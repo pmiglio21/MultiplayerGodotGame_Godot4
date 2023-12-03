@@ -1,6 +1,6 @@
-using FrogGame.Enums;
-using FrogGame.Globals;
-using FrogGame.Globals.PlayerManagement;
+using Enums;
+using Globals;
+using Globals.PlayerManagement;
 using Godot;
 using System;
 

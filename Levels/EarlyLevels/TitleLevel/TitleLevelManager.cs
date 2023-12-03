@@ -1,10 +1,10 @@
-using FrogGame.Enums;
-using FrogGame.Globals;
+using Enums;
+using Globals;
 using Godot;
 
-namespace FrogGame.Levels.EarlyLevels.TitleLevel
+namespace Levels.EarlyLevels.TitleLevel
 {
-	public partial class TitleLevelManager: Node3D
+	public partial class TitleLevelManager: Node
 	{
 		private Button _playGameButton;
 		private Button _quitGameButton;

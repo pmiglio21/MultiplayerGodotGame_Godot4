@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy0ujgws8m5wm"]
+
+[ext_resource type="PackedScene" uid="uid://b747x2cly2qxj" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.tscn" id="2_3pb1u"]
+[ext_resource type="PackedScene" uid="uid://b8vspdmrgl85a" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.tscn" id="2_nxjnc"]
+
+[node name="PlayerSelectLevel" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0921447, 0.995746, 0, -0.995746, -0.0921447, 0, 8.21751, 3.24857)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.780681, 0.624929, 0, -0.624929, 0.780681, 0, 8.21751, 13.8695)
+
+[node name="PlayerCharacterPicker0" parent="." instance=ExtResource("2_3pb1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 7, 7)
+NumberOfCharactersNecessaryBeforeGivingAccess = 0
+
+[node name="PlayerCharacterPicker1" parent="." instance=ExtResource("2_3pb1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7, 7)
+NumberOfCharactersNecessaryBeforeGivingAccess = 1
+
+[node name="PlayerCharacterPicker2" parent="." instance=ExtResource("2_3pb1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 7, 7)
+NumberOfCharactersNecessaryBeforeGivingAccess = 2
+
+[node name="PlayerCharacterPicker3" parent="." instance=ExtResource("2_3pb1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 7, 7)
+NumberOfCharactersNecessaryBeforeGivingAccess = 3
+
+[node name="ConfirmSelectionButton" parent="." instance=ExtResource("2_nxjnc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 7.2, 7)
+
+[connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker1" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker2" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker3" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
+[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]

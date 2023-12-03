@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrogGame.Scenes.UI.PlayerSelectScene
+namespace Scenes.UI.PlayerSelectScene
 {
 	public static class PlayerCharacterPickerManager
 	{

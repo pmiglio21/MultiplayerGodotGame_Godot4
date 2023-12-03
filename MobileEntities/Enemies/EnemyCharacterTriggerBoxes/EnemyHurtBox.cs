@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrogGame.MobileEntities.Enemies.EnemyCharacterTriggerBoxes
+namespace MobileEntities.Enemies.EnemyCharacterTriggerBoxes
 {
 	public partial class EnemyHurtBox : Area3D
 	{

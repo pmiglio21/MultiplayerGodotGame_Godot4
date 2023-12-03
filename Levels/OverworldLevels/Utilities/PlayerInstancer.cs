@@ -1,9 +1,9 @@
-using FrogGame.Globals.PlayerManagement;
-using FrogGame.MobileEntities.PlayerCharacters.Scripts;
-using FrogGame.Scenes.UI.PlayerSelectScene;
+using Globals.PlayerManagement;
+using MobileEntities.PlayerCharacters.Scripts;
+using Scenes.UI.PlayerSelectScene;
 using Godot;
 
-namespace FrogGame.Scenes.OverworldLevels
+namespace Scenes.OverworldLevels
 {
 	public partial class PlayerInstancer : Node
 	{

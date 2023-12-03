@@ -1,11 +1,11 @@
-using FrogGame.MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrogGame.Globals.PlayerManagement
+namespace Globals.PlayerManagement
 {
 	public static class PlayerManager
 	{
@@ -34,7 +34,7 @@ namespace FrogGame.Globals.PlayerManagement
 		#endregion
 
 		public static void ClearActivePlayers()
-        {
+		{
 			ActivePlayers.Clear();
 		}
 	}

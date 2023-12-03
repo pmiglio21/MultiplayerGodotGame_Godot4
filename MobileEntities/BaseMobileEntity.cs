@@ -1,10 +1,10 @@
-using FrogGame.Enums;
+using Enums;
 using Godot;
 using System;
 
-namespace FrogGame.MobileEntities
+namespace MobileEntities
 {
-	public partial class BaseMobileEntity : CharacterBody3D
+	public partial class BaseMobileEntity : CharacterBody2D
 	{
 		// Called when the node enters the scene tree for the first time.
 		//public override void _Ready()
@@ -17,51 +17,51 @@ namespace FrogGame.MobileEntities
 		//}
 
 		#region MobileEntity Movement Helpers
-		protected CardinalDirection FindLatestCardinalDirection(Vector3 moveDirection)
+		protected CardinalDirection FindLatestCardinalDirection(Vector2 moveDirection)
 		{
 			CardinalDirection latestCardinalDirection = CardinalDirection.Center;
 
 			if (moveDirection.X == 0)
 			{
-				if (moveDirection.Z > 0)
+				if (moveDirection.Y > 0)
 				{
 					latestCardinalDirection = CardinalDirection.South;
 				}
-				else if (moveDirection.Z < 0)
+				else if (moveDirection.Y < 0)
 				{
 					latestCardinalDirection = CardinalDirection.North;
 				}
-				else if (moveDirection.Z == 0)
+				else if (moveDirection.Y == 0)
 				{
 					latestCardinalDirection = CardinalDirection.Center;
 				}
 			}
 			else if (moveDirection.X > 0)
 			{
-				if (moveDirection.Z > 0)
+				if (moveDirection.Y > 0)
 				{
 					latestCardinalDirection = CardinalDirection.SouthEast;
 				}
-				else if (moveDirection.Z < 0)
+				else if (moveDirection.Y < 0)
 				{
 					latestCardinalDirection = CardinalDirection.NorthEast;
 				}
-				else if (moveDirection.Z == 0)
+				else if (moveDirection.Y == 0)
 				{
 					latestCardinalDirection = CardinalDirection.East;
 				}
 			}
 			else if (moveDirection.X < 0)
 			{
-				if (moveDirection.Z > 0)
+				if (moveDirection.Y > 0)
 				{
 					latestCardinalDirection = CardinalDirection.SouthWest;
 				}
-				else if (moveDirection.Z < 0)
+				else if (moveDirection.Y < 0)
 				{
 					latestCardinalDirection = CardinalDirection.NorthWest;
 				}
-				else if (moveDirection.Z == 0)
+				else if (moveDirection.Y == 0)
 				{
 					latestCardinalDirection = CardinalDirection.West;
 				}

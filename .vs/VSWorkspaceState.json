@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Enums",
+    "\\Globals",
+    "\\Levels",
+    "\\Levels\\EarlyLevels",
+    "\\Levels\\EarlyLevels\\TitleLevel",
+    "\\MobileEntities"
+  ],
+  "SelectedNode": "\\Levels\\EarlyLevels\\TitleLevel\\TitleLevelManager.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrogGame.MobileEntities.PlayerCharacters.PlayerCharacterTriggerBoxes
+namespace MobileEntities.PlayerCharacters.PlayerCharacterTriggerBoxes
 {
 	public partial class PlayerHurtBox : Area3D
 	{

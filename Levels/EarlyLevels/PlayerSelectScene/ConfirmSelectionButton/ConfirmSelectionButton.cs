@@ -1,12 +1,12 @@
-using FrogGame.Globals;
-using FrogGame.Globals.PlayerManagement;
-using FrogGame.MobileEntities.PlayerCharacters.Scripts;
+using Globals;
+using Globals.PlayerManagement;
+using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrogGame.Scenes.UI.PlayerSelectScene
+namespace Scenes.UI.PlayerSelectScene
 {
 	public partial class ConfirmSelectionButton : Node
 	{
@@ -61,19 +61,19 @@ namespace FrogGame.Scenes.UI.PlayerSelectScene
 
 					if (instanceAsBaseCharacter.PlayerNumber == 0)
 					{
-						instanceAsBaseCharacter.Position = new Vector3(-1, 0, -10);
+						instanceAsBaseCharacter.Position = new Vector2(-1, 1);
 					}
 					else if (instanceAsBaseCharacter.PlayerNumber == 1)
 					{
-						instanceAsBaseCharacter.Position = new Vector3(1, 0, -10);
+						instanceAsBaseCharacter.Position = new Vector2(1, 1);
 					}
 					else if (instanceAsBaseCharacter.PlayerNumber == 2)
 					{
-						instanceAsBaseCharacter.Position = new Vector3(-1, 0, -8);
+						instanceAsBaseCharacter.Position = new Vector2(-1, -1);
 					}
 					else if (instanceAsBaseCharacter.PlayerNumber == 3)
 					{
-						instanceAsBaseCharacter.Position = new Vector3(1, 0, -8);
+						instanceAsBaseCharacter.Position = new Vector2(1, -1);
 					}
 				}
 

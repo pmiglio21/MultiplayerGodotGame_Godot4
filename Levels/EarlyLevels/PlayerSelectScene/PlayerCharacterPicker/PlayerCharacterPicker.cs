@@ -1,13 +1,13 @@
-using FrogGame.Enums;
-using FrogGame.Globals;
-using FrogGame.Globals.PlayerManagement;
-using FrogGame.MobileEntities.PlayerCharacters.Scripts;
+using Enums;
+using Globals;
+using Globals.PlayerManagement;
+using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrogGame.Scenes.UI.PlayerSelectScene
+namespace Scenes.UI.PlayerSelectScene
 {
 	public partial class PlayerCharacterPicker : Node
 	{

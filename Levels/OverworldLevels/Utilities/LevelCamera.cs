@@ -1,5 +1,5 @@
-using FrogGame.Globals.PlayerManagement;
-using FrogGame.MobileEntities.PlayerCharacters.Scripts;
+using Globals.PlayerManagement;
+using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
 

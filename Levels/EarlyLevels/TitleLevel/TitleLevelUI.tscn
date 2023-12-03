@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf8ld0gid5wam"]
+
+[ext_resource type="Script" path="res://Levels/EarlyLevels/TitleLevel/TitleLevelManager.cs" id="1_1kefu"]
+
+[sub_resource type="Theme" id="Theme_ijh7m"]
+default_font_size = 30
+
+[node name="TitleLevelUI" type="Node"]
+script = ExtResource("1_1kefu")
+
+[node name="TitleText" type="RichTextLabel" parent="."]
+offset_left = 448.0
+offset_top = 247.0
+offset_right = 672.0
+offset_bottom = 300.0
+theme = SubResource("Theme_ijh7m")
+text = "Untitled Game"
+
+[node name="TitleToPlayerSelectButton" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 310.0
+offset_right = 617.0
+offset_bottom = 375.0
+text = "Play"
+
+[node name="QuitGameButton" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 386.0
+offset_right = 617.0
+offset_bottom = 451.0
+text = "Quit"
