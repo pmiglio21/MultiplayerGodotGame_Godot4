@@ -15,10 +15,10 @@ namespace Globals.PlayerManagement
 
 		public static List<string> AvailablePlayerSceneOptions = new List<string>()
 		{
-			"res://MobileEntities/PlayerCharacters/TreeFrog/Scenes/TreeFrog.tscn",
-			"res://MobileEntities/PlayerCharacters/BullFrog/Scenes/BullFrog.tscn",
-			"res://MobileEntities/PlayerCharacters/ChorusFrog/Scenes/ChorusFrog.tscn",
-			"res://MobileEntities/PlayerCharacters/WoodFrog/Scenes/WoodFrog.tscn"
+			"res://MobileEntities/PlayerCharacters/Knight/Scenes/Knight.tscn",
+			"res://MobileEntities/PlayerCharacters/Mage/Scenes/Mage.tscn",
+			"res://MobileEntities/PlayerCharacters/Rogue/Scenes/Rogue.tscn",
+			"res://MobileEntities/PlayerCharacters/Cleric/Scenes/Cleric.tscn"
 		};
 
 		public static string DefaultPickerImageOption = "res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/BaseCharacter_PickerIcon.png";

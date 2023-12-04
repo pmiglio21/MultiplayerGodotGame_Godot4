@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3o2qaw760l14"]
+
+[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_vtany"]
+
+[node name="CharacterBody" instance=ExtResource("1_vtany")]
