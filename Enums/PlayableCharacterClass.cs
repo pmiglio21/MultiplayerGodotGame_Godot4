@@ -9,9 +9,9 @@ namespace Enums
     public enum PlayableCharacterClass
     {
         BaseCharacter,
-        TreeFrog,
-        BullFrog,
-        ChorusFrog,
-        WoodFrog
+        Knight,
+        Mage,
+        Rogue,
+        Cleric
     }
 }

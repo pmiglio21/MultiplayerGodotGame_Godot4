@@ -3,7 +3,7 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
 using Godot;
 
-namespace Scenes.OverworldLevels
+namespace FrogGame.Scenes.OverworldLevels
 {
 	public partial class PlayerInstancer : Node
 	{
@@ -13,7 +13,7 @@ namespace Scenes.OverworldLevels
 
 			foreach (BaseCharacter character in PlayerManager.ActivePlayers)
 			{
-				GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}");
+				GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
 				AddChild(character);
 			}
 

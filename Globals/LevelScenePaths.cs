@@ -18,7 +18,7 @@ namespace Globals
         #endregion
 
         #region Overworld Level Scenes
-        public const string OverworldLevel1Path = "res://Levels/OverworldLevels/Levels/OverworldLevel1.tscn";
+        public const string OverworldLevel1Path = "res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn";
         #endregion
     }
 }

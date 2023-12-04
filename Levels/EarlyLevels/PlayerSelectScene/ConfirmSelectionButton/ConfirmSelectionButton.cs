@@ -13,7 +13,7 @@ namespace Scenes.UI.PlayerSelectScene
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			var sprite = GetNode<Sprite3D>("Sprite");
+			var sprite = GetNode<Sprite2D>("Sprite");
 		}
 
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,13 +22,13 @@ namespace Scenes.UI.PlayerSelectScene
 			if (PlayerCharacterPickerManager.ActivePickers.Count != 0 &&
 				PlayerCharacterPickerManager.ActivePickers.All(x => x.SelectionHasBeenMade))
 			{
-				var sprite = this.GetNode("Sprite") as Sprite3D;
+				var sprite = this.GetNode("Sprite") as Sprite2D;
 				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png") as Texture2D;
 				sprite.Texture = newTexture;
 			}
 			else
 			{
-				var sprite = this.GetNode("Sprite") as Sprite3D;
+				var sprite = this.GetNode("Sprite") as Sprite2D;
 				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png") as Texture2D;
 				sprite.Texture = newTexture;
 			}

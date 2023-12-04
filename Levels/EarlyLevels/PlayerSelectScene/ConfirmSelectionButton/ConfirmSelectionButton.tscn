@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8vspdmrgl85a"]
+[gd_scene load_steps=3 format=3 uid="uid://cmob6mda775oe"]
 
 [ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.cs" id="1_llcb1"]
 [ext_resource type="Texture2D" uid="uid://c5fh3k8xpyrw5" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png" id="2_eaa2q"]
@@ -6,7 +6,7 @@
 [node name="ConfirmationSelectionButton" type="Node3D"]
 script = ExtResource("1_llcb1")
 
-[node name="Sprite" type="Sprite3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-billboard = 1
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(905, 100)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_eaa2q")

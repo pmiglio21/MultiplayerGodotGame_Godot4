@@ -16,7 +16,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected AnimationPlayer animationPlayer;
 
-		private List<string> animationList; 
+		private List<string> _animationList; 
 
 		protected Sprite2D playerSprite;
 
@@ -52,6 +52,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		#region Player Identification Properties
 
+		public PlayableCharacterClass CharacterClassName;
+
 		public int PlayerNumber = -1;
 		public string DeviceIdentifier = "-1";
 
@@ -63,19 +65,46 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isHurt = false;
 		#endregion
 
+		#region References to Outside Nodes
+
+		protected PauseScreenManager pauseScreen;
+
+		protected LevelCamera levelCamera;
+
+		#endregion
+
+		#region Pause Properties
+
+		private bool _pauseChangedRecently = false;
+		public bool IsPaused = false;
+
+		private int _pauseTimer = 0;
+		private const int _pauseTimerMax = 15;
+
+		#endregion
+
 		public override void _Ready()
 		{
+			InitializeClassSpecificProperties();
+
+			#region Initializing Components
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-			animationList = animationPlayer.GetAnimationList().ToList();
-			playerSprite = GetNode<Sprite2D>("Sprite");
+			_animationList = animationPlayer.GetAnimationList().ToList();
+
+			playerSprite = GetNode<Sprite2D>("PlayerSprite");
+			#endregion
 
 			InitializeDeadZones();
+
+			GetReferencesToOutsideNodes();
 
 			PlayAppropriateAnimation(CardinalDirection.South, AnimationType.Idle);
 		}
 
 		public override void _Process(double delta)
 		{
+			GetPauseInput();
+
 			GetMovementInput();
 
 			if (moveDirection != Vector2.Zero)
@@ -98,18 +127,84 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 		}
 
+		#region On Ready Methods
+
 		protected void InitializeDeadZones()
 		{
-			InputMap.ActionSetDeadzone($"MoveRight_{DeviceIdentifier}", moveInputDeadzone);
-			InputMap.ActionSetDeadzone($"MoveLeft_{DeviceIdentifier}", moveInputDeadzone);
-			InputMap.ActionSetDeadzone($"MoveDown_{DeviceIdentifier}", moveInputDeadzone);
-			InputMap.ActionSetDeadzone($"MoveUp_{DeviceIdentifier}", moveInputDeadzone);
+			InputMap.ActionSetDeadzone($"MoveEast_{DeviceIdentifier}", moveInputDeadzone);
+			InputMap.ActionSetDeadzone($"MoveWest_{DeviceIdentifier}", moveInputDeadzone);
+			InputMap.ActionSetDeadzone($"MoveSouth_{DeviceIdentifier}", moveInputDeadzone);
+			InputMap.ActionSetDeadzone($"MoveNorth_{DeviceIdentifier}", moveInputDeadzone);
+		}
+
+		protected virtual void InitializeClassSpecificProperties() { }
+
+		private void GetReferencesToOutsideNodes()
+		{
+			GetPauseScreen();
+
+			GetLevelCamera();
+		}
+
+		private void GetPauseScreen()
+		{
+			var pauseScreens = GetTree().GetNodesInGroup("PauseScreen");
+
+			if (pauseScreens != null)
+			{
+				pauseScreen = pauseScreens.First() as PauseScreenManager;
+			}
+		}
+
+		private void GetLevelCamera()
+		{
+			var levelCameras = GetTree().GetNodesInGroup("LevelCamera");
+
+			if (levelCameras != null)
+			{
+				levelCamera = levelCameras.First() as LevelCamera;
+			}
+		}
+
+		#endregion
+
+		#region On Update Methods
+
+		private void GetPauseInput()
+		{
+			//Pause button hit in PauseScreen
+			if (!_pauseChangedRecently && IsPaused != GetTree().Paused && _pauseTimer < _pauseTimerMax)
+			{
+				_pauseChangedRecently = true;
+				IsPaused = false;
+			}
+
+			//Let timer go
+			if (_pauseChangedRecently && _pauseTimer < _pauseTimerMax)
+			{
+				_pauseTimer++;
+			}
+			else
+			{
+				_pauseChangedRecently = false;
+				_pauseTimer = 0;
+			}
+
+			if (!_pauseChangedRecently && Input.IsActionJustPressed($"StartButton_{DeviceIdentifier}"))
+			{
+				pauseScreen.Show();
+				GetTree().Paused = true;
+				IsPaused = true;
+
+				pauseScreen.GetNode<Button>("ResumeGameButton").GrabFocus();
+				//GetNode<Button>("ResumeGameButton").GrabFocus();
+			}
 		}
 
 		protected void GetMovementInput()
 		{
-			moveInput.X = Input.GetActionStrength($"MoveRight_{DeviceIdentifier}") - Input.GetActionStrength($"MoveLeft_{DeviceIdentifier}");
-			moveInput.Y = Input.GetActionStrength($"MoveDown_{DeviceIdentifier}") - Input.GetActionStrength($"MoveUp_{DeviceIdentifier}");
+			moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+			moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
 
 			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
 			{
@@ -135,11 +230,13 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			if (cardinalDirection != CardinalDirection.Center)
 			{
-				if (animationList.Contains($"{characterClass}_{animationType}_{cardinalDirection}"))
+				if (_animationList.Contains($"{characterClass}_{animationType}_{cardinalDirection}"))
 				{
 					animationPlayer.Play($"{characterClass}_{animationType}_{cardinalDirection}");
 				}
 			}
 		}
+
+		#endregion
 	}
 }

@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy0ujgws8m5wm"]
+[gd_scene load_steps=3 format=3 uid="uid://bvjx3l2urbwgh"]
 
-[ext_resource type="PackedScene" uid="uid://b747x2cly2qxj" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.tscn" id="2_3pb1u"]
-[ext_resource type="PackedScene" uid="uid://b8vspdmrgl85a" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.tscn" id="2_nxjnc"]
+[ext_resource type="PackedScene" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.tscn" id="2_3pb1u"]
+[ext_resource type="PackedScene" uid="uid://cmob6mda775oe" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.tscn" id="2_nxjnc"]
 
 [node name="PlayerSelectLevel" type="Node3D"]
 
