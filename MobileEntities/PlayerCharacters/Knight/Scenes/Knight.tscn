@@ -1,12 +1,96 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=16 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Scripts/Knight.cs" id="2_5633e"]
 [ext_resource type="Texture2D" uid="uid://cfq3wq2barpur" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/South/KnightIdle00.png" id="3_1hapm"]
+[ext_resource type="Texture2D" uid="uid://dgp8ap68dgh4g" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle06.png" id="3_3aqr4"]
+[ext_resource type="Texture2D" uid="uid://dep5i8ffiskrl" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/South/KnightIdle01.png" id="3_lsss8"]
+[ext_resource type="Texture2D" uid="uid://dtpglm5e8x1ls" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/North/KnightIdle_03.png" id="3_wajuk"]
+[ext_resource type="Texture2D" uid="uid://0d0ei1skp85r" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/North/KnightIdle_02.png" id="6_k1nrn"]
+[ext_resource type="Texture2D" uid="uid://bfe41ydxpqxis" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle04.png" id="7_s2cib"]
+[ext_resource type="Texture2D" uid="uid://17s5o5lsgab4" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle05.png" id="8_g80ok"]
+[ext_resource type="Texture2D" uid="uid://dtt258it0mtoi" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle07.png" id="10_31hw6"]
+
+[sub_resource type="Animation" id="Animation_ix2uo"]
+resource_name = "Idle_South"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_1hapm"), ExtResource("3_lsss8")]
+}
+
+[sub_resource type="Animation" id="Animation_q7xxv"]
+resource_name = "Idle_North"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("6_k1nrn"), ExtResource("3_wajuk")]
+}
+
+[sub_resource type="Animation" id="Animation_eqtv1"]
+resource_name = "Idle_East"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("7_s2cib"), ExtResource("8_g80ok")]
+}
+
+[sub_resource type="Animation" id="Animation_b5dgr"]
+resource_name = "Idle_West"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_3aqr4"), ExtResource("10_31hw6")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
+_data = {
+"Idle_East": SubResource("Animation_eqtv1"),
+"Idle_North": SubResource("Animation_q7xxv"),
+"Idle_South": SubResource("Animation_ix2uo"),
+"Idle_West": SubResource("Animation_b5dgr")
+}
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
 script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_1hapm")
+texture = ExtResource("10_31hw6")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_g3jla")
+}

@@ -230,9 +230,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			if (cardinalDirection != CardinalDirection.Center)
 			{
-				if (_animationList.Contains($"{characterClass}_{animationType}_{cardinalDirection}"))
+				if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
 				{
-					animationPlayer.Play($"{characterClass}_{animationType}_{cardinalDirection}");
+					animationPlayer.Play($"{animationType}_{cardinalDirection}");
 				}
 			}
 		}
