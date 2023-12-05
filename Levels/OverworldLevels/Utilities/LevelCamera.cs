@@ -3,9 +3,9 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
 
-public partial class LevelCamera : Camera3D
+public partial class LevelCamera : Camera2D
 {
-	private Vector3 _newPosition;
+	private Vector2 _newPosition;
 	private float _distanceThresholdBeforeCameraMoves = 10;
 
 	public override void _Ready()
