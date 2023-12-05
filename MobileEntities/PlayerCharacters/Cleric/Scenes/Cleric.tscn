@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dowausv2otjir"]
+[gd_scene load_steps=3 format=3 uid="uid://dowausv2otjir"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_cx27y"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Cleric/Scripts/Cleric.cs" id="2_tbyem"]
 
 [node name="CharacterBody" instance=ExtResource("1_cx27y")]
+script = ExtResource("2_tbyem")
 characterClass = 4

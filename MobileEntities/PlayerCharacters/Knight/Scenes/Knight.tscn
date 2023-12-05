@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=3 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_vtany"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Scripts/Knight.cs" id="2_5633e"]
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
+script = ExtResource("2_5633e")
 characterClass = 1

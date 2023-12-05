@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://t31er3ewqfvm"]
+[gd_scene load_steps=3 format=3 uid="uid://t31er3ewqfvm"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_bll5p"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Scripts/Mage.cs" id="2_bqvon"]
 
 [node name="CharacterBody" instance=ExtResource("1_bll5p")]
+script = ExtResource("2_bqvon")
 characterClass = 2

@@ -5,6 +5,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enums;
 
 namespace Scenes.UI.PlayerSelectScene
 {
@@ -52,6 +53,8 @@ namespace Scenes.UI.PlayerSelectScene
 					//For ease of access
 					var instanceAsBaseCharacter = instance as BaseCharacter;
 
+					instanceAsBaseCharacter.CharacterClassName = DeterminePlayableCharacterClass(instance);
+
 					instanceAsBaseCharacter.PlayerNumber = PlayerManager.ActivePlayers.Count;
 					instanceAsBaseCharacter.DeviceIdentifier = picker.CurrentDeviceId.ToString();
 
@@ -85,6 +88,30 @@ namespace Scenes.UI.PlayerSelectScene
 		private void OnPlayerCharacterPicker_FinishSelectionProcess()
 		{
 			FinishSelectionForAllPickers();
+		}
+
+		private PlayableCharacterClass DeterminePlayableCharacterClass(Node instance)
+        {
+			if (instance is Knight)
+			{
+				return PlayableCharacterClass.Knight;
+			}
+			else if (instance is Mage)
+			{
+				return PlayableCharacterClass.Mage;
+			}
+			else if (instance is Rogue)
+			{
+				return PlayableCharacterClass.Rogue;
+			}
+			else if (instance is Cleric)
+			{
+				return PlayableCharacterClass.Cleric;
+			}
+			else
+            {
+				return PlayableCharacterClass.BaseCharacter;
+			}
 		}
 	}
 }
