@@ -25,8 +25,8 @@
 [ext_resource type="Texture2D" uid="uid://d3e6gcnkn5pmy" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_04.png" id="23_olfdb"]
 [ext_resource type="Texture2D" uid="uid://dpjpdysq6hqrm" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_06.png" id="24_pecwv"]
 
-[sub_resource type="Animation" id="Animation_ix2uo"]
-resource_name = "Idle_South"
+[sub_resource type="Animation" id="Animation_eqtv1"]
+resource_name = "Idle_East"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("3_1hapm"), ExtResource("3_lsss8")]
+"values": [ExtResource("7_s2cib"), ExtResource("8_g80ok")]
 }
 
 [sub_resource type="Animation" id="Animation_q7xxv"]
@@ -57,8 +57,8 @@ tracks/0/keys = {
 "values": [ExtResource("6_k1nrn"), ExtResource("3_wajuk")]
 }
 
-[sub_resource type="Animation" id="Animation_eqtv1"]
-resource_name = "Idle_East"
+[sub_resource type="Animation" id="Animation_ix2uo"]
+resource_name = "Idle_South"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("7_s2cib"), ExtResource("8_g80ok")]
+"values": [ExtResource("3_1hapm"), ExtResource("3_lsss8")]
 }
 
 [sub_resource type="Animation" id="Animation_b5dgr"]
@@ -138,7 +138,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("20_5e26v")
+texture = ExtResource("3_fiapi")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

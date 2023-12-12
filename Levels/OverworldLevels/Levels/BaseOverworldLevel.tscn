@@ -1,8 +1,67 @@
-[gd_scene load_steps=4 format=3 uid="uid://de22b7g4faw63"]
+[gd_scene load_steps=21 format=3 uid="uid://de22b7g4faw63"]
 
 [ext_resource type="PackedScene" uid="uid://64m18dfpgas4" path="res://Levels/OverworldLevels/Utilities/LevelCamera.tscn" id="1_45dlx"]
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Utilities/PlayerInstancer.cs" id="2_wkdfo"]
 [ext_resource type="PackedScene" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreen.tscn" id="3_i8rss"]
+[ext_resource type="Texture2D" uid="uid://ba68ddttsknon" path="res://Levels/OverworldLevels/TileMapping/tile_0.png" id="4_2n3b4"]
+[ext_resource type="Texture2D" uid="uid://bibjduiq8u7fw" path="res://Levels/OverworldLevels/TileMapping/tile_1.png" id="5_qdy60"]
+[ext_resource type="Texture2D" uid="uid://bqrw8i6h5wp2b" path="res://Levels/OverworldLevels/TileMapping/tile_2.png" id="6_j60qb"]
+[ext_resource type="Texture2D" uid="uid://dd6xki2yvytfn" path="res://Levels/OverworldLevels/TileMapping/tile_3.png" id="7_jut2x"]
+[ext_resource type="Texture2D" uid="uid://dibuce6csnq3n" path="res://Levels/OverworldLevels/TileMapping/tile_4.png" id="8_8k37n"]
+[ext_resource type="Texture2D" uid="uid://8kgaod4r3xew" path="res://Levels/OverworldLevels/TileMapping/tile_5.png" id="9_yijpa"]
+[ext_resource type="Texture2D" uid="uid://duduallijuh84" path="res://Levels/OverworldLevels/TileMapping/tile_6.png" id="10_3vhp4"]
+[ext_resource type="Texture2D" uid="uid://c3lv750qrfa6y" path="res://Levels/OverworldLevels/TileMapping/tile_7.png" id="11_boj4e"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_77f1s"]
+texture = ExtResource("4_2n3b4")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ytx27"]
+texture = ExtResource("5_qdy60")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_huwhy"]
+texture = ExtResource("6_j60qb")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25np6"]
+texture = ExtResource("7_jut2x")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_63fsx"]
+texture = ExtResource("8_8k37n")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iuoft"]
+texture = ExtResource("9_yijpa")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wxm65"]
+texture = ExtResource("10_3vhp4")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_avwkk"]
+texture = ExtResource("11_boj4e")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_nwmom"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_77f1s")
+sources/1 = SubResource("TileSetAtlasSource_ytx27")
+sources/2 = SubResource("TileSetAtlasSource_huwhy")
+sources/3 = SubResource("TileSetAtlasSource_25np6")
+sources/4 = SubResource("TileSetAtlasSource_63fsx")
+sources/5 = SubResource("TileSetAtlasSource_iuoft")
+sources/6 = SubResource("TileSetAtlasSource_wxm65")
+sources/7 = SubResource("TileSetAtlasSource_avwkk")
 
 [node name="Level" type="Node"]
 
@@ -12,8 +71,16 @@
 script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
+zoom = Vector2(2, 2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource("3_i8rss")]
 visible = false
+
+[node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(0.947354, 0.943386)
+tile_set = SubResource("TileSet_nwmom")
+format = 2
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(-3, 0, 0, 65533, 0, 0, -65535, 0, 0, 1, 0, 0, 0, 0, 0, 65535, 0, 0, 65534, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65534, 0, 0, 2, 0, 0, 262137, 0, 0, 196601, 0, 0, 131065, 0, 0, 65529, 0, 0, -7, 0, 0, -65543, 0, 0, -131079, 0, 0, -196615, 0, 0, -196614, 0, 0, -196613, 0, 0, -196612, 0, 0, -196611, 0, 0, -196610, 0, 0, -196609, 0, 0, -262144, 0, 0, -262143, 0, 0, -262142, 0, 0, -262141, 0, 0, -262140, 0, 0, -262139, 0, 0, -196603, 0, 0, -131067, 0, 0, -65531, 0, 0, 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196613, 0, 0, 196612, 0, 0, 196611, 0, 0, 196610, 0, 0, 196609, 0, 0, 196608, 0, 0, 262143, 0, 0, 262142, 0, 0, 262141, 0, 0, 262140, 0, 0, 262139, 0, 0, 262138, 0, 0, 196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 196614, 0, 0, 131078, 0, 0, 65542, 0, 0, 6, 0, 0, -65530, 0, 0, -131066, 0, 0, -196602, 0, 0, -262138, 0, 0, -131078, 0, 0, -65542, 0, 0, -6, 0, 0, 65530, 0, 0, 131066, 0, 0, 196602, 0, 0, -131077, 0, 0, -65541, 0, 0, -5, 0, 0, 65531, 0, 0, 131067, 0, 0, 196603, 0, 0, -131076, 0, 0, -65540, 0, 0, -4, 0, 0, 65532, 0, 0, 131068, 0, 0, 196604, 0, 0, -131075, 0, 0, -65539, 0, 0, 131069, 0, 0, 196605, 0, 0, -131074, 0, 0, -65538, 0, 0, 131070, 0, 0, 196606, 0, 0, -131073, 0, 0, -65537, 0, 0, 131071, 0, 0, -196608, 0, 0, -131072, 0, 0, 65536, 0, 0, -196607, 0, 0, -131071, 0, 0, 65537, 0, 0, -196606, 0, 0, -131070, 0, 0, 65538, 0, 0, -196605, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, -196604, 0, 0, -131068, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxk777q0pnsmo"
-path="res://.godot/imported/MageIdle_2.png-d5c4a79c3974218ead626b62e9c06cdc.ctex"
+uid="uid://bqrw8i6h5wp2b"
+path="res://.godot/imported/tile_2.png-e6180583ea3150463759e3ff7ea124d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/South/MageIdle_2.png"
-dest_files=["res://.godot/imported/MageIdle_2.png-d5c4a79c3974218ead626b62e9c06cdc.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/tile_2.png"
+dest_files=["res://.godot/imported/tile_2.png-e6180583ea3150463759e3ff7ea124d9.ctex"]
 
 [params]
 
