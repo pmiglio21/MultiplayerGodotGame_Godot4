@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0wp40hqixbkk"
-path="res://.godot/imported/TileMappingAtlas.png-668552b85df6f4d2d82b3c51d231c825.ctex"
+uid="uid://bb3pk0vbk0l6m"
+path="res://.godot/imported/tile_atlas.png-620032de64fd5c061f8e41ab99ec9484.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/TileMappingAtlas.png"
-dest_files=["res://.godot/imported/TileMappingAtlas.png-668552b85df6f4d2d82b3c51d231c825.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/tile_atlas.png"
+dest_files=["res://.godot/imported/tile_atlas.png-620032de64fd5c061f8e41ab99ec9484.ctex"]
 
 [params]
 
