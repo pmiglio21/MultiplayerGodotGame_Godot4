@@ -1,12 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://t31er3ewqfvm"]
+[gd_scene load_steps=7 format=3 uid="uid://t31er3ewqfvm"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_bll5p"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Scripts/Mage.cs" id="2_bqvon"]
-[ext_resource type="Texture2D" uid="uid://b7qj82k5w8ku2" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/South/MageIdle_0.png" id="3_cpaxt"]
+[ext_resource type="Texture2D" uid="uid://yc6vj65hp7kb" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_0.png" id="4_0t2sn"]
+[ext_resource type="Texture2D" uid="uid://cdmntqhbo36yk" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_1.png" id="5_i78ho"]
+
+[sub_resource type="Animation" id="Animation_x7o5b"]
+resource_name = "Idle_East"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_0t2sn"), ExtResource("5_i78ho")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bx2le"]
+_data = {
+"Idle_East": SubResource("Animation_x7o5b")
+}
 
 [node name="CharacterBody" instance=ExtResource("1_bll5p")]
 script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_cpaxt")
+texture = ExtResource("4_0t2sn")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_bx2le")
+}

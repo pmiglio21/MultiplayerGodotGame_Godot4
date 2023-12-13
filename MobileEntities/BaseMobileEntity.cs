@@ -19,52 +19,15 @@ namespace MobileEntities
 		#region MobileEntity Movement Helpers
 		protected CardinalDirection FindLatestCardinalDirection(Vector2 moveDirection)
 		{
-			CardinalDirection latestCardinalDirection = CardinalDirection.Center;
+			CardinalDirection latestCardinalDirection = CardinalDirection.East;
 
-			if (moveDirection.X == 0)
+			if (moveDirection.X == 0 && moveDirection.X > 0)
 			{
-				if (moveDirection.Y > 0)
-				{
-					latestCardinalDirection = CardinalDirection.South;
-				}
-				else if (moveDirection.Y < 0)
-				{
-					latestCardinalDirection = CardinalDirection.North;
-				}
-				else if (moveDirection.Y == 0)
-				{
-					latestCardinalDirection = CardinalDirection.Center;
-				}
-			}
-			else if (moveDirection.X > 0)
-			{
-				if (moveDirection.Y > 0)
-				{
-					latestCardinalDirection = CardinalDirection.SouthEast;
-				}
-				else if (moveDirection.Y < 0)
-				{
-					latestCardinalDirection = CardinalDirection.NorthEast;
-				}
-				else if (moveDirection.Y == 0)
-				{
-					latestCardinalDirection = CardinalDirection.East;
-				}
+				latestCardinalDirection = CardinalDirection.East;
 			}
 			else if (moveDirection.X < 0)
 			{
-				if (moveDirection.Y > 0)
-				{
-					latestCardinalDirection = CardinalDirection.SouthWest;
-				}
-				else if (moveDirection.Y < 0)
-				{
-					latestCardinalDirection = CardinalDirection.NorthWest;
-				}
-				else if (moveDirection.Y == 0)
-				{
-					latestCardinalDirection = CardinalDirection.West;
-				}
+				latestCardinalDirection = CardinalDirection.West;
 			}
 
 			//GD.Print(latestCardinalDirection);

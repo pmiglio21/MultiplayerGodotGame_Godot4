@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://brddfjf0oxjjm"]
-
-[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_cx27y"]
-
-[node name="CharacterBody" instance=ExtResource("1_cx27y")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxk777q0pnsmo"
-path="res://.godot/imported/MageIdle_2.png-2be87e26a28ad5e8761dfe498d9aed72.ctex"
+uid="uid://dxya6ca7tof2c"
+path="res://.godot/imported/ClericIdle_1.png-e8770fe54c8eed7e459e39ce39385f10.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/North/MageIdle_2.png"
-dest_files=["res://.godot/imported/MageIdle_2.png-2be87e26a28ad5e8761dfe498d9aed72.ctex"]
+source_file="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/East/ClericIdle_1.png"
+dest_files=["res://.godot/imported/ClericIdle_1.png-e8770fe54c8eed7e459e39ce39385f10.ctex"]
 
 [params]
 

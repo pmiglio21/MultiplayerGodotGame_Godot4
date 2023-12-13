@@ -98,7 +98,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			GetReferencesToOutsideNodes();
 
-			PlayAppropriateAnimation(CardinalDirection.South, AnimationType.Idle);
+			PlayAppropriateAnimation(CardinalDirection.East, AnimationType.Idle);
 		}
 
 		public override void _Process(double delta)

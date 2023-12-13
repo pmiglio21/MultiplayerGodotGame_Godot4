@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://doujl37jchbgm"
-path="res://.godot/imported/MageIdle_5.png-1e6b50e31620e64bf4bc39632fd0734a.ctex"
+uid="uid://yc6vj65hp7kb"
+path="res://.godot/imported/MageIdle_0.png-ddebb7dbc89db46c5d1ff5e962b37997.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_5.png"
-dest_files=["res://.godot/imported/MageIdle_5.png-1e6b50e31620e64bf4bc39632fd0734a.ctex"]
+source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_0.png"
+dest_files=["res://.godot/imported/MageIdle_0.png-ddebb7dbc89db46c5d1ff5e962b37997.ctex"]
 
 [params]
 
