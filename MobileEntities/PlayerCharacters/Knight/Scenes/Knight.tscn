@@ -1,29 +1,9 @@
-[gd_scene load_steps=32 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=7 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Scripts/Knight.cs" id="2_5633e"]
-[ext_resource type="Texture2D" uid="uid://cfq3wq2barpur" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/South/KnightIdle00.png" id="3_1hapm"]
-[ext_resource type="Texture2D" uid="uid://dgp8ap68dgh4g" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle06.png" id="3_3aqr4"]
-[ext_resource type="Texture2D" uid="uid://co8brk3dxtuqv" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_13.png" id="3_crskx"]
-[ext_resource type="Texture2D" uid="uid://b0fk787x8swwq" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_05.png" id="3_fiapi"]
-[ext_resource type="Texture2D" uid="uid://dep5i8ffiskrl" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/South/KnightIdle01.png" id="3_lsss8"]
-[ext_resource type="Texture2D" uid="uid://dtpglm5e8x1ls" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/North/KnightIdle_03.png" id="3_wajuk"]
-[ext_resource type="Texture2D" uid="uid://0d0ei1skp85r" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/North/KnightIdle_02.png" id="6_k1nrn"]
-[ext_resource type="Texture2D" uid="uid://bfe41ydxpqxis" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle04.png" id="7_s2cib"]
-[ext_resource type="Texture2D" uid="uid://17s5o5lsgab4" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle05.png" id="8_g80ok"]
-[ext_resource type="Texture2D" uid="uid://dtt258it0mtoi" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle07.png" id="10_31hw6"]
-[ext_resource type="Texture2D" uid="uid://dv4fuo2uqph3c" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_07.png" id="12_f4lhq"]
-[ext_resource type="Texture2D" uid="uid://c0aprmfp5iqtr" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_08.png" id="13_k4cw2"]
-[ext_resource type="Texture2D" uid="uid://dihwpwo56jwih" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_09.png" id="14_v7c8s"]
-[ext_resource type="Texture2D" uid="uid://c75h41pewy8an" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_10.png" id="15_1d6qc"]
-[ext_resource type="Texture2D" uid="uid://bj7ukvdvax5j0" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_11.png" id="16_16iw1"]
-[ext_resource type="Texture2D" uid="uid://hef4h37xt76m" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/North/KnightMove_12.png" id="17_bmnev"]
-[ext_resource type="Texture2D" uid="uid://1bk0vjirmpvc" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_00.png" id="19_8aam2"]
-[ext_resource type="Texture2D" uid="uid://dcthenq1tk2nk" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_01.png" id="20_5e26v"]
-[ext_resource type="Texture2D" uid="uid://bm3p5t3ipc4c7" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_02.png" id="21_tlarw"]
-[ext_resource type="Texture2D" uid="uid://ohp6opwibke7" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_03.png" id="22_wqhqh"]
-[ext_resource type="Texture2D" uid="uid://d3e6gcnkn5pmy" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_04.png" id="23_olfdb"]
-[ext_resource type="Texture2D" uid="uid://dpjpdysq6hqrm" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/South/KnightMove_06.png" id="24_pecwv"]
+[ext_resource type="Texture2D" uid="uid://dcef0ht73r31s" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_ubxxk"]
+[ext_resource type="Texture2D" uid="uid://dhytnintqi7e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png" id="5_33sy5"]
 
 [sub_resource type="Animation" id="Animation_eqtv1"]
 resource_name = "Idle_East"
@@ -38,99 +18,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("7_s2cib"), ExtResource("8_g80ok")]
-}
-
-[sub_resource type="Animation" id="Animation_q7xxv"]
-resource_name = "Idle_North"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("6_k1nrn"), ExtResource("3_wajuk")]
-}
-
-[sub_resource type="Animation" id="Animation_ix2uo"]
-resource_name = "Idle_South"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("3_1hapm"), ExtResource("3_lsss8")]
-}
-
-[sub_resource type="Animation" id="Animation_b5dgr"]
-resource_name = "Idle_West"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("3_3aqr4"), ExtResource("10_31hw6")]
-}
-
-[sub_resource type="Animation" id="Animation_na8la"]
-resource_name = "Move_North"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("12_f4lhq"), ExtResource("13_k4cw2"), ExtResource("14_v7c8s"), ExtResource("15_1d6qc"), ExtResource("16_16iw1"), ExtResource("17_bmnev"), ExtResource("3_crskx"), ExtResource("17_bmnev")]
-}
-
-[sub_resource type="Animation" id="Animation_3xynn"]
-resource_name = "Move_South"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("19_8aam2"), ExtResource("20_5e26v"), ExtResource("21_tlarw"), ExtResource("22_wqhqh"), ExtResource("23_olfdb"), ExtResource("3_fiapi"), ExtResource("24_pecwv"), ExtResource("3_fiapi")]
+"values": [ExtResource("4_ubxxk"), ExtResource("5_33sy5")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
-"Idle_East": SubResource("Animation_eqtv1"),
-"Idle_North": SubResource("Animation_q7xxv"),
-"Idle_South": SubResource("Animation_ix2uo"),
-"Idle_West": SubResource("Animation_b5dgr"),
-"Move_North": SubResource("Animation_na8la"),
-"Move_South": SubResource("Animation_3xynn")
+"Idle_East": SubResource("Animation_eqtv1")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
@@ -138,7 +31,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_fiapi")
+texture = ExtResource("4_ubxxk")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

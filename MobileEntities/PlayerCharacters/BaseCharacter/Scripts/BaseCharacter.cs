@@ -228,12 +228,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		private void PlayAppropriateAnimation(CardinalDirection cardinalDirection, AnimationType animationType)
 		{
-			if (cardinalDirection != CardinalDirection.Center)
+			if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
 			{
-				if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
-				{
-					animationPlayer.Play($"{animationType}_{cardinalDirection}");
-				}
+				animationPlayer.Play($"{animationType}_{cardinalDirection}");
 			}
 		}
 
