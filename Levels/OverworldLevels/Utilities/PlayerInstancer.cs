@@ -3,7 +3,7 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
 using Godot;
 
-namespace FrogGame.Scenes.OverworldLevels
+namespace Levels.OverworldLevels.Utilities
 {
 	public partial class PlayerInstancer : Node
 	{

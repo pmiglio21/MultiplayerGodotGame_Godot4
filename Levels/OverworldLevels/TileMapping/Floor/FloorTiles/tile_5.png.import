@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dibuce6csnq3n"
-path="res://.godot/imported/tile_4.png-f059a4226492993cbff5dd1cd7bb097b.ctex"
+uid="uid://8kgaod4r3xew"
+path="res://.godot/imported/tile_5.png-74983dde0dfa9aa36b970cb609298f13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/tile_4.png"
-dest_files=["res://.godot/imported/tile_4.png-f059a4226492993cbff5dd1cd7bb097b.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/Floor/FloorTiles/tile_5.png"
+dest_files=["res://.godot/imported/tile_5.png-74983dde0dfa9aa36b970cb609298f13.ctex"]
 
 [params]
 
