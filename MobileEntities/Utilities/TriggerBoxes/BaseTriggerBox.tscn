@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://7pkixpwpisla"]
+[gd_scene load_steps=2 format=3 uid="uid://7pkixpwpisla"]
 
-[node name="BaseTriggerBox" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmc3k"]
+
+[node name="TriggerArea" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xmc3k")
+disabled = true

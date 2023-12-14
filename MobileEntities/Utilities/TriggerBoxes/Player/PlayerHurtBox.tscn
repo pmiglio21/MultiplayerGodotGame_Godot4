@@ -1,3 +1,5 @@
-[gd_scene format=3 uid="uid://c38ryg6x3bj8y"]
+[gd_scene load_steps=2 format=3 uid="uid://co5rd15t5k5d6"]
 
-[node name="PlayerHurtBox" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://7pkixpwpisla" path="res://MobileEntities/Utilities/TriggerBoxes/BaseTriggerBox.tscn" id="1_xkywp"]
+
+[node name="TriggerArea" instance=ExtResource("1_xkywp")]

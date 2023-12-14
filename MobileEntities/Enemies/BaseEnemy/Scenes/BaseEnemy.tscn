@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cp2csqmog36w"]
+[gd_scene load_steps=3 format=3 uid="uid://cp2csqmog36w"]
+
+[ext_resource type="PackedScene" uid="uid://b5osh7vwxfkjk" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHitBox.tscn" id="1_tcsid"]
+[ext_resource type="PackedScene" uid="uid://c3oowxqwvi1bx" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHurtBox.tscn" id="2_sfuwj"]
 
 [node name="BaseEnemy" type="Node2D"]
 z_index = -1
@@ -6,3 +9,7 @@ z_index = -1
 [node name="EnemySprite" type="Sprite2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MainHitBox" parent="." instance=ExtResource("1_tcsid")]
+
+[node name="MainHurtBox" parent="." instance=ExtResource("2_sfuwj")]

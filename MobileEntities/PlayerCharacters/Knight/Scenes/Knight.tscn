@@ -38,3 +38,7 @@ texture = ExtResource("4_ubxxk")
 libraries = {
 "": SubResource("AnimationLibrary_g3jla")
 }
+
+[node name="MainHurtBox" parent="." index="3"]
+position = Vector2(-2, 0)
+scale = Vector2(0.5, 0.9)

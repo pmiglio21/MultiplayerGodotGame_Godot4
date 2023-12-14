@@ -7,3 +7,7 @@
 
 [node name="EnemySprite" parent="." index="0"]
 texture = ExtResource("2_638em")
+
+[node name="MainHurtBox" parent="." index="3"]
+position = Vector2(0, -1)
+scale = Vector2(0.988317, 0.87055)

@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjc80kpo3mn2l"]
+[gd_scene load_steps=5 format=3 uid="uid://cjc80kpo3mn2l"]
 
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scripts/BaseCharacter.cs" id="1_t02fc"]
+[ext_resource type="PackedScene" uid="uid://ofxacw3acfl7" path="res://MobileEntities/Utilities/TriggerBoxes/Player/PlayerHitBox.tscn" id="2_lps0t"]
+[ext_resource type="PackedScene" uid="uid://co5rd15t5k5d6" path="res://MobileEntities/Utilities/TriggerBoxes/Player/PlayerHurtBox.tscn" id="3_cxmac"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
 
@@ -13,3 +15,7 @@ script = ExtResource("1_t02fc")
 libraries = {
 "": SubResource("AnimationLibrary_hihs4")
 }
+
+[node name="MainHitBox" parent="." instance=ExtResource("2_lps0t")]
+
+[node name="MainHurtBox" parent="." instance=ExtResource("3_cxmac")]

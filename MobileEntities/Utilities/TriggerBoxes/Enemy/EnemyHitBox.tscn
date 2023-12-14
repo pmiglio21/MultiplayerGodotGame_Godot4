@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://c68uq6vdhjv5r"]
+[gd_scene load_steps=2 format=3 uid="uid://b5osh7vwxfkjk"]
 
-[node name="EnemyHitBox" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://7pkixpwpisla" path="res://MobileEntities/Utilities/TriggerBoxes/BaseTriggerBox.tscn" id="1_wic84"]
+
+[node name="TriggerArea" instance=ExtResource("1_wic84")]
+
+[node name="CollisionShape2D" parent="." index="0"]
+scale = Vector2(1e-05, 1e-05)
