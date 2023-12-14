@@ -98,7 +98,14 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			GetReferencesToOutsideNodes();
 
-			PlayAppropriateAnimation(CardinalDirection.East, AnimationType.Idle);
+			if (PlayerNumber % 2 == 0)
+			{
+				PlayAppropriateAnimation(CardinalDirection.East, AnimationType.Idle);
+			}
+			else
+			{
+				PlayAppropriateAnimation(CardinalDirection.West, AnimationType.Idle);
+			}
 		}
 
 		public override void _Process(double delta)

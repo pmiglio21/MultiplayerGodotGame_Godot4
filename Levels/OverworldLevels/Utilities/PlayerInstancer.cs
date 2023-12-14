@@ -14,6 +14,24 @@ namespace FrogGame.Scenes.OverworldLevels
 			foreach (BaseCharacter character in PlayerManager.ActivePlayers)
 			{
 				GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
+
+				if (character.PlayerNumber == 0)
+				{
+					character.GlobalPosition = new Vector2(-15, -15);
+				}
+				else if (character.PlayerNumber == 1)
+				{
+					character.GlobalPosition = new Vector2(15, -15);
+				}
+				else if (character.PlayerNumber == 2)
+				{
+					character.GlobalPosition = new Vector2(-15, 15);
+				}
+				else if (character.PlayerNumber == 3)
+				{
+					character.GlobalPosition = new Vector2(15, 15);
+				}
+
 				AddChild(character);
 			}
 
