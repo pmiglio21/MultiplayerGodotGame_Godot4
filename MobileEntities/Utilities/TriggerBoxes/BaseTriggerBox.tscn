@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://7pkixpwpisla"]
+
+[node name="BaseTriggerBox" type="Node2D"]

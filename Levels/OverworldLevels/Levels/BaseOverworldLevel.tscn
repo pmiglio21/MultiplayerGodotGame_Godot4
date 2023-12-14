@@ -22,3 +22,4 @@ visible = false
 [node name="BaseFloor" parent="." instance=ExtResource("4_4pted")]
 
 [node name="BaseEnemy" parent="." instance=ExtResource("5_jbigk")]
+position = Vector2(27, -21)
