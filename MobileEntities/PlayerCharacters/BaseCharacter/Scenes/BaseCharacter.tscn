@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjc80kpo3mn2l"]
+[gd_scene load_steps=3 format=3 uid="uid://cjc80kpo3mn2l"]
 
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scripts/BaseCharacter.cs" id="1_t02fc"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
 
 [node name="CharacterBody" type="CharacterBody2D"]
 script = ExtResource("1_t02fc")
@@ -8,3 +10,6 @@ script = ExtResource("1_t02fc")
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hihs4")
+}

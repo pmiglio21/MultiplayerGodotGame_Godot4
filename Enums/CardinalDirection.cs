@@ -8,6 +8,7 @@ namespace Enums
 {
     public enum CardinalDirection
     {
+        Center,
         East,
         West
     }

@@ -9,9 +9,9 @@ namespace MobileEntities
 		#region MobileEntity Movement Helpers
 		protected CardinalDirection FindLatestCardinalDirection(Vector2 moveDirection)
 		{
-			CardinalDirection latestCardinalDirection = CardinalDirection.East;
+			CardinalDirection latestCardinalDirection = CardinalDirection.Center;
 
-			if (moveDirection.X == 0 && moveDirection.X > 0)
+			if (moveDirection.X > 0)
 			{
 				latestCardinalDirection = CardinalDirection.East;
 			}

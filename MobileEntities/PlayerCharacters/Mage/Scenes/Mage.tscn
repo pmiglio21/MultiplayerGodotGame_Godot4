@@ -1,12 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://t31er3ewqfvm"]
+[gd_scene load_steps=10 format=3 uid="uid://t31er3ewqfvm"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_bll5p"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Scripts/Mage.cs" id="2_bqvon"]
+[ext_resource type="Texture2D" uid="uid://b4yxx44u1mhyd" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_2.png" id="3_jv88t"]
 [ext_resource type="Texture2D" uid="uid://yc6vj65hp7kb" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_0.png" id="4_0t2sn"]
 [ext_resource type="Texture2D" uid="uid://cdmntqhbo36yk" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_1.png" id="5_i78ho"]
+[ext_resource type="Texture2D" uid="uid://cjcdsxi72gjj8" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_3.png" id="6_lu70i"]
 
 [sub_resource type="Animation" id="Animation_x7o5b"]
 resource_name = "Idle_East"
+length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -15,15 +18,33 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [ExtResource("4_0t2sn"), ExtResource("5_i78ho")]
 }
 
+[sub_resource type="Animation" id="Animation_w6lp2"]
+resource_name = "Idle_West"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_jv88t"), ExtResource("6_lu70i")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bx2le"]
 _data = {
-"Idle_East": SubResource("Animation_x7o5b")
+"Idle_East": SubResource("Animation_x7o5b"),
+"Idle_West": SubResource("Animation_w6lp2")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_bll5p")]

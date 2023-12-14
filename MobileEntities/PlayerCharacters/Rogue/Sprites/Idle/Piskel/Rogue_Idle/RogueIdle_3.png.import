@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfrehi3kcxwvc"
-path="res://.godot/imported/MageIdle_7.png-979155e5a2c5e16240675302bc52a1fa.ctex"
+uid="uid://dlkxgpdmc5bnv"
+path="res://.godot/imported/RogueIdle_3.png-d025b9efbadad38a6bb8e7dfa94c3c56.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_7.png"
-dest_files=["res://.godot/imported/MageIdle_7.png-979155e5a2c5e16240675302bc52a1fa.ctex"]
+source_file="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/Piskel/Rogue_Idle/RogueIdle_3.png"
+dest_files=["res://.godot/imported/RogueIdle_3.png-d025b9efbadad38a6bb8e7dfa94c3c56.ctex"]
 
 [params]
 

@@ -1,8 +1,60 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1eji8458cjqx"]
+[gd_scene load_steps=10 format=3 uid="uid://c1eji8458cjqx"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_t5014"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Rogue/Scripts/Rogue.cs" id="2_38rth"]
+[ext_resource type="Texture2D" uid="uid://coop7xgg46ebq" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/East/RogueIdle_0.png" id="3_i3au4"]
+[ext_resource type="Texture2D" uid="uid://ivejeh8dtryi" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/East/RogueIdle_1.png" id="4_6sqcm"]
+[ext_resource type="Texture2D" uid="uid://c6lrj88wbrtjm" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/West/RogueIdle_2.png" id="5_d86m1"]
+[ext_resource type="Texture2D" uid="uid://dh3gcuk2novej" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/West/RogueIdle_3.png" id="6_40131"]
+
+[sub_resource type="Animation" id="Animation_cggnk"]
+resource_name = "Idle_East"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_i3au4"), ExtResource("4_6sqcm")]
+}
+
+[sub_resource type="Animation" id="Animation_i7o4v"]
+resource_name = "Idle_West"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_d86m1"), ExtResource("6_40131")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p4mck"]
+_data = {
+"Idle_East": SubResource("Animation_cggnk"),
+"Idle_West": SubResource("Animation_i7o4v")
+}
 
 [node name="CharacterBody" instance=ExtResource("1_t5014")]
 script = ExtResource("2_38rth")
 characterClass = 3
+
+[node name="PlayerSprite" parent="." index="0"]
+texture = ExtResource("5_d86m1")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_p4mck")
+}

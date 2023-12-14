@@ -28,7 +28,7 @@ tile_proxies/coords_level = [[15, Vector2i(0, 0)], [17, Vector2i(0, 0)], [16, Ve
 script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
-zoom = Vector2(2, 2)
+zoom = Vector2(2.5, 2.5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
