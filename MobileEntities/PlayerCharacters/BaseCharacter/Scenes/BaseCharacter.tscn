@@ -19,3 +19,8 @@ libraries = {
 [node name="MainHitBox" parent="." instance=ExtResource("2_lps0t")]
 
 [node name="MainHurtBox" parent="." instance=ExtResource("3_cxmac")]
+
+[connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
+[connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
+[connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
+[connection signal="area_exited" from="MainHurtBox" to="." method="OnMainHurtBoxAreaExited"]

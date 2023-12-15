@@ -243,5 +243,37 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		}
 
 		#endregion
+
+		#region Signal Receptions
+
+		#region Trigger Boxes
+		private void OnMainHitBoxAreaEntered(Area2D area)
+		{
+			GD.Print("Hit Entered");
+		}
+
+
+		private void OnMainHitBoxAreaExited(Area2D area)
+		{
+			GD.Print("Hit Exited");
+		}
+
+
+		private void OnMainHurtBoxAreaEntered(Area2D area)
+		{
+			GD.Print("Hurt Entered");
+		}
+
+
+		private void OnMainHurtBoxAreaExited(Area2D area)
+		{
+			GD.Print("Hurt Exited");
+		}
+		#endregion
+
+		#endregion
 	}
 }
+
+
+
