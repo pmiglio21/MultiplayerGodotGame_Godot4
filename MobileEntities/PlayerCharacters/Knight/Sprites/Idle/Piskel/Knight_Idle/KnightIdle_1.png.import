@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtt258it0mtoi"
-path="res://.godot/imported/KnightIdle07.png-f7f3a091db7e38d63e205b831e4a74df.ctex"
+uid="uid://b8uh0e8lbeyla"
+path="res://.godot/imported/KnightIdle_1.png-48e4c81899e5d36e77bdd03f78031afb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle07.png"
-dest_files=["res://.godot/imported/KnightIdle07.png-f7f3a091db7e38d63e205b831e4a74df.ctex"]
+source_file="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_1.png"
+dest_files=["res://.godot/imported/KnightIdle_1.png-48e4c81899e5d36e77bdd03f78031afb.ctex"]
 
 [params]
 

@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=10 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Scripts/Knight.cs" id="2_5633e"]
 [ext_resource type="Texture2D" uid="uid://dcef0ht73r31s" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_ubxxk"]
 [ext_resource type="Texture2D" uid="uid://dhytnintqi7e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png" id="5_33sy5"]
+[ext_resource type="Texture2D" uid="uid://bs16yjy6cwln6" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_2.png" id="5_m11ch"]
+[ext_resource type="Texture2D" uid="uid://bfhms8l4cwdgu" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 
 [sub_resource type="Animation" id="Animation_eqtv1"]
 resource_name = "Idle_East"
@@ -22,9 +24,27 @@ tracks/0/keys = {
 "values": [ExtResource("4_ubxxk"), ExtResource("5_33sy5")]
 }
 
+[sub_resource type="Animation" id="Animation_syps0"]
+resource_name = "Idle_West"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_m11ch"), ExtResource("6_xutwp")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
-"Idle_East": SubResource("Animation_eqtv1")
+"Idle_East": SubResource("Animation_eqtv1"),
+"Idle_West": SubResource("Animation_syps0")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
@@ -40,5 +60,5 @@ libraries = {
 }
 
 [node name="MainHurtBox" parent="." index="3"]
-position = Vector2(-2, 0)
-scale = Vector2(0.5, 0.9)
+position = Vector2(0, 2)
+scale = Vector2(-0.52621, 1.00891)

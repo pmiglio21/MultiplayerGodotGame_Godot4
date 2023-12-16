@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dowausv2otjir"]
+[gd_scene load_steps=10 format=3 uid="uid://dowausv2otjir"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_cx27y"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Cleric/Scripts/Cleric.cs" id="2_tbyem"]
 [ext_resource type="Texture2D" uid="uid://d3hwo0gmftg55" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/East/ClericIdle_0.png" id="3_bd41j"]
 [ext_resource type="Texture2D" uid="uid://dxya6ca7tof2c" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/East/ClericIdle_1.png" id="4_a0pcg"]
+[ext_resource type="Texture2D" uid="uid://djbrgi4ck5tyu" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/West/ClericIdle_2.png" id="5_1v8gv"]
+[ext_resource type="Texture2D" uid="uid://dlru8yyu4bk7n" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/West/ClericIdle_3.png" id="6_dbrgv"]
 
 [sub_resource type="Animation" id="Animation_3ekph"]
 resource_name = "Idle_East"
@@ -22,9 +24,27 @@ tracks/0/keys = {
 "values": [ExtResource("3_bd41j"), ExtResource("4_a0pcg")]
 }
 
+[sub_resource type="Animation" id="Animation_xtqiy"]
+resource_name = "Idle_West"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_1v8gv"), ExtResource("6_dbrgv")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4cjwe"]
 _data = {
-"Idle_East": SubResource("Animation_3ekph")
+"Idle_East": SubResource("Animation_3ekph"),
+"Idle_West": SubResource("Animation_xtqiy")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_cx27y")]
@@ -32,9 +52,13 @@ script = ExtResource("2_tbyem")
 characterClass = 4
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_bd41j")
+texture = ExtResource("5_1v8gv")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_4cjwe")
 }
+
+[node name="MainHurtBox" parent="." index="3"]
+position = Vector2(1, 2)
+scale = Vector2(-0.449675, -0.973588)
