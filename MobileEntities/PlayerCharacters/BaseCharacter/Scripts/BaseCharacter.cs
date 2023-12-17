@@ -33,8 +33,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		float speed = 100.0f;
 
-		private int inputTimer = 0;
-		private int inputTimerMax = 20;
+		private int initialInputTimer = 0;
+		private int initialInputTimerMax = 25;
+
+		private int attackInputTimer = 0;
+		private int attackInputTimerMax = 20;
 
 		public bool IsFacingRight
 		{
@@ -118,9 +121,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Process(double delta)
 		{
-			if (inputTimer < inputTimerMax)
+			if (initialInputTimer < initialInputTimerMax)
 			{
-				inputTimer++;
+				initialInputTimer++;
 			}
 			else
 			{
@@ -218,13 +221,19 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected void GetAttackInput()
 		{
-			if (!isAttacking)
+			if (attackInputTimer < attackInputTimerMax)
+			{
+				attackInputTimer++;
+			}
+			else if (!isAttacking && attackInputTimer == attackInputTimerMax)
 			{
 				isAttacking = Input.IsActionPressed($"SouthButton_{DeviceIdentifier}");
 
 				attackDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 
 				moveDirection = Vector2.Zero;
+
+				attackInputTimer = 0;
 			}
 		}
 

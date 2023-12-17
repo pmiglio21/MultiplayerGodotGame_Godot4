@@ -19,7 +19,7 @@
 
 [sub_resource type="Animation" id="Animation_66tr5"]
 resource_name = "Attack_East"
-length = 0.2
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,7 +35,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_c0mhj"]
 resource_name = "Attack_West"
-length = 0.2
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -132,7 +132,7 @@ script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("11_q40wi")
+texture = ExtResource("3_30v7l")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
