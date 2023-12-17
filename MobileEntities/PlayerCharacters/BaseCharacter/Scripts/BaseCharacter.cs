@@ -64,6 +64,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isControllable = true;
 
 		protected bool isHurt = false;
+
+		protected bool isAttacking = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -113,18 +115,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			GetPauseInput();
 
+			GetAttackInput();
+
 			GetMovementInput();
 
-			if (moveDirection != Vector2.Zero)
-			{
-				latestCardinalDirection = FindLatestCardinalDirection(moveDirection);
-
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
-			}
-			else
-			{
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Idle);
-			}
+			SetAnimationToBePlayed();
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -209,6 +204,16 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 		}
 
+		protected void GetAttackInput()
+		{
+			isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
+
+			//if ()
+   //         {
+				
+   //         }
+		}
+
 		protected void GetMovementInput()
 		{
 			moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
@@ -234,6 +239,24 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			MoveAndSlide();
 		}
 
+		private void SetAnimationToBePlayed()
+		{
+			if (isAttacking)
+			{
+				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Attack);
+			}
+			else if (moveDirection != Vector2.Zero)
+			{
+				latestCardinalDirection = FindLatestCardinalDirection(moveDirection);
+
+				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
+			}
+			else
+			{
+				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Idle);
+			}
+		}
+
 		private void PlayAppropriateAnimation(CardinalDirection cardinalDirection, AnimationType animationType)
 		{
 			if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
@@ -245,6 +268,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 
 		#region Signal Receptions
+
+		private void OnAnimationPlayerAnimationFinished(StringName animationName)
+		{
+			GD.Print($"{animationName} finished");
+			// Replace with function body.
+		}
 
 		#region Trigger Boxes
 		private void OnMainHitBoxAreaEntered(Area2D area)
@@ -274,6 +303,3 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 	}
 }
-
-
-

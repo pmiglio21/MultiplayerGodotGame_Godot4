@@ -9,6 +9,8 @@ namespace Enums
     public enum AnimationType
     {
         Idle,
-        Move
+        Move,
+        Attack,
+        SpecialAttack
     }
 }

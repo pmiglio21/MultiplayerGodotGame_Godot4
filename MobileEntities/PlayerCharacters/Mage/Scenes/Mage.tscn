@@ -1,11 +1,53 @@
-[gd_scene load_steps=10 format=3 uid="uid://t31er3ewqfvm"]
+[gd_scene load_steps=24 format=3 uid="uid://t31er3ewqfvm"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_bll5p"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Scripts/Mage.cs" id="2_bqvon"]
+[ext_resource type="Texture2D" uid="uid://cutumgesh3756" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Attack/East/MageAttack_1.png" id="3_30v7l"]
 [ext_resource type="Texture2D" uid="uid://b4yxx44u1mhyd" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_2.png" id="3_jv88t"]
+[ext_resource type="Texture2D" uid="uid://b3a5pprb4trov" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_1.png" id="3_rmgbw"]
 [ext_resource type="Texture2D" uid="uid://yc6vj65hp7kb" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_0.png" id="4_0t2sn"]
 [ext_resource type="Texture2D" uid="uid://cdmntqhbo36yk" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_1.png" id="5_i78ho"]
 [ext_resource type="Texture2D" uid="uid://cjcdsxi72gjj8" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_3.png" id="6_lu70i"]
+[ext_resource type="Texture2D" uid="uid://c80jtuaoxy34c" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_0.png" id="8_qd3vw"]
+[ext_resource type="Texture2D" uid="uid://oryjtauh7o37" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_2.png" id="9_76g5b"]
+[ext_resource type="Texture2D" uid="uid://be5p5x7022afh" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_3.png" id="10_folld"]
+[ext_resource type="Texture2D" uid="uid://xt0tywqicipa" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_4.png" id="11_q40wi"]
+[ext_resource type="Texture2D" uid="uid://o3c2awnc2k0k" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_5.png" id="12_6natn"]
+[ext_resource type="Texture2D" uid="uid://oynjr6vi7033" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Attack/East/MageAttack_0.png" id="14_04utc"]
+[ext_resource type="Texture2D" uid="uid://magn7caa8ayg" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Attack/West/MageAttack_2.png" id="15_oedfk"]
+[ext_resource type="Texture2D" uid="uid://hx8ixdhshao7" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Attack/West/MageAttack_3.png" id="16_7hb1c"]
+
+[sub_resource type="Animation" id="Animation_66tr5"]
+resource_name = "Attack_East"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("14_04utc"), ExtResource("3_30v7l")]
+}
+
+[sub_resource type="Animation" id="Animation_c0mhj"]
+resource_name = "Attack_West"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("15_oedfk"), ExtResource("16_7hb1c")]
+}
 
 [sub_resource type="Animation" id="Animation_x7o5b"]
 resource_name = "Idle_East"
@@ -41,10 +83,48 @@ tracks/0/keys = {
 "values": [ExtResource("3_jv88t"), ExtResource("6_lu70i")]
 }
 
+[sub_resource type="Animation" id="Animation_y38r4"]
+resource_name = "Move_East"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("8_qd3vw"), ExtResource("3_rmgbw"), ExtResource("9_76g5b")]
+}
+
+[sub_resource type="Animation" id="Animation_jh0hq"]
+resource_name = "Move_West"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_folld"), ExtResource("11_q40wi"), ExtResource("12_6natn")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bx2le"]
 _data = {
+"Attack_East": SubResource("Animation_66tr5"),
+"Attack_West": SubResource("Animation_c0mhj"),
 "Idle_East": SubResource("Animation_x7o5b"),
-"Idle_West": SubResource("Animation_w6lp2")
+"Idle_West": SubResource("Animation_w6lp2"),
+"Move_East": SubResource("Animation_y38r4"),
+"Move_West": SubResource("Animation_jh0hq")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_bll5p")]
@@ -52,9 +132,13 @@ script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("4_0t2sn")
+texture = ExtResource("14_04utc")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_bx2le")
 }
+
+[node name="MainHurtBox" parent="." index="3"]
+position = Vector2(1, 1)
+scale = Vector2(0.479338, 1.06548)
