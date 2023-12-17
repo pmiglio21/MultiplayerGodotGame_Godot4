@@ -29,7 +29,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		float moveInputDeadzone = 0.1f;
 
 		float moveDeadzone = 0.32f;
-		Vector2 moveDirection = Vector2.Zero;
+		protected Vector2 moveDirection = Vector2.Zero;
 
 		float speed = 100.0f;
 
@@ -51,6 +51,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		private bool _isFacingRight = false;
 
 		private CardinalDirection latestCardinalDirection;
+
+		protected Vector2 attackDirection = Vector2.Zero;
 
 		#endregion
 
@@ -220,6 +222,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				isAttacking = Input.IsActionPressed($"SouthButton_{DeviceIdentifier}");
 
+				attackDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+
 				moveDirection = Vector2.Zero;
 			}
 		}
@@ -273,10 +277,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 			else if (isAttacking)
 			{
-				if (moveDirection.X != 0)
-				{
-					latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, moveDirection);
-				}
+				latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, attackDirection);
 
 				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Attack);
 			}
