@@ -7,9 +7,9 @@ namespace MobileEntities
 	public partial class BaseMobileEntity : CharacterBody2D
 	{
 		#region MobileEntity Movement Helpers
-		protected CardinalDirection FindLatestCardinalDirection(Vector2 moveDirection)
+		protected CardinalDirection FindLatestCardinalDirection(CardinalDirection lastUsedCardinalDirection, Vector2 moveDirection)
 		{
-			CardinalDirection latestCardinalDirection = CardinalDirection.Center;
+			CardinalDirection latestCardinalDirection = lastUsedCardinalDirection;
 
 			if (moveDirection.X > 0)
 			{

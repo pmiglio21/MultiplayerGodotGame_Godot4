@@ -31,7 +31,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		float moveDeadzone = 0.32f;
 		Vector2 moveDirection = Vector2.Zero;
 
-		float speed = 140.0f;
+		float speed = 100.0f;
+
+		private int inputTimer = 0;
+		private int inputTimerMax = 20;
 
 		public bool IsFacingRight
 		{
@@ -113,13 +116,20 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Process(double delta)
 		{
-			GetPauseInput();
+			if (inputTimer < inputTimerMax)
+			{
+				inputTimer++;
+			}
+			else
+			{
+				GetPauseInput();
 
-			GetAttackInput();
+				GetAttackInput();
 
-			GetMovementInput();
+				GetMovementInput();
 
-			SetAnimationToBePlayed();
+				SetAnimationToBePlayed();
+			}
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -206,30 +216,33 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected void GetAttackInput()
 		{
-			isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
+			if (!isAttacking)
+			{
+				isAttacking = Input.IsActionPressed($"SouthButton_{DeviceIdentifier}");
 
-			//if ()
-   //         {
-				
-   //         }
+				moveDirection = Vector2.Zero;
+			}
 		}
 
 		protected void GetMovementInput()
 		{
-			moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
-			moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
-
-			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
+			if (!isAttacking)
 			{
-				//if you want to check input for walking and running speeds, do it here
-				moveDirection = moveInput.Normalized();
-			}
-			else
-			{
-				moveDirection = Vector2.Zero;
-			}
+				moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+				moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
 
-			//GD.Print($"Movement Vector: {moveDirection}");
+				if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
+				{
+					//if you want to check input for walking and running speeds, do it here
+					moveDirection = moveInput.Normalized();
+				}
+				else
+				{
+					moveDirection = Vector2.Zero;
+				}
+
+				//GD.Print($"Movement Vector: {moveDirection}");
+			}
 		}
 
 		private void MovePlayer()
@@ -241,19 +254,31 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		private void SetAnimationToBePlayed()
 		{
-			if (isAttacking)
+			if (!isAttacking)
 			{
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Attack);
-			}
-			else if (moveDirection != Vector2.Zero)
-			{
-				latestCardinalDirection = FindLatestCardinalDirection(moveDirection);
+				if (moveDirection == Vector2.Zero)
+				{
+					//GD.Print($"idling {latestCardinalDirection}");
+					PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Idle);
+				}
+				if (moveDirection != Vector2.Zero)
+				{
+					latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, moveDirection);
 
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
+					//GD.Print($"moving {latestCardinalDirection}");
+
+					PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
+				}
+
 			}
-			else
+			else if (isAttacking)
 			{
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Idle);
+				if (moveDirection.X != 0)
+				{
+					latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, moveDirection);
+				}
+
+				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Attack);
 			}
 		}
 
@@ -261,6 +286,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
 			{
+				//GD.Print($"Playing: {animationType}_{cardinalDirection}");
 				animationPlayer.Play($"{animationType}_{cardinalDirection}");
 			}
 		}
@@ -271,8 +297,13 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		private void OnAnimationPlayerAnimationFinished(StringName animationName)
 		{
-			GD.Print($"{animationName} finished");
-			// Replace with function body.
+			string animationNameString = animationName.ToString();
+
+			//GD.Print($"{animationName} finished");
+			if (animationNameString.Contains(AnimationType.Attack.ToString()))
+			{
+				isAttacking = false;
+			}
 		}
 
 		#region Trigger Boxes
@@ -303,3 +334,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 	}
 }
+
+
+

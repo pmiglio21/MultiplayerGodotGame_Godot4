@@ -19,7 +19,7 @@
 
 [sub_resource type="Animation" id="Animation_66tr5"]
 resource_name = "Attack_East"
-length = 0.6
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -27,7 +27,7 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [ExtResource("14_04utc"), ExtResource("3_30v7l")]
@@ -35,7 +35,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_c0mhj"]
 resource_name = "Attack_West"
-length = 0.6
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -43,7 +43,7 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [ExtResource("15_oedfk"), ExtResource("16_7hb1c")]
@@ -85,7 +85,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_y38r4"]
 resource_name = "Move_East"
-length = 0.6
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -94,15 +94,15 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("8_qd3vw"), ExtResource("3_rmgbw"), ExtResource("9_76g5b")]
+"values": [ExtResource("8_qd3vw"), ExtResource("3_rmgbw"), ExtResource("9_76g5b"), ExtResource("3_rmgbw")]
 }
 
 [sub_resource type="Animation" id="Animation_jh0hq"]
 resource_name = "Move_West"
-length = 0.6
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -111,10 +111,10 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("10_folld"), ExtResource("11_q40wi"), ExtResource("12_6natn")]
+"values": [ExtResource("10_folld"), ExtResource("11_q40wi"), ExtResource("12_6natn"), ExtResource("11_q40wi")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bx2le"]
@@ -132,7 +132,7 @@ script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("14_04utc")
+texture = ExtResource("11_q40wi")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
