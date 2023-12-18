@@ -41,7 +41,11 @@ namespace Levels.OverworldLevels.Utilities
 					SetDistance(minDistancePlayer);
 				}
 
-				GlobalPosition = _newPosition;
+				//Maybe try MoveAndSlide()?
+
+				GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+
+				//GlobalPosition = _newPosition;
 			}
 		}
 
