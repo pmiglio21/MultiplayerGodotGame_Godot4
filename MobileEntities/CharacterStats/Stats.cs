@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MobileEntities.CharacterStats
 {
-    public class CharacterStats
+    public class Stats
     {
         public Experience Experience = new Experience();
 
@@ -17,5 +17,10 @@ namespace MobileEntities.CharacterStats
         public float Defense = 0;
 
         public float Speed = 0;
+
+        public Stats(float _healthAmount)
+        {
+            Health.HealthAmount = _healthAmount;
+        }
     }
 }

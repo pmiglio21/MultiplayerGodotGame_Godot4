@@ -8,5 +8,13 @@ namespace MobileEntities.CharacterStats
 {
     public class Health
     {
+        public float HealthAmount;
+
+        public Health() { }
+
+        public Health(float _healthAmount)
+        {
+            HealthAmount = _healthAmount;
+        }
     }
 }

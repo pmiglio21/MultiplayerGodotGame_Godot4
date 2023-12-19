@@ -1,11 +1,16 @@
 using Enums;
 using Godot;
+using MobileEntities.CharacterStats;
 using System;
 
 namespace MobileEntities
 {
 	public partial class BaseMobileEntity : CharacterBody2D
 	{
+		#region Entity Stats
+		protected Stats characterStats = new Stats(1);
+		#endregion
+
 		#region MobileEntity Movement Helpers
 		protected CardinalDirection FindLatestCardinalDirection(CardinalDirection lastUsedCardinalDirection, Vector2 moveDirection)
 		{

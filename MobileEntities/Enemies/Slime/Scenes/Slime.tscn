@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ski2r0ediecx"]
+[gd_scene load_steps=4 format=3 uid="uid://ski2r0ediecx"]
 
 [ext_resource type="PackedScene" uid="uid://cp2csqmog36w" path="res://MobileEntities/Enemies/BaseEnemy/Scenes/BaseEnemy.tscn" id="1_siiyb"]
 [ext_resource type="Texture2D" uid="uid://c143pq7f52ksw" path="res://MobileEntities/Enemies/Slime/Sprites/SlimeConcept.png" id="2_638em"]
+[ext_resource type="Script" path="res://MobileEntities/Enemies/Slime/Scripts/Slime.cs" id="2_nvxdg"]
 
 [node name="BaseEnemy" instance=ExtResource("1_siiyb")]
+script = ExtResource("2_nvxdg")
 
 [node name="EnemySprite" parent="." index="0"]
 texture = ExtResource("2_638em")
@@ -11,3 +13,8 @@ texture = ExtResource("2_638em")
 [node name="MainHurtBox" parent="." index="3"]
 position = Vector2(0, -1)
 scale = Vector2(0.988317, 0.87055)
+
+[connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
+[connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
+[connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
+[connection signal="area_exited" from="MainHurtBox" to="." method="OnMainHurtBoxAreaExited"]

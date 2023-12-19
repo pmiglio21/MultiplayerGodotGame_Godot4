@@ -4,19 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://b5osh7vwxfkjk" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHitBox.tscn" id="1_tcsid"]
 [ext_resource type="PackedScene" uid="uid://c3oowxqwvi1bx" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHurtBox.tscn" id="2_sfuwj"]
 
-[node name="BaseEnemy" type="Node2D"]
-z_index = -1
+[node name="EnemyBody" type="CharacterBody2D"]
 script = ExtResource("1_14wtk")
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("")
 
 [node name="MainHitBox" parent="." instance=ExtResource("1_tcsid")]
 
 [node name="MainHurtBox" parent="." instance=ExtResource("2_sfuwj")]
-
-[connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
-[connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
-[connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
-[connection signal="area_exited" from="MainHurtBox" to="." method="OnMainHurtBoxAreaExited"]

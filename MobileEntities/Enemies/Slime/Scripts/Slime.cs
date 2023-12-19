@@ -1,18 +1,14 @@
 using Godot;
+using MobileEntities.CharacterStats;
 using System;
 
 namespace MobileEntities.Enemies.Scripts
 {
-	public partial class Slime : Node
+	public partial class Slime : BaseEnemy
 	{
-		//// Called when the node enters the scene tree for the first time.
-		//public override void _Ready()
-		//{
-		//}
-
-		//// Called every frame. 'delta' is the elapsed time since the previous frame.
-		//public override void _Process(double delta)
-		//{
-		//}
+		protected override void InitializeEnemySpecificProperties()
+		{
+			characterStats = new Stats(10);
+		}
 	}
 }

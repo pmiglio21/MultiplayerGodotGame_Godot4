@@ -3,7 +3,7 @@ using System;
 
 namespace MobileEntities.Enemies.Scripts
 {
-	public partial class BaseEnemy : Node2D
+	public partial class BaseEnemy : BaseMobileEntity
 	{
 		public override void _Ready()
 		{
@@ -12,8 +12,10 @@ namespace MobileEntities.Enemies.Scripts
 
 		public override void _Process(double delta)
 		{
-
+			InitializeEnemySpecificProperties();
 		}
+
+		protected virtual void InitializeEnemySpecificProperties() { }
 
 		#region	Signal Receptions
 
