@@ -126,21 +126,29 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			if (characterStats.Health.HealthAmount <= 0)
 			{
 				isDead = true;
+
+				//REMOVE THIS LATER
+				//isControllable = false;
+
+				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
 			}
 
-			if (initialInputTimer < initialInputTimerMax)
+			if (isControllable)
 			{
-				initialInputTimer++;
-			}
-			else
-			{
-				GetPauseInput();
+				if (initialInputTimer < initialInputTimerMax)
+				{
+					initialInputTimer++;
+				}
+				else
+				{
+					GetPauseInput();
 
-				GetAttackInput();
+					GetAttackInput();
 
-				GetMovementInput();
+					GetMovementInput();
 
-				SetAnimationToBePlayed();
+					SetAnimationToBePlayed();
+				}
 			}
 		}
 
@@ -345,6 +353,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				if (!collisionShape.Disabled)
 				{
 					GD.Print("Player Hurt Entered");
+
+					characterStats.Health.HealthAmount -= 1;
 				}
 			}
 		}

@@ -11,6 +11,7 @@ namespace Enums
         Idle,
         Move,
         Attack,
-        SpecialAttack
+        Special,
+        Dead
     }
 }
