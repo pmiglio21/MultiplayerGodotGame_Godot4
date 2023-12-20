@@ -2,7 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://7pkixpwpisla" path="res://MobileEntities/Utilities/TriggerBoxes/BaseTriggerBox.tscn" id="1_j0wf6"]
 
-[node name="TriggerArea" instance=ExtResource("1_j0wf6")]
-
-[node name="CollisionShape2D" parent="." index="0"]
-scale = Vector2(1e-05, 1e-05)
+[node name="TriggerArea" groups=["PlayerHitBox"] instance=ExtResource("1_j0wf6")]

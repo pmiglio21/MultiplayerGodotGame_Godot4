@@ -10,11 +10,10 @@ script = ExtResource("2_nvxdg")
 [node name="EnemySprite" parent="." index="0"]
 texture = ExtResource("2_638em")
 
+[node name="MainHitBox" parent="." index="2"]
+position = Vector2(0, -1)
+scale = Vector2(0.988, 0.871)
+
 [node name="MainHurtBox" parent="." index="3"]
 position = Vector2(0, -1)
 scale = Vector2(0.988317, 0.87055)
-
-[connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
-[connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
-[connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
-[connection signal="area_exited" from="MainHurtBox" to="." method="OnMainHurtBoxAreaExited"]

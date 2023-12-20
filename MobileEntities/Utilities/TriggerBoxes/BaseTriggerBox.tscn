@@ -4,6 +4,5 @@
 
 [node name="TriggerArea" type="Area2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_xmc3k")
-disabled = true

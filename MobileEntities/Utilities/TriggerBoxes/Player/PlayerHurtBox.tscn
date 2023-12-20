@@ -2,7 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://7pkixpwpisla" path="res://MobileEntities/Utilities/TriggerBoxes/BaseTriggerBox.tscn" id="1_xkywp"]
 
-[node name="TriggerArea" instance=ExtResource("1_xkywp")]
-
-[node name="CollisionShape2D" parent="." index="0"]
-disabled = false
+[node name="TriggerArea" groups=["PlayerHurtBox"] instance=ExtResource("1_xkywp")]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,13 @@ namespace MobileEntities.CharacterStats
         {
             HealthAmount = _healthAmount;
         }
+
+        //public void CheckIfDead()
+        //{
+        //    if (HealthAmount <= 0)
+        //    {
+        //        GD.Print("DEAD");
+        //    }
+        //}
     }
 }

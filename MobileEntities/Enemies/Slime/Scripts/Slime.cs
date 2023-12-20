@@ -8,7 +8,7 @@ namespace MobileEntities.Enemies.Scripts
 	{
 		protected override void InitializeEnemySpecificProperties()
 		{
-			characterStats = new Stats(10);
+			characterStats = new Stats(4);
 		}
 	}
 }

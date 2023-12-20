@@ -74,6 +74,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isHurt = false;
 
 		protected bool isAttacking = false;
+
+		protected bool isDead = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -121,6 +123,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Process(double delta)
 		{
+			if (characterStats.Health.HealthAmount <= 0)
+			{
+				isDead = true;
+			}
+
 			if (initialInputTimer < initialInputTimerMax)
 			{
 				initialInputTimer++;
@@ -319,25 +326,33 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#region Trigger Boxes
 		private void OnMainHitBoxAreaEntered(Area2D area)
 		{
-			GD.Print("Player Hit Entered");
+			//GD.Print("Player Hit Entered");
 		}
 
 
 		private void OnMainHitBoxAreaExited(Area2D area)
 		{
-			GD.Print("Player Hit Exited");
+			//GD.Print("Player Hit Exited");
 		}
 
 
 		private void OnMainHurtBoxAreaEntered(Area2D area)
 		{
-			GD.Print("Player Hurt Entered");
+			if (area.IsInGroup("EnemyHitBox"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+
+				if (!collisionShape.Disabled)
+				{
+					GD.Print("Player Hurt Entered");
+				}
+			}
 		}
 
 
 		private void OnMainHurtBoxAreaExited(Area2D area)
 		{
-			GD.Print("Player Hurt Exited");
+			//GD.Print("Player Hurt Exited");
 		}
 		#endregion
 
