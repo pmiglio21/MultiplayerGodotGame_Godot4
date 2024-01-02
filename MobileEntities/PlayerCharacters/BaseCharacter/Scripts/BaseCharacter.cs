@@ -55,7 +55,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected CardinalDirection latestCardinalDirection;
 
-		protected Vector2 attackDirection = Vector2.Zero;
+		protected Vector2 attackTurnDirection = Vector2.Zero;
 
 		#endregion
 
@@ -143,11 +143,26 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 				else
 				{
+					#region Get Input
+
 					GetPauseInput();
 
 					GetAttackInput();
 
 					GetMovementInput();
+					 
+					#endregion
+
+					if (isAttacking && attackInputTimer == attackInputTimerMax)
+					{
+						moveDirection = Vector2.Zero;
+
+						attackInputTimer = 0;
+
+						RunAttack();
+
+						GD.Print("Attacking");
+					}
 
 					MoveHurtBoxes(latestCardinalDirection);
 
@@ -177,6 +192,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected virtual void InitializeClassSpecificProperties() { }
 
 		protected virtual void MoveHurtBoxes(CardinalDirection hurtBoxDirection) { }
+
+		protected virtual void RunAttack() { }
 
 		private void GetReferencesToOutsideNodes()
 		{
@@ -248,13 +265,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 			else if (!isAttacking && attackInputTimer == attackInputTimerMax)
 			{
-				isAttacking = Input.IsActionPressed($"SouthButton_{DeviceIdentifier}");
+				isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
 
-				attackDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
-
-				moveDirection = Vector2.Zero;
-
-				attackInputTimer = 0;
+				attackTurnDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 			}
 		}
 
@@ -307,7 +320,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 			else if (isAttacking)
 			{
-				latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, attackDirection);
+				latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, attackTurnDirection);
 
 				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Attack);
 			}

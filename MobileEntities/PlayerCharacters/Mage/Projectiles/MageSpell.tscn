@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfhi4pn4vuksu"]
+
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Projectiles/MageSpell.cs" id="1_ep6tg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcfn5"]
+
+[node name="MageSpell" type="CharacterBody2D"]
+script = ExtResource("1_ep6tg")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Area"]
+shape = SubResource("RectangleShape2D_tcfn5")
