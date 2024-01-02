@@ -132,7 +132,7 @@ script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_jv88t")
+texture = ExtResource("14_04utc")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

@@ -37,7 +37,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		private int initialInputTimerMax = 25;
 
 		private int attackInputTimer = 0;
-		private int attackInputTimerMax = 20;
+		private int attackInputTimerMax = 10;
 
 		public bool IsFacingRight
 		{
@@ -53,7 +53,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		}
 		private bool _isFacingRight = false;
 
-		protected CardinalDirection latestCardinalDirection;
+		protected CardinalDirection latestCardinalDirection = CardinalDirection.East;
 
 		protected Vector2 attackTurnDirection = Vector2.Zero;
 
@@ -74,6 +74,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isHurt = false;
 
 		protected bool isAttacking = false;
+
+		protected bool finishedAttack = false;
 
 		protected bool isDead = false;
 		#endregion
@@ -153,13 +155,15 @@ namespace MobileEntities.PlayerCharacters.Scripts
 					 
 					#endregion
 
-					if (isAttacking && attackInputTimer == attackInputTimerMax)
+					if (isAttacking && attackInputTimer == attackInputTimerMax && !finishedAttack)
 					{
 						moveDirection = Vector2.Zero;
 
 						attackInputTimer = 0;
 
 						RunAttack();
+
+						finishedAttack = true;
 
 						GD.Print("Attacking");
 					}
@@ -268,6 +272,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
 
 				attackTurnDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+
+				if (!isAttacking)
+				{
+					finishedAttack = false;
+				}
 			}
 		}
 

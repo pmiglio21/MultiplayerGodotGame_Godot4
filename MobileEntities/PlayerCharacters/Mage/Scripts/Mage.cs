@@ -32,7 +32,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected override void RunAttack()
 		{
 			var mageSpellInstance = _mageSpell.Instantiate() as MageSpell;
-			AddChild(mageSpellInstance);
+			mageSpellInstance.Position = Position;
+
+			var rootScene = GetTree().CurrentScene;
+			rootScene.AddChild(mageSpellInstance);
 
 			var attackDirectionalInput = Vector2.Zero;
 			attackDirectionalInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");

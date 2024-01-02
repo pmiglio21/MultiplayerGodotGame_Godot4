@@ -47,7 +47,17 @@ namespace MobileEntities.Enemies.Scripts
 
 		private void OnMainHurtBoxAreaEntered(Area2D area)
 		{
-			//GD.Print("Enemy Hurt Entered");
+			if (area.IsInGroup("PlayerProjectileTriggerBox"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+
+				if (!collisionShape.Disabled)
+				{
+					GD.Print("Enemy Hurt Entered");
+
+					characterStats.Health.HealthAmount -= 1;
+				}
+			}
 		}
 
 
