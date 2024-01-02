@@ -1,5 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://co5rd15t5k5d6"]
+[gd_scene load_steps=3 format=3 uid="uid://co5rd15t5k5d6"]
 
 [ext_resource type="PackedScene" uid="uid://7pkixpwpisla" path="res://MobileEntities/Utilities/TriggerBoxes/BaseTriggerBox.tscn" id="1_xkywp"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2kvg"]
+
 [node name="TriggerArea" groups=["PlayerHurtBox"] instance=ExtResource("1_xkywp")]
+
+[node name="CollisionShape" parent="." index="0"]
+scale = Vector2(9.09086, -0.687869)
+shape = SubResource("RectangleShape2D_f2kvg")

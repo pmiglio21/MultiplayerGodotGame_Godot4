@@ -53,7 +53,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		}
 		private bool _isFacingRight = false;
 
-		private CardinalDirection latestCardinalDirection;
+		protected CardinalDirection latestCardinalDirection;
 
 		protected Vector2 attackDirection = Vector2.Zero;
 
@@ -114,10 +114,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			if (PlayerNumber % 2 == 0)
 			{
 				PlayAppropriateAnimation(CardinalDirection.East, AnimationType.Idle);
+				MoveHurtBoxes(CardinalDirection.East);
 			}
 			else
 			{
 				PlayAppropriateAnimation(CardinalDirection.West, AnimationType.Idle);
+				MoveHurtBoxes(CardinalDirection.West);
 			}
 		}
 
@@ -147,6 +149,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 					GetMovementInput();
 
+					MoveHurtBoxes(latestCardinalDirection);
+
 					SetAnimationToBePlayed();
 				}
 			}
@@ -171,6 +175,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		}
 
 		protected virtual void InitializeClassSpecificProperties() { }
+
+		protected virtual void MoveHurtBoxes(CardinalDirection hurtBoxDirection) { }
 
 		private void GetReferencesToOutsideNodes()
 		{
