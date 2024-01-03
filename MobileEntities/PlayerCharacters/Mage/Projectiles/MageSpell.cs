@@ -28,4 +28,18 @@ public partial class MageSpell : CharacterBody2D
 
 		MoveAndSlide();
 	}
+
+	private void OnAreaEntered(Area2D area)
+	{
+		if (area.IsInGroup("EnemyHurtBox"))
+		{
+			CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+
+			if (!collisionShape.Disabled)
+			{
+				QueueFree();
+			}
+		}
+	}
 }
+

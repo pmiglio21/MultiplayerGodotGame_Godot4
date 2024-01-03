@@ -15,3 +15,5 @@ script = ExtResource("1_ep6tg")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Area"]
 shape = SubResource("RectangleShape2D_tcfn5")
+
+[connection signal="area_entered" from="Area" to="." method="OnAreaEntered"]
