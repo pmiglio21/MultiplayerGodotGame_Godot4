@@ -14,6 +14,7 @@ script = ExtResource("1_1tjb3")
 script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
+position = Vector2(303, 186)
 zoom = Vector2(2.5, 2.5)
 position_smoothing_speed = 5.0
 
@@ -23,11 +24,10 @@ position_smoothing_speed = 5.0
 visible = false
 
 [node name="BaseFloor" parent="." instance=ExtResource("4_4pted")]
-position = Vector2(9, -2)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("5_ptelb")]
 z_index = -1
-position = Vector2(67, -44)
+position = Vector2(353, 167)
 
 [node name="FogOfWar" type="Sprite2D" parent="."]
 position = Vector2(-305, -181)
