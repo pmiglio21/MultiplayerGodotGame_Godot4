@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjc80kpo3mn2l"]
+[gd_scene load_steps=7 format=3 uid="uid://cjc80kpo3mn2l"]
 
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scripts/BaseCharacter.cs" id="1_t02fc"]
 [ext_resource type="PackedScene" uid="uid://ofxacw3acfl7" path="res://MobileEntities/Utilities/TriggerBoxes/Player/PlayerHitBox.tscn" id="2_lps0t"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bgbrf4c0jmhcd" path="res://MobileEntities/PlayerCharacters/ComponentPieces/CharacterPointLight/CharacterPointLight.png" id="4_6ligv"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nnay"]
+size = Vector2(17, 2)
 
 [node name="CharacterBody" type="CharacterBody2D"]
 script = ExtResource("1_t02fc")
@@ -25,6 +28,9 @@ libraries = {
 position = Vector2(0, 7)
 color = Color(1, 0.8, 0.25098, 0.521569)
 texture = ExtResource("4_6ligv")
+
+[node name="FootBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4nnay")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationPlayerAnimationFinished"]
 [connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]

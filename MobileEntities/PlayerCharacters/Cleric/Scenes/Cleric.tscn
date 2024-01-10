@@ -59,6 +59,12 @@ libraries = {
 "": SubResource("AnimationLibrary_4cjwe")
 }
 
+[node name="MainHitBox" parent="." index="2"]
+visible = false
+
 [node name="MainHurtBox" parent="." index="3"]
 position = Vector2(1, 2)
-scale = Vector2(-0.449675, -0.973588)
+scale = Vector2(-0.065853, -1.31287)
+
+[node name="FootBox" parent="." index="5"]
+position = Vector2(0.5, 11)

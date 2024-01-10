@@ -58,3 +58,13 @@ texture = ExtResource("5_d86m1")
 libraries = {
 "": SubResource("AnimationLibrary_p4mck")
 }
+
+[node name="MainHitBox" parent="." index="2"]
+visible = false
+
+[node name="MainHurtBox" parent="." index="3"]
+position = Vector2(1, 2)
+scale = Vector2(0.045078, 1.30834)
+
+[node name="FootBox" parent="." index="5"]
+position = Vector2(1.25, 11)

@@ -56,11 +56,18 @@ namespace Levels.OverworldLevels.Utilities
 				if (GlobalPosition.X - player.GlobalPosition.X >= _distanceThresholdBeforeCameraMoves)
 				{
 					_newPosition.X = player.GlobalPosition.X + _distanceThresholdBeforeCameraMoves;
-					_newPosition.Y = player.GlobalPosition.Y + _distanceThresholdBeforeCameraMoves;
 				}
 				else if (GlobalPosition.X - player.GlobalPosition.X <= -_distanceThresholdBeforeCameraMoves)
 				{
 					_newPosition.X = player.GlobalPosition.X - _distanceThresholdBeforeCameraMoves;
+				}
+
+				if (GlobalPosition.Y - player.GlobalPosition.Y >= _distanceThresholdBeforeCameraMoves)
+				{
+					_newPosition.Y = player.GlobalPosition.Y + _distanceThresholdBeforeCameraMoves;
+				}
+				else if (GlobalPosition.Y - player.GlobalPosition.Y <= -_distanceThresholdBeforeCameraMoves)
+				{
 					_newPosition.Y = player.GlobalPosition.Y - _distanceThresholdBeforeCameraMoves;
 				}
 			}

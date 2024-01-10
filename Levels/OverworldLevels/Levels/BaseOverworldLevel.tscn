@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://de22b7g4faw63"]
+[gd_scene load_steps=8 format=3 uid="uid://de22b7g4faw63"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="PackedScene" uid="uid://64m18dfpgas4" path="res://Levels/OverworldLevels/Utilities/LevelCamera.tscn" id="1_45dlx"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_3clom"]
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Utilities/PlayerInstancer.cs" id="2_wkdfo"]
 [ext_resource type="PackedScene" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreen.tscn" id="3_i8rss"]
 [ext_resource type="PackedScene" uid="uid://op013weh84on" path="res://Levels/OverworldLevels/TileMapping/Floor/BaseFloor.tscn" id="4_4pted"]
@@ -9,6 +10,12 @@
 
 [node name="Level" type="Node"]
 script = ExtResource("1_1tjb3")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(579, 328)
+scale = Vector2(-85.3218, -55.6922)
+texture = ExtResource("2_3clom")
 
 [node name="PlayerInstancer" type="Node" parent="."]
 script = ExtResource("2_wkdfo")
