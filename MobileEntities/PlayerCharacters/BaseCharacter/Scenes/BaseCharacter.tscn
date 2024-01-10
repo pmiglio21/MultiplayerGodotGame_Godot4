@@ -8,7 +8,7 @@
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4nnay"]
-size = Vector2(17, 2)
+size = Vector2(12.5, 2)
 
 [node name="CharacterBody" type="CharacterBody2D"]
 script = ExtResource("1_t02fc")

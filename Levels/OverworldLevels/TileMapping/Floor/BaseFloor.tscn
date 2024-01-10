@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://op013weh84on"]
 
 [ext_resource type="Texture2D" uid="uid://bb3pk0vbk0l6m" path="res://Levels/OverworldLevels/TileMapping/Floor/FloorTiles/tile_atlas.png" id="1_citmf"]
-[ext_resource type="Texture2D" uid="uid://c3fef37yp6o6p" path="res://Levels/OverworldLevels/TileMapping/Walls/BackWallTiles_0.png" id="1_ttx8d"]
+[ext_resource type="Texture2D" uid="uid://c3fef37yp6o6p" path="res://Levels/OverworldLevels/TileMapping/ExteriorWalls/BackWallTiles_0.png" id="1_m3t3p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0qtik"]
-texture = ExtResource("1_ttx8d")
+texture = ExtResource("1_m3t3p")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
