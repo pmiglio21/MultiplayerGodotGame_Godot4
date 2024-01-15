@@ -25,7 +25,7 @@ public partial class BaseOverworldLevel : Node
 		int i = 0;
 
 		//Gets all positions of cells being used in TileMap
-		foreach(var tilePosition in tileMap.GetUsedCells(0))
+		foreach(var tilePosition in tileMap.GetUsedCellsById(0, 8))
 		{
 			GD.Print($"{i}: {tilePosition}");
 
@@ -34,16 +34,15 @@ public partial class BaseOverworldLevel : Node
 			if (i % 4 == 0)
 			{
 				//Generate InteriorWallBlock at that position
-
 				var tempBlock = scene.Instantiate();
 				var interiorBlock = tempBlock as Node2D;
 				AddChild(interiorBlock);
 
 				//Needs to get better positions, Vector2I makes it weird
-				var real_pos = tileMap.MapToLocal(new Vector2I(tilePosition.X+8, tilePosition.Y+5));
-				interiorBlock.GlobalPosition = real_pos;
+				var real_pos = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
+				interiorBlock.GlobalPosition = new Vector2(real_pos.X, real_pos.Y);
 
-				GD.Print($"Instantiated {i}: {tilePosition}");
+				GD.Print($"Instantiated {i}, Tile Position: {tilePosition}, Real Position: {new Vector2(real_pos.X, real_pos.Y)}");
 			}
 
 		}
