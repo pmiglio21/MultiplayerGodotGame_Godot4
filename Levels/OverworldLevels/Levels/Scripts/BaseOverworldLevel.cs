@@ -3,6 +3,54 @@ using System;
 
 public partial class BaseOverworldLevel : Node
 {
+	#region Component Nodes
+
+	private Node2D _baseFloor = null;
+
+	#endregion
+
+	PackedScene scene = GD.Load<PackedScene>("res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorWallBlock.tscn");
+
+	public override void _Ready()
+	{
+		_baseFloor = GetNode<Node2D>("BaseFloor");
+
+		GenerateInteriorWallsForLevel();
+	}
+
+	private void GenerateInteriorWallsForLevel()
+	{
+		TileMap tileMap = _baseFloor.GetNode<TileMap>("TileMap");
+
+		int i = 0;
+
+		//Gets all positions of cells being used in TileMap
+		foreach(var tilePosition in tileMap.GetUsedCells(0))
+		{
+			GD.Print($"{i}: {tilePosition}");
+
+			i++;
+
+			if (i % 4 == 0)
+			{
+				//Generate InteriorWallBlock at that position
+
+				var tempBlock = scene.Instantiate();
+				var interiorBlock = tempBlock as Node2D;
+				AddChild(interiorBlock);
+
+				//Needs to get better positions, Vector2I makes it weird
+				var real_pos = tileMap.MapToLocal(new Vector2I(tilePosition.X+8, tilePosition.Y+5));
+				interiorBlock.GlobalPosition = real_pos;
+
+				GD.Print($"Instantiated {i}: {tilePosition}");
+			}
+
+		}
+		
+	}
+
+
 	//private int _gridSize = 16;
 	//private Sprite2D _fog;
 

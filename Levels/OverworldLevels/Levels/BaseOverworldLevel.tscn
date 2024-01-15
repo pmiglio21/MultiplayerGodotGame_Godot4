@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://de22b7g4faw63"]
+[gd_scene load_steps=8 format=3 uid="uid://de22b7g4faw63"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="PackedScene" uid="uid://64m18dfpgas4" path="res://Levels/OverworldLevels/Utilities/LevelCamera.tscn" id="1_45dlx"]
@@ -7,12 +7,12 @@
 [ext_resource type="PackedScene" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreen.tscn" id="3_i8rss"]
 [ext_resource type="PackedScene" uid="uid://op013weh84on" path="res://Levels/OverworldLevels/TileMapping/Floor/BaseFloor.tscn" id="4_4pted"]
 [ext_resource type="PackedScene" uid="uid://ski2r0ediecx" path="res://MobileEntities/Enemies/Slime/Scenes/Slime.tscn" id="5_ptelb"]
-[ext_resource type="PackedScene" uid="uid://bdhu1j2nvagsy" path="res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorWallBlock.tscn" id="8_ypkyn"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_1tjb3")
 
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 z_index = -2
 position = Vector2(579, 328)
 scale = Vector2(-85.3218, -55.6922)
@@ -23,7 +23,7 @@ script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
 position = Vector2(303, 186)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(0.5, 0.5)
 position_smoothing_speed = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -35,11 +35,8 @@ visible = false
 
 [node name="BaseEnemy" parent="." instance=ExtResource("5_ptelb")]
 z_index = -1
-position = Vector2(353, 167)
+position = Vector2(352, 167)
 
 [node name="FogOfWar" type="Sprite2D" parent="."]
 position = Vector2(-305, -181)
 centered = false
-
-[node name="InteriorWallBlock" parent="." instance=ExtResource("8_ypkyn")]
-position = Vector2(246, 181)
