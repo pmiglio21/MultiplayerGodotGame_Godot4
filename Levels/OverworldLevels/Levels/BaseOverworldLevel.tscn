@@ -12,10 +12,9 @@
 script = ExtResource("1_1tjb3")
 
 [node name="Background" type="Sprite2D" parent="."]
-visible = false
 z_index = -2
-position = Vector2(579, 328)
-scale = Vector2(-85.3218, -55.6922)
+position = Vector2(946, 634)
+scale = Vector2(-101.605, -70.0698)
 texture = ExtResource("2_3clom")
 
 [node name="PlayerInstancer" type="Node" parent="."]
@@ -23,7 +22,7 @@ script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
 position = Vector2(303, 186)
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(2.5, 2.5)
 position_smoothing_speed = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
