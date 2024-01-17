@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class BaseOverworldLevel : Node
 {
@@ -22,28 +24,49 @@ public partial class BaseOverworldLevel : Node
 	{
 		TileMap tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
-		//var count = tileMap.GetUsedCellsById(0, 8).Count;
-
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
-		//Gets all positions of cells being used in TileMap
-		foreach (var tilePosition in tileMap.GetUsedCellsById(0, 8))
+		List<Node2D> existingInteriorBlocks = new List<Node2D>();
+
+		//The id of the floor tiles is 8
+		var floorTileList = tileMap.GetUsedCellsById(0, 8).ToList();
+
+		var floorTileCount = tileMap.GetUsedCellsById(0, 8).Count;
+
+		//Generate interior blocks everywhere there is a floor tile
+		foreach (var tilePosition in floorTileList)
 		{
-			var chanceOfInteriorBlockInstantiation = rng.RandfRange(0, 100);
+			//Generate InteriorWallBlock at that position
+			var tempBlock = scene.Instantiate();
+			var interiorBlock = tempBlock as Node2D;
+			AddChild(interiorBlock);
 
-			if (chanceOfInteriorBlockInstantiation < 25)
+			var positionInLevel = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
+			interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
+
+			existingInteriorBlocks.Add(interiorBlock);
+
+			//GD.Print($"Chance {chanceOfInteriorBlockInstantiation}, Tile Position: {tilePosition}, Real Position: {new Vector2(real_pos.X, real_pos.Y)}");
+		}
+
+		int spawnPointGeneratedCount = 0;
+		while (spawnPointGeneratedCount < 4)
+		{
+			var floorTileIndex = (int)Math.Floor(rng.RandfRange(0, floorTileCount));
+
+			var currentFloorTileGridMapPosition = floorTileList[floorTileIndex];
+
+			if (existingInteriorBlocks.Any(x => x.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition)))
 			{
-				//Generate InteriorWallBlock at that position
-				var tempBlock = scene.Instantiate();
-				var interiorBlock = tempBlock as Node2D;
-				AddChild(interiorBlock);
+				var interiorBlockWithMatchingPosition = existingInteriorBlocks.FirstOrDefault(x => x.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition));
 
-				var positionInLevel = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
-				interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
+				GD.Print($"Freeing {interiorBlockWithMatchingPosition.GlobalPosition.X}, {interiorBlockWithMatchingPosition.GlobalPosition.Y}");
 
-				//GD.Print($"Chance {chanceOfInteriorBlockInstantiation}, Tile Position: {tilePosition}, Real Position: {new Vector2(real_pos.X, real_pos.Y)}");
+				interiorBlockWithMatchingPosition.QueueFree();
 			}
+
+			spawnPointGeneratedCount++;
 		}
 	}
 

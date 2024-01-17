@@ -22,7 +22,7 @@ script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
 position = Vector2(303, 186)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(0.5, 0.5)
 position_smoothing_speed = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

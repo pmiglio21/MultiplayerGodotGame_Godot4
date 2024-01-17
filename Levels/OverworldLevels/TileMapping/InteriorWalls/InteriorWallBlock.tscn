@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="1_m03es"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa8xg"]
-size = Vector2(32.0001, 31.9999)
+size = Vector2(8.00006, 6.99994)
 
 [node name="InteriorWallBlock" type="Node2D"]
 z_index = -2
@@ -14,6 +14,6 @@ texture = ExtResource("1_m03es")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(4.76837e-07, 2.38419e-07)
+position = Vector2(12, -12.5)
 rotation = -3.14159
 shape = SubResource("RectangleShape2D_aa8xg")
