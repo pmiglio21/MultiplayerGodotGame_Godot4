@@ -39,14 +39,12 @@ public partial class BaseOverworldLevel : Node
 				var interiorBlock = tempBlock as Node2D;
 				AddChild(interiorBlock);
 
-				//Needs to get better positions, Vector2I makes it weird
-				var real_pos = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
-				interiorBlock.GlobalPosition = new Vector2(real_pos.X, real_pos.Y);
+				var positionInLevel = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
+				interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
 				//GD.Print($"Chance {chanceOfInteriorBlockInstantiation}, Tile Position: {tilePosition}, Real Position: {new Vector2(real_pos.X, real_pos.Y)}");
 			}
 		}
-		
 	}
 
 
