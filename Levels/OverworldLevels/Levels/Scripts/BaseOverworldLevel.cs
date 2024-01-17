@@ -1,4 +1,8 @@
+using Globals.PlayerManagement;
 using Godot;
+using MobileEntities.PlayerCharacters.Scripts;
+using MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping;
+using Scenes.UI.PlayerSelectScene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +35,7 @@ public partial class BaseOverworldLevel : Node
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
-		//The id of the floor tiles is 8
-		_floorTileList = _tileMap.GetUsedCellsById(0, 8).ToList();
+		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
 
 		GenerateInteriorWallsForLevel();
 	}
@@ -41,13 +44,21 @@ public partial class BaseOverworldLevel : Node
 	{
 		_rng.Randomize();
 
-		GenerateAllInteriorBlocks();
+		GenerateInteriorBlocksOnAllFloorTiles();
 
 		GenerateSpawnPoints();
+
+		//CreatePathsInInteriorBlocks();
+
+		//
+
+		//GenerateKeyMapItems();
+
+		SpawnPlayers();
+		
 	}
 
-	//Generate interior blocks everywhere there is a floor tile
-	private void GenerateAllInteriorBlocks()
+	private void GenerateInteriorBlocksOnAllFloorTiles()
 	{
 		foreach (var tilePosition in _floorTileList)
 		{
@@ -63,11 +74,9 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	//Generate spawn points
 	private void GenerateSpawnPoints()
 	{
-		//TODO: Set spawnPointGeneratedCountMax = # of players spawning in
-		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < 4; spawnPointGeneratedCount++)
+		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{
 			var floorTileIndex = (int)Math.Floor(_rng.RandfRange(0, _floorTileList.Count));
 
@@ -84,13 +93,86 @@ public partial class BaseOverworldLevel : Node
 				//Clear out spawn point areas
 				foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
 				{
-					if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= 48)
+					if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.SpaceToCheckBetweenInteriorBlocks)
 					{
 						currentFloorGridSpace.InteriorBlock.QueueFree();
 					}
 				}
 			}
 		}
+	}
+
+	//private void CreatePathsInInteriorBlocks()
+	//{
+	//	TileMapFloorGridSpace walkingFloorSpace = null;
+
+	//	var changeInX = 0;
+	//	var changeInY = 0;
+
+	//	var firstSpawnPoint = _existingFloorGridSpaces.FirstOrDefault(x => x.IsSpawnPoint);
+
+	//	changeInX = RandomlySetChangeInDirection();
+	//	changeInY = RandomlySetChangeInDirection();
+
+	//	//Set walkingFloorSpace here
+
+	//	//Figure out while loop
+	//	//while (walkingFloorSpace != firstSpawnPoint && )
+ // //      {
+	//	//	changeInX = RandomlySetChangeInDirection();
+	//	//	changeInY = RandomlySetChangeInDirection();
+
+	//	//	//Find next block with this change in direction
+	//	//}
+		
+	//}
+
+	private int RandomlySetChangeInDirection()
+	{
+		var randChance = _rng.RandfRange(0, 1);
+		if (randChance < .3333)
+		{
+			return 16;
+		}
+		else if (randChance >= .3333 && randChance < .6667)
+		{
+			return -16;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	private void GenerateKeyMapItems()
+	{
+		GeneratePortal();
+
+		GenerateSwitches();
+	}
+
+	private void GeneratePortal() { }
+
+	private void GenerateSwitches() { }
+
+	private void SpawnPlayers()
+	{
+		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+
+		int playerCount = 0;
+
+		foreach (BaseCharacter character in PlayerManager.ActivePlayers)
+		{
+			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
+
+			character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
+
+			AddChild(character);
+
+			playerCount++;
+		}
+
+		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 }
 
