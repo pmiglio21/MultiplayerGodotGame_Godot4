@@ -27,7 +27,7 @@ public partial class BaseOverworldLevel : Node
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
-		List<Node2D> existingInteriorBlocks = new List<Node2D>();
+		List<TileMapFloorGridSpace> existingFloorGridSpaces = new List<TileMapFloorGridSpace>();
 
 		//The id of the floor tiles is 8
 		var floorTileList = tileMap.GetUsedCellsById(0, 8).ToList();
@@ -45,28 +45,43 @@ public partial class BaseOverworldLevel : Node
 			var positionInLevel = interiorBlock.ToGlobal(tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
 			interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
-			existingInteriorBlocks.Add(interiorBlock);
-
-			//GD.Print($"Chance {chanceOfInteriorBlockInstantiation}, Tile Position: {tilePosition}, Real Position: {new Vector2(real_pos.X, real_pos.Y)}");
+			existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock });
 		}
 
-		int spawnPointGeneratedCount = 0;
-		while (spawnPointGeneratedCount < 4)
+		//Generate spawn points
+		//TODO: Set spawnPointGeneratedCountMax = # of players spawning in
+		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < 4; spawnPointGeneratedCount++)
 		{
 			var floorTileIndex = (int)Math.Floor(rng.RandfRange(0, floorTileCount));
 
 			var currentFloorTileGridMapPosition = floorTileList[floorTileIndex];
 
-			if (existingInteriorBlocks.Any(x => x.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition)))
+			if (existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition)))
 			{
-				var interiorBlockWithMatchingPosition = existingInteriorBlocks.FirstOrDefault(x => x.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition));
+				var floorGridSpaceWithMatchingPosition = existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == tileMap.MapToLocal(currentFloorTileGridMapPosition));
 
-				GD.Print($"Freeing {interiorBlockWithMatchingPosition.GlobalPosition.X}, {interiorBlockWithMatchingPosition.GlobalPosition.Y}");
+				//GD.Print($"Freeing {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.X}, {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.Y}");
 
-				interiorBlockWithMatchingPosition.QueueFree();
+				floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+
+				floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
 			}
+		}
 
-			spawnPointGeneratedCount++;
+		//Clear out spawn point areas
+		foreach (var currentFloorGridSpace in existingFloorGridSpaces)
+		{
+			foreach (var spawnPointGridSpace in existingFloorGridSpaces.Where(x => x.IsSpawnPoint))
+			{
+				if (spawnPointGridSpace.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= 48)
+				{
+					currentFloorGridSpace.InteriorBlock.QueueFree();
+				}
+				else
+				{
+					//GD.Print($"Distance between {spawnPointGridSpace.InteriorBlock.GlobalPosition.X}, {spawnPointGridSpace.InteriorBlock.GlobalPosition.Y} and {currentFloorGridSpace.InteriorBlock.GlobalPosition.X}, {currentFloorGridSpace.InteriorBlock.GlobalPosition.Y}: {spawnPointGridSpace.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition)}");
+				}
+			}
 		}
 	}
 
