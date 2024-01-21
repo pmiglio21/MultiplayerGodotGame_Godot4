@@ -48,13 +48,22 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateSpawnPoints();
 
-		//CreatePathsInInteriorBlocks();
+		//If multiplayer
+		if (_existingFloorGridSpaces.Count(x => x.IsSpawnPoint) > 1)
+        {
+			CreatePathsBetweenSpawnPoints();
+		}
+		//If singleplayer
+		else
+        {
 
-		//
+        }
 
-		//GenerateKeyMapItems();
+        //
 
-		SpawnPlayers();
+        //GenerateKeyMapItems();
+
+        SpawnPlayers();
 		
 	}
 
@@ -90,10 +99,12 @@ public partial class BaseOverworldLevel : Node
 
 				floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
 
+				GD.Print($"Spawn Point: {_tileMap.LocalToMap(floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition).X}, {_tileMap.LocalToMap(floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition).Y}");
+
 				//Clear out spawn point areas
 				foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
 				{
-					if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.SpaceToCheckBetweenInteriorBlocks)
+					if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
 					{
 						currentFloorGridSpace.InteriorBlock.QueueFree();
 					}
@@ -102,41 +113,100 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	//private void CreatePathsInInteriorBlocks()
-	//{
-	//	TileMapFloorGridSpace walkingFloorSpace = null;
+    private void CreatePathsBetweenSpawnPoints()
+    {
+		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
-	//	var changeInX = 0;
-	//	var changeInY = 0;
+		foreach (TileMapFloorGridSpace currentSpawnPoint in spawnPoints)
+        {
+			TileMapFloorGridSpace walkingFloorSpace = currentSpawnPoint;
 
-	//	var firstSpawnPoint = _existingFloorGridSpaces.FirstOrDefault(x => x.IsSpawnPoint);
+			List<TileMapFloorGridSpace> availableSpawnPoints = spawnPoints.Where(x => x != currentSpawnPoint).ToList();
 
-	//	changeInX = RandomlySetChangeInDirection();
-	//	changeInY = RandomlySetChangeInDirection();
+			var changeInX = 0;
+			var changeInY = 0;
 
-	//	//Set walkingFloorSpace here
+			GD.Print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			GD.Print($"Adjusting spawn: {_tileMap.LocalToMap(currentSpawnPoint.InteriorBlock.GlobalPosition).X}, {_tileMap.LocalToMap(currentSpawnPoint.InteriorBlock.GlobalPosition).Y}");
 
-	//	//Figure out while loop
-	//	//while (walkingFloorSpace != firstSpawnPoint && )
- // //      {
-	//	//	changeInX = RandomlySetChangeInDirection();
-	//	//	changeInY = RandomlySetChangeInDirection();
+			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+			while (walkingFloorSpace == currentSpawnPoint)
+            {
+				changeInX = RandomlySetChangeInDirection();
+				changeInY = RandomlySetChangeInDirection();
 
-	//	//	//Find next block with this change in direction
-	//	//}
-		
-	//}
+				GD.Print($"Change in direction: {changeInX}, {changeInY}");
 
-	private int RandomlySetChangeInDirection()
+				var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+
+				GD.Print($"New Position: {newPosition.X}, {newPosition.Y}");
+
+				//walkingFloorSpace.InteriorBlock.GlobalPosition = new Vector2(walkingFloorSpace.InteriorBlock.GlobalPosition.X + changeInX, walkingFloorSpace.InteriorBlock.GlobalPosition.Y + changeInY);
+
+				//Set walkingFloorSpace to somewhere adjacent to spawn
+				if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
+				{
+					var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
+
+					if (floorGridSpaceWithMatchingPosition != currentSpawnPoint)
+                    {
+						if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+                        {
+							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+						}
+
+						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+
+						GD.Print($"Matching Position in Vector2I: {_tileMap.LocalToMap(floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition).X}, {_tileMap.LocalToMap(floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition).Y}");
+
+						GD.Print($"Matching Position in Vector2: {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.X}, {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.Y}");
+					}
+				}
+			}
+
+
+
+			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+			//while (!walkingFloorSpace.IsSpawnPoint && walkingFloorSpace != )
+			//{
+			//	changeInX = RandomlySetChangeInDirection();
+			//	changeInY = RandomlySetChangeInDirection();
+
+			//	walkingFloorSpace.InteriorBlock.GlobalPosition = new Vector2(walkingFloorSpace.InteriorBlock.GlobalPosition.X + changeInX, walkingFloorSpace.InteriorBlock.GlobalPosition.Y + changeInY);
+
+			//	//Set walkingFloorSpace to somewhere adjacent to spawn
+			//	if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == walkingFloorSpace.InteriorBlock.GlobalPosition))
+			//	{
+			//		var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == walkingFloorSpace.InteriorBlock.GlobalPosition);
+
+			//		if (floorGridSpaceWithMatchingPosition != currentSpawnPoint)
+			//		{
+			//			if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+			//			{
+			//				floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+			//			}
+
+			//			walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+
+			//			GD.Print($"New Point: {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.X}, {floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.Y}");
+			//		}
+			//	}
+			//}
+		}
+
+
+	}
+
+    private int RandomlySetChangeInDirection()
 	{
 		var randChance = _rng.RandfRange(0, 1);
 		if (randChance < .3333)
 		{
-			return 16;
+			return 1;
 		}
 		else if (randChance >= .3333 && randChance < .6667)
 		{
-			return -16;
+			return -1;
 		}
 		else
 		{

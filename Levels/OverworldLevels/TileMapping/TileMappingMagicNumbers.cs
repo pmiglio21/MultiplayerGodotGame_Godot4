@@ -10,6 +10,7 @@ namespace MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping
     {
         public const int TileMapFloorSpriteId = 8;
 
-        public const int SpaceToCheckBetweenInteriorBlocks = 48;
+        // 32 * SQRT(2) = diagonal distance between interior blocks
+        public const double DiagonalDistanceBetweenInteriorBlocks = 45.25483399593904;
     }
 }
