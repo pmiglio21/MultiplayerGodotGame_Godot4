@@ -8,4 +8,6 @@ public partial class TileMapFloorGridSpace
 	public bool IsSpawnPoint = false;
 
 	public int NumberOfSpawnPointWhoClearedIt = -1;
+
+	public Node2D TestText = null;
 }

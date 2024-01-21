@@ -17,12 +17,3 @@ texture = ExtResource("1_m03es")
 position = Vector2(12, -12.5)
 rotation = -3.14159
 shape = SubResource("RectangleShape2D_aa8xg")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-visible = false
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 36.0
-offset_bottom = 36.0
-scale = Vector2(0.382282, 0.381584)
-text = "-1"
