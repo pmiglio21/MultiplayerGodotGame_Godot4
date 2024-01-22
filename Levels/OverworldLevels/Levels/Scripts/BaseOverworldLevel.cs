@@ -62,20 +62,20 @@ public partial class BaseOverworldLevel : Node
 
 		}
 
-		//
+        //
 
-		//GenerateKeyMapItems();
+        //GenerateKeyMapItems();
 
-		//var tasks = new List<Task>();
+        var tasks = new List<Task>();
 
-		//for (int i = 0; i < 18; i++)
-		//{
-		//	tasks.Add(CreatePathsBetweenPointsAsync());
-		//}
+        for (int i = 0; i < 8; i++)
+        {
+            tasks.Add(CreatePathsBetweenPointsAsync());
+        }
 
-		//await Task.WhenAll(tasks);
+        await Task.WhenAll(tasks);
 
-		SpawnPlayers();
+        SpawnPlayers();
 	}
 
 	private void GenerateInteriorBlocksOnAllFloorTiles()
@@ -311,34 +311,7 @@ public partial class BaseOverworldLevel : Node
 
 		GD.Print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-		var weightedXValue = 0;
-		var weightedYValue = 0;
-
-		if (angleFromWalkingFloorSpaceToTargetPoint > 0 && angleFromWalkingFloorSpaceToTargetPoint <= (Math.PI / 2f))
-		{
-			weightedXValue = 1;
-			weightedYValue = 1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint <= Math.PI)
-		{
-			weightedXValue = -1;
-			weightedYValue = 1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetPoint < 0 && angleFromWalkingFloorSpaceToTargetPoint >= -(Math.PI / 2f))
-		{
-			weightedXValue = 1;
-			weightedYValue = -1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint >= -Math.PI)
-		{
-			weightedXValue = -1;
-			weightedYValue = -1;
-		}
-		else
-		{
-			weightedXValue = 1;
-			weightedYValue = 1;
-		}
+		var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
 
 		var changeInX = 0;
 		var changeInY = 0;
@@ -348,11 +321,11 @@ public partial class BaseOverworldLevel : Node
 		{
 			if (_rng.RandfRange(0, 1) <= .5)
 			{
-				changeInX = RandomlySetChangeInDirection(weightedXValue);
+				changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 
 				if (changeInX == 0)
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
+					changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 				}
 				else
 				{
@@ -361,11 +334,11 @@ public partial class BaseOverworldLevel : Node
 			}
 			else
 			{
-				changeInY = RandomlySetChangeInDirection(weightedYValue);
+				changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 
 				if (changeInY == 0)
 				{
-					changeInX = RandomlySetChangeInDirection(weightedXValue);
+					changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 				}
 				else
 				{
@@ -397,15 +370,15 @@ public partial class BaseOverworldLevel : Node
 		int count = 0;
 
 		//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-		while (walkingFloorSpace != targetPoint) //&& count < 500)
+		while (count < 500)
 		{
 			if (_rng.RandfRange(0, 1) <= .5)
 			{
-				changeInX = RandomlySetChangeInDirection(weightedXValue);
+				changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 
 				if (changeInX == 0)
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
+					changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 				}
 				else
 				{
@@ -414,11 +387,11 @@ public partial class BaseOverworldLevel : Node
 			}
 			else
 			{
-				changeInY = RandomlySetChangeInDirection(weightedYValue);
+				changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 
 				if (changeInY == 0)
 				{
-					changeInX = RandomlySetChangeInDirection(weightedXValue);
+					changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 				}
 				else
 				{
