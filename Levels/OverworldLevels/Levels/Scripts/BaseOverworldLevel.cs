@@ -65,7 +65,7 @@ public partial class BaseOverworldLevel : Node
 
 		//GenerateKeyMapItems();
 
-		CreatePathsBetweenPoints();
+		//CreatePathsBetweenPoints();
 
 		SpawnPlayers();
 	}
@@ -275,19 +275,21 @@ public partial class BaseOverworldLevel : Node
 							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
 						}
 
+						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+						walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
+
+						var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+						rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
 						if (floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != -1 &&
 							floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
 						{
 							break;
 						}
-						else
-						{
-							walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-							walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
-
-							var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-							rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-						}
+						//else
+						//{
+							
+						//}
 					}
 				}
 
