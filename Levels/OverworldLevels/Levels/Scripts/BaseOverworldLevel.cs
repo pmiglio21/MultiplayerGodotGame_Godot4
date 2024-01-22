@@ -6,6 +6,7 @@ using Scenes.UI.PlayerSelectScene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public partial class BaseOverworldLevel : Node
 {
@@ -39,10 +40,10 @@ public partial class BaseOverworldLevel : Node
 
 		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
 
-		GenerateInteriorWallsForLevel();
+		 _ = GenerateInteriorWallsForLevel();
 	}
 
-	private void GenerateInteriorWallsForLevel()
+	private async Task GenerateInteriorWallsForLevel()
 	{
 		_rng.Randomize();
 
@@ -65,7 +66,14 @@ public partial class BaseOverworldLevel : Node
 
 		//GenerateKeyMapItems();
 
-		//CreatePathsBetweenPoints();
+		//var tasks = new List<Task>();
+
+		//for (int i = 0; i < 18; i++)
+		//{
+		//	tasks.Add(CreatePathsBetweenPointsAsync());
+		//}
+
+		//await Task.WhenAll(tasks);
 
 		SpawnPlayers();
 	}
@@ -146,34 +154,7 @@ public partial class BaseOverworldLevel : Node
 
 			GD.Print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-			var weightedXValue = 0;
-			var weightedYValue = 0;
-
-			if (angleFromWalkingFloorSpaceToTargetSpawnPoint > 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI/2f))
-			{
-				weightedXValue = 1;
-				weightedYValue = 1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= Math.PI)
-			{
-				weightedXValue = -1;
-				weightedYValue = 1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 2f))
-			{
-				weightedXValue = 1;
-				weightedYValue = -1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -Math.PI)
-			{
-				weightedXValue = -1;
-				weightedYValue = -1;
-			}
-			else
-			{
-				weightedXValue = 1;
-				weightedYValue = 1;
-			}
+			var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
 			var changeInX = 0;
 			var changeInY = 0;
@@ -183,11 +164,11 @@ public partial class BaseOverworldLevel : Node
 			{
 				if (_rng.RandfRange(0, 1) <= .5)
 				{
-					changeInX = RandomlySetChangeInDirection(weightedXValue);
+					changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 
 					if (changeInX == 0)
 					{
-						changeInY = RandomlySetChangeInDirection(weightedYValue);
+						changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 					}
 					else
 					{
@@ -196,11 +177,11 @@ public partial class BaseOverworldLevel : Node
 				}
 				else
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
+					changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 
 					if (changeInY == 0)
 					{
-						changeInX = RandomlySetChangeInDirection(weightedXValue);
+						changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 					}
 					else
 					{
@@ -232,15 +213,24 @@ public partial class BaseOverworldLevel : Node
 			int count = 0;
 
 			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-			while (walkingFloorSpace != targetSpawnPoint && count < 500)
+			while (true)
 			{
+				if (count < 500)
+                {
+					angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+
+					weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+
+					count = 0;
+                }
+
 				if (_rng.RandfRange(0, 1) <= .5)
 				{
-					changeInX = RandomlySetChangeInDirection(weightedXValue);
+					changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 
 					if (changeInX == 0)
 					{
-						changeInY = RandomlySetChangeInDirection(weightedYValue);
+						changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 					}
 					else
 					{
@@ -249,11 +239,11 @@ public partial class BaseOverworldLevel : Node
 				}
 				else
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
+					changeInY = RandomlySetChangeInDirection(weightedValues.Item2);
 
 					if (changeInY == 0)
 					{
-						changeInX = RandomlySetChangeInDirection(weightedXValue);
+						changeInX = RandomlySetChangeInDirection(weightedValues.Item1);
 					}
 					else
 					{
@@ -275,21 +265,21 @@ public partial class BaseOverworldLevel : Node
 							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
 						}
 
+						var number = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
+
 						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
 						walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
 
 						var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
 						rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
 
-						if (floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != -1 &&
-							floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
+						if (number != -1 &&
+							number != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
 						{
+							GD.Print("BREAK");
+
 							break;
 						}
-						//else
-						//{
-							
-						//}
 					}
 				}
 
@@ -298,178 +288,173 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void CreatePathsBetweenPoints()
+	private async Task CreatePathsBetweenPointsAsync()
 	{
 		//List<TileMapFloorGridSpace> startingPoints = new List<TileMapFloorGridSpace>();
 
 		////Just using 10 for now
 		//for  (int i = 0; i < 18; i++)
-  //      {
-  //          startingPoints.Add(_existingFloorGridSpaces[_rng.RandiRange(0, _existingFloorGridSpaces.Count - 1)]);
+		//      {
+		//          startingPoints.Add(_existingFloorGridSpaces[_rng.RandiRange(0, _existingFloorGridSpaces.Count - 1)]);
 		//}
 
-		for (int i = 0; i < 18; i++)
+		var availableSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
+
+		TileMapFloorGridSpace startingPoint = availableSpaces[_rng.RandiRange(0, availableSpaces.Count - 1)];
+
+		TileMapFloorGridSpace walkingFloorSpace = startingPoint;
+
+		var targetPoint = _existingFloorGridSpaces[_rng.RandiRange(0, _existingFloorGridSpaces.Count - 1)];
+
+		//For some reason, trig circle is flipped across its y axis... whatever...
+		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
+
+		GD.Print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+		var weightedXValue = 0;
+		var weightedYValue = 0;
+
+		if (angleFromWalkingFloorSpaceToTargetPoint > 0 && angleFromWalkingFloorSpaceToTargetPoint <= (Math.PI / 2f))
 		{
-			var availableSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
+			weightedXValue = 1;
+			weightedYValue = 1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint <= Math.PI)
+		{
+			weightedXValue = -1;
+			weightedYValue = 1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetPoint < 0 && angleFromWalkingFloorSpaceToTargetPoint >= -(Math.PI / 2f))
+		{
+			weightedXValue = 1;
+			weightedYValue = -1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint >= -Math.PI)
+		{
+			weightedXValue = -1;
+			weightedYValue = -1;
+		}
+		else
+		{
+			weightedXValue = 1;
+			weightedYValue = 1;
+		}
 
-			TileMapFloorGridSpace startingPoint = availableSpaces[_rng.RandiRange(0, availableSpaces.Count - 1)];
+		var changeInX = 0;
+		var changeInY = 0;
 
-			TileMapFloorGridSpace walkingFloorSpace = startingPoint;
-
-			var targetPoint = _existingFloorGridSpaces[_rng.RandiRange(0, _existingFloorGridSpaces.Count - 1)];
-
-			//For some reason, trig circle is flipped across its y axis... whatever...
-			var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
-
-			GD.Print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-			var weightedXValue = 0;
-			var weightedYValue = 0;
-
-			if (angleFromWalkingFloorSpaceToTargetPoint > 0 && angleFromWalkingFloorSpaceToTargetPoint <= (Math.PI / 2f))
+		//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+		while (walkingFloorSpace == startingPoint)
+		{
+			if (_rng.RandfRange(0, 1) <= .5)
 			{
-				weightedXValue = 1;
-				weightedYValue = 1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint <= Math.PI)
-			{
-				weightedXValue = -1;
-				weightedYValue = 1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetPoint < 0 && angleFromWalkingFloorSpaceToTargetPoint >= -(Math.PI / 2f))
-			{
-				weightedXValue = 1;
-				weightedYValue = -1;
-			}
-			else if (angleFromWalkingFloorSpaceToTargetPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetPoint >= -Math.PI)
-			{
-				weightedXValue = -1;
-				weightedYValue = -1;
+				changeInX = RandomlySetChangeInDirection(weightedXValue);
+
+				if (changeInX == 0)
+				{
+					changeInY = RandomlySetChangeInDirection(weightedYValue);
+				}
+				else
+				{
+					changeInY = 0;
+				}
 			}
 			else
 			{
-				weightedXValue = 1;
-				weightedYValue = 1;
-			}
+				changeInY = RandomlySetChangeInDirection(weightedYValue);
 
-			var changeInX = 0;
-			var changeInY = 0;
-
-			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-			while (walkingFloorSpace == startingPoint)
-			{
-				if (_rng.RandfRange(0, 1) <= .5)
+				if (changeInY == 0)
 				{
 					changeInX = RandomlySetChangeInDirection(weightedXValue);
-
-					if (changeInX == 0)
-					{
-						changeInY = RandomlySetChangeInDirection(weightedYValue);
-					}
-					else
-					{
-						changeInY = 0;
-					}
 				}
 				else
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
-
-					if (changeInY == 0)
-					{
-						changeInX = RandomlySetChangeInDirection(weightedXValue);
-					}
-					else
-					{
-						changeInX = 0;
-					}
-				}
-
-				var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
-
-				//Set walkingFloorSpace to somewhere adjacent to spawn
-				if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
-				{
-					var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
-
-					if (floorGridSpaceWithMatchingPosition != startingPoint)
-					{
-						if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
-						{
-							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-						}
-
-						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-					}
+					changeInX = 0;
 				}
 			}
 
-			GD.Print($"Current Spawn Point: {_tileMap.LocalToMap(startingPoint.InteriorBlock.GlobalPosition).X}, {_tileMap.LocalToMap(startingPoint.InteriorBlock.GlobalPosition).Y}");
+			var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
 
-			int count = 0;
-
-			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-			while (walkingFloorSpace != targetPoint && count < 500)
+			//Set walkingFloorSpace to somewhere adjacent to spawn
+			if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
 			{
-				if (_rng.RandfRange(0, 1) <= .5)
-				{
-					changeInX = RandomlySetChangeInDirection(weightedXValue);
+				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
 
-					if (changeInX == 0)
+				if (floorGridSpaceWithMatchingPosition != startingPoint)
+				{
+					if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
 					{
-						changeInY = RandomlySetChangeInDirection(weightedYValue);
+						floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
 					}
-					else
-					{
-						changeInY = 0;
-					}
+
+					walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+				}
+			}
+		}
+
+		GD.Print($"Current Spawn Point: {_tileMap.LocalToMap(startingPoint.InteriorBlock.GlobalPosition).X}, {_tileMap.LocalToMap(startingPoint.InteriorBlock.GlobalPosition).Y}");
+
+		int count = 0;
+
+		//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+		while (walkingFloorSpace != targetPoint) //&& count < 500)
+		{
+			if (_rng.RandfRange(0, 1) <= .5)
+			{
+				changeInX = RandomlySetChangeInDirection(weightedXValue);
+
+				if (changeInX == 0)
+				{
+					changeInY = RandomlySetChangeInDirection(weightedYValue);
 				}
 				else
 				{
-					changeInY = RandomlySetChangeInDirection(weightedYValue);
-
-					if (changeInY == 0)
-					{
-						changeInX = RandomlySetChangeInDirection(weightedXValue);
-					}
-					else
-					{
-						changeInX = 0;
-					}
+					changeInY = 0;
 				}
-
-				var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
-
-				//Set walkingFloorSpace to somewhere adjacent to spawn
-				if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
-				{
-					var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
-
-					if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
-					{
-						if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
-						{
-							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-						}
-
-						if (floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != -1 &&
-							floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != 99)
-						{
-							break;
-						}
-						else
-						{
-							walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-							walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
-
-							var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-							rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-						}
-					}
-				}
-
-				count++;
 			}
+			else
+			{
+				changeInY = RandomlySetChangeInDirection(weightedYValue);
+
+				if (changeInY == 0)
+				{
+					changeInX = RandomlySetChangeInDirection(weightedXValue);
+				}
+				else
+				{
+					changeInX = 0;
+				}
+			}
+
+			var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+
+			//Set walkingFloorSpace to somewhere adjacent to spawn
+			if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
+			{
+				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
+
+				if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
+				{
+					if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+					{
+						floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+					}
+
+					walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+					walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+
+					var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+					rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+					if (floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != -1 &&
+						floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt != 99)
+					{
+						break;
+					}
+				}
+			}
+
+			count++;
 		}
 	}
 
@@ -520,6 +505,40 @@ public partial class BaseOverworldLevel : Node
 		}
 
 		PlayerCharacterPickerManager.ActivePickers.Clear();
+	}
+
+	private Tuple<int, int> GetWeightedValues(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
+    {
+		var weightedXValue = 0;
+		var weightedYValue = 0;
+
+		if (angleFromWalkingFloorSpaceToTargetSpawnPoint > 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 2f))
+		{
+			weightedXValue = 1;
+			weightedYValue = 1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= Math.PI)
+		{
+			weightedXValue = -1;
+			weightedYValue = 1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 2f))
+		{
+			weightedXValue = 1;
+			weightedYValue = -1;
+		}
+		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -Math.PI)
+		{
+			weightedXValue = -1;
+			weightedYValue = -1;
+		}
+		else
+		{
+			weightedXValue = 1;
+			weightedYValue = 1;
+		}
+
+		return new Tuple<int, int>(weightedXValue, weightedYValue); ;
 	}
 }
 
