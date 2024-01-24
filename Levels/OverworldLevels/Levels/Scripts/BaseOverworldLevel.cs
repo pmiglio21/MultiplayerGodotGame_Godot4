@@ -24,6 +24,14 @@ public partial class BaseOverworldLevel : Node
 
 	#endregion
 
+	#region Key Level Object Generation
+
+	private PackedScene _portalScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/Portal/Portal.tscn");
+
+	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
+
+	#endregion
+
 	#region Component Nodes
 
 	private Node2D _baseFloor = null;
@@ -65,7 +73,7 @@ public partial class BaseOverworldLevel : Node
 		float percentageOfFloorToCover = 0;
 
 		switch (PlayerManager.ActivePlayers.Count)
-        {
+		{
 			case 1:
 				percentageOfFloorToCover = .125f;
 				break;
@@ -85,13 +93,13 @@ public partial class BaseOverworldLevel : Node
 
 		//TODO: Get this to work concurrently
 		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
-        {
+		{
 			CreatePathsBetweenPoints();
 		}
 
-        GenerateKeyMapItems();
+		GenerateKeyMapItems();
 
-        SpawnPlayers();
+		SpawnPlayers();
 	}
 
 	#region Path Generation
@@ -179,13 +187,13 @@ public partial class BaseOverworldLevel : Node
 			while (true)
 			{
 				if (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
-                {
+				{
 					angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
 					weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
 					iterationCount = 0;
-                }
+				}
 
 				if (_rng.RandfRange(0, 1) <= .5)
 				{
@@ -346,9 +354,31 @@ public partial class BaseOverworldLevel : Node
 		GenerateSwitches();
 	}
 
-	private void GeneratePortal() { }
+	private void GeneratePortal() 
+	{
+		var tempPortal = _portalScene.Instantiate();
+		var portal = tempPortal as Node2D;
+		AddChild(portal);
 
-	private void GenerateSwitches() { }
+		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+
+		//Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
+		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
+	}
+
+	private void GenerateSwitches() 
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			var tempPortalSwitch = _portalSwitchScene.Instantiate();
+			var portalSwitch = tempPortalSwitch as Node2D;
+			AddChild(portalSwitch);
+
+			var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+
+			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
+		}
+	}
 
 	private void SpawnPlayers()
 	{
@@ -393,7 +423,7 @@ public partial class BaseOverworldLevel : Node
 	}
 
 	private Tuple<int, int> GetWeightedValues(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
-    {
+	{
 		var weightedXValue = 0;
 		var weightedYValue = 0;
 
