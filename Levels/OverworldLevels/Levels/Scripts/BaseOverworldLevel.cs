@@ -40,10 +40,10 @@ public partial class BaseOverworldLevel : Node
 
 		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
 
-		 _ = GenerateInteriorWallsForLevel();
+		 GenerateInteriorWallsForLevel();
 	}
 
-	private async Task GenerateInteriorWallsForLevel()
+	private void GenerateInteriorWallsForLevel()
 	{
 		_rng.Randomize();
 
@@ -56,28 +56,45 @@ public partial class BaseOverworldLevel : Node
 		{
 			CreatePathsBetweenSpawnPoints();
 		}
-		//If singleplayer
+		//TODO: If singleplayer
 		else
 		{
 
 		}
 
-		//Verify that this even works
-        var tasks = new List<Task>();
+		float percentageOfFloorToCover = 0;
 
-        for (int i = 0; i < 8; i++)
+		switch (PlayerManager.ActivePlayers.Count)
         {
-            tasks.Add(CreatePathsBetweenPointsAsync());
-        }
+			case 1:
+				percentageOfFloorToCover = .125f;
+				break;
+			case 2:
+				percentageOfFloorToCover = .25f;
+				break;
+			case 3:
+				percentageOfFloorToCover = .333f;
+				break;
+			case 4:
+				percentageOfFloorToCover = .4f;
+				break;
+			default:
+				percentageOfFloorToCover = .25f;
+				break;
+		}
 
-        await Task.WhenAll(tasks);
-		//
+		//TODO: Get this to work concurrently
+		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
+        {
+			CreatePathsBetweenPoints();
+		}
 
-		//GenerateKeyMapItems();
+        GenerateKeyMapItems();
 
-		SpawnPlayers();
+        SpawnPlayers();
 	}
 
+	#region Path Generation
 	private void GenerateInteriorBlocksOnAllFloorTiles()
 	{
 		foreach (var tilePosition in _floorTileList)
@@ -232,15 +249,17 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private async Task CreatePathsBetweenPointsAsync()
+	private void CreatePathsBetweenPoints()
 	{
-		var availableSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
+		var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
 
-		TileMapFloorGridSpace startingPoint = availableSpaces[_rng.RandiRange(0, availableSpaces.Count - 1)];
+		TileMapFloorGridSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
 
 		TileMapFloorGridSpace walkingFloorSpace = startingPoint;
 
-		var targetPoint = _existingFloorGridSpaces[_rng.RandiRange(0, _existingFloorGridSpaces.Count - 1)];
+		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
+
+		var targetPoint = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
 
 		//For some reason, trig circle is flipped across its y axis... whatever...
 		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
@@ -316,6 +335,10 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
+	#endregion
+
+	#region Key Object Generation
+
 	private void GenerateKeyMapItems()
 	{
 		GeneratePortal();
@@ -346,6 +369,8 @@ public partial class BaseOverworldLevel : Node
 
 		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
+
+	#endregion
 
 	#region Direction-Changing Utility Methods
 
