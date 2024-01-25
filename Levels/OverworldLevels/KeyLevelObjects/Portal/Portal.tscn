@@ -1,18 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdxp168wlyb8a"]
 
-[ext_resource type="Texture2D" uid="uid://bw0wcqcr245e5" path="res://Levels/OverworldLevels/KeyLevelObjects/Portal/Portal.png" id="1_02f0l"]
+[ext_resource type="Texture2D" uid="uid://5yejjkejj05v" path="res://Levels/OverworldLevels/KeyLevelObjects/Portal/Sprites/Portal_0.png" id="1_hbrop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwmtv"]
-size = Vector2(62, 62)
+size = Vector2(34, 31)
 
 [node name="Portal" type="Node2D"]
 metadata/_edit_horizontal_guides_ = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("1_02f0l")
+texture = ExtResource("1_hbrop")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 0.5)
 shape = SubResource("RectangleShape2D_vwmtv")

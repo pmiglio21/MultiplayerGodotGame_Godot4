@@ -1,15 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://drqp35yight32"]
 
-[ext_resource type="Texture2D" uid="uid://dbv2ic8ka22la" path="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.png" id="1_4uiff"]
+[ext_resource type="Texture2D" uid="uid://bdv3ewcbgl0fg" path="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/Sprites/PortalSwitch_0.png" id="1_glven"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uk080"]
-size = Vector2(56, 59)
+size = Vector2(27, 29)
 
 [node name="PortalSwitch" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.237764, 0.246637)
-texture = ExtResource("1_4uiff")
+texture = ExtResource("1_glven")
 
 [node name="Area2D" type="Area2D" parent="."]
 

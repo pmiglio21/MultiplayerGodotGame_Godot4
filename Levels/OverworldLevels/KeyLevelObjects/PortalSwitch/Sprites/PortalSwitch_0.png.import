@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbv2ic8ka22la"
-path="res://.godot/imported/PortalSwitch.png-f86be9ee19805bc52b1687f828181198.ctex"
+uid="uid://bdv3ewcbgl0fg"
+path="res://.godot/imported/PortalSwitch_0.png-42b15e84fd989bb09fc45f763467d5ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.png"
-dest_files=["res://.godot/imported/PortalSwitch.png-f86be9ee19805bc52b1687f828181198.ctex"]
+source_file="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/Sprites/PortalSwitch_0.png"
+dest_files=["res://.godot/imported/PortalSwitch_0.png-42b15e84fd989bb09fc45f763467d5ba.ctex"]
 
 [params]
 
