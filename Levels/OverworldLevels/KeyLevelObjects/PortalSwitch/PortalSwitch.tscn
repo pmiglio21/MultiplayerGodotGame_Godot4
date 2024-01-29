@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://drqp35yight32"]
+
+[ext_resource type="Texture2D" uid="uid://bdv3ewcbgl0fg" path="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/Sprites/PortalSwitch_0.png" id="1_glven"]
+[ext_resource type="Script" path="res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.cs" id="1_lw7qt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uk080"]
+size = Vector2(27, 29)
+
+[node name="PortalSwitch" type="CharacterBody2D"]
+script = ExtResource("1_lw7qt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_glven")
+
+[node name="CollisionArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uk080")

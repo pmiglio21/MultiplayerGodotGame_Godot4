@@ -15,7 +15,7 @@ script = ExtResource("2_wkdfo")
 
 [node name="LevelCamera" parent="." instance=ExtResource("1_45dlx")]
 position = Vector2(303, 186)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(2, 2)
 position_smoothing_speed = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -32,3 +32,6 @@ position = Vector2(353, 167)
 [node name="FogOfWar" type="Sprite2D" parent="."]
 position = Vector2(-305, -181)
 centered = false
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)

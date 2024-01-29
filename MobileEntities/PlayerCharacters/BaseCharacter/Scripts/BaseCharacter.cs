@@ -269,7 +269,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 			else if (!isAttacking && attackInputTimer == attackInputTimerMax)
 			{
-				isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
+				isAttacking = Input.IsActionJustPressed($"WestButton_{DeviceIdentifier}");
 
 				attackTurnDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 
@@ -395,6 +395,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 
 		#endregion
+
+
 	}
 }
 
