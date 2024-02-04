@@ -37,4 +37,4 @@ position = Vector2(-305, -181)
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.65098)
