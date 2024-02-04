@@ -5,9 +5,9 @@ using MobileEntities.PlayerCharacters.Scripts;
 using System;
 using System.Collections.Generic;
 
-public partial class PortalSwitch : Node2D
+public partial class Portal : Node2D
 {
-	public bool IsSwitchActivated = false;
+	public bool IsPortalActivated = false;
 	private bool _isAreaEntered = false;
 	private List<string> _playersInArea = new List<string>();
 
@@ -42,7 +42,9 @@ public partial class PortalSwitch : Node2D
 
 			if (didOneOfThePlayersInAreaPressTheButton)
 			{
-				IsSwitchActivated = !IsSwitchActivated;
+				IsPortalActivated = !IsPortalActivated;
+
+				GD.Print("Yuh");
 			}
 		}
 	}
