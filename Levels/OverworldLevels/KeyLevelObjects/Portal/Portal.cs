@@ -5,80 +5,83 @@ using MobileEntities.PlayerCharacters.Scripts;
 using System;
 using System.Collections.Generic;
 
-public partial class Portal : Node2D
+namespace Levels.OverworldLevels.KeyLevelObjects
 {
-	public bool IsPortalActivated = false;
-	private bool _isAreaEntered = false;
-	private List<string> _playersInArea = new List<string>();
-
-	public override void _Ready()
+	public partial class Portal : Node2D
 	{
-	}
+		public bool IsPortalActivated = false;
+		private bool _isAreaEntered = false;
+		private List<string> _playersInArea = new List<string>();
 
-	public override void _Process(double delta)
-	{
-		CheckForSwitchActivation();
-	}
-
-	private void CheckForSwitchActivation()
-	{
-		if (_isAreaEntered && UniversalInputHelper.IsButtonJustPressed(InputType.SouthButton))
+		public override void _Ready()
 		{
-			var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.SouthButton);
+		}
 
-			bool didOneOfThePlayersInAreaPressTheButton = false;
+		public override void _Process(double delta)
+		{
+			CheckForPortalActivation();
+		}
 
-			foreach (string playerWhoPressedButton in playersWhoPressedButtonThisFrame)
+		private void CheckForPortalActivation()
+		{
+			if (_isAreaEntered && UniversalInputHelper.IsButtonJustPressed(InputType.SouthButton))
 			{
-				foreach (string playerInArea in _playersInArea)
+				var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.SouthButton);
+
+				bool didOneOfThePlayersInAreaPressTheButton = false;
+
+				foreach (string playerWhoPressedButton in playersWhoPressedButtonThisFrame)
 				{
-					if (playerWhoPressedButton == playerInArea)
+					foreach (string playerInArea in _playersInArea)
 					{
-						didOneOfThePlayersInAreaPressTheButton = true;
-						break;
+						if (playerWhoPressedButton == playerInArea)
+						{
+							didOneOfThePlayersInAreaPressTheButton = true;
+							break;
+						}
 					}
 				}
-			}
 
-			if (didOneOfThePlayersInAreaPressTheButton)
-			{
-				IsPortalActivated = !IsPortalActivated;
+				if (didOneOfThePlayersInAreaPressTheButton)
+				{
+					IsPortalActivated = !IsPortalActivated;
 
-				GD.Print("Yuh");
-			}
-		}
-	}
-
-	private void OnCollisionAreaEntered(Area2D area)
-	{
-		if (area.IsInGroup("PlayerHurtBox"))
-		{
-			CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
-
-			var character = area.GetParent() as BaseCharacter;
-
-			if (!collisionShape.Disabled)
-			{
-				_isAreaEntered = true;
-
-				_playersInArea.Add(character.DeviceIdentifier);
+					GD.Print("Yuh");
+				}
 			}
 		}
-	}
 
-	private void OnCollisionAreaExited(Area2D area)
-	{
-		if (area.IsInGroup("PlayerHurtBox"))
+		private void OnCollisionAreaEntered(Area2D area)
 		{
-			CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
-
-			var character = area.GetParent() as BaseCharacter;
-
-			if (!collisionShape.Disabled)
+			if (area.IsInGroup("PlayerHurtBox"))
 			{
-				_isAreaEntered = false;
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
-				_playersInArea.Remove(character.DeviceIdentifier);
+				var character = area.GetParent() as BaseCharacter;
+
+				if (!collisionShape.Disabled)
+				{
+					_isAreaEntered = true;
+
+					_playersInArea.Add(character.DeviceIdentifier);
+				}
+			}
+		}
+
+		private void OnCollisionAreaExited(Area2D area)
+		{
+			if (area.IsInGroup("PlayerHurtBox"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+
+				var character = area.GetParent() as BaseCharacter;
+
+				if (!collisionShape.Disabled)
+				{
+					_isAreaEntered = false;
+
+					_playersInArea.Remove(character.DeviceIdentifier);
+				}
 			}
 		}
 	}

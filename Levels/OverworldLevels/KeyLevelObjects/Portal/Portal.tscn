@@ -13,7 +13,7 @@ metadata/_edit_horizontal_guides_ = []
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_hbrop")
 
-[node name="CollisionArea" type="Area2D" parent="."]
+[node name="CollisionArea" type="Area2D" parent="." groups=["PortalArea"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
 position = Vector2(1, 0.5)
