@@ -78,6 +78,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool finishedAttack = false;
 
 		protected bool isDead = false;
+
+		protected bool isInPortal = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -95,6 +97,14 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		private int _pauseTimer = 0;
 		private const int _pauseTimerMax = 15;
+
+		#endregion
+
+		#region Portal Properties
+
+		private int _portalWaitTimer = 0;
+
+		private const int _portalWaitTimerMax = 150;
 
 		#endregion
 
@@ -139,6 +149,19 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			if (isControllable)
 			{
+				if (_portalWaitTimer < _portalWaitTimerMax && isInPortal)
+				{
+					_portalWaitTimer++;
+				}
+				else if (_portalWaitTimer >= _portalWaitTimerMax && isInPortal)
+				{
+					//Portal jump
+
+					GD.Print("PORTAL JUMP");
+
+					_portalWaitTimer = 0;
+				}
+
 				if (initialInputTimer < initialInputTimerMax)
 				{
 					initialInputTimer++;
@@ -269,7 +292,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 			else if (!isAttacking && attackInputTimer == attackInputTimerMax)
 			{
-				isAttacking = Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}");
+				isAttacking = Input.IsActionJustPressed($"WestButton_{DeviceIdentifier}");
 
 				attackTurnDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 
@@ -378,11 +401,21 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
+				//if (!collisionShape.Disabled)
+				//{
+				//	GD.Print("Player Hurt Entered");
+
+				//	characterStats.Health.HealthAmount -= 1;
+				//}
+			}
+			else if (area.IsInGroup("PortalArea"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape2D");
+
 				if (!collisionShape.Disabled)
 				{
-					GD.Print("Player Hurt Entered");
-
-					characterStats.Health.HealthAmount -= 1;
+					GD.Print("IsInPortal");
+					isInPortal = true;
 				}
 			}
 		}
@@ -391,6 +424,18 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		private void OnMainHurtBoxAreaExited(Area2D area)
 		{
 			//GD.Print("Player Hurt Exited");
+
+			if (area.IsInGroup("PortalArea"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape2D");
+
+				if (!collisionShape.Disabled)
+				{
+					GD.Print("!IsInPortal");
+					isInPortal = false;
+					_portalWaitTimer = 0;
+				}
+			}
 		}
 		#endregion
 

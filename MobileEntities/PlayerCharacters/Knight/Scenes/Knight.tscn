@@ -59,6 +59,12 @@ libraries = {
 "": SubResource("AnimationLibrary_g3jla")
 }
 
+[node name="MainHitBox" parent="." index="2"]
+visible = false
+
 [node name="MainHurtBox" parent="." index="3"]
 position = Vector2(0, 2)
-scale = Vector2(-0.52621, 1.00891)
+scale = Vector2(-0.0548879, -1.31183)
+
+[node name="FootBox" parent="." index="5"]
+position = Vector2(0.5, 11)

@@ -61,6 +61,15 @@ namespace Levels.OverworldLevels.Utilities
 				{
 					_newPosition.X = player.GlobalPosition.X - _distanceThresholdBeforeCameraMoves;
 				}
+
+				if (GlobalPosition.Y - player.GlobalPosition.Y >= _distanceThresholdBeforeCameraMoves)
+				{
+					_newPosition.Y = player.GlobalPosition.Y + _distanceThresholdBeforeCameraMoves;
+				}
+				else if (GlobalPosition.Y - player.GlobalPosition.Y <= -_distanceThresholdBeforeCameraMoves)
+				{
+					_newPosition.Y = player.GlobalPosition.Y - _distanceThresholdBeforeCameraMoves;
+				}
 			}
 		}
 	}
