@@ -9,7 +9,7 @@ using Enums;
 
 namespace Scenes.UI.PlayerSelectScene
 {
-	public partial class ConfirmSelectionButton : Node
+	public partial class ConfirmSelectionButton : Node2D
 	{
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
@@ -43,7 +43,7 @@ namespace Scenes.UI.PlayerSelectScene
 				//Instances all characters from the currently activated pickers
 				foreach (var picker in PlayerCharacterPickerManager.ActivePickers)
 				{
-					var currentPickerSprite = picker.GetNode("SelectedPlayerIcon") as Sprite3D;
+					var currentPickerSprite = picker.GetNode("SelectedPlayerIcon") as Sprite2D;
 
 					int matchingIndex = PlayerManager.AvailablePlayerImageOptions.IndexOf(currentPickerSprite.Texture.ResourcePath);
 
@@ -91,7 +91,7 @@ namespace Scenes.UI.PlayerSelectScene
 		}
 
 		private PlayableCharacterClass DeterminePlayableCharacterClass(Node instance)
-        {
+		{
 			if (instance is Knight)
 			{
 				return PlayableCharacterClass.Knight;
@@ -109,7 +109,7 @@ namespace Scenes.UI.PlayerSelectScene
 				return PlayableCharacterClass.Cleric;
 			}
 			else
-            {
+			{
 				return PlayableCharacterClass.BaseCharacter;
 			}
 		}

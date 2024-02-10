@@ -30,7 +30,7 @@ namespace MobileEntities
 			return latestCardinalDirection;
 		}
 
-		protected void FlipCharacter(Vector3 moveDirection, Sprite3D playerSprite)
+		protected void FlipCharacter(Vector3 moveDirection, Sprite2D playerSprite)
 		{
 			if (moveDirection.X > 0 && playerSprite.FlipH)
 			{

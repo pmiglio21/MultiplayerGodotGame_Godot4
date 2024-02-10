@@ -13,7 +13,7 @@ namespace Scenes.UI.PlayerSelectScene
 	{
 		#region Signals
 		[Signal]
-		public delegate void PlayerSelectionOccurredEventHandler(Sprite3D pickerSprite, bool selectionHasBeenMade);
+		public delegate void PlayerSelectionOccurredEventHandler(Sprite2D pickerSprite, bool selectionHasBeenMade);
 
 		[Signal]
 		public delegate void FinishSelectionProcessStartedEventHandler();
@@ -51,7 +51,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 		#region Components 
 
-		public Sprite3D PickerSprite;
+		public Sprite2D PickerSprite;
 
 		#endregion
 
@@ -67,7 +67,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 		public override void _Ready()
 		{
-			PickerSprite = GetNode<Sprite3D>("SelectedPlayerIcon");
+			PickerSprite = GetNode<Sprite2D>("SelectedPlayerIcon");
 		}
 
 		public override void _Process(double delta)
@@ -369,7 +369,7 @@ namespace Scenes.UI.PlayerSelectScene
 		//Receiving this signal from the other 3 pickers (NOT itself)
 		//This event allows players to pick only unique classes.
 		//TODO: I feel like this could certainly be more organized
-		private void OnPlayerCharacterPicker_PlayerSelectionOccurred(Sprite3D pickerSprite, bool selectionHasBeenMade)
+		private void OnPlayerCharacterPicker_PlayerSelectionOccurred(Sprite2D pickerSprite, bool selectionHasBeenMade)
 		{
 			//Changes player selection enabled/disabled depending on what other pickers have chosen.
 			if (CurrentPickerIsActivated && !SelectionHasBeenMade && pickerSprite.Texture == PickerSprite.Texture)
