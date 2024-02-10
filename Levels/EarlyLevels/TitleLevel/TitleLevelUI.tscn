@@ -16,16 +16,25 @@ offset_bottom = 300.0
 theme = SubResource("Theme_ijh7m")
 text = "Untitled Game"
 
-[node name="TitleToPlayerSelectButton" type="Button" parent="."]
+[node name="TitleToCompetitivePlayerSelectButton" type="Button" parent="."]
 offset_left = 503.0
-offset_top = 310.0
+offset_top = 306.0
 offset_right = 617.0
-offset_bottom = 375.0
-text = "Play"
+offset_bottom = 371.0
+text = "Competitive
+"
+
+[node name="TitleToCoopPlayerSelectButton" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 379.0
+offset_right = 617.0
+offset_bottom = 444.0
+text = "Co-op
+"
 
 [node name="QuitGameButton" type="Button" parent="."]
 offset_left = 503.0
-offset_top = 386.0
+offset_top = 455.0
 offset_right = 617.0
-offset_bottom = 451.0
+offset_bottom = 520.0
 text = "Quit"

@@ -51,7 +51,7 @@ public partial class PauseScreenManager : Node2D
 			_pauseTimer = 0;
 		}
 
-		if (UniversalInputHelper.IsButtonJustPressed(InputType.StartButton) || UniversalInputHelper.IsButtonJustPressed(InputType.SouthButton))
+		if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 		{
 			if (_resumeGameButton.HasFocus())
 			{
@@ -68,6 +68,7 @@ public partial class PauseScreenManager : Node2D
 			{
 				GetTree().Paused = false;
 				PlayerManager.ClearActivePlayers();
+				GlobalGameProperties.CurrentGameType = GameType.None;
 				GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 			}
 		}
@@ -75,7 +76,7 @@ public partial class PauseScreenManager : Node2D
 
 	private void GetNavigationInput()
 	{
-		if (UniversalInputHelper.IsButtonJustPressed(InputType.MoveSouth))
+		if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
 		{
 			if (_resumeGameButton.HasFocus())
 			{
@@ -83,7 +84,7 @@ public partial class PauseScreenManager : Node2D
 			}
 		}
 
-		if (UniversalInputHelper.IsButtonJustPressed(InputType.MoveNorth))
+		if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
 		{
 			if (_quitGameButton.HasFocus())
 			{

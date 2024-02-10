@@ -10,11 +10,18 @@ namespace Globals
 {
     public static class UniversalInputHelper
     {
-        public static bool IsButtonJustPressed(InputType inputType)
+        public static bool IsActionJustPressed(InputType inputType)
         {
             return (Input.IsActionJustPressed($"{inputType}_0") || Input.IsActionJustPressed($"{inputType}_1") || 
                     Input.IsActionJustPressed($"{inputType}_2") || Input.IsActionJustPressed($"{inputType}_3") || 
                     Input.IsActionJustPressed($"{inputType}_Keyboard"));
+        }
+
+        public static bool IsActionPressed(InputType inputType)
+        {
+            return (Input.IsActionPressed($"{inputType}_0") || Input.IsActionPressed($"{inputType}_1") ||
+                    Input.IsActionPressed($"{inputType}_2") || Input.IsActionPressed($"{inputType}_3") ||
+                    Input.IsActionPressed($"{inputType}_Keyboard"));
         }
 
         public static List<string> GetPlayersWhoJustPressedButton(InputType inputType)

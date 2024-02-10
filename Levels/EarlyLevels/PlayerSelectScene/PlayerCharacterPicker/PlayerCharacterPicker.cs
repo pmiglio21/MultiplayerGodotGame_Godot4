@@ -91,7 +91,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 					if (!_playerSelectionChangedRecently)
 					{
-						bool goToTitleLevel = UniversalInputHelper.IsButtonJustPressed(InputType.EastButton);
+						bool goToTitleLevel = UniversalInputHelper.IsActionJustPressed(InputType.EastButton);
 
 						if (goToTitleLevel && PlayerCharacterPickerManager.ActivePickers.Count == 0)
 						{

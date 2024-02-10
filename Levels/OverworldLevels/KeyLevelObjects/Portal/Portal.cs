@@ -24,7 +24,7 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
 		private void CheckForPortalActivation()
 		{
-			if (_isAreaEntered && UniversalInputHelper.IsButtonJustPressed(InputType.SouthButton))
+			if (_isAreaEntered && UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
 				var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.SouthButton);
 
