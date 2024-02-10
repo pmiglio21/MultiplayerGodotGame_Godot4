@@ -19,6 +19,10 @@ config/icon="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageId
 
 project/assembly_name="Multiplayer Godot Game Godot 4"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+
 [input]
 
 MoveSouth_0={
