@@ -1,4 +1,5 @@
 using Enums;
+using Globals.PlayerManagement;
 using Godot;
 using Levels.OverworldLevels.Utilities;
 using System;
@@ -20,6 +21,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		private List<string> _animationList; 
 
 		protected Sprite2D playerSprite;
+
+		protected PlayerCamera playerCamera;
 
 		#endregion
 
@@ -117,6 +120,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			_animationList = animationPlayer.GetAnimationList().ToList();
 
 			playerSprite = GetNode<Sprite2D>("PlayerSprite");
+
+			playerCamera = GetNode<PlayerCamera>("PlayerCamera");
+			AdjustPlayerCameraView();
+
 			#endregion
 
 			InitializeDeadZones();
@@ -226,7 +233,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			GetPauseScreen();
 
-			GetLevelCamera();
+			//GetLevelCamera();
 		}
 
 		private void GetPauseScreen()
@@ -241,11 +248,48 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		private void GetLevelCamera()
 		{
-			var levelCameras = GetTree().GetNodesInGroup("LevelCamera");
+			//var levelCameras = GetTree().GetNodesInGroup("LevelCamera");
 
-			if (levelCameras != null)
+			//if (levelCameras != null)
+			//{
+			//	levelCamera = levelCameras.First() as LevelCamera;
+			//}
+		}
+
+		private void AdjustPlayerCameraView()
+		{
+			if (PlayerManager.ActivePlayers.Count == 1)
 			{
-				levelCamera = levelCameras.First() as LevelCamera;
+				//playerCamera.Zoom = new Vector2(5, 5);
+			}
+			else if (PlayerManager.ActivePlayers.Count == 2)
+			{
+
+			}
+			else if (PlayerManager.ActivePlayers.Count == 3)
+			{
+
+			}
+			else if (PlayerManager.ActivePlayers.Count == 4)
+			{
+
+			}
+
+			if (PlayerNumber == 1)
+			{
+
+			}
+			else if (PlayerNumber == 2)
+			{
+
+			}
+			else if (PlayerNumber == 3)
+			{
+
+			}
+			else if (PlayerNumber == 3)
+			{
+
 			}
 		}
 
