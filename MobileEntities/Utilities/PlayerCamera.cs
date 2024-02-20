@@ -14,23 +14,25 @@ namespace Levels.OverworldLevels.Utilities
 		public override void _Ready()
 		{
 			_parentPlayer = GetParent() as CharacterBody2D;
+
+			//GD.Print("");
 			_newPosition = GlobalPosition;
 		}
 
 		public override void _Process(double delta)
 		{
-			if (PlayerManager.ActivePlayers.Count > 0)
-			{
-				//Find nearest player and set camera distance based on that player
+			//if (PlayerManager.ActivePlayers.Count > 0)
+			//{
+			//	//Find nearest player and set camera distance based on that player
 
-				SetDistance(_parentPlayer);
+			//	SetDistance(_parentPlayer);
 
-				//Maybe try MoveAndSlide()?
+			//	//Maybe try MoveAndSlide()?
 
-				GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+			//	GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
 
-				//GlobalPosition = _newPosition;
-			}
+			//	//GlobalPosition = _newPosition;
+			//}
 		}
 
 		private void SetDistance(CharacterBody2D player)

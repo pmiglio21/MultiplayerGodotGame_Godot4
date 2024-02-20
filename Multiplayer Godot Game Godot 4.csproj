@@ -4,7 +4,4 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>MultiplayerGodotGameGodot4</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="MobileEntities\Utilities\" />
-  </ItemGroup>
 </Project>

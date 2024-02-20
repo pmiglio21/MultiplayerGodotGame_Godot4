@@ -18,6 +18,7 @@ namespace Globals
         #endregion
 
         #region Overworld Level Scenes
+        public const string SplitScreenManagerPath = "res://Levels/OverworldLevels/Utilities/SplitScreenManager.tscn";
         public const string OverworldLevel1Path = "res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn";
         #endregion
     }

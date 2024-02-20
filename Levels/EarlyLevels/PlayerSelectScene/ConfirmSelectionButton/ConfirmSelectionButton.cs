@@ -81,7 +81,7 @@ namespace Scenes.UI.PlayerSelectScene
 				}
 
 				//Load next scene
-				GetTree().ChangeSceneToFile(LevelScenePaths.OverworldLevel1Path);
+				GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
 			}
 		}
 

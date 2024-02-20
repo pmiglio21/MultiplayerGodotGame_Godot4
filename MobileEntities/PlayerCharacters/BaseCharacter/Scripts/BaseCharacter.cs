@@ -22,7 +22,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected Sprite2D playerSprite;
 
-		protected PlayerCamera playerCamera;
+		public Camera2D playerCamera;
 
 		#endregion
 
@@ -121,8 +121,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			playerSprite = GetNode<Sprite2D>("PlayerSprite");
 
-			playerCamera = GetNode<PlayerCamera>("PlayerCamera");
-			AdjustPlayerCameraView();
+			playerCamera = GetNode<Camera2D>("Camera2D");
+			//AdjustPlayerCameraView();
 
 			#endregion
 
@@ -203,6 +203,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 					SetAnimationToBePlayed();
 				}
 			}
+
+			playerCamera.GlobalPosition = this.GlobalPosition;
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -255,43 +257,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			//	levelCamera = levelCameras.First() as LevelCamera;
 			//}
 		}
-
-		private void AdjustPlayerCameraView()
-		{
-			if (PlayerManager.ActivePlayers.Count == 1)
-			{
-				//playerCamera.Zoom = new Vector2(5, 5);
-			}
-			else if (PlayerManager.ActivePlayers.Count == 2)
-			{
-
-			}
-			else if (PlayerManager.ActivePlayers.Count == 3)
-			{
-
-			}
-			else if (PlayerManager.ActivePlayers.Count == 4)
-			{
-
-			}
-
-			if (PlayerNumber == 1)
-			{
-
-			}
-			else if (PlayerNumber == 2)
-			{
-
-			}
-			else if (PlayerNumber == 3)
-			{
-
-			}
-			else if (PlayerNumber == 3)
-			{
-
-			}
-		}
+		
 
 		#endregion
 

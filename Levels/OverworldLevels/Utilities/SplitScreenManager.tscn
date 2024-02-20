@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://gvduncuyxglt"]
+
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Utilities/SplitScreenManager.cs" id="1_rtyjs"]
+[ext_resource type="PackedScene" uid="uid://de22b7g4faw63" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
+
+[node name="SubViewportCanvas" type="CanvasLayer"]
+script = ExtResource("1_rtyjs")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_right = 1028.0
+offset_bottom = 1028.0
+scale = Vector2(1.11705, 0.638117)
+size_flags_horizontal = 0
+columns = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer/SubViewport"]
+
+[node name="Level" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_sbvqd")]
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer2/SubViewport"]
+
+[node name="SubViewportContainer3" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer3"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer3/SubViewport"]
+
+[node name="SubViewportContainer4" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer4"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer4/SubViewport"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 58.0
+offset_top = 45.0
+offset_right = 687.0
+offset_bottom = 379.0
+text = "HELLO"
