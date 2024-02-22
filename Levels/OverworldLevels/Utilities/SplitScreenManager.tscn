@@ -9,7 +9,7 @@ script = ExtResource("1_rtyjs")
 [node name="GridContainer" type="GridContainer" parent="."]
 offset_right = 1028.0
 offset_bottom = 1028.0
-scale = Vector2(1.11705, 0.638117)
+scale = Vector2(0.996491, 0.99652)
 size_flags_horizontal = 0
 columns = 2
 
@@ -19,6 +19,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
+size = Vector2i(576, 324)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer/SubViewport"]
@@ -31,6 +32,8 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
 transparent_bg = true
 handle_input_locally = false
+size = Vector2i(576, 324)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer2/SubViewport"]
@@ -41,6 +44,8 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer3"]
 transparent_bg = true
 handle_input_locally = false
+size = Vector2i(576, 324)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer3/SubViewport"]
@@ -51,6 +56,8 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer4"]
 transparent_bg = true
 handle_input_locally = false
+size = Vector2i(576, 324)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer4/SubViewport"]

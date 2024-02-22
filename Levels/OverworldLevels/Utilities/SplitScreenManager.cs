@@ -12,7 +12,7 @@ public partial class SplitScreenManager : CanvasLayer
 
 	public override void _Ready()
 	{
-        _subViewports = GetSubViewports();
+		_subViewports = GetSubViewports();
 		_level = _subViewports[0].GetNode("Level");
 		SetSubViewportWorlds();
 		SetCamerasToPlayers();
@@ -20,8 +20,8 @@ public partial class SplitScreenManager : CanvasLayer
 
 		GD.Print($"SubViewports: {_subViewports.Count}");
 
-        //AdjustPlayerCameraView();
-    }
+		//AdjustPlayerCameraView();
+	}
 
 	public override void _Process(double delta)
 	{
@@ -49,24 +49,24 @@ public partial class SplitScreenManager : CanvasLayer
 	}
 
 	private void SetSubViewportWorlds()
-    {
+	{
 		foreach (SubViewport subViewport in _subViewports)
-        {
+		{
 			subViewport.World2D = _subViewports[0].World2D;
-        }
-    }
+		}
+	}
 
 	private void SetCamerasToPlayers()
-    {
+	{
 		int playerCount = 0;
 
 		foreach (BaseCharacter player in PlayerManager.ActivePlayers)
-        {
+		{
 			player.playerCamera = _subViewportCameras[playerCount];
 
 			playerCount++;
-        }
-    }
+		}
+	}
 
 	private void AdjustPlayerCameraView()
 	{
