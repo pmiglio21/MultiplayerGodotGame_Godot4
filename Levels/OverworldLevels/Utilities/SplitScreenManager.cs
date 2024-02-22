@@ -20,7 +20,7 @@ public partial class SplitScreenManager : CanvasLayer
 
 		GD.Print($"SubViewports: {_subViewports.Count}");
 
-		//AdjustPlayerCameraView();
+		AdjustPlayerCameraView();
 	}
 
 	public override void _Process(double delta)
@@ -70,24 +70,30 @@ public partial class SplitScreenManager : CanvasLayer
 
 	private void AdjustPlayerCameraView()
 	{
+		Vector2I mainViewportSize = GetWindow().Size;
+
 		if (PlayerManager.ActivePlayers.Count == 1)
 		{
-			_subViewports[0].Size = new Vector2I(100, 100);
-
-			//PlayerManager.ActivePlayers[0].playerCamera = _subViewports[0].GetCamera2D();
-			//playerCamera.Zoom = new Vector2(5, 5);
+			_subViewports[0].Size = mainViewportSize;
 		}
 		else if (PlayerManager.ActivePlayers.Count == 2)
 		{
-
+			_subViewports[0].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
+			_subViewports[1].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
 		}
 		else if (PlayerManager.ActivePlayers.Count == 3)
 		{
-
+			_subViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[3].Size = new Vector2I(0, 0);
 		}
 		else if (PlayerManager.ActivePlayers.Count == 4)
 		{
-
+			_subViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			_subViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 		}
 
 		//if (PlayerNumber == 1)
