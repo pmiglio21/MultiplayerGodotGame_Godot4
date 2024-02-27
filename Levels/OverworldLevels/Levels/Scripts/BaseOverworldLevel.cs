@@ -61,13 +61,20 @@ public partial class BaseOverworldLevel : Node
 
 		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
 		{
-			GenerateCompetitiveSpawnPoints();
+			if (PlayerManager.ActivePlayers.Count > 1)
+			{
+				GenerateMultipleSpawnPoints();
 
-			CreatePathsBetweenSpawnPoints();
+				CreatePathsBetweenSpawnPoints();
+			}
+			else
+			{
+				GenerateSingleSpawnPoints();
+			}
 		}
 		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
 		{
-			GenerateCoopSpawnPoints();
+			GenerateSingleSpawnPoints();
 		}
 
 		float percentageOfFloorToCover = 0;
@@ -131,7 +138,7 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void GenerateCompetitiveSpawnPoints()
+	private void GenerateMultipleSpawnPoints()
 	{
 		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{
@@ -167,7 +174,7 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void GenerateCoopSpawnPoints()
+	private void GenerateSingleSpawnPoints()
 	{
 		var floorTileIndex = (int)Math.Floor(_rng.RandfRange(0, _floorTileList.Count));
 

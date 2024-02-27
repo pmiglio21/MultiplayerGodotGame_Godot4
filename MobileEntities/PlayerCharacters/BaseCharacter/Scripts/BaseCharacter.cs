@@ -235,8 +235,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		private void GetReferencesToOutsideNodes()
 		{
 			GetPauseScreen();
-
-			//GetLevelCamera();
 		}
 
 		private void GetPauseScreen()
@@ -248,17 +246,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				pauseScreen = pauseScreens.First() as PauseScreenManager;
 			}
 		}
-
-		private void GetLevelCamera()
-		{
-			//var levelCameras = GetTree().GetNodesInGroup("LevelCamera");
-
-			//if (levelCameras != null)
-			//{
-			//	levelCamera = levelCameras.First() as LevelCamera;
-			//}
-		}
-		
 
 		#endregion
 
