@@ -1,3 +1,5 @@
+using Enums;
+using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
@@ -57,17 +59,18 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateInteriorBlocksOnAllFloorTiles();
 
-		GenerateSpawnPoints();
+		
 
 		//If multiplayer
-		if (_existingFloorGridSpaces.Count(x => x.IsSpawnPoint) > 1)
+		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
 		{
+			GenerateCompetitiveSpawnPoints();
+
 			CreatePathsBetweenSpawnPoints();
 		}
-		//TODO: If singleplayer
-		else
+		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
 		{
-
+			GenerateCoopSpawnPoints();
 		}
 
 		float percentageOfFloorToCover = 0;
@@ -99,7 +102,14 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateKeyMapItems();
 
-		SpawnPlayers();
+		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+		{
+			SpawnLocalCompetitivePlayers();
+		}
+		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+		{
+			SpawnLocalCoopPlayers();
+		}
 	}
 
 	#region Path Generation
@@ -124,7 +134,7 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void GenerateSpawnPoints()
+	private void GenerateCompetitiveSpawnPoints()
 	{
 		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{
@@ -155,6 +165,39 @@ public partial class BaseOverworldLevel : Node
 						var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
 						rtl.Text = spawnPointGeneratedCount.ToString();
 					}
+				}
+			}
+		}
+	}
+
+	private void GenerateCoopSpawnPoints()
+	{
+		var floorTileIndex = (int)Math.Floor(_rng.RandfRange(0, _floorTileList.Count));
+
+		var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
+
+		if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
+		{
+			var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
+
+			floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+
+			floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+			floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = 0;
+
+			var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
+			richTextLabel.Text = "0";
+
+			//Clear out spawn point areas
+			foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
+			{
+				if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+				{
+					currentFloorGridSpace.InteriorBlock.QueueFree();
+					currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
+
+					var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+					rtl.Text = "0";
 				}
 			}
 		}
@@ -380,7 +423,39 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void SpawnPlayers()
+	private void SpawnLocalCoopPlayers()
+	{
+		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+
+		int playerCount = 0;
+
+		foreach (BaseCharacter character in PlayerManager.ActivePlayers)
+		{
+			if (playerCount == 0)
+			{
+				character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
+
+				AddChild(character);
+			}
+			else
+			{
+				float changeInX = _rng.RandfRange(-30, 30);
+				float changeInY = _rng.RandfRange(-30, 30);
+
+				character.GlobalPosition = new Vector2(PlayerManager.ActivePlayers[0].GlobalPosition.X + changeInX, PlayerManager.ActivePlayers[0].GlobalPosition.Y + changeInY);
+
+				AddChild(character);
+			}
+
+			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
+
+			playerCount++;
+		}
+
+		PlayerCharacterPickerManager.ActivePickers.Clear();
+	}
+
+	private void SpawnLocalCompetitivePlayers()
 	{
 		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
@@ -391,8 +466,6 @@ public partial class BaseOverworldLevel : Node
 			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
 
 			character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
-
-			//_subViewports[playerCount].AddChild(character);
 
 			AddChild(character);
 

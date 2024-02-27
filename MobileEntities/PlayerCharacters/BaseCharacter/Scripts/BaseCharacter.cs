@@ -1,4 +1,5 @@
 using Enums;
+using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using Levels.OverworldLevels.Utilities;
@@ -89,8 +90,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected PauseScreenManager pauseScreen;
 
-		protected LevelCamera levelCamera;
-
 		#endregion
 
 		#region Pause Properties
@@ -122,7 +121,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			playerSprite = GetNode<Sprite2D>("PlayerSprite");
 
 			playerCamera = GetNode<Camera2D>("Camera2D");
-			//AdjustPlayerCameraView();
 
 			#endregion
 
@@ -204,7 +202,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			playerCamera.GlobalPosition = this.GlobalPosition;
+			if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+			{
+				playerCamera.GlobalPosition = this.GlobalPosition;
+			}
 		}
 
 		public override void _PhysicsProcess(double delta)

@@ -32,13 +32,13 @@ namespace Levels.EarlyLevels.TitleLevel
 			{
 				if (_competitiveGameButton.HasFocus())
 				{
-					GlobalGameProperties.CurrentGameType = GameType.Competitive;
+					GlobalGameProperties.CurrentGameType = GameType.LocalCompetitive;
 					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
 				}
 
 				if (_coopGameButton.HasFocus())
 				{
-					GlobalGameProperties.CurrentGameType = GameType.Coop;
+					GlobalGameProperties.CurrentGameType = GameType.LocalCoop;
 					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
 				}
 

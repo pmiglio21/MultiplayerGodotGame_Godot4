@@ -1,3 +1,5 @@
+using Enums;
+using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
@@ -20,7 +22,15 @@ public partial class SplitScreenManager : CanvasLayer
 
 		GD.Print($"SubViewports: {_subViewports.Count}");
 
-		AdjustPlayerCameraView();
+
+		if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+		{
+			AdjustLocalCoopPlayerCameraView();
+		}
+		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+		{
+			AdjustLocalCompetitivePlayerCameraView();
+		}
 	}
 
 	public override void _Process(double delta)
@@ -68,7 +78,7 @@ public partial class SplitScreenManager : CanvasLayer
 		}
 	}
 
-	private void AdjustPlayerCameraView()
+	private void AdjustLocalCompetitivePlayerCameraView()
 	{
 		Vector2I mainViewportSize = GetWindow().Size;
 
@@ -95,22 +105,15 @@ public partial class SplitScreenManager : CanvasLayer
 			_subViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 			_subViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 		}
+	}
 
-		//if (PlayerNumber == 1)
-		//{
+	private void AdjustLocalCoopPlayerCameraView()
+	{
+		Vector2I mainViewportSize = GetWindow().Size;
 
-		//}
-		//else if (PlayerNumber == 2)
-		//{
-
-		//}
-		//else if (PlayerNumber == 3)
-		//{
-
-		//}
-		//else if (PlayerNumber == 3)
-		//{
-
-		//}
+		_subViewports[0].Size = mainViewportSize;
+		_subViewports[1].Size = new Vector2I(0, 0);
+		_subViewports[2].Size = new Vector2I(0, 0);
+		_subViewports[3].Size = new Vector2I(0, 0);
 	}
 }

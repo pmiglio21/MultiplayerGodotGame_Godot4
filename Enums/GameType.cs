@@ -9,7 +9,7 @@ namespace Enums
     public enum GameType
     {
         None,
-        Competitive,
-        Coop
+        LocalCompetitive,
+        LocalCoop
     }
 }

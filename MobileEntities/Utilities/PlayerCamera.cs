@@ -2,6 +2,8 @@
 using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
+using Enums;
+using Globals;
 
 namespace Levels.OverworldLevels.Utilities
 {
@@ -21,19 +23,40 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Process(double delta)
 		{
-			//if (PlayerManager.ActivePlayers.Count > 0)
-			//{
-			//	//Find nearest player and set camera distance based on that player
+			if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+            {
+				if (PlayerManager.ActivePlayers.Count > 0)
+				{
+					//Find nearest player and set camera distance based on that player
+					if (PlayerManager.ActivePlayers.Count == 1)
+					{
+						SetDistance(PlayerManager.ActivePlayers[0]);
+					}
+					else if (PlayerManager.ActivePlayers.Count > 1)
+					{
+						BaseCharacter minDistancePlayer = null;
+						float minDistance = float.MaxValue;
 
-			//	SetDistance(_parentPlayer);
+						foreach (var player in PlayerManager.ActivePlayers)
+						{
+							if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
+							{
+								minDistancePlayer = player;
+								minDistance = GlobalPosition.X - player.GlobalPosition.X;
+							}
+						}
 
-			//	//Maybe try MoveAndSlide()?
+						SetDistance(minDistancePlayer);
+					}
 
-			//	GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+					//Maybe try MoveAndSlide()?
 
-			//	//GlobalPosition = _newPosition;
-			//}
-		}
+					GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+
+					//GlobalPosition = _newPosition;
+				}
+			}
+        }
 
 		private void SetDistance(CharacterBody2D player)
 		{
