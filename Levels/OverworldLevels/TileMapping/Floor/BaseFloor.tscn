@@ -48,6 +48,8 @@ layer_0/tile_data = PackedInt32Array(0, 196616, 1, 1, 196616, 1, 2, 131080, 1, 3
 [node name="TopWall" type="StaticBody2D" parent="."]
 position = Vector2(326, 26)
 scale = Vector2(2.17061, 0.143278)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
 position = Vector2(290.625, -227)
@@ -56,6 +58,8 @@ shape = SubResource("RectangleShape2D_e0ra3")
 [node name="BottomWall" type="StaticBody2D" parent="."]
 position = Vector2(154, 1130)
 scale = Vector2(2.52732, 0.31558)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
 position = Vector2(289.25, 521.657)
@@ -64,6 +68,8 @@ shape = SubResource("RectangleShape2D_e0ra3")
 [node name="LeftWall" type="StaticBody2D" parent="."]
 position = Vector2(52, 423)
 scale = Vector2(0.172782, 2.62838)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
 position = Vector2(-351, 148)
@@ -72,6 +78,8 @@ shape = SubResource("RectangleShape2D_4t4o3")
 [node name="RightWall" type="StaticBody2D" parent="."]
 position = Vector2(2013, 524)
 scale = Vector2(-0.227682, 2.96439)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
 position = Vector2(498.816, 47.4648)
