@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://de22b7g4faw63"]
+[gd_scene load_steps=4 format=3 uid="uid://de22b7g4faw63"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_3clom"]
-[ext_resource type="PackedScene" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreen.tscn" id="3_i8rss"]
 [ext_resource type="PackedScene" uid="uid://op013weh84on" path="res://Levels/OverworldLevels/TileMapping/Floor/BaseFloor.tscn" id="4_4pted"]
 
 [node name="Level" type="Node"]
@@ -13,11 +12,6 @@ z_index = -2
 position = Vector2(946, 634)
 scale = Vector2(-101.605, -70.0698)
 texture = ExtResource("2_3clom")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PauseScreen" parent="CanvasLayer" instance=ExtResource("3_i8rss")]
-visible = false
 
 [node name="BaseFloor" parent="." instance=ExtResource("4_4pted")]
 

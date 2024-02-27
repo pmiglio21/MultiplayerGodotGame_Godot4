@@ -59,9 +59,6 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateInteriorBlocksOnAllFloorTiles();
 
-		
-
-		//If multiplayer
 		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
 		{
 			GenerateCompetitiveSpawnPoints();
