@@ -66,5 +66,9 @@ visible = false
 position = Vector2(1, 2)
 scale = Vector2(-0.065853, -1.31287)
 
-[node name="FootBox" parent="." index="5"]
+[node name="FootBox" parent="." index="6"]
 position = Vector2(0.5, 11)
+
+[node name="VisibleOnScreenNotifier" parent="." index="7"]
+position = Vector2(0.434577, 2.49262)
+scale = Vector2(0.743458, 0.949262)

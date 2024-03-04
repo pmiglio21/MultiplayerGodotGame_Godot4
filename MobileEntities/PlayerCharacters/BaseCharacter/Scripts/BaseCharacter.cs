@@ -380,6 +380,28 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 		}
 
+		private void OnVisibleOnScreenNotifierScreenExited()
+		{
+			Vector2I mainViewportSize = GetWindow().Size;
+
+			GD.Print($"{PlayerNumber} leaving");
+
+			// //Testing Camera manipulation
+			//GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
+			//GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
+		}
+
+		private void OnVisibleOnScreenNotifierScreenEntered()
+		{
+			Vector2I mainViewportSize = GetWindow().Size;
+
+			GD.Print($"{PlayerNumber} entering");
+
+			// //Testing Camera manipulation
+			//GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
+			//GlobalGameComponents.AvailableSubViewports[1].Size = Vector2I.Zero;
+		}
+
 		#region Trigger Boxes
 		private void OnMainHitBoxAreaEntered(Area2D area)
 		{
@@ -440,6 +462,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 	}
 }
+
+
 
 
 

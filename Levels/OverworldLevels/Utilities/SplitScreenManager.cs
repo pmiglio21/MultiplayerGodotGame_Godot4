@@ -8,19 +8,19 @@ using System.Collections.Generic;
 
 public partial class SplitScreenManager : CanvasLayer
 {
-	private List<SubViewport> _subViewports = new List<SubViewport>();
+	
 	private List<Camera2D> _subViewportCameras = new List<Camera2D>();
 	private Node _level = null;
 
 	public override void _Ready()
 	{
-		_subViewports = GetSubViewports();
-		_level = _subViewports[0].GetNode("Level");
+		GlobalGameComponents.AvailableSubViewports = GetSubViewports();
+		_level = GlobalGameComponents.AvailableSubViewports[0].GetNode("Level");
 		SetSubViewportWorlds();
 		SetCamerasToPlayers();
 
 
-		GD.Print($"SubViewports: {_subViewports.Count}");
+		GD.Print($"SubViewports: {GlobalGameComponents.AvailableSubViewports.Count}");
 
 
 		if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
@@ -60,9 +60,9 @@ public partial class SplitScreenManager : CanvasLayer
 
 	private void SetSubViewportWorlds()
 	{
-		foreach (SubViewport subViewport in _subViewports)
+		foreach (SubViewport subViewport in GlobalGameComponents.AvailableSubViewports)
 		{
-			subViewport.World2D = _subViewports[0].World2D;
+			subViewport.World2D = GlobalGameComponents.AvailableSubViewports[0].World2D;
 		}
 	}
 
@@ -74,6 +74,8 @@ public partial class SplitScreenManager : CanvasLayer
 		{
 			player.playerCamera = _subViewportCameras[playerCount];
 
+			GD.Print($"Setting camera for {player.PlayerNumber}");
+
 			playerCount++;
 		}
 	}
@@ -84,26 +86,26 @@ public partial class SplitScreenManager : CanvasLayer
 
 		if (PlayerManager.ActivePlayers.Count == 1)
 		{
-			_subViewports[0].Size = mainViewportSize;
+			GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
 		}
 		else if (PlayerManager.ActivePlayers.Count == 2)
 		{
-			_subViewports[0].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
-			_subViewports[1].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
+			GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
+			GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X/2), mainViewportSize.Y);
 		}
 		else if (PlayerManager.ActivePlayers.Count == 3)
 		{
-			_subViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[3].Size = new Vector2I(0, 0);
+			GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I(0, 0);
 		}
 		else if (PlayerManager.ActivePlayers.Count == 4)
 		{
-			_subViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-			_subViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
+			GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 		}
 	}
 
@@ -111,9 +113,9 @@ public partial class SplitScreenManager : CanvasLayer
 	{
 		Vector2I mainViewportSize = GetWindow().Size;
 
-		_subViewports[0].Size = mainViewportSize;
-		_subViewports[1].Size = new Vector2I(0, 0);
-		_subViewports[2].Size = new Vector2I(0, 0);
-		_subViewports[3].Size = new Vector2I(0, 0);
+		GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
+		GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I(0, 0);
+		GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I(0, 0);
+		GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I(0, 0);
 	}
 }
