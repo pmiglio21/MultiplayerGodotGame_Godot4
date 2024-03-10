@@ -2,7 +2,7 @@ using Enums;
 using Globals;
 using Godot;
 
-namespace Levels.EarlyLevels.TitleLevel
+namespace Levels.EarlyLevels
 {
 	public partial class TitleLevelManager: Node
 	{
