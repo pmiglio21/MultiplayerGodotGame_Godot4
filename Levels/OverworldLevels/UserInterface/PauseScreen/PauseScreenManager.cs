@@ -2,94 +2,139 @@ using Enums;
 using Globals;
 using Globals.PlayerManagement;
 using Godot;
+using Levels.EarlyLevels;
 using System;
+using System.Linq;
 
-public partial class PauseScreenManager : Node2D
+
+namespace Levels.OverworldLevels
 {
-	private bool _pauseChangedRecently = false;
-	private bool _isPaused = false;
-
-	private int _pauseTimer = 0;
-	private const int _pauseTimerMax = 15;
-
-	private Button _resumeGameButton;
-	private Button _quitGameButton;
-
-	public override void _Ready()
+	public partial class PauseScreenManager : Node2D
 	{
-		_resumeGameButton = GetNode<Button>("ResumeGameButton");
-		_quitGameButton = GetNode<Button>("QuitGameButton");
+		private bool _pauseChangedRecently = false;
+		private bool _isPaused = false;
 
-		_resumeGameButton.GrabFocus();
-	}
+		private int _pauseTimer = 0;
+		private const int _pauseTimerMax = 15;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		GetButtonInput();
+		private Button _resumeGameButton;
+		private Button _settingsButton;
+		private Button _quitGameButton;
 
-		GetNavigationInput();
-	}
+		protected SettingsScreenManager settingsScreen;
 
-	private void GetButtonInput()
-	{
-		//Pause button hit by player
-		if (!_pauseChangedRecently && _isPaused != GetTree().Paused && _pauseTimer < _pauseTimerMax)
+		public override void _Ready()
 		{
-			_pauseChangedRecently = true;
-			_isPaused = true;
+			_resumeGameButton = GetNode<Button>("ResumeGameButton");
+			_settingsButton = GetNode<Button>("SettingsButton");
+			_quitGameButton = GetNode<Button>("QuitGameButton");
+
+			GetSettingsScreen();
+
+			_resumeGameButton.GrabFocus();
 		}
 
-		//Let timer go
-		if (_pauseChangedRecently && _pauseTimer < _pauseTimerMax)
+		// Called every frame. 'delta' is the elapsed time since the previous frame.
+		public override void _Process(double delta)
 		{
-			_pauseTimer++;
-		}
-		else
-		{
-			_pauseChangedRecently = false;
-			_pauseTimer = 0;
+			GetButtonInput();
+
+			GetNavigationInput();
 		}
 
-		if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+		private void GetButtonInput()
 		{
-			if (_resumeGameButton.HasFocus())
+			//Pause button hit by player
+			if (!_pauseChangedRecently && _isPaused != GetTree().Paused && _pauseTimer < _pauseTimerMax)
 			{
-				//Get pause input once timer lets up
-				if (!_pauseChangedRecently)
+				_pauseChangedRecently = true;
+				_isPaused = true;
+			}
+
+			//Let timer go
+			if (_pauseChangedRecently && _pauseTimer < _pauseTimerMax)
+			{
+				_pauseTimer++;
+			}
+			else
+			{
+				_pauseChangedRecently = false;
+				_pauseTimer = 0;
+			}
+
+			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			{
+				if (_resumeGameButton.HasFocus())
 				{
+					//Get pause input once timer lets up
+					if (!_pauseChangedRecently)
+					{
+						this.Hide();
+						GetTree().Paused = false;
+						_isPaused = false;
+					}
+				}
+
+				if (_settingsButton.HasFocus())
+				{
+					settingsScreen.IsSettingsScreenEnabled = true;
+					settingsScreen.GrabFocusOfTopButton();
 					this.Hide();
+
+					//GetTree().ChangeSceneToFile(LevelScenePaths.SettingsLevelPath);
+					//GlobalGameProperties.PriorScene = LevelScenePaths.OverworldLevel1Path;
+				}
+
+				if (_quitGameButton.HasFocus())
+				{
 					GetTree().Paused = false;
-					_isPaused = false;
+					PlayerManager.ClearActivePlayers();
+					GlobalGameProperties.CurrentGameType = GameType.None;
+					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+				}
+			}
+		}
+
+		private void GetNavigationInput()
+		{
+			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
+			{
+				if (_resumeGameButton.HasFocus())
+				{
+					_settingsButton.GrabFocus();
+				}
+				else if (_settingsButton.HasFocus())
+				{
+					_quitGameButton.GrabFocus();
 				}
 			}
 
-			if (_quitGameButton.HasFocus())
+			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
 			{
-				GetTree().Paused = false;
-				PlayerManager.ClearActivePlayers();
-				GlobalGameProperties.CurrentGameType = GameType.None;
-				GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
-			}
-		}
-	}
-
-	private void GetNavigationInput()
-	{
-		if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
-		{
-			if (_resumeGameButton.HasFocus())
-			{
-				_quitGameButton.GrabFocus();
+				if (_quitGameButton.HasFocus())
+				{
+					_settingsButton.GrabFocus();
+				}
+				else if (_settingsButton.HasFocus())
+				{
+					_resumeGameButton.GrabFocus();
+				}
 			}
 		}
 
-		if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
+		private void GetSettingsScreen()
 		{
-			if (_quitGameButton.HasFocus())
+			var settingsScreens = GetTree().GetNodesInGroup("SettingsScreen");
+
+			if (settingsScreens != null)
 			{
-				_resumeGameButton.GrabFocus();
+				settingsScreen = settingsScreens.First() as SettingsScreenManager;
 			}
+		}
+
+		public void GrabFocusOfTopButton()
+		{
+			_resumeGameButton.GrabFocus();
 		}
 	}
 }

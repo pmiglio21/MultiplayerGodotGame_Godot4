@@ -1,11 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://8sccfkiegkvw"]
 
-[ext_resource type="Script" path="res://Levels/EarlyLevels/SettingsLevel/SettingsLevelManager.cs" id="1_fd6ci"]
+[ext_resource type="Script" path="res://Levels/EarlyLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
 
-[node name="SettingsLevelUI" type="Node"]
+[node name="SettingsLevelUI" type="Node2D" groups=["SettingsScreen"]]
+visible = false
 script = ExtResource("1_fd6ci")
 
 [node name="TopText" type="RichTextLabel" parent="."]

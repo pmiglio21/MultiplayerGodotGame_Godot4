@@ -1,11 +1,17 @@
 using Enums;
 using Globals;
 using Godot;
+using Levels.OverworldLevels;
+using System.Linq;
 
 namespace Levels.EarlyLevels
 {
-	public partial class SettingsLevelManager : Node
+	public partial class SettingsScreenManager : Node2D
 	{
+		public bool IsSettingsScreenEnabled = false;
+
+		protected PauseScreenManager pauseScreen;
+
 		private Button _settingsButton;
 		private Button _returnButton;
 
@@ -14,14 +20,28 @@ namespace Levels.EarlyLevels
 			_settingsButton = GetNode<Button>("SettingsToScreenMergingButton");
 			_returnButton = GetNode<Button>("ReturnButton");
 
+			GetPauseScreen();
+
 			_settingsButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
 		{
-			GetButtonPressInput();
+			if (IsSettingsScreenEnabled)
+			{
+				Show();
+			}
+			else
+			{
+				Hide();
+			}
 
-			GetNavigationInput();
+			if (IsSettingsScreenEnabled)
+            {
+				GetButtonPressInput();
+
+				GetNavigationInput();
+			}
 		}
 
 		private void GetButtonPressInput()
@@ -35,7 +55,11 @@ namespace Levels.EarlyLevels
 				}
 				else if (_returnButton.HasFocus())
 				{
-					//GetTree().Quit();
+					IsSettingsScreenEnabled = false;
+					pauseScreen.Show();
+
+					pauseScreen.GrabFocusOfTopButton();
+					//GetTree().ChangeSceneToFile(GlobalGameProperties.PriorScene);
 				}
 			}
 		}
@@ -58,5 +82,20 @@ namespace Levels.EarlyLevels
 				}
 			}
 		}
+
+		private void GetPauseScreen()
+		{
+			var pauseScreens = GetTree().GetNodesInGroup("PauseScreen");
+
+			if (pauseScreens != null)
+			{
+				pauseScreen = pauseScreens.First() as PauseScreenManager;
+			}
+		}
+
+		public void GrabFocusOfTopButton()
+        {
+			_settingsButton.GrabFocus();
+        }
 	}
 }

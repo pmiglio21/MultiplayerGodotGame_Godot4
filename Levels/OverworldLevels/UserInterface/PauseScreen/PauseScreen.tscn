@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dr0ocm5stbbop"]
+[gd_scene load_steps=2 format=3 uid="uid://8s6036ufpjx6"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreenManager.cs" id="1_shvw2"]
 
@@ -15,11 +15,20 @@ offset_bottom = 275.0
 focus_neighbor_bottom = NodePath("../QuitGameButton")
 text = "Resume Game"
 
+[node name="SettingsButton" type="Button" parent="."]
+process_mode = 2
+offset_left = 509.0
+offset_top = 293.0
+offset_right = 629.0
+offset_bottom = 324.0
+focus_neighbor_top = NodePath("../ResumeGameButton")
+text = "Settings"
+
 [node name="QuitGameButton" type="Button" parent="."]
 process_mode = 2
-offset_left = 506.0
-offset_top = 296.0
-offset_right = 626.0
-offset_bottom = 327.0
+offset_left = 512.0
+offset_top = 345.0
+offset_right = 632.0
+offset_bottom = 376.0
 focus_neighbor_top = NodePath("../ResumeGameButton")
 text = "Quit Game"

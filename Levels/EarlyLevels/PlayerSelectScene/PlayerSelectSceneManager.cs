@@ -32,7 +32,8 @@ namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 				if (_settingsButton.HasFocus())
 				{
 					GlobalGameProperties.CurrentGameType = GameType.LocalCoop;
-					GetTree().ChangeSceneToFile(LevelScenePaths.SettingsLevelPath);
+					GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
+					GlobalGameProperties.PriorScene = LevelScenePaths.PlayerSelectLevelPath;
 				}
 			}
 		}

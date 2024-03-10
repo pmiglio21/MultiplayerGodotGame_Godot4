@@ -10,5 +10,7 @@ namespace Globals
     public static class GlobalGameProperties
     {
         public static GameType CurrentGameType = GameType.None;
+
+        public static string PriorScene = string.Empty;
     }
 }
