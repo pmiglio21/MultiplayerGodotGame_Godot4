@@ -22,6 +22,11 @@ namespace Levels.EarlyLevels
 
 			GetPauseScreen();
 
+			if (pauseScreen == null)
+            {
+				IsSettingsScreenEnabled = true;
+            }
+
 			_settingsButton.GrabFocus();
 		}
 
@@ -56,10 +61,17 @@ namespace Levels.EarlyLevels
 				else if (_returnButton.HasFocus())
 				{
 					IsSettingsScreenEnabled = false;
-					pauseScreen.Show();
 
-					pauseScreen.GrabFocusOfTopButton();
-					//GetTree().ChangeSceneToFile(GlobalGameProperties.PriorScene);
+					if (pauseScreen != null)
+                    {
+						pauseScreen.Show();
+
+						pauseScreen.GrabFocusOfTopButton();
+					}
+					else
+                    {
+                        GetTree().ChangeSceneToFile(GlobalGameProperties.PriorScene);
+                    }
 				}
 			}
 		}
@@ -87,7 +99,7 @@ namespace Levels.EarlyLevels
 		{
 			var pauseScreens = GetTree().GetNodesInGroup("PauseScreen");
 
-			if (pauseScreens != null)
+			if (pauseScreens != null && pauseScreens.Count > 0)
 			{
 				pauseScreen = pauseScreens.First() as PauseScreenManager;
 			}

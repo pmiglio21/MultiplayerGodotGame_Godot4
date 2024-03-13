@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Enums;
 using Globals;
 using Godot;
+using Levels.EarlyLevels;
 
 namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 {
@@ -31,9 +32,14 @@ namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 			{
 				if (_settingsButton.HasFocus())
 				{
-					GlobalGameProperties.CurrentGameType = GameType.LocalCoop;
-					GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
 					GlobalGameProperties.PriorScene = LevelScenePaths.PlayerSelectLevelPath;
+
+					var settingsScene = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath);
+                    var settingsInstance = settingsScene.Instantiate() as SettingsScreenManager;
+					settingsInstance.IsSettingsScreenEnabled = true;
+					settingsInstance.Show();
+
+                    GetTree().ChangeSceneToPacked(settingsScene);
 				}
 			}
 		}
