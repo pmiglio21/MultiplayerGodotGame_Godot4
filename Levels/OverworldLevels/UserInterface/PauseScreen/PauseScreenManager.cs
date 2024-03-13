@@ -93,6 +93,11 @@ namespace Levels.OverworldLevels
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 				}
 			}
+
+			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+			{
+				_resumeGameButton.GrabFocus();
+			}
 		}
 
 		private void GetNavigationInput()
