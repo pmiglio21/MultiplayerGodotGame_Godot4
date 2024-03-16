@@ -32,9 +32,16 @@ offset_bottom = 444.0
 text = "Co-op
 "
 
-[node name="QuitGameButton" type="Button" parent="."]
+[node name="SettingsButton" type="Button" parent="."]
 offset_left = 503.0
 offset_top = 455.0
 offset_right = 617.0
 offset_bottom = 520.0
+text = "Settings"
+
+[node name="QuitGameButton" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 535.0
+offset_right = 617.0
+offset_bottom = 600.0
 text = "Quit"

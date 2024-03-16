@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvjx3l2urbwgh"]
+[gd_scene load_steps=3 format=3 uid="uid://bvjx3l2urbwgh"]
 
-[ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerSelectSceneManager.cs" id="1_64eqt"]
 [ext_resource type="PackedScene" uid="uid://dkdont5cpaoeu" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.tscn" id="2_3pb1u"]
 [ext_resource type="PackedScene" uid="uid://cmob6mda775oe" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.tscn" id="2_nxjnc"]
-[ext_resource type="PackedScene" uid="uid://8sccfkiegkvw" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="4_3hcfk"]
 
 [node name="PlayerSelectLevel" type="Node2D"]
-script = ExtResource("1_64eqt")
 
 [node name="PlayerCharacterPicker0" parent="." instance=ExtResource("2_3pb1u")]
 position = Vector2(77, 114)
@@ -26,15 +23,6 @@ NumberOfCharactersNecessaryBeforeGivingAccess = 3
 
 [node name="ConfirmSelectionButton" parent="." instance=ExtResource("2_nxjnc")]
 position = Vector2(5, 7.2)
-
-[node name="SettingsButton" type="Button" parent="."]
-offset_left = 18.0
-offset_top = 512.0
-offset_right = 206.0
-offset_bottom = 632.0
-text = "Settings"
-
-[node name="SettingsScreen" parent="." instance=ExtResource("4_3hcfk")]
 
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
 [connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]

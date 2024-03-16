@@ -22,6 +22,11 @@ namespace Levels.EarlyLevels
 
 			GetPauseScreen();
 
+			if (pauseScreen == null)
+			{
+				IsSettingsScreenBeingShown = true;
+			}
+
 			_settingsButton.GrabFocus();
 		}
 
@@ -110,6 +115,10 @@ namespace Levels.EarlyLevels
 				pauseScreen.ShowAllChildren();
 
 				pauseScreen.GrabFocusOfTopButton();
+			}
+			else
+			{
+				GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 			}
 		}
 	}
