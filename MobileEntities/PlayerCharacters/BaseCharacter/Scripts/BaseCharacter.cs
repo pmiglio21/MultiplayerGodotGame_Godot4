@@ -274,12 +274,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			if (!_pauseChangedRecently && Input.IsActionJustPressed($"StartButton_{DeviceIdentifier}"))
 			{
-				pauseScreen.Show();
+				pauseScreen.IsPauseScreenBeingShown = true;
 				GetTree().Paused = true;
 				IsPaused = true;
 
-				pauseScreen.GetNode<Button>("ResumeGameButton").GrabFocus();
-				//GetNode<Button>("ResumeGameButton").GrabFocus();
+				pauseScreen.GrabFocusOfTopButton();
 			}
 		}
 

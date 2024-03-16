@@ -13,10 +13,12 @@ namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 	public partial class PlayerSelectSceneManager : Node2D
 	{
 		private Button _settingsButton;
+		private SettingsScreenManager _settingsManager;
 
 		public override void _Ready()
 		{
 			_settingsButton = GetNode<Button>("SettingsButton");
+			_settingsManager = GetNode<SettingsScreenManager>("SettingsScreen");
 		}
 
 		public override void _Process(double delta)
@@ -32,14 +34,7 @@ namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 			{
 				if (_settingsButton.HasFocus())
 				{
-					//GlobalGameProperties.PriorSceneString = LevelScenePaths.PlayerSelectLevelPath;
-
-					//var settingsScene = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath);
-					//var settingsInstance = settingsScene.Instantiate() as SettingsScreenManager;
-					//settingsInstance.IsSettingsScreenEnabled = true;
-					//settingsInstance.Show();
-
-					//GetTree().ChangeSceneToPacked(settingsScene);
+					_settingsManager.IsSettingsScreenBeingShown = true;
 				}
 			}
 		}

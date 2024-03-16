@@ -11,6 +11,9 @@ namespace Levels.OverworldLevels
 {
 	public partial class PauseScreenManager : Node2D
 	{
+		public bool IsPauseScreenBeingShown = false;
+		public bool IsPauseScreenChildBeingShown = false;
+
 		private bool _pauseChangedRecently = false;
 		private bool _isPaused = false;
 
@@ -37,9 +40,23 @@ namespace Levels.OverworldLevels
 		// Called every frame. 'delta' is the elapsed time since the previous frame.
 		public override void _Process(double delta)
 		{
-			GetButtonInput();
+			if (IsPauseScreenBeingShown)
+			{
+				Show();
+			}
+			else
+			{
+				Hide();
+				GetTree().Paused = false;
+				_isPaused = false;
+			}
 
-			GetNavigationInput();
+			if (IsPauseScreenBeingShown && !IsPauseScreenChildBeingShown)
+			{
+				GetButtonInput();
+
+				GetNavigationInput();
+			}
 		}
 
 		private void GetButtonInput()
@@ -69,17 +86,18 @@ namespace Levels.OverworldLevels
 					//Get pause input once timer lets up
 					if (!_pauseChangedRecently)
 					{
-						this.Hide();
-						GetTree().Paused = false;
-						_isPaused = false;
+						IsPauseScreenBeingShown = false;
 					}
 				}
 
 				if (_settingsButton.HasFocus())
 				{
-					settingsScreen.IsSettingsScreenEnabled = true;
+					settingsScreen.IsSettingsScreenBeingShown = true;
 					settingsScreen.GrabFocusOfTopButton();
-					this.Hide();
+
+					IsPauseScreenChildBeingShown = true;
+
+					HideAllButThisChildScreen(settingsScreen);
 				}
 
 				if (_quitGameButton.HasFocus())
@@ -137,6 +155,39 @@ namespace Levels.OverworldLevels
 		public void GrabFocusOfTopButton()
 		{
 			_resumeGameButton.GrabFocus();
+		}
+
+		private void HideAllButThisChildScreen(Node childScreen)
+		{
+			foreach (Node child in this.GetChildren())
+			{ 
+				if (child.Name != childScreen.Name)
+				{
+					if (child is Node2D)
+					{
+						(child as Node2D).Hide();
+					}
+					else if (child is CanvasItem)
+					{
+						(child as CanvasItem).Hide();
+					}
+				}
+			}
+		}
+
+		public void ShowAllChildren()
+		{
+			foreach (Node child in this.GetChildren())
+			{
+				if (child is Node2D)
+				{
+					(child as Node2D).Show();
+				}
+				else if (child is CanvasItem)
+				{
+					(child as CanvasItem).Show();
+				}
+			}
 		}
 	}
 }

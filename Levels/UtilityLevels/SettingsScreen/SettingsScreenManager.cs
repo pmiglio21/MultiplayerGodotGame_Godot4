@@ -8,7 +8,7 @@ namespace Levels.EarlyLevels
 {
 	public partial class SettingsScreenManager : Node2D
 	{
-		public bool IsSettingsScreenEnabled = false;
+		public bool IsSettingsScreenBeingShown = false;
 
 		protected PauseScreenManager pauseScreen;
 
@@ -22,17 +22,12 @@ namespace Levels.EarlyLevels
 
 			GetPauseScreen();
 
-			if (pauseScreen == null)
-			{
-				IsSettingsScreenEnabled = true;
-			}
-
 			_settingsButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
 		{
-			if (IsSettingsScreenEnabled)
+			if (IsSettingsScreenBeingShown)
 			{
 				Show();
 			}
@@ -41,15 +36,15 @@ namespace Levels.EarlyLevels
 				Hide();
 			}
 
-			if (IsSettingsScreenEnabled)
+			if (IsSettingsScreenBeingShown)
 			{
-				GetButtonPressInput();
+				GetButtonInput();
 
 				GetNavigationInput();
 			}
 		}
 
-		private void GetButtonPressInput()
+		private void GetButtonInput()
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
@@ -106,17 +101,15 @@ namespace Levels.EarlyLevels
 
 		private void ReturnToPriorScene()
 		{
-			IsSettingsScreenEnabled = false;
+			IsSettingsScreenBeingShown = false;
 
 			if (pauseScreen != null)
 			{
-				pauseScreen.Show();
+				pauseScreen.IsPauseScreenChildBeingShown = false;
+
+				pauseScreen.ShowAllChildren();
 
 				pauseScreen.GrabFocusOfTopButton();
-			}
-			else
-			{
-				//GetTree().ChangeSceneToFile(GlobalGameProperties.PriorScene);
 			}
 		}
 	}

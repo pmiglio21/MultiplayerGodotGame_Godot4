@@ -19,8 +19,7 @@ public partial class SplitScreenManager : CanvasLayer
 		SetSubViewportWorlds();
 		SetCamerasToPlayers();
 
-
-		GD.Print($"SubViewports: {GlobalGameComponents.AvailableSubViewports.Count}");
+		//GD.Print($"SubViewports: {GlobalGameComponents.AvailableSubViewports.Count}");
 
 
 		if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
