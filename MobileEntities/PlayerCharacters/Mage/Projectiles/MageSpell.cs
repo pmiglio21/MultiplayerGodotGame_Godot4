@@ -11,12 +11,12 @@ public partial class MageSpell : CharacterBody2D
 
 	public override void _Ready()
 	{
-		_originPoint = Position;
+		_originPoint = GlobalPosition;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (Position.DistanceTo(_originPoint) > 200)
+		if (GlobalPosition.DistanceTo(_originPoint) > 200)
 		{
 			QueueFree();
 		}
