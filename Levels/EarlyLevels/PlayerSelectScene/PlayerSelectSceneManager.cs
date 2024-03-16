@@ -32,14 +32,14 @@ namespace MultiplayerGodotGameGodot4.Levels.EarlyLevels
 			{
 				if (_settingsButton.HasFocus())
 				{
-					GlobalGameProperties.PriorScene = LevelScenePaths.PlayerSelectLevelPath;
+					//GlobalGameProperties.PriorSceneString = LevelScenePaths.PlayerSelectLevelPath;
 
-					var settingsScene = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath);
-                    var settingsInstance = settingsScene.Instantiate() as SettingsScreenManager;
-					settingsInstance.IsSettingsScreenEnabled = true;
-					settingsInstance.Show();
+					//var settingsScene = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath);
+					//var settingsInstance = settingsScene.Instantiate() as SettingsScreenManager;
+					//settingsInstance.IsSettingsScreenEnabled = true;
+					//settingsInstance.Show();
 
-                    GetTree().ChangeSceneToPacked(settingsScene);
+					//GetTree().ChangeSceneToPacked(settingsScene);
 				}
 			}
 		}

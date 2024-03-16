@@ -80,9 +80,6 @@ namespace Levels.OverworldLevels
 					settingsScreen.IsSettingsScreenEnabled = true;
 					settingsScreen.GrabFocusOfTopButton();
 					this.Hide();
-
-					//GetTree().ChangeSceneToFile(LevelScenePaths.SettingsLevelPath);
-					//GlobalGameProperties.PriorScene = LevelScenePaths.OverworldLevel1Path;
 				}
 
 				if (_quitGameButton.HasFocus())

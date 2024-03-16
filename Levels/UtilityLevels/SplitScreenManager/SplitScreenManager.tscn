@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://gvduncuyxglt"]
+[gd_scene load_steps=5 format=3 uid="uid://gvduncuyxglt"]
 
-[ext_resource type="Script" path="res://Levels/OverworldLevels/Utilities/SplitScreenManager.cs" id="1_rtyjs"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.cs" id="1_rtyjs"]
 [ext_resource type="PackedScene" uid="uid://de22b7g4faw63" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
 [ext_resource type="Script" path="res://MobileEntities/Utilities/PlayerCamera.cs" id="2_mpov0"]
-[ext_resource type="PackedScene" uid="uid://8s6036ufpjx6" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreen.tscn" id="4_s2u4q"]
-[ext_resource type="PackedScene" uid="uid://8sccfkiegkvw" path="res://Levels/EarlyLevels/SettingsScreen/SettingsScreen.tscn" id="5_snaus"]
+[ext_resource type="PackedScene" uid="uid://8s6036ufpjx6" path="res://Levels/UtilityLevels/PauseScreen/PauseScreen.tscn" id="4_pk341"]
 
 [node name="SubViewportCanvas" type="CanvasLayer"]
 script = ExtResource("1_rtyjs")
@@ -69,8 +68,5 @@ render_target_update_mode = 4
 [node name="Camera2D" type="Camera2D" parent="GridContainer/SubViewportContainer4/SubViewport"]
 script = ExtResource("2_mpov0")
 
-[node name="PauseScreen" parent="." instance=ExtResource("4_s2u4q")]
+[node name="PauseScreen" parent="." instance=ExtResource("4_pk341")]
 visible = false
-
-[node name="SettingsScreen" parent="." instance=ExtResource("5_snaus")]
-process_mode = 2

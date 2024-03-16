@@ -9,9 +9,8 @@ namespace Globals
     public static class LevelScenePaths
     {
         #region Early Scenes
-        public const string TitleLevelPath = "res://Levels/EarlyLevels/TitleLevel/TitleLevelUI.tscn";
+        public const string TitleLevelPath = "res://Levels/EarlyLevels/TitleLevel/TitleLevel.tscn";
         public const string PlayerSelectLevelPath = "res://Levels/EarlyLevels/PlayerSelectScene/PlayerSelectLevel.tscn";
-        public const string SettingsScreenPath = "res://Levels/EarlyLevels/SettingsScreen/SettingsScreen.tscn";
         #endregion
 
         #region Overlay UI Scenes
@@ -19,8 +18,11 @@ namespace Globals
         #endregion
 
         #region Overworld Level Scenes
-        public const string SplitScreenManagerPath = "res://Levels/OverworldLevels/Utilities/SplitScreenManager.tscn";
         public const string OverworldLevel1Path = "res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn";
+        #endregion
+
+        #region Utility Scenes
+        public const string SplitScreenManagerPath = "res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.tscn";
         #endregion
     }
 }

@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://cf8ld0gid5wam"]
 
-[ext_resource type="Script" path="res://Levels/EarlyLevels/TitleLevel/TitleLevelManager.cs" id="1_1kefu"]
+[ext_resource type="Script" path="res://Levels/EarlyLevels/TitleLevel/TitleLevelManager.cs" id="1_g22g1"]
 
 [sub_resource type="Theme" id="Theme_ijh7m"]
 default_font_size = 30
 
-[node name="TitleLevelUI" type="Node"]
-script = ExtResource("1_1kefu")
+[node name="TitleLevel" type="Node"]
+script = ExtResource("1_g22g1")
 
 [node name="TitleText" type="RichTextLabel" parent="."]
 offset_left = 448.0

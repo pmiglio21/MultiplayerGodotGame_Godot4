@@ -12,5 +12,6 @@ namespace Globals
         public static GameType CurrentGameType = GameType.None;
 
         public static string PriorScene = string.Empty;
+        public static string PriorSceneString = string.Empty;
     }
 }

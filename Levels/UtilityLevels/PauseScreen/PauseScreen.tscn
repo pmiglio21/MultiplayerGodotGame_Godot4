@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://8s6036ufpjx6"]
+[gd_scene load_steps=3 format=3 uid="uid://8s6036ufpjx6"]
 
-[ext_resource type="Script" path="res://Levels/OverworldLevels/UserInterface/PauseScreen/PauseScreenManager.cs" id="1_shvw2"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/PauseScreen/PauseScreenManager.cs" id="1_u56yh"]
+[ext_resource type="PackedScene" uid="uid://8sccfkiegkvw" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="2_dkcpk"]
 
 [node name="PauseScreen" type="Node2D" groups=["PauseScreen"]]
 process_mode = 2
-script = ExtResource("1_shvw2")
+script = ExtResource("1_u56yh")
 
 [node name="ResumeGameButton" type="Button" parent="." groups=["ResumeGameButton"]]
 process_mode = 2
@@ -32,3 +33,5 @@ offset_right = 632.0
 offset_bottom = 376.0
 focus_neighbor_top = NodePath("../ResumeGameButton")
 text = "Quit Game"
+
+[node name="SettingsScreen" parent="." instance=ExtResource("2_dkcpk")]
