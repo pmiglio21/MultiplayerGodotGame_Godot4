@@ -8,6 +8,7 @@ namespace Levels.EarlyLevels
 	{
 		private Button _competitiveGameButton;
 		private Button _coopGameButton;
+		private Button _gameRulesButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
@@ -15,6 +16,7 @@ namespace Levels.EarlyLevels
 		{
 			_competitiveGameButton = GetNode<Button>("TitleToCompetitivePlayerSelectButton");
 			_coopGameButton = GetNode<Button>("TitleToCoopPlayerSelectButton");
+			_gameRulesButton = GetNode<Button>("GameRulesButton");
 			_settingsButton = GetNode<Button>("SettingsButton");
 			_quitGameButton = GetNode<Button>("QuitGameButton");
 
@@ -42,6 +44,10 @@ namespace Levels.EarlyLevels
 					GlobalGameProperties.CurrentGameType = GameType.LocalCoop;
 					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
 				}
+				else if (_gameRulesButton.HasFocus())
+				{
+					GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
+				}
 				else if (_settingsButton.HasFocus())
 				{
 					GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
@@ -63,6 +69,10 @@ namespace Levels.EarlyLevels
 				}
 				else if (_coopGameButton.HasFocus())
 				{
+					_gameRulesButton.GrabFocus();
+				}
+				else if (_gameRulesButton.HasFocus())
+				{
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
@@ -77,7 +87,11 @@ namespace Levels.EarlyLevels
 				{
 					_settingsButton.GrabFocus();
 				}
-				else if (_settingsButton.HasFocus())
+				if (_settingsButton.HasFocus())
+				{
+					_gameRulesButton.GrabFocus();
+				}
+				else if (_gameRulesButton.HasFocus())
 				{
 					_coopGameButton.GrabFocus();
 				}

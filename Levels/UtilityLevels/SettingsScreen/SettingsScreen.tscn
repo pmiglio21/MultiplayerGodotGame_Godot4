@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=3 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 
@@ -16,14 +16,6 @@ offset_right = 624.0
 offset_bottom = 300.0
 theme = SubResource("Theme_udowp")
 text = "Settings"
-
-[node name="SettingsToScreenMergingButton" type="Button" parent="."]
-offset_left = 498.0
-offset_top = 308.0
-offset_right = 626.0
-offset_bottom = 373.0
-text = "Screen Merging
-"
 
 [node name="ReturnButton" type="Button" parent="."]
 offset_left = 505.0

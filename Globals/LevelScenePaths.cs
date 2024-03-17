@@ -23,6 +23,7 @@ namespace Globals
 
         #region Utility Scenes
         public const string SplitScreenManagerPath = "res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.tscn";
+        public const string GameRulesScreenPath = "res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreen.tscn";
         public const string SettingsScreenPath = "res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn";
         #endregion
     }

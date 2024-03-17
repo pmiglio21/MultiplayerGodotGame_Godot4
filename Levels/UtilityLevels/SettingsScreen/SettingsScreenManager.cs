@@ -8,16 +8,18 @@ namespace Levels.EarlyLevels
 {
 	public partial class SettingsScreenManager : Node2D
 	{
+		private bool _settingsChangedRecently = false;
 		public bool IsSettingsScreenBeingShown = false;
+
+		private int _inputTimer = 0;
+		private const int _inputTimerMax = 15;
 
 		protected PauseScreenManager pauseScreen;
 
-		private Button _settingsButton;
 		private Button _returnButton;
 
 		public override void _Ready()
 		{
-			_settingsButton = GetNode<Button>("SettingsToScreenMergingButton");
 			_returnButton = GetNode<Button>("ReturnButton");
 
 			GetPauseScreen();
@@ -27,7 +29,7 @@ namespace Levels.EarlyLevels
 				IsSettingsScreenBeingShown = true;
 			}
 
-			_settingsButton.GrabFocus();
+			_returnButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -51,41 +53,54 @@ namespace Levels.EarlyLevels
 
 		private void GetButtonInput()
 		{
+			//Pause button hit by player
+			if (!_settingsChangedRecently && _inputTimer < _inputTimerMax)
+			{
+				_settingsChangedRecently = true;
+			}
+
+			//Let timer go
+			if (_settingsChangedRecently && _inputTimer < _inputTimerMax)
+			{
+				_inputTimer++;
+			}
+			else
+			{
+				_settingsChangedRecently = false;
+			}
+
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-				if (_settingsButton.HasFocus())
+				if (_returnButton.HasFocus())
 				{
-					//GlobalGameProperties.CurrentGameType = GameType.LocalCompetitive;
-					//GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
-				}
-				else if (_returnButton.HasFocus())
-				{
-					ReturnToPriorScene();
+					if (!_settingsChangedRecently)
+					{
+						ReturnToPriorScene();
+
+						_inputTimer = 0;
+					}
 				}
 			}
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-				ReturnToPriorScene();
+				if (!_settingsChangedRecently)
+				{
+					ReturnToPriorScene();
+
+					_inputTimer = 0;
+				}
 			}
 		}
 
 		private void GetNavigationInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
-			{
-				if (_settingsButton.HasFocus())
-				{
-					_returnButton.GrabFocus();
-				}
-			}
-
 			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
 			{
-				if (_returnButton.HasFocus())
-				{
-					_settingsButton.GrabFocus();
-				}
+				//if (_returnButton.HasFocus())
+				//{
+				//	_settingsButton.GrabFocus();
+				//}
 			}
 		}
 
@@ -101,7 +116,7 @@ namespace Levels.EarlyLevels
 
 		public void GrabFocusOfTopButton()
 		{
-			_settingsButton.GrabFocus();
+			_returnButton.GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
@@ -114,7 +129,7 @@ namespace Levels.EarlyLevels
 
 				pauseScreen.ShowAllChildren();
 
-				pauseScreen.GrabFocusOfTopButton();
+				pauseScreen.GrabFocusOfSettingsButton();
 			}
 			else
 			{

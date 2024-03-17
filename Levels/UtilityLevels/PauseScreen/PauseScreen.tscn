@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://8s6036ufpjx6"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/PauseScreen/PauseScreenManager.cs" id="1_u56yh"]
-[ext_resource type="PackedScene" uid="uid://8sccfkiegkvw" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="2_dkcpk"]
+[ext_resource type="PackedScene" uid="uid://jx5of1yg28rn" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="2_dkcpk"]
 
 [node name="PauseScreen" type="Node2D" groups=["PauseScreen"]]
 process_mode = 2

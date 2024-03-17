@@ -157,6 +157,11 @@ namespace Levels.OverworldLevels
 			_resumeGameButton.GrabFocus();
 		}
 
+		public void GrabFocusOfSettingsButton()
+		{
+			_settingsButton.GrabFocus();
+		}
+
 		private void HideAllButThisChildScreen(Node childScreen)
 		{
 			foreach (Node child in this.GetChildren())
