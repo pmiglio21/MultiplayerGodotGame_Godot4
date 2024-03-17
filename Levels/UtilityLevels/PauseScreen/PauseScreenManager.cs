@@ -3,6 +3,7 @@ using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using Levels.EarlyLevels;
+using Enums.GameRules;
 using System;
 using System.Linq;
 
@@ -128,7 +129,7 @@ namespace Levels.OverworldLevels
 				{
 					GetTree().Paused = false;
 					PlayerManager.ClearActivePlayers();
-					GlobalGameProperties.CurrentGameType = GameType.None;
+					CurrentSaveGameRules.CurrentGameType = GameType.None;
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 				}
 			}

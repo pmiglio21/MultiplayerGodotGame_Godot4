@@ -1,8 +1,8 @@
-using Enums;
 using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
+using Enums.GameRules;
 using MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping;
 using Scenes.UI.PlayerSelectScene;
 using System;
@@ -59,7 +59,7 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateInteriorBlocksOnAllFloorTiles();
 
-		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+		if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
 		{
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
@@ -72,7 +72,7 @@ public partial class BaseOverworldLevel : Node
 				GenerateSingleSpawnPoints();
 			}
 		}
-		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+		else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
 		{
 			GenerateSingleSpawnPoints();
 		}
@@ -106,11 +106,11 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateKeyMapItems();
 
-		if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+		if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
 		{
 			SpawnLocalCompetitivePlayers();
 		}
-		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+		else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
 		{
 			SpawnLocalCoopPlayers();
 		}

@@ -1,9 +1,9 @@
-﻿using Globals.PlayerManagement;
+using Globals.PlayerManagement;
 using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
 using System;
-using Enums;
 using Globals;
+using Enums.GameRules;
 
 namespace Levels.OverworldLevels.Utilities
 {
@@ -23,8 +23,8 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Process(double delta)
 		{
-			if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
-            {
+			if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
+			{
 				if (PlayerManager.ActivePlayers.Count > 0)
 				{
 					//Find nearest player and set camera distance based on that player
@@ -56,7 +56,7 @@ namespace Levels.OverworldLevels.Utilities
 					//GlobalPosition = _newPosition;
 				}
 			}
-        }
+		}
 
 		private void SetDistance(CharacterBody2D player)
 		{

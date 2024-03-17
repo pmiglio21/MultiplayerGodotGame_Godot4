@@ -1,8 +1,8 @@
-using Enums;
 using Globals;
 using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
+using Enums.GameRules;
 using System;
 using System.Collections.Generic;
 
@@ -22,11 +22,11 @@ public partial class SplitScreenManager : CanvasLayer
 		//GD.Print($"SubViewports: {GlobalGameComponents.AvailableSubViewports.Count}");
 
 
-		if (GlobalGameProperties.CurrentGameType == GameType.LocalCoop)
+		if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
 		{
 			AdjustLocalCoopPlayerCameraView();
 		}
-		else if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+		else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
 		{
 			AdjustLocalCompetitivePlayerCameraView();
 		}

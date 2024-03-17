@@ -1,6 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
+using Enums.GameRules;
 
 namespace Levels.EarlyLevels
 {
@@ -36,12 +37,12 @@ namespace Levels.EarlyLevels
 			{
 				if (_competitiveGameButton.HasFocus())
 				{
-					GlobalGameProperties.CurrentGameType = GameType.LocalCompetitive;
+					CurrentSaveGameRules.CurrentGameType = GameType.LocalCompetitive;
 					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
 				}
 				else if (_coopGameButton.HasFocus())
 				{
-					GlobalGameProperties.CurrentGameType = GameType.LocalCoop;
+					CurrentSaveGameRules.CurrentGameType = GameType.LocalCoop;
 					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
 				}
 				else if (_gameRulesButton.HasFocus())

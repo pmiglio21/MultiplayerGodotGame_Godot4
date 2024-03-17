@@ -4,6 +4,7 @@ using Globals.PlayerManagement;
 using Godot;
 using Levels.OverworldLevels;
 using Levels.OverworldLevels.Utilities;
+using Enums.GameRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
-	public partial class BaseCharacter : BaseMobileEntity
+    public partial class BaseCharacter : BaseMobileEntity
 	{
 		#region Components
 		[Export]
@@ -203,7 +204,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			if (GlobalGameProperties.CurrentGameType == GameType.LocalCompetitive)
+			if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
 			{
 				playerCamera.GlobalPosition = this.GlobalPosition;
 			}
