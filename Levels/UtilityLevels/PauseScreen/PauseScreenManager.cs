@@ -14,17 +14,21 @@ namespace Levels.OverworldLevels
 		public bool IsPauseScreenBeingShown = false;
 		public bool IsPauseScreenChildBeingShown = false;
 
-		private bool _pauseChangedRecently = false;
+		//Necessary to keep pause screen from immediately unpausing
 		private bool _isPaused = false;
-
 		private int _pauseTimer = 0;
 		private const int _pauseTimerMax = 15;
+		private bool _pauseChangedRecently = false;
+
+		private int _inputTimer = 0;
+		private const int _inputTimerMax = 15;
+		private bool _inputChangedRecently = false;
 
 		private Button _resumeGameButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
-		protected SettingsScreenManager settingsScreen;
+		private SettingsScreenManager _settingsScreen;
 
 		public override void _Ready()
 		{
@@ -32,7 +36,7 @@ namespace Levels.OverworldLevels
 			_settingsButton = GetNode<Button>("SettingsButton");
 			_quitGameButton = GetNode<Button>("QuitGameButton");
 
-			GetSettingsScreen();
+			_settingsScreen = GetNode<SettingsScreenManager>("SettingsScreen");
 
 			_resumeGameButton.GrabFocus();
 		}
@@ -61,6 +65,7 @@ namespace Levels.OverworldLevels
 
 		private void GetButtonInput()
 		{
+			#region Pause Timer Setup
 			//Pause button hit by player
 			if (!_pauseChangedRecently && _isPaused != GetTree().Paused && _pauseTimer < _pauseTimerMax)
 			{
@@ -68,7 +73,7 @@ namespace Levels.OverworldLevels
 				_isPaused = true;
 			}
 
-			//Let timer go
+			//Let pause timer go
 			if (_pauseChangedRecently && _pauseTimer < _pauseTimerMax)
 			{
 				_pauseTimer++;
@@ -78,6 +83,25 @@ namespace Levels.OverworldLevels
 				_pauseChangedRecently = false;
 				_pauseTimer = 0;
 			}
+			#endregion
+
+			#region Input Timer Setup
+			//Button input hit by player
+			if (!_inputChangedRecently && _inputTimer < _inputTimerMax)
+			{
+				_inputChangedRecently = true;
+			}
+
+			//Let input timer go
+			if (_inputChangedRecently && _inputTimer < _inputTimerMax)
+			{
+				_inputTimer++;
+			}
+			else
+			{
+				_inputChangedRecently = false;
+			}
+			#endregion
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
@@ -92,12 +116,12 @@ namespace Levels.OverworldLevels
 
 				if (_settingsButton.HasFocus())
 				{
-					settingsScreen.IsSettingsScreenBeingShown = true;
-					settingsScreen.GrabFocusOfTopButton();
+					_settingsScreen.IsSettingsScreenBeingShown = true;
+					_settingsScreen.GrabFocusOfTopButton();
 
 					IsPauseScreenChildBeingShown = true;
 
-					HideAllButThisChildScreen(settingsScreen);
+					HideAllButThisChildScreen(_settingsScreen);
 				}
 
 				if (_quitGameButton.HasFocus())
@@ -122,10 +146,12 @@ namespace Levels.OverworldLevels
 				if (_resumeGameButton.HasFocus())
 				{
 					_settingsButton.GrabFocus();
+					_inputTimer = 0;
 				}
 				else if (_settingsButton.HasFocus())
 				{
 					_quitGameButton.GrabFocus();
+					_inputTimer = 0;
 				}
 			}
 
@@ -134,21 +160,13 @@ namespace Levels.OverworldLevels
 				if (_quitGameButton.HasFocus())
 				{
 					_settingsButton.GrabFocus();
+					_inputTimer = 0;
 				}
 				else if (_settingsButton.HasFocus())
 				{
 					_resumeGameButton.GrabFocus();
+					_inputTimer = 0;
 				}
-			}
-		}
-
-		private void GetSettingsScreen()
-		{
-			var settingsScreens = GetTree().GetNodesInGroup("SettingsScreen");
-
-			if (settingsScreens != null)
-			{
-				settingsScreen = settingsScreens.First() as SettingsScreenManager;
 			}
 		}
 

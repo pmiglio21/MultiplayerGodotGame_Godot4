@@ -8,11 +8,11 @@ namespace Levels.EarlyLevels
 {
 	public partial class SettingsScreenManager : Node2D
 	{
-		private bool _settingsChangedRecently = false;
 		public bool IsSettingsScreenBeingShown = false;
 
 		private int _inputTimer = 0;
 		private const int _inputTimerMax = 15;
+		private bool _inputChangedRecently = false;
 
 		protected PauseScreenManager pauseScreen;
 
@@ -54,26 +54,26 @@ namespace Levels.EarlyLevels
 		private void GetButtonInput()
 		{
 			//Pause button hit by player
-			if (!_settingsChangedRecently && _inputTimer < _inputTimerMax)
+			if (!_inputChangedRecently && _inputTimer < _inputTimerMax)
 			{
-				_settingsChangedRecently = true;
+				_inputChangedRecently = true;
 			}
 
 			//Let timer go
-			if (_settingsChangedRecently && _inputTimer < _inputTimerMax)
+			if (_inputChangedRecently && _inputTimer < _inputTimerMax)
 			{
 				_inputTimer++;
 			}
 			else
 			{
-				_settingsChangedRecently = false;
+				_inputChangedRecently = false;
 			}
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
 				if (_returnButton.HasFocus())
 				{
-					if (!_settingsChangedRecently)
+					if (!_inputChangedRecently)
 					{
 						ReturnToPriorScene();
 
@@ -84,7 +84,7 @@ namespace Levels.EarlyLevels
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-				if (!_settingsChangedRecently)
+				if (!_inputChangedRecently)
 				{
 					ReturnToPriorScene();
 
