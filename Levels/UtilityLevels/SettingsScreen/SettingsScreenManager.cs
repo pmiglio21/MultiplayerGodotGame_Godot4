@@ -4,7 +4,7 @@ using Godot;
 using Levels.OverworldLevels;
 using System.Linq;
 
-namespace Levels.EarlyLevels
+namespace Levels.UtilityLevels
 {
 	public partial class SettingsScreenManager : Node2D
 	{

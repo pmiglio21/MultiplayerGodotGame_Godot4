@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=4 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
+[ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="2_qmecr"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
@@ -16,17 +17,15 @@ offset_bottom = 302.0
 theme = SubResource("Theme_udowp")
 text = "Game Rules"
 
-[node name="ToScreenMergingButton" type="Button" parent="."]
-offset_left = 498.0
-offset_top = 308.0
-offset_right = 626.0
-offset_bottom = 373.0
-text = "Screen Merging
-"
+[node name="SplitScreenOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+position = Vector2(487, 301)
+scale = Vector2(1.25, 1.05882)
+LabelText = "Splitscreen"
+OptionSelectorType = 1
 
 [node name="ReturnButton" type="Button" parent="."]
-offset_left = 505.0
-offset_top = 384.0
-offset_right = 619.0
-offset_bottom = 449.0
+offset_left = 500.0
+offset_top = 381.0
+offset_right = 614.0
+offset_bottom = 446.0
 text = "Return"

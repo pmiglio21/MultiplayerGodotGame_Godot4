@@ -17,7 +17,6 @@ namespace Levels.OverworldLevels.Utilities
 		{
 			_parentPlayer = GetParent() as CharacterBody2D;
 
-			//GD.Print("");
 			_newPosition = GlobalPosition;
 		}
 

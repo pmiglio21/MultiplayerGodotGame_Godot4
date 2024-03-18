@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bf4dyoagbc04o"]
+
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.cs" id="1_whrl2"]
+
+[node name="OptionSelector" type="Node2D"]
+script = ExtResource("1_whrl2")
+
+[node name="OptionLabel" type="Label" parent="."]
+offset_left = -182.0
+offset_right = -22.0
+offset_bottom = 60.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OptionButton" type="Button" parent="."]
+offset_right = 110.0
+offset_bottom = 62.0

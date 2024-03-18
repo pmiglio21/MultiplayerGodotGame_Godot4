@@ -2,13 +2,13 @@ using Enums;
 using Globals;
 using Globals.PlayerManagement;
 using Godot;
-using Levels.EarlyLevels;
+using Levels.UtilityLevels;
 using Enums.GameRules;
 using System;
 using System.Linq;
 
 
-namespace Levels.OverworldLevels
+namespace Levels.UtilityLevels
 {
 	public partial class PauseScreenManager : Node2D
 	{

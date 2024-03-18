@@ -2,23 +2,25 @@ using Enums;
 using Globals;
 using Godot;
 using Levels.OverworldLevels;
+using Levels.UtilityLevels.UserInterfaceComponents;
 using System.Linq;
 
-namespace Levels.EarlyLevels
+namespace Levels.UtilityLevels
 {
 	public partial class GameRulesScreenManager : Node2D
 	{
 		protected PauseScreenManager pauseScreen;
 
-		private Button _screenMergingButton;
+		private OptionSelector _splitScreenOptionSelector;
 		private Button _returnButton;
 
 		public override void _Ready()
 		{
-			_screenMergingButton = GetNode<Button>("ToScreenMergingButton");
+			_splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
 			_returnButton = GetNode<Button>("ReturnButton");
 
-			_screenMergingButton.GrabFocus();
+
+			_splitScreenOptionSelector.GetOptionButton().GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -32,7 +34,7 @@ namespace Levels.EarlyLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-				if (_screenMergingButton.HasFocus())
+				if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
 				{
 					//GlobalGameProperties.CurrentGameType = GameType.LocalCompetitive;
 					//GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
@@ -53,7 +55,7 @@ namespace Levels.EarlyLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
 			{
-				if (_screenMergingButton.HasFocus())
+				if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
 				{
 					_returnButton.GrabFocus();
 				}
@@ -63,14 +65,14 @@ namespace Levels.EarlyLevels
 			{
 				if (_returnButton.HasFocus())
 				{
-					_screenMergingButton.GrabFocus();
+					_splitScreenOptionSelector.GetOptionButton().GrabFocus();
 				}
 			}
 		}
 
 		public void GrabFocusOfTopButton()
 		{
-			_screenMergingButton.GrabFocus();
+			_splitScreenOptionSelector.GetOptionButton().GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
