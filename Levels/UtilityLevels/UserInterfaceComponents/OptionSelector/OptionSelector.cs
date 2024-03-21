@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,11 +85,13 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 				case OptionSelectorTypes.SplitScreenMergingType:
 
-					foreach (var type in Enum.GetNames(typeof(SplitScreenMergingType)))
+					foreach (var enumValue in Enum.GetValues(typeof(SplitScreenMergingType)))
 					{
-						if (type.ToString() != "None")
+						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+						if (enumDescription != "None")
 						{
-							_options.Add(type.ToString());
+							_options.Add(enumDescription);
 						}
 					}
 

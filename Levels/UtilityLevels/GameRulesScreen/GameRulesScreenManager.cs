@@ -1,8 +1,11 @@
 using Enums;
+using Enums.GameRules;
 using Globals;
 using Godot;
 using Levels.OverworldLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
+using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Levels.UtilityLevels
@@ -77,7 +80,22 @@ namespace Levels.UtilityLevels
 
 		private void ReturnToPriorScene()
 		{
+			SaveOutGameRules();
+
 			GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+		}
+
+		private void SaveOutGameRules()
+		{
+			foreach (var enumValue in Enum.GetValues(typeof(SplitScreenMergingType)))
+			{
+				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+				if (enumDescription != "None" && enumDescription == _splitScreenOptionSelector.GetOptionButton().Text)
+				{
+					CurrentSaveGameRules.CurrentSplitScreenMergingType = (SplitScreenMergingType)enumValue;
+				}
+			}
 		}
 	}
 }
