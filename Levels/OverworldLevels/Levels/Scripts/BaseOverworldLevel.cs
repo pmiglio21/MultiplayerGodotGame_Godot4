@@ -59,8 +59,6 @@ public partial class BaseOverworldLevel : Node
 
 		GenerateInteriorBlocksOnAllFloorTiles();
 
-		GD.Print(CurrentSaveGameRules.CurrentGameType);
-
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			GenerateSingleSpawnPoints();

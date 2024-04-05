@@ -22,38 +22,35 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Process(double delta)
 		{
-			if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
+			if (PlayerManager.ActivePlayers.Count > 0)
 			{
-				if (PlayerManager.ActivePlayers.Count > 0)
+				//Find nearest player and set camera distance based on that player
+				if (PlayerManager.ActivePlayers.Count == 1)
 				{
-					//Find nearest player and set camera distance based on that player
-					if (PlayerManager.ActivePlayers.Count == 1)
-					{
-						SetDistance(PlayerManager.ActivePlayers[0]);
-					}
-					else if (PlayerManager.ActivePlayers.Count > 1)
-					{
-						BaseCharacter minDistancePlayer = null;
-						float minDistance = float.MaxValue;
-
-						foreach (var player in PlayerManager.ActivePlayers)
-						{
-							if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
-							{
-								minDistancePlayer = player;
-								minDistance = GlobalPosition.X - player.GlobalPosition.X;
-							}
-						}
-
-						SetDistance(minDistancePlayer);
-					}
-
-					//Maybe try MoveAndSlide()?
-
-					GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
-
-					//GlobalPosition = _newPosition;
+					SetDistance(PlayerManager.ActivePlayers[0]);
 				}
+				else if (PlayerManager.ActivePlayers.Count > 1)
+				{
+					BaseCharacter minDistancePlayer = null;
+					float minDistance = float.MaxValue;
+
+					foreach (var player in PlayerManager.ActivePlayers)
+					{
+						if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
+						{
+							minDistancePlayer = player;
+							minDistance = GlobalPosition.X - player.GlobalPosition.X;
+						}
+					}
+
+					SetDistance(minDistancePlayer);
+				}
+
+				//Maybe try MoveAndSlide()?
+
+				GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+
+				//GlobalPosition = _newPosition;
 			}
 		}
 

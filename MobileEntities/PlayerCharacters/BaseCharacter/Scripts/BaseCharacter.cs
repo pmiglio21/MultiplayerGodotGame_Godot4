@@ -203,7 +203,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
+			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+				(CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.ScreenPerPlayer && PlayerNumber == 0))
 			{
 				playerCamera.GlobalPosition = this.GlobalPosition;
 			}

@@ -129,7 +129,6 @@ namespace Levels.UtilityLevels
 				{
 					GetTree().Paused = false;
 					PlayerManager.ActivePlayers.Clear();
-					CurrentSaveGameRules.CurrentGameType = GameType.None;
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 				}
 			}

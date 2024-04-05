@@ -21,16 +21,13 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			SetSubViewportWorlds();
 			SetCamerasToPlayers();
 
-			//GD.Print($"SubViewports: {GlobalGameComponents.AvailableSubViewports.Count}");
-
-
-			if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
+			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
-				AdjustLocalCoopPlayerCameraView();
+				AdjustScreenPerPlayerCameraView();
 			}
-			else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
+			else 
 			{
-				AdjustLocalCompetitivePlayerCameraView();
+				AdjustSharedScreenCameraView();
 			}
 		}
 
@@ -81,7 +78,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			}
 		}
 
-		private void AdjustLocalCompetitivePlayerCameraView()
+		private void AdjustScreenPerPlayerCameraView()
 		{
 			Vector2I mainViewportSize = GetWindow().Size;
 
@@ -110,7 +107,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			}
 		}
 
-		private void AdjustLocalCoopPlayerCameraView()
+		private void AdjustSharedScreenCameraView()
 		{
 			Vector2I mainViewportSize = GetWindow().Size;
 

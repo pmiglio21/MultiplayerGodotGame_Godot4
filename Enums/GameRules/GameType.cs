@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Enums.GameRules
 {
-    public enum GameType
-    {
-        None,
-        LocalCompetitive,
-        LocalCoop
-    }
+    //Removing for now because Game Rules is kinda replacing it
+    //public enum GameType
+    //{
+    //    None,
+    //    LocalCompetitive,
+    //    LocalCoop
+    //}
 }

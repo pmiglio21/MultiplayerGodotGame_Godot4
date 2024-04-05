@@ -58,6 +58,8 @@ namespace Levels.UtilityLevels
 				}
 				else if (_continueButton.HasFocus())
 				{
+					SaveOutGameRules();
+
 					GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
 				}
 				else
@@ -145,11 +147,14 @@ namespace Levels.UtilityLevels
 			{
 				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-				if (enumDescription != "None" && enumDescription == _splitScreenOptionSelector.GetOptionButton().Text)
+				if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().Text)
 				{
 					CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
 				}
 			}
+
+			GD.Print($"0: {CurrentSaveGameRules.CurrentSplitScreenMergingType}");
+			GD.Print($"1: {CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType}");
 		}
 	}
 }
