@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Enums.GameRules
 {
-    public enum OptionSelectorTypes
+    public enum OptionSelectorType
     {
         None,
-        SplitScreenMergingType
+        SplitScreenMergingType,
+        RelativePlayerSpawnDistance
     }
 }

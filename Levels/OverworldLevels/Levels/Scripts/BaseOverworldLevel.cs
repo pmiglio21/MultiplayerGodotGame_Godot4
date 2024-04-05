@@ -57,10 +57,22 @@ public partial class BaseOverworldLevel : Node
 	{
 		_rng.Randomize();
 
+		GD.Print("1");
+
 		GenerateInteriorBlocksOnAllFloorTiles();
 
-		if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
+		GD.Print("5");
+
+		GD.Print(CurrentSaveGameRules.CurrentGameType);
+
+		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
+			GD.Print("3");
+			GenerateSingleSpawnPoints();
+		}
+		else
+		{
+			GD.Print("2");
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
 				GenerateMultipleSpawnPoints();
@@ -72,10 +84,8 @@ public partial class BaseOverworldLevel : Node
 				GenerateSingleSpawnPoints();
 			}
 		}
-		else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
-		{
-			GenerateSingleSpawnPoints();
-		}
+
+		GD.Print("4");
 
 		float percentageOfFloorToCover = 0;
 
@@ -98,22 +108,32 @@ public partial class BaseOverworldLevel : Node
 				break;
 		}
 
+		GD.Print("6");
+
 		//TODO: Get this to work concurrently
 		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
 		{
 			CreatePathsBetweenPoints();
 		}
 
+		GD.Print("7");
+
 		GenerateKeyMapItems();
 
-		if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCompetitive)
+		GD.Print("8");
+
+		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
-			SpawnLocalCompetitivePlayers();
+			GD.Print("10");
+			SpawnPlayersClose();
 		}
-		else if (CurrentSaveGameRules.CurrentGameType == GameType.LocalCoop)
+		else
 		{
-			SpawnLocalCoopPlayers();
+			GD.Print("9");
+			SpawnPlayersNormal();
 		}
+		
+		GD.Print("11");
 	}
 
 	#region Path Generation
@@ -427,7 +447,7 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	private void SpawnLocalCoopPlayers()
+	private void SpawnPlayersClose()
 	{
 		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
@@ -459,7 +479,7 @@ public partial class BaseOverworldLevel : Node
 		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
-	private void SpawnLocalCompetitivePlayers()
+	private void SpawnPlayersNormal()
 	{
 		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 

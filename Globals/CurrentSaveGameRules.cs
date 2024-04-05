@@ -7,5 +7,7 @@ namespace Globals
         public static GameType CurrentGameType = GameType.None;
 
         public static SplitScreenMergingType CurrentSplitScreenMergingType = SplitScreenMergingType.None;
+
+        public static RelativePlayerSpawnDistanceType CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.None;
     }
 }

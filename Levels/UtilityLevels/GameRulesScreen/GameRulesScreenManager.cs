@@ -17,12 +17,14 @@ namespace Levels.UtilityLevels
 		protected PauseScreenManager pauseScreen;
 
 		private OptionSelector _splitScreenOptionSelector;
+		private OptionSelector _relativePlayerSpawnDistanceOptionSelector;
 		private Button _returnButton;
 		private Button _continueButton;
 
 		public override void _Ready()
 		{
 			_splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
+			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
@@ -50,18 +52,24 @@ namespace Levels.UtilityLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-				if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
-				{
-					//GlobalGameProperties.CurrentGameType = GameType.LocalCompetitive;
-					//GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
-				}
-				else if (_returnButton.HasFocus())
+				if (_returnButton.HasFocus())
 				{
 					ReturnToPriorScene();
 				}
 				else if (_continueButton.HasFocus())
 				{
 					GetTree().ChangeSceneToFile(LevelScenePaths.OverworldLevel1Path);
+				}
+				else
+                {
+					if (_continueButton.Visible)
+                    {
+						_continueButton.GrabFocus();
+					}
+					else if (_returnButton.Visible)
+					{
+						_returnButton.GrabFocus();
+					}
 				}
 			}
 
@@ -76,6 +84,10 @@ namespace Levels.UtilityLevels
 			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
 			{
 				if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
+				{
+					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
 				{
 					_returnButton.GrabFocus();
 				}
@@ -92,6 +104,10 @@ namespace Levels.UtilityLevels
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus())
+				{
+					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
 				{
 					_splitScreenOptionSelector.GetOptionButton().GrabFocus();
 				}
@@ -122,6 +138,16 @@ namespace Levels.UtilityLevels
 				if (enumDescription != "None" && enumDescription == _splitScreenOptionSelector.GetOptionButton().Text)
 				{
 					CurrentSaveGameRules.CurrentSplitScreenMergingType = (SplitScreenMergingType)enumValue;
+				}
+			}
+
+			foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
+			{
+				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+				if (enumDescription != "None" && enumDescription == _splitScreenOptionSelector.GetOptionButton().Text)
+				{
+					CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
 				}
 			}
 		}

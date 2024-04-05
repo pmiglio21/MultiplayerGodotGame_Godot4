@@ -18,7 +18,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		public string LabelText = string.Empty;
 
 		[Export]
-		public OptionSelectorTypes OptionSelectorType = OptionSelectorTypes.None;
+		public OptionSelectorType OptionSelectorType = OptionSelectorType.None;
 		#endregion
 
 		#region Components
@@ -77,15 +77,29 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
 			switch (OptionSelectorType)
 			{
-				case OptionSelectorTypes.None:
+				case OptionSelectorType.None:
 
 					_options = new List<string>();
 					
 					break;
 
-				case OptionSelectorTypes.SplitScreenMergingType:
+				case OptionSelectorType.SplitScreenMergingType:
 
 					foreach (var enumValue in Enum.GetValues(typeof(SplitScreenMergingType)))
+					{
+						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+						if (enumDescription != "None")
+						{
+							_options.Add(enumDescription);
+						}
+					}
+
+					break;
+
+				case OptionSelectorType.RelativePlayerSpawnDistance:
+
+					foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
 					{
 						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
