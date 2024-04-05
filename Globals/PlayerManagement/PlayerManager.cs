@@ -32,10 +32,5 @@ namespace Globals.PlayerManagement
 		};
 
 		#endregion
-
-		public static void ClearActivePlayers()
-		{
-			ActivePlayers.Clear();
-		}
 	}
 }

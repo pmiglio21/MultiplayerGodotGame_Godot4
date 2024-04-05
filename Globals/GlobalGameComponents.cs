@@ -10,5 +10,7 @@ namespace Globals
     public static class GlobalGameComponents
     {
         public static List<SubViewport> AvailableSubViewports = new List<SubViewport>();
+
+        public static string PriorSceneName = string.Empty;
     }
 }

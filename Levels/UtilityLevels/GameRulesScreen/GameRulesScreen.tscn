@@ -29,3 +29,10 @@ offset_top = 381.0
 offset_right = 614.0
 offset_bottom = 446.0
 text = "Return"
+
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 502.0
+offset_top = 461.0
+offset_right = 616.0
+offset_bottom = 526.0
+text = "Continue"

@@ -128,7 +128,7 @@ namespace Levels.UtilityLevels
 				if (_quitGameButton.HasFocus())
 				{
 					GetTree().Paused = false;
-					PlayerManager.ClearActivePlayers();
+					PlayerManager.ActivePlayers.Clear();
 					CurrentSaveGameRules.CurrentGameType = GameType.None;
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 				}

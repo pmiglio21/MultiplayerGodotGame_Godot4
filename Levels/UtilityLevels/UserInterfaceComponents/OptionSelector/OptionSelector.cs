@@ -42,7 +42,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		public override void _Process(double delta)
 		{
-			if (_options.Count > 1)
+			if (_options.Count > 1 && _optionButton.HasFocus())
 			{
 				if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
 				{

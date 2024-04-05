@@ -45,6 +45,7 @@ namespace Levels.EarlyLevels
 				//}
 				else if (_gameRulesButton.HasFocus())
 				{
+					GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleLevelPath;
 					GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
 				}
 				else if (_settingsButton.HasFocus())
