@@ -58,12 +58,12 @@ namespace Levels.UtilityLevels
 				}
 				else if (_continueButton.HasFocus())
 				{
-					GetTree().ChangeSceneToFile(LevelScenePaths.OverworldLevel1Path);
+					GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
 				}
 				else
-                {
+				{
 					if (_continueButton.Visible)
-                    {
+					{
 						_continueButton.GrabFocus();
 					}
 					else if (_returnButton.Visible)

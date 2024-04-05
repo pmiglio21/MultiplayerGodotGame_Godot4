@@ -57,22 +57,16 @@ public partial class BaseOverworldLevel : Node
 	{
 		_rng.Randomize();
 
-		GD.Print("1");
-
 		GenerateInteriorBlocksOnAllFloorTiles();
-
-		GD.Print("5");
 
 		GD.Print(CurrentSaveGameRules.CurrentGameType);
 
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
-			GD.Print("3");
 			GenerateSingleSpawnPoints();
 		}
 		else
 		{
-			GD.Print("2");
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
 				GenerateMultipleSpawnPoints();
@@ -84,8 +78,6 @@ public partial class BaseOverworldLevel : Node
 				GenerateSingleSpawnPoints();
 			}
 		}
-
-		GD.Print("4");
 
 		float percentageOfFloorToCover = 0;
 
@@ -108,32 +100,22 @@ public partial class BaseOverworldLevel : Node
 				break;
 		}
 
-		GD.Print("6");
-
 		//TODO: Get this to work concurrently
 		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
 		{
 			CreatePathsBetweenPoints();
 		}
 
-		GD.Print("7");
-
 		GenerateKeyMapItems();
-
-		GD.Print("8");
 
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
-			GD.Print("10");
 			SpawnPlayersClose();
 		}
 		else
 		{
-			GD.Print("9");
 			SpawnPlayersNormal();
 		}
-		
-		GD.Print("11");
 	}
 
 	#region Path Generation
