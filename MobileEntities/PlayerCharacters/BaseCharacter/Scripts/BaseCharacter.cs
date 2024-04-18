@@ -329,7 +329,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			MoveAndSlide();
 
-			GD.Print(Position);
+			//GD.Print(Position);
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 			{
