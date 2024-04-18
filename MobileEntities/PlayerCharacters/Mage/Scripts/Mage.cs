@@ -33,8 +33,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			var mageSpellInstance = _mageSpell.Instantiate() as MageSpell;
 
-			GD.Print($"Mage GlobalPosition {GlobalPosition}");
-			GD.Print($"Mage Position {Position}");
+			//GD.Print($"Mage GlobalPosition {GlobalPosition}");
+			//GD.Print($"Mage Position {Position}");
 
 			mageSpellInstance.Position = Position;
 

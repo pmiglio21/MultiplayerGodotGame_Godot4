@@ -4,6 +4,7 @@ using Godot;
 using System;
 using Globals;
 using Enums.GameRules;
+using System.Linq;
 
 namespace Levels.OverworldLevels.Utilities
 {
@@ -22,36 +23,74 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Process(double delta)
 		{
-			if (PlayerManager.ActivePlayers.Count > 0)
+			if ((CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust) && PlayerManager.ActivePlayers.Count > 1)
 			{
-				//Find nearest player and set camera distance based on that player
-				if (PlayerManager.ActivePlayers.Count == 1)
-				{
-					SetDistance(PlayerManager.ActivePlayers[0]);
-				}
-				else if (PlayerManager.ActivePlayers.Count > 1)
-				{
-					BaseCharacter minDistancePlayer = null;
-					float minDistance = float.MaxValue;
+				//Determine Camera point (middle of all players)
+				Vector2 midpointVector = new Vector2();
 
-					foreach (var player in PlayerManager.ActivePlayers)
+				foreach (var player in PlayerManager.ActivePlayers)
+				{
+					midpointVector += player.GlobalPosition;
+				}
+
+				midpointVector = midpointVector / PlayerManager.ActivePlayers.Count;
+
+				GlobalPosition = midpointVector;
+
+
+				//Determine camera zoom (depends on furthest distance between players)
+				float farthestDistanceBetweenPlayers = float.MinValue;
+
+
+				foreach (var firstPlayer in PlayerManager.ActivePlayers)
+				{
+					foreach (var secondPlayer in PlayerManager.ActivePlayers.Where(x => x.PlayerNumber != firstPlayer.PlayerNumber))
 					{
-						if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
+						if (firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition) > farthestDistanceBetweenPlayers)
 						{
-							minDistancePlayer = player;
-							minDistance = GlobalPosition.X - player.GlobalPosition.X;
+							farthestDistanceBetweenPlayers = firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition);
 						}
 					}
-
-					SetDistance(minDistancePlayer);
 				}
 
-				//Maybe try MoveAndSlide()?
+				float minValue = 32;
 
-				GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+				var multiplier = farthestDistanceBetweenPlayers > minValue ? 64 / Mathf.Floor(farthestDistanceBetweenPlayers) : 2.5f; 
 
-				//GlobalPosition = _newPosition;
+				//Float and Vector2 comparison
+				this.Zoom = new Vector2(1, 1) * multiplier;
 			}
+
+			//if (PlayerManager.ActivePlayers.Count > 0)
+			//{
+			//	//Find nearest player and set camera distance based on that player
+			//	if (PlayerManager.ActivePlayers.Count == 1)
+			//	{
+			//		SetDistance(PlayerManager.ActivePlayers[0]);
+			//	}
+			//	else if (PlayerManager.ActivePlayers.Count > 1)
+			//	{
+			//		BaseCharacter minDistancePlayer = null;
+			//		float minDistance = float.MaxValue;
+
+			//		foreach (var player in PlayerManager.ActivePlayers)
+			//		{
+			//			if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
+			//			{
+			//				minDistancePlayer = player;
+			//				minDistance = GlobalPosition.X - player.GlobalPosition.X;
+			//			}
+			//		}
+
+			//		SetDistance(minDistancePlayer);
+			//	}
+
+			//	//Maybe try MoveAndSlide()?
+
+			//	GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
+
+			//	//GlobalPosition = _newPosition;
+			//}
 		}
 
 		private void SetDistance(CharacterBody2D player)

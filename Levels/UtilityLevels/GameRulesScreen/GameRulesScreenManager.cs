@@ -153,8 +153,8 @@ namespace Levels.UtilityLevels
 				}
 			}
 
-			GD.Print($"0: {CurrentSaveGameRules.CurrentSplitScreenMergingType}");
-			GD.Print($"1: {CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType}");
+			//GD.Print($"0: {CurrentSaveGameRules.CurrentSplitScreenMergingType}");
+			//GD.Print($"1: {CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType}");
 		}
 	}
 }

@@ -80,6 +80,8 @@ namespace Scenes.UI.PlayerSelectScene
 					}
 				}
 
+				GD.Print("---------------------------------------");
+
 				//Load next scene
 				//GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
 

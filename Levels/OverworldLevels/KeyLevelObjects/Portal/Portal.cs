@@ -46,7 +46,7 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 				{
 					IsPortalActivated = !IsPortalActivated;
 
-					GD.Print("Yuh");
+					//GD.Print("Yuh");
 				}
 			}
 		}

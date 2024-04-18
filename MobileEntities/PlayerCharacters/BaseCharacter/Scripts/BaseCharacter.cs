@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
-    public partial class BaseCharacter : BaseMobileEntity
+	public partial class BaseCharacter : BaseMobileEntity
 	{
 		#region Components
 		[Export]
@@ -163,7 +163,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					//Portal jump
 
-					GD.Print("PORTAL JUMP");
+					//GD.Print("PORTAL JUMP");
 
 					_portalWaitTimer = 0;
 				}
@@ -194,7 +194,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 						finishedAttack = true;
 
-						GD.Print("Attacking");
+						//GD.Print("Attacking");
 					}
 
 					MoveHurtBoxes(latestCardinalDirection);
@@ -204,7 +204,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			}
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.ScreenPerPlayer && PlayerNumber == 0))
+				(PlayerManager.ActivePlayers.Count == 1))
 			{
 				playerCamera.GlobalPosition = this.GlobalPosition;
 			}
@@ -328,6 +328,34 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			Velocity = moveDirection * speed;
 
 			MoveAndSlide();
+
+			GD.Print(Position);
+
+			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+			{
+				//var canvasPos = GetGlobalTransform() * Position;
+				//Position = GetGlobalTransform().AffineInverse() * canvasPos;
+
+				//var screenCord = GetViewport().GetScreenTransform() * GetGlobalTransformWithCanvas() * Position;
+
+				//GD.Print($"Screen Coord: {screenCord}");
+
+
+
+				//var a = GlobalGameComponents.AvailableSubViewports[0].GetScreenTransform().;
+
+
+
+				//var posX = Mathf.Clamp(Position.X, 0, );
+				//var posY = Mathf.Clamp(Position.Y, 0, GlobalGameComponents.AvailableSubViewports[0].Position.Y);
+
+				//GD.Print($"GetWindow().Size: {GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().GetViewportRect().Size.X}, {GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().GetViewportRect().Size.Y}");
+				//GD.Print($"Chosen Position: {posX}, {posY}");
+
+				
+
+				//Position = new Vector2(posX, posY);
+			}
 		}
 
 		private void SetAnimationToBePlayed()
@@ -387,6 +415,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			GD.Print($"{PlayerNumber} leaving");
 
+			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * .8f;
+
 			// //Testing Camera manipulation
 			//GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
 			//GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
@@ -397,6 +427,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			Vector2I mainViewportSize = GetWindow().Size;
 
 			GD.Print($"{PlayerNumber} entering");
+
+			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * 1.25f;
 
 			// //Testing Camera manipulation
 			//GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
@@ -435,7 +467,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print("IsInPortal");
+					//GD.Print("IsInPortal");
 					isInPortal = true;
 				}
 			}
@@ -452,7 +484,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print("!IsInPortal");
+					//GD.Print("!IsInPortal");
 					isInPortal = false;
 					_portalWaitTimer = 0;
 				}

@@ -19,7 +19,12 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			GlobalGameComponents.AvailableSubViewports = GetSubViewports();
 			_level = GlobalGameComponents.AvailableSubViewports[0].GetNode("Level");
 			SetSubViewportWorlds();
-			SetCamerasToPlayers();
+
+			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+				(PlayerManager.ActivePlayers.Count == 1))
+			{
+				SetCamerasToPlayers();
+			}
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
@@ -72,7 +77,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			{
 				player.playerCamera = _subViewportCameras[playerCount];
 
-				GD.Print($"Setting camera for {player.PlayerNumber}");
+				//GD.Print($"Setting camera for {player.PlayerNumber}");
 
 				playerCount++;
 			}
@@ -105,6 +110,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 				GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 			}
+
+			GD.Print($"Size per {GlobalGameComponents.AvailableSubViewports[0].Size}");
 		}
 
 		private void AdjustSharedScreenCameraView()
@@ -115,6 +122,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I(0, 0);
 			GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I(0, 0);
 			GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I(0, 0);
+
+			GD.Print($"Size shared {GlobalGameComponents.AvailableSubViewports[0].Size}");
 		}
 	}
 }

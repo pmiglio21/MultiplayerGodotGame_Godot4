@@ -456,6 +456,8 @@ public partial class BaseOverworldLevel : Node
 			playerCount++;
 		}
 
+		GD.Print("---------------------------------------");
+
 		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
@@ -475,6 +477,8 @@ public partial class BaseOverworldLevel : Node
 
 			playerCount++;
 		}
+
+		GD.Print("---------------------------------------");
 
 		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
