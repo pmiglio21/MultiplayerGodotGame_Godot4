@@ -23,9 +23,18 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Process(double delta)
 		{
-			if ((CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust) && PlayerManager.ActivePlayers.Count > 1)
+			if (PlayerManager.ActivePlayers.Count > 1)
 			{
-				RunSharedScreenAdjustedProcess();
+				if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
+				{
+					RunSharedScreenAdjustedProcess();
+				}
+				else if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+				{
+					Zoom = new Vector2(2, 2);
+
+					SetCameraToPlayerPositionMidpoint();
+				}
 			}
 
 			//if (PlayerManager.ActivePlayers.Count > 0)
@@ -87,12 +96,14 @@ namespace Levels.OverworldLevels.Utilities
 		#region Shared Screen Adjust
 		private void RunSharedScreenAdjustedProcess()
 		{
+			SetCameraToPlayerPositionMidpoint();
+
 			float farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
 
 			SetLockedScreenAdjustedProcess(farthestDistanceBetweenPlayers);
 		}
 
-		private float FindFarthestDistanceBetweenPlayers()
+		private void SetCameraToPlayerPositionMidpoint()
 		{
 			//Determine Camera point (middle of all players)
 			Vector2 midpointVector = new Vector2();
@@ -105,8 +116,10 @@ namespace Levels.OverworldLevels.Utilities
 			midpointVector = midpointVector / PlayerManager.ActivePlayers.Count;
 
 			GlobalPosition = midpointVector;
+		}
 
-
+		private float FindFarthestDistanceBetweenPlayers()
+		{
 			//Determine camera zoom (depends on furthest distance between players)
 			float farthestDistanceBetweenPlayers = float.MinValue;
 
