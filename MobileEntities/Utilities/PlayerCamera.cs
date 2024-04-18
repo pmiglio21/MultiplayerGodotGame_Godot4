@@ -25,40 +25,7 @@ namespace Levels.OverworldLevels.Utilities
 		{
 			if ((CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust) && PlayerManager.ActivePlayers.Count > 1)
 			{
-				//Determine Camera point (middle of all players)
-				Vector2 midpointVector = new Vector2();
-
-				foreach (var player in PlayerManager.ActivePlayers)
-				{
-					midpointVector += player.GlobalPosition;
-				}
-
-				midpointVector = midpointVector / PlayerManager.ActivePlayers.Count;
-
-				GlobalPosition = midpointVector;
-
-
-				//Determine camera zoom (depends on furthest distance between players)
-				float farthestDistanceBetweenPlayers = float.MinValue;
-
-
-				foreach (var firstPlayer in PlayerManager.ActivePlayers)
-				{
-					foreach (var secondPlayer in PlayerManager.ActivePlayers.Where(x => x.PlayerNumber != firstPlayer.PlayerNumber))
-					{
-						if (firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition) > farthestDistanceBetweenPlayers)
-						{
-							farthestDistanceBetweenPlayers = firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition);
-						}
-					}
-				}
-
-				float minValue = 32;
-
-				var multiplier = farthestDistanceBetweenPlayers > minValue ? 64 / Mathf.Floor(farthestDistanceBetweenPlayers) : 2.5f; 
-
-				//Float and Vector2 comparison
-				this.Zoom = new Vector2(1, 1) * multiplier;
+				RunSharedScreenAdjustedProcess();
 			}
 
 			//if (PlayerManager.ActivePlayers.Count > 0)
@@ -116,5 +83,58 @@ namespace Levels.OverworldLevels.Utilities
 				}
 			}
 		}
+
+		#region Shared Screen Adjust
+		private void RunSharedScreenAdjustedProcess()
+		{
+			float farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
+
+			SetLockedScreenAdjustedProcess(farthestDistanceBetweenPlayers);
+		}
+
+		private float FindFarthestDistanceBetweenPlayers()
+		{
+			//Determine Camera point (middle of all players)
+			Vector2 midpointVector = new Vector2();
+
+			foreach (var player in PlayerManager.ActivePlayers)
+			{
+				midpointVector += player.GlobalPosition;
+			}
+
+			midpointVector = midpointVector / PlayerManager.ActivePlayers.Count;
+
+			GlobalPosition = midpointVector;
+
+
+			//Determine camera zoom (depends on furthest distance between players)
+			float farthestDistanceBetweenPlayers = float.MinValue;
+
+
+			foreach (var firstPlayer in PlayerManager.ActivePlayers)
+			{
+				foreach (var secondPlayer in PlayerManager.ActivePlayers.Where(x => x.PlayerNumber != firstPlayer.PlayerNumber))
+				{
+					if (firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition) > farthestDistanceBetweenPlayers)
+					{
+						farthestDistanceBetweenPlayers = firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition);
+					}
+				}
+			}
+
+			return farthestDistanceBetweenPlayers;
+		}
+
+		private void SetLockedScreenAdjustedProcess(float farthestDistanceBetweenPlayers)
+		{
+			float minPossibleDistanceValue = 256;
+
+			//Needs to be Ceil and not Floor because dividing by 0 is no good.
+			var multiplier = farthestDistanceBetweenPlayers > minPossibleDistanceValue ? minPossibleDistanceValue / Mathf.Ceil(farthestDistanceBetweenPlayers) : 1f;
+
+			//Float and Vector2 comparison
+			Zoom = new Vector2(2f, 2f) * multiplier;
+		}
+		#endregion
 	}
 }
