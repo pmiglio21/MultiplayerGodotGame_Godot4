@@ -140,13 +140,27 @@ namespace Levels.OverworldLevels.Utilities
 
 		private void SetLockedScreenAdjustedProcess(float farthestDistanceBetweenPlayers)
 		{
+			/////////MAYBE MAKE MAP SQUARE? This fixes the zoom being weird///////////////
+
+			//Picked a random number
 			float minPossibleDistanceValue = 256;
 
 			//Needs to be Ceil and not Floor because dividing by 0 is no good.
 			var multiplier = farthestDistanceBetweenPlayers > minPossibleDistanceValue ? minPossibleDistanceValue / Mathf.Ceil(farthestDistanceBetweenPlayers) : 1f;
 
 			//Float and Vector2 comparison
-			Zoom = new Vector2(2f, 2f) * multiplier;
+			var newZoom = new Vector2(2f, 2f) * multiplier;
+
+
+			//Up and down lock: .49516442
+			//Left and right lock: .60952383
+			//Only works for the map size as it is. Don't know how to get the numbers dynamically yet. Maybe check for limits being notified?
+			var newX = newZoom.X <= .6102503f ? .6102503f : newZoom.X;
+			var newY = newZoom.Y <= .49516442f ? .49516442f : newZoom.Y;
+
+			Zoom = new Vector2(newX, newY);
+
+			//GD.Print(Zoom);
 		}
 		#endregion
 	}

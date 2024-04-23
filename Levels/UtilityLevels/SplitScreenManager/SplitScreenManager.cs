@@ -54,7 +54,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 					subViewports.Add(subViewport);
 
-					_subViewportCameras.Add(subViewport.GetNode<Camera2D>("Camera2D"));
+					_subViewportCameras.Add(subViewport.GetNode<Camera2D>("PlayerCamera"));
 				}
 			}
 

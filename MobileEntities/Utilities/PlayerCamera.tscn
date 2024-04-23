@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfxuhtvhblj48"]
+
+[ext_resource type="Script" path="res://MobileEntities/Utilities/PlayerCamera.cs" id="1_cuxs3"]
+
+[node name="PlayerCamera" type="Camera2D"]
+limit_left = 0
+limit_top = 32
+limit_right = 1888
+limit_bottom = 1280
+script = ExtResource("1_cuxs3")
