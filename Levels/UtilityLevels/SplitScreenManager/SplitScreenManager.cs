@@ -90,18 +90,23 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			if (PlayerManager.ActivePlayers.Count == 1)
 			{
 				GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
+				GlobalGameComponents.AvailableSubViewports[1].Size = Vector2I.Zero;
+				GlobalGameComponents.AvailableSubViewports[2].Size = Vector2I.Zero;
+				GlobalGameComponents.AvailableSubViewports[3].Size = Vector2I.Zero;
 			}
 			else if (PlayerManager.ActivePlayers.Count == 2)
 			{
 				GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
 				GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
+				GlobalGameComponents.AvailableSubViewports[2].Size = Vector2I.Zero;
+				GlobalGameComponents.AvailableSubViewports[3].Size = Vector2I.Zero;
 			}
 			else if (PlayerManager.ActivePlayers.Count == 3)
 			{
 				GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 				GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 				GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
-				GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I(0, 0);
+				GlobalGameComponents.AvailableSubViewports[3].Size = Vector2I.Zero;
 			}
 			else if (PlayerManager.ActivePlayers.Count == 4)
 			{

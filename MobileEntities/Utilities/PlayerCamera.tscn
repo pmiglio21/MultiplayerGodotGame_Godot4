@@ -1,10 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfxuhtvhblj48"]
+[gd_scene load_steps=6 format=3 uid="uid://dfxuhtvhblj48"]
 
 [ext_resource type="Script" path="res://MobileEntities/Utilities/PlayerCamera.cs" id="1_cuxs3"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wk6x"]
+size = Vector2(634, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xbem"]
+size = Vector2(52, 395)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrl70"]
+size = Vector2(626, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_csn74"]
+size = Vector2(38, 391)
+
 [node name="PlayerCamera" type="Camera2D"]
+zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 32
 limit_right = 1888
-limit_bottom = 1280
+limit_bottom = 1920
 script = ExtResource("1_cuxs3")
+
+[node name="TopWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
+position = Vector2(0, 2)
+collision_layer = 524288
+collision_mask = 524292
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(-1, -194.5)
+shape = SubResource("RectangleShape2D_2wk6x")
+
+[node name="LeftWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
+position = Vector2(-307, -194)
+collision_layer = 524288
+collision_mask = 524292
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(16, 187.5)
+shape = SubResource("RectangleShape2D_1xbem")
+
+[node name="BottomWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
+collision_layer = 524288
+collision_mask = 524292
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(0, 184)
+shape = SubResource("RectangleShape2D_nrl70")
+
+[node name="RightWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
+position = Vector2(301, 2)
+collision_layer = 524288
+collision_mask = 524292
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(-9, -10.5)
+shape = SubResource("RectangleShape2D_csn74")

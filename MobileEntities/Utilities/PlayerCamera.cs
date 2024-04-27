@@ -1,10 +1,9 @@
 using Globals.PlayerManagement;
-using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
-using System;
 using Globals;
 using Enums.GameRules;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Levels.OverworldLevels.Utilities
 {
@@ -13,10 +12,29 @@ namespace Levels.OverworldLevels.Utilities
 		private Vector2 _newPosition;
 		private float _distanceThresholdBeforeCameraMoves = 10;
 		private CharacterBody2D _parentPlayer;
+		private List<StaticBody2D> _cameraWalls = new List<StaticBody2D>();
 
 		public override void _Ready()
 		{
 			_parentPlayer = GetParent() as CharacterBody2D;
+
+			foreach (var cameraWall in GetChildren().Where(x => x.IsInGroup("CameraWall")))
+			{
+				_cameraWalls.Add(cameraWall as StaticBody2D);
+			}
+
+			//if (CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			//{
+				if (_cameraWalls != null)
+				{
+					foreach (var wall in _cameraWalls)
+					{
+						var collision = wall.GetNode("CollisionShape2D") as CollisionShape2D;
+
+						collision.Disabled = true;
+					}
+				}
+			//}
 
 			_newPosition = GlobalPosition;
 		}
@@ -36,37 +54,6 @@ namespace Levels.OverworldLevels.Utilities
 					SetCameraToPlayerPositionMidpoint();
 				}
 			}
-
-			//if (PlayerManager.ActivePlayers.Count > 0)
-			//{
-			//	//Find nearest player and set camera distance based on that player
-			//	if (PlayerManager.ActivePlayers.Count == 1)
-			//	{
-			//		SetDistance(PlayerManager.ActivePlayers[0]);
-			//	}
-			//	else if (PlayerManager.ActivePlayers.Count > 1)
-			//	{
-			//		BaseCharacter minDistancePlayer = null;
-			//		float minDistance = float.MaxValue;
-
-			//		foreach (var player in PlayerManager.ActivePlayers)
-			//		{
-			//			if (Mathf.Abs(GlobalPosition.X - player.GlobalPosition.X) < minDistance)
-			//			{
-			//				minDistancePlayer = player;
-			//				minDistance = GlobalPosition.X - player.GlobalPosition.X;
-			//			}
-			//		}
-
-			//		SetDistance(minDistancePlayer);
-			//	}
-
-			//	//Maybe try MoveAndSlide()?
-
-			//	GlobalPosition = GlobalPosition.Lerp(_newPosition, .01f);
-
-			//	//GlobalPosition = _newPosition;
-			//}
 		}
 
 		private void SetDistance(CharacterBody2D player)
@@ -152,13 +139,15 @@ namespace Levels.OverworldLevels.Utilities
 			var newZoom = new Vector2(2f, 2f) * multiplier;
 
 
-			//Up and down lock: .49516442
-			//Left and right lock: .60952383
-			//Only works for the map size as it is. Don't know how to get the numbers dynamically yet. Maybe check for limits being notified?
-			var newX = newZoom.X <= .6102503f ? .6102503f : newZoom.X;
-			var newY = newZoom.Y <= .49516442f ? .49516442f : newZoom.Y;
+			////Up and down lock: .49516442
+			////Left and right lock: .60952383
+			////Only works for the map size as it is. Don't know how to get the numbers dynamically yet. Maybe check for limits being notified?
+			//var newX = newZoom.X <= .6102503f ? .6102503f : newZoom.X;
+			//var newY = newZoom.Y <= .49516442f ? .49516442f : newZoom.Y;
 
-			Zoom = new Vector2(newX, newY);
+			//Zoom = new Vector2(newX, newY);
+
+			Zoom = newZoom;
 
 			//GD.Print(Zoom);
 		}
