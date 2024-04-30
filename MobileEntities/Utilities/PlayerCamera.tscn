@@ -1,18 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfxuhtvhblj48"]
+[gd_scene load_steps=10 format=3 uid="uid://dfxuhtvhblj48"]
 
 [ext_resource type="Script" path="res://MobileEntities/Utilities/PlayerCamera.cs" id="1_cuxs3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2wk6x"]
-size = Vector2(634, 25)
+size = Vector2(634, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1xbem"]
-size = Vector2(52, 395)
+size = Vector2(18, 395)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nrl70"]
-size = Vector2(626, 20)
+size = Vector2(626, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_csn74"]
-size = Vector2(38, 391)
+size = Vector2(20, 391)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rk2i2"]
+size = Vector2(539, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cuxa"]
+size = Vector2(20, 297)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72pci"]
+size = Vector2(538, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhx1t"]
+size = Vector2(20, 298)
 
 [node name="PlayerCamera" type="Camera2D"]
 zoom = Vector2(2, 2)
@@ -23,36 +35,90 @@ limit_bottom = 1920
 script = ExtResource("1_cuxs3")
 
 [node name="TopWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
-position = Vector2(0, 2)
+position = Vector2(1, -18)
 collision_layer = 524288
-collision_mask = 524292
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
-position = Vector2(-1, -194.5)
+position = Vector2(-1, -154)
 shape = SubResource("RectangleShape2D_2wk6x")
 
 [node name="LeftWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
-position = Vector2(-307, -194)
+position = Vector2(-327, -194)
 collision_layer = 524288
-collision_mask = 524292
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
-position = Vector2(16, 187.5)
+position = Vector2(28, 188)
 shape = SubResource("RectangleShape2D_1xbem")
 
 [node name="BottomWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
+position = Vector2(0, 8)
 collision_layer = 524288
-collision_mask = 524292
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
-position = Vector2(0, 184)
+position = Vector2(0, 165)
 shape = SubResource("RectangleShape2D_nrl70")
 
 [node name="RightWall" type="StaticBody2D" parent="." groups=["CameraWall"]]
-position = Vector2(301, 2)
+position = Vector2(321, 2)
 collision_layer = 524288
-collision_mask = 524292
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
-position = Vector2(-9, -10.5)
+position = Vector2(-22, -6)
 shape = SubResource("RectangleShape2D_csn74")
+
+[node name="TopArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 262144
+collision_mask = 262144
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopArea"]
+position = Vector2(-1.5, -132)
+shape = SubResource("RectangleShape2D_rk2i2")
+disabled = true
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[node name="RightArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 262144
+collision_mask = 262144
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightArea"]
+position = Vector2(259, 7.5)
+shape = SubResource("RectangleShape2D_7cuxa")
+disabled = true
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[node name="BottomArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 262144
+collision_mask = 262144
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomArea"]
+position = Vector2(-1, 146)
+shape = SubResource("RectangleShape2D_72pci")
+disabled = true
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[node name="LeftArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 262144
+collision_mask = 262144
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea"]
+position = Vector2(-259, 7)
+shape = SubResource("RectangleShape2D_rhx1t")
+disabled = true
+debug_color = Color(0.658824, 0.513726, 0, 0.419608)
+
+[connection signal="body_entered" from="TopArea" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="TopArea" to="." method="OnBodyExited"]
+[connection signal="body_entered" from="RightArea" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="RightArea" to="." method="OnBodyExited"]
+[connection signal="body_entered" from="BottomArea" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="BottomArea" to="." method="OnBodyExited"]
+[connection signal="body_entered" from="LeftArea" to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="LeftArea" to="." method="OnBodyExited"]

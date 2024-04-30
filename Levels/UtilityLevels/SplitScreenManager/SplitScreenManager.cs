@@ -46,6 +46,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 			List<SubViewport> subViewports = new List<SubViewport>();
 
+			int cameraCount = 0;
+
 			foreach (var child in gridContainer.GetChildren())
 			{
 				if (child is SubViewportContainer)
@@ -54,8 +56,10 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 					subViewports.Add(subViewport);
 
-					_subViewportCameras.Add(subViewport.GetNode<Camera2D>("PlayerCamera"));
+					_subViewportCameras.Add(subViewport.GetNode<Camera2D>($"PlayerCamera{cameraCount}"));
 				}
+
+				cameraCount++;
 			}
 
 			return subViewports;

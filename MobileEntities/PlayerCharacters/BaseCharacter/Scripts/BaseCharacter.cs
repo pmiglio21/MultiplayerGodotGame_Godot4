@@ -329,7 +329,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			MoveAndSlide();
 
-			//GD.Print(Position);
+			//GD.Print($"Player {PlayerNumber} Transform: {Transform}");
+			//GD.Print($"Player {PlayerNumber} GlobalPosition: {GlobalPosition}");
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 			{
