@@ -10,42 +10,35 @@ namespace Levels.OverworldLevels.Utilities
 {
 	public partial class PlayerCamera : Camera2D
 	{
-		private float _distanceThresholdBeforeCameraMoves = 10;
 		private CharacterBody2D _parentPlayer;
 		private List<StaticBody2D> _cameraWalls = new List<StaticBody2D>();
-
-		//private List<int> _playersInLockedAreas = new List<int>();
+		private List<Area2D> _wallAreas = new List<Area2D>();
+		private bool _isCameraSetBetweenPlayers = false;
+		private bool _isSomeoneTouchingAWall = false;
 
 		public override void _Ready()
 		{
 			_parentPlayer = GetParent() as CharacterBody2D;
 
-			foreach (var cameraWall in GetChildren().Where(x => x.IsInGroup("CameraWall")))
+			GetCameraWalls();
+
+			GetWallAreas();
+
+			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 			{
-				_cameraWalls.Add(cameraWall as StaticBody2D);
+				SetCameraToPlayerPositionMidpoint(1, true);
 			}
-
-			if (this.Name != "PlayerCamera0" || CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
-			{
-				if (_cameraWalls != null)
-				{
-					foreach (var wall in _cameraWalls)
-					{
-						var collision = wall.GetNode("CollisionShape2D") as CollisionShape2D;
-
-						collision.Disabled = true;
-					}
-				}
-			}
-
-			//if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
-			//{
-			//	SetCameraToPlayerPositionMidpoint(false);
-			//}
 		}
+
+		
+		///////////////// IF PLAYER RUNS INTO WALL (detect area collision), STOP CAMERA MOVEMENT UNTIL ALL PLAYERS STOP TOUCHING WALL
+
+
 
 		public override void _Process(double delta)
 		{
+			//GD.Print($"Is camera set at midpoint yet? {_isCameraSetBetweenPlayers}");
+
 			//GD.Print($"Viewport 0 Rect: {GlobalGameComponents.AvailableSubViewports[0].GetVisibleRect()}");
 			//GD.Print($"Viewport 1 Rect: {GlobalGameComponents.AvailableSubViewports[1].GetVisibleRect()}");
 
@@ -57,69 +50,154 @@ namespace Levels.OverworldLevels.Utilities
 				}
 				else if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 				{
-					Zoom = new Vector2(2, 2);
+					RunSharedScreenLockedProcess(delta);
+				}
+			}
+		}
 
-					bool tooCloseToWalls = false;
+		private void GetCameraWalls()
+		{
+			foreach (var cameraWall in GetChildren().Where(x => x.IsInGroup("CameraWall")))
+			{
+				_cameraWalls.Add(cameraWall as StaticBody2D);
+			}
 
-					foreach (var cameraWall in _cameraWalls)
+			if (this.Name != "PlayerCamera0" || CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			{
+				if (_cameraWalls != null)
+				{
+					foreach (var wall in _cameraWalls)
 					{
-						var collision = cameraWall.GetNode("CollisionShape2D") as CollisionShape2D;
+						var collision = wall.GetNode("StaticBodyCollision") as CollisionShape2D;
 
-						foreach (var player in PlayerManager.ActivePlayers)
-						{
-							//GD.Print($"Player {player.PlayerNumber}");
-
-							//if (player.PlayerNumber == 0)
-							//{
-							//	GD.Print($"X: Player: {player.GlobalPosition.X}, {cameraWall.Name}: {collision.GlobalPosition.X}");
-							//	GD.Print($"Y: Player: {player.GlobalPosition.Y}, {cameraWall.Name}: {collision.GlobalPosition.Y}");
-							//}
-
-							if (cameraWall.Name == "TopWall" || cameraWall.Name == "BottomWall")
-							{
-								if (Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y) <= 50)
-								{
-									GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-									GD.Print($"Y diff: {Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y)}");
-
-									tooCloseToWalls = true;
-									break;
-								}
-							}
-
-							if (cameraWall.Name == "RightWall" || cameraWall.Name == "LeftWall")
-							{
-								if (Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X) <= 50)
-								{
-									GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-									GD.Print($"X diff: {Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X)}");
-
-									tooCloseToWalls = true;
-									break;
-								}
-							}
-						}
-					}
-
-					if (!tooCloseToWalls)
-					{
-						SetCameraToPlayerPositionMidpoint(false);
+						collision.Disabled = true;
 					}
 				}
 			}
 		}
 
+		private void GetWallAreas()
+		{
+			foreach (var wallArea in GetChildren().Where(x => x.IsInGroup("DetectorArea")))
+			{
+				_wallAreas.Add(wallArea as Area2D);
+			}
+
+			if (this.Name != "PlayerCamera0" || CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			{
+				if (_wallAreas != null)
+				{
+					foreach (var area in _wallAreas)
+					{
+						var collision = area.GetNode("AreaCollision") as CollisionShape2D;
+
+						collision.Disabled = true;
+					}
+				}
+			}
+		}
+
+		#region Shared Screen Locked
+		private void RunSharedScreenLockedProcess(double delta)
+		{
+			//Zoom = new Vector2(2, 2);
+
+			bool tooCloseToWalls = false;
+
+			foreach (var cameraWall in _cameraWalls)
+			{
+				var collision = cameraWall.GetNode("StaticBodyCollision") as CollisionShape2D;
+
+				foreach (var player in PlayerManager.ActivePlayers)
+				{
+					//GD.Print($"Player {player.PlayerNumber}");
+
+					//if (player.PlayerNumber == 0)
+					//{
+					//	GD.Print($"X: Player: {player.GlobalPosition.X}, {cameraWall.Name}: {collision.GlobalPosition.X}");
+					//	GD.Print($"Y: Player: {player.GlobalPosition.Y}, {cameraWall.Name}: {collision.GlobalPosition.Y}");
+					//}
+
+					if (cameraWall.Name == "TopWall")
+					{
+						if (Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y) <= 5)
+						{
+							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
+							//GD.Print($"Y diff: {Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y)}");
+
+							tooCloseToWalls = true;
+							break;
+						}
+					}
+
+					if (cameraWall.Name == "BottomWall")
+					{
+						if (Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y) <= 10)
+						{
+							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
+							//GD.Print($"Y diff: {Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y)}");
+
+							tooCloseToWalls = true;
+							break;
+						}
+					}
+
+					if (cameraWall.Name == "LeftWall")
+					{
+						if (Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X) <= 10)
+						{
+							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
+							//GD.Print($"X diff: {Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X)}");
+
+							tooCloseToWalls = true;
+							break;
+						}
+					}
+
+					if (cameraWall.Name == "RightWall")
+					{
+						if (Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X) <= 10)
+						{
+							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
+							//GD.Print($"X diff: {Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X)}");
+
+							tooCloseToWalls = true;
+							break;
+						}
+					}
+				}
+			}
+
+			///////////////////////
+			//CLEAN UP
+			var a = FindFarthestDistanceBetweenPlayers();
+
+			//Picked a random number
+			float minPossibleDistanceValue = 256;
+
+			//if (!tooCloseToWalls || a < minPossibleDistanceValue)
+			//{
+			//	SetCameraToPlayerPositionMidpoint(delta ,_isCameraSetBetweenPlayers);
+			//}
+
+			if (!_isSomeoneTouchingAWall || a < minPossibleDistanceValue)
+			{
+				SetCameraToPlayerPositionMidpoint(delta, _isCameraSetBetweenPlayers);
+			}
+		}
+		#endregion
+
 		#region Shared Screen Adjust
 		private void RunSharedScreenAdjustedProcess()
 		{
-			SetCameraToPlayerPositionMidpoint(false);
+			SetCameraToPlayerPositionMidpoint(doLerp: false);
 
 			float farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
 
 			SetLockedScreenAdjustedProcess(farthestDistanceBetweenPlayers);
 		}
 
-		private void SetCameraToPlayerPositionMidpoint(bool doLerp = false)
+		private void SetCameraToPlayerPositionMidpoint(double delta = 0, bool doLerp = false)
 		{
 			//Determine Camera point (middle of all players)
 			Vector2 midpointVector = new Vector2();
@@ -133,11 +211,15 @@ namespace Levels.OverworldLevels.Utilities
 
 			if (doLerp)
 			{
-				GlobalPosition = GlobalPosition.Lerp(midpointVector, .01f);
+				GlobalPosition = GlobalPosition.Lerp(midpointVector, .8f * (float)delta);
+
+				//_isCameraSetBetweenPlayers = false;
 			}
 			else
 			{
 				GlobalPosition = midpointVector;
+
+				_isCameraSetBetweenPlayers = true;
 			}
 		}
 
@@ -190,28 +272,20 @@ namespace Levels.OverworldLevels.Utilities
 		#endregion
 
 		#region Signal Receptions
-		private void OnBodyEntered(Node2D body)
-		{
-			GD.Print("entering top area");
-			if (body is BaseCharacter)
-			{
-				//GD.Print("entering top area");
 
-				//_playersInLockedAreas.Add((body as BaseCharacter).PlayerNumber);
-			}
+		private void OnDetectorAreaBodyEntered(Node2D body)
+		{
+			_isSomeoneTouchingAWall = true;
+			GD.Print("Collision!");
 		}
 
-		private void OnBodyExited(Node2D body)
+		private void OnDetectorAreaBodyExited(Node2D body)
 		{
-			GD.Print("exiting top area");
-			if (body is BaseCharacter)
-			{
-				//GD.Print("exiting top area");
-
-				//_playersInLockedAreas.Remove((body as BaseCharacter).PlayerNumber);
-			}
+			_isSomeoneTouchingAWall = false;
+			GD.Print("No collision!");
 		}
 
 		#endregion
 	}
 }
+
