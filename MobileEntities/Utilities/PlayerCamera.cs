@@ -46,6 +46,10 @@ namespace Levels.OverworldLevels.Utilities
 				{
 					RunSharedScreenLockedProcess(delta);
 				}
+				else if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.MergeAndSplit)
+				{
+					RunMergeAndSplitProcess(delta);
+				}
 			}
 		}
 
@@ -192,18 +196,35 @@ namespace Levels.OverworldLevels.Utilities
 		}
 		#endregion
 
+		#region Merge And Split
+		private void RunMergeAndSplitProcess(double delta)
+		{
+			Zoom = new Vector2(2, 2);
+
+			var farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
+
+			//Picked a random number		   
+			float minPossibleDistanceValue = 256;
+
+			if (!_isSomeoneTouchingAWall || farthestDistanceBetweenPlayers < minPossibleDistanceValue)
+			{
+				SetCameraToPlayerPositionMidpoint(delta, _isCameraSetBetweenPlayers);
+			}
+		}
+		#endregion
+
 		#region Signal Receptions
 
 		private void OnDetectorAreaBodyEntered(Node2D body)
 		{
 			_isSomeoneTouchingAWall = true;
-			GD.Print("Collision!");
+			//GD.Print("Collision!");
 		}
 
 		private void OnDetectorAreaBodyExited(Node2D body)
 		{
 			_isSomeoneTouchingAWall = false;
-			GD.Print("No collision!");
+			//GD.Print("No collision!");
 		}
 
 		#endregion
