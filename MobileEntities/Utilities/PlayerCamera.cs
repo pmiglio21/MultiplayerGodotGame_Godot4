@@ -4,7 +4,6 @@ using Globals;
 using Enums.GameRules;
 using System.Linq;
 using System.Collections.Generic;
-using MobileEntities.PlayerCharacters.Scripts;
 
 namespace Levels.OverworldLevels.Utilities
 {
@@ -29,11 +28,6 @@ namespace Levels.OverworldLevels.Utilities
 				SetCameraToPlayerPositionMidpoint(1, true);
 			}
 		}
-
-		
-		///////////////// IF PLAYER RUNS INTO WALL (detect area collision), STOP CAMERA MOVEMENT UNTIL ALL PLAYERS STOP TOUCHING WALL
-
-
 
 		public override void _Process(double delta)
 		{
@@ -100,87 +94,14 @@ namespace Levels.OverworldLevels.Utilities
 		#region Shared Screen Locked
 		private void RunSharedScreenLockedProcess(double delta)
 		{
-			//Zoom = new Vector2(2, 2);
+			Zoom = new Vector2(2, 2);
 
-			bool tooCloseToWalls = false;
+			var farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
 
-			foreach (var cameraWall in _cameraWalls)
-			{
-				var collision = cameraWall.GetNode("StaticBodyCollision") as CollisionShape2D;
-
-				foreach (var player in PlayerManager.ActivePlayers)
-				{
-					//GD.Print($"Player {player.PlayerNumber}");
-
-					//if (player.PlayerNumber == 0)
-					//{
-					//	GD.Print($"X: Player: {player.GlobalPosition.X}, {cameraWall.Name}: {collision.GlobalPosition.X}");
-					//	GD.Print($"Y: Player: {player.GlobalPosition.Y}, {cameraWall.Name}: {collision.GlobalPosition.Y}");
-					//}
-
-					if (cameraWall.Name == "TopWall")
-					{
-						if (Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y) <= 5)
-						{
-							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-							//GD.Print($"Y diff: {Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y)}");
-
-							tooCloseToWalls = true;
-							break;
-						}
-					}
-
-					if (cameraWall.Name == "BottomWall")
-					{
-						if (Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y) <= 10)
-						{
-							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-							//GD.Print($"Y diff: {Mathf.Abs(player.GlobalPosition.Y - collision.GlobalPosition.Y)}");
-
-							tooCloseToWalls = true;
-							break;
-						}
-					}
-
-					if (cameraWall.Name == "LeftWall")
-					{
-						if (Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X) <= 10)
-						{
-							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-							//GD.Print($"X diff: {Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X)}");
-
-							tooCloseToWalls = true;
-							break;
-						}
-					}
-
-					if (cameraWall.Name == "RightWall")
-					{
-						if (Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X) <= 10)
-						{
-							//GD.Print($"Culprit player: {player.PlayerNumber}, wall: {cameraWall.Name}");
-							//GD.Print($"X diff: {Mathf.Abs(player.GlobalPosition.X - collision.GlobalPosition.X)}");
-
-							tooCloseToWalls = true;
-							break;
-						}
-					}
-				}
-			}
-
-			///////////////////////
-			//CLEAN UP
-			var a = FindFarthestDistanceBetweenPlayers();
-
-			//Picked a random number
+			//Picked a random number		   
 			float minPossibleDistanceValue = 256;
 
-			//if (!tooCloseToWalls || a < minPossibleDistanceValue)
-			//{
-			//	SetCameraToPlayerPositionMidpoint(delta ,_isCameraSetBetweenPlayers);
-			//}
-
-			if (!_isSomeoneTouchingAWall || a < minPossibleDistanceValue)
+			if (!_isSomeoneTouchingAWall || farthestDistanceBetweenPlayers < minPossibleDistanceValue)
 			{
 				SetCameraToPlayerPositionMidpoint(delta, _isCameraSetBetweenPlayers);
 			}
@@ -194,7 +115,7 @@ namespace Levels.OverworldLevels.Utilities
 
 			float farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
 
-			SetLockedScreenAdjustedProcess(farthestDistanceBetweenPlayers);
+			SetSharedScreenAdjustedProcess(farthestDistanceBetweenPlayers);
 		}
 
 		private void SetCameraToPlayerPositionMidpoint(double delta = 0, bool doLerp = false)
@@ -243,7 +164,7 @@ namespace Levels.OverworldLevels.Utilities
 			return farthestDistanceBetweenPlayers;
 		}
 
-		private void SetLockedScreenAdjustedProcess(float farthestDistanceBetweenPlayers)
+		private void SetSharedScreenAdjustedProcess(float farthestDistanceBetweenPlayers)
 		{
 			/////////MAYBE MAKE MAP SQUARE? This fixes the zoom being weird///////////////
 
