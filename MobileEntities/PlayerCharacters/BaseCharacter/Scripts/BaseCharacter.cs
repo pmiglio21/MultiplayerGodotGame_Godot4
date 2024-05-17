@@ -85,8 +85,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isDead = false;
 
 		protected bool isInPortal = false;
-
-		public bool leftMainScreen = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -211,10 +209,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			//}
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-			   (PlayerManager.ActivePlayers.Count == 1) ||
-			   (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.MergeAndSplit &&
-				   (leftMainScreen) || (!leftMainScreen && PlayerManager.ActivePlayers.All(x => x.leftMainScreen))
-			   ))
+			   (PlayerManager.ActivePlayers.Count == 1))
 			{
 				//Move camera depending on if they left the screen AND depending on the subviewports' size
 				playerCamera.GlobalPosition = this.GlobalPosition;
@@ -419,36 +414,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				isAttacking = false;
 			}
-		}
-
-		private void OnVisibleOnScreenNotifierScreenExited()
-		{
-			Vector2I mainViewportSize = GetWindow().Size;
-
-			GD.Print($"{PlayerNumber} leaving");
-
-			leftMainScreen = true;
-
-			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * .8f;
-
-			//Testing Camera manipulation
-			GlobalGameComponents.AvailableSubViewports[0].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
-			GlobalGameComponents.AvailableSubViewports[1].Size = new Vector2I((mainViewportSize.X / 2), mainViewportSize.Y);
-		}
-
-		private void OnVisibleOnScreenNotifierScreenEntered()
-		{
-			Vector2I mainViewportSize = GetWindow().Size;
-
-			GD.Print($"{PlayerNumber} entering");
-
-			leftMainScreen = false;
-
-			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * 1.25f;
-
-			//Testing Camera manipulation
-			GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
-			GlobalGameComponents.AvailableSubViewports[1].Size = Vector2I.Zero;
 		}
 
 		#region Trigger Boxes

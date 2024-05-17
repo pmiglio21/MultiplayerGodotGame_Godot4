@@ -46,10 +46,6 @@ namespace Levels.OverworldLevels.Utilities
 				{
 					RunSharedScreenLockedProcess(delta);
 				}
-				else if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.MergeAndSplit)
-				{
-					RunMergeAndSplitProcess(delta);
-				}
 			}
 		}
 
@@ -193,23 +189,6 @@ namespace Levels.OverworldLevels.Utilities
 			Zoom = newZoom;
 
 			//GD.Print(Zoom);
-		}
-		#endregion
-
-		#region Merge And Split
-		private void RunMergeAndSplitProcess(double delta)
-		{
-			Zoom = new Vector2(2, 2);
-
-			var farthestDistanceBetweenPlayers = FindFarthestDistanceBetweenPlayers();
-
-			//Picked a random number		   
-			float minPossibleDistanceValue = 256;
-
-			if (PlayerManager.ActivePlayers.Count(x => !x.leftMainScreen) > 1)
-			{
-				SetCameraToPlayerPositionMidpoint(delta, _isCameraSetBetweenPlayers);
-			}
 		}
 		#endregion
 

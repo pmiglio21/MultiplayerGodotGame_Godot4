@@ -16,8 +16,6 @@ namespace Enums.GameRules
         [Description("Shared Screen - Locked")]
         SharedScreenLocked,   //Each player must be in the same screen at all times, screen does not zoom out if characters try to move past the screen edge
         [Description("Shared Screen - Adjust")]
-        SharedScreenAdjust,     //Each player must be in the same screen at all times, but the screen will zoom out if characters try to move past the screen edge 
-        [Description("Merge & Split")]
-        MergeAndSplit           //When players are near, use shared screen. When characters try to move past the screen edge, characters start using their own screens
+        SharedScreenAdjust     //Each player must be in the same screen at all times, but the screen will zoom out if characters try to move past the screen edge 
     }
 }
