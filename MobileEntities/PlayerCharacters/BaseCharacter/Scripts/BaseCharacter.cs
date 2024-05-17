@@ -85,6 +85,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isDead = false;
 
 		protected bool isInPortal = false;
+
+		public bool leftMainScreen = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -203,8 +205,16 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
+			//if (this.PlayerNumber == 1)
+			//{
+			//	leftMainScreen = true;
+			//}
+
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(PlayerManager.ActivePlayers.Count == 1))
+			   (PlayerManager.ActivePlayers.Count == 1) ||
+			   (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.MergeAndSplit &&
+				   (leftMainScreen) || (!leftMainScreen && PlayerManager.ActivePlayers.All(x => x.leftMainScreen))
+			   ))
 			{
 				//Move camera depending on if they left the screen AND depending on the subviewports' size
 				playerCamera.GlobalPosition = this.GlobalPosition;
@@ -417,6 +427,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			GD.Print($"{PlayerNumber} leaving");
 
+			leftMainScreen = true;
+
 			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * .8f;
 
 			//Testing Camera manipulation
@@ -429,6 +441,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			Vector2I mainViewportSize = GetWindow().Size;
 
 			GD.Print($"{PlayerNumber} entering");
+
+			leftMainScreen = false;
 
 			//GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom = GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().Zoom * 1.25f;
 

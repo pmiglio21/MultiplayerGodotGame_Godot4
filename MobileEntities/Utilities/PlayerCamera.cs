@@ -206,7 +206,7 @@ namespace Levels.OverworldLevels.Utilities
 			//Picked a random number		   
 			float minPossibleDistanceValue = 256;
 
-			if (!_isSomeoneTouchingAWall || farthestDistanceBetweenPlayers < minPossibleDistanceValue)
+			if (PlayerManager.ActivePlayers.Count(x => !x.leftMainScreen) > 1)
 			{
 				SetCameraToPlayerPositionMidpoint(delta, _isCameraSetBetweenPlayers);
 			}
