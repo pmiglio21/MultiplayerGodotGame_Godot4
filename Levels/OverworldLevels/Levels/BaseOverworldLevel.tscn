@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://de22b7g4faw63"]
+[gd_scene load_steps=4 format=3 uid="uid://t1cyumqgdw24"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_3clom"]

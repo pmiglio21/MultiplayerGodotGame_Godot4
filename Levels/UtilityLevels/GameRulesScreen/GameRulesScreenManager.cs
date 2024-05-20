@@ -60,7 +60,8 @@ namespace Levels.UtilityLevels
 				{
 					SaveOutGameRules();
 
-					GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
+					//Maybe change this
+					GetTree().ChangeSceneToFile(LevelScenePaths.LevelHolderPath);
 				}
 				else
 				{

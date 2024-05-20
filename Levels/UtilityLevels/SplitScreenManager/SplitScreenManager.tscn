@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://gvduncuyxglt"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.cs" id="1_rtyjs"]
-[ext_resource type="PackedScene" uid="uid://de22b7g4faw63" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
+[ext_resource type="PackedScene" uid="uid://t1cyumqgdw24" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
 [ext_resource type="PackedScene" uid="uid://dfxuhtvhblj48" path="res://MobileEntities/Utilities/PlayerCamera.tscn" id="2_nt5ex"]
 [ext_resource type="PackedScene" uid="uid://8s6036ufpjx6" path="res://Levels/UtilityLevels/PauseScreen/PauseScreen.tscn" id="4_pk341"]
 
-[node name="SubViewportCanvas" type="CanvasLayer"]
+[node name="SplitScreenManager" type="CanvasLayer"]
 script = ExtResource("1_rtyjs")
 
 [node name="GridContainer" type="GridContainer" parent="."]

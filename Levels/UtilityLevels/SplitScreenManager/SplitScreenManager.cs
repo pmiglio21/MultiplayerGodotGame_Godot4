@@ -21,7 +21,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			SetSubViewportWorlds();
 
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(PlayerManager.ActivePlayers.Count == 1))
 			{
 				SetCamerasToPlayers();
 			}

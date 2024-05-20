@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dufj0qhb8nb2u"]
+
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/LevelHolder.cs" id="1_y04q2"]
+[ext_resource type="PackedScene" uid="uid://gvduncuyxglt" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.tscn" id="1_yyexv"]
+
+[node name="LevelHolder" type="Node"]
+script = ExtResource("1_y04q2")
+
+[node name="SplitScreenManager" parent="." instance=ExtResource("1_yyexv")]

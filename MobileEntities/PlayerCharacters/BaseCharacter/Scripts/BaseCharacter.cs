@@ -85,6 +85,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected bool isDead = false;
 
 		protected bool isInPortal = false;
+
+		public bool IsWaitingForNextLevel = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -163,9 +165,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					//Portal jump
 
-					//GD.Print("PORTAL JUMP");
+					GD.Print("PORTAL JUMP");
 
 					_portalWaitTimer = 0;
+
+					IsWaitingForNextLevel = true;
 				}
 
 				if (initialInputTimer < initialInputTimerMax)
