@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://gvduncuyxglt"]
+[gd_scene load_steps=4 format=3 uid="uid://gvduncuyxglt"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.cs" id="1_rtyjs"]
 [ext_resource type="PackedScene" uid="uid://t1cyumqgdw24" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
 [ext_resource type="PackedScene" uid="uid://dfxuhtvhblj48" path="res://MobileEntities/Utilities/PlayerCamera.tscn" id="2_nt5ex"]
-[ext_resource type="PackedScene" uid="uid://8s6036ufpjx6" path="res://Levels/UtilityLevels/PauseScreen/PauseScreen.tscn" id="4_pk341"]
 
-[node name="SplitScreenManager" type="CanvasLayer"]
+[node name="SplitScreenManager" type="CanvasLayer" groups=["SplitScreenManager"]]
 script = ExtResource("1_rtyjs")
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -64,6 +63,3 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera3" parent="GridContainer/SubViewportContainer4/SubViewport" instance=ExtResource("2_nt5ex")]
-
-[node name="PauseScreen" parent="." instance=ExtResource("4_pk341")]
-visible = false
