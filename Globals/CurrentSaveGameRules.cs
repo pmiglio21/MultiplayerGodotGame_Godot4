@@ -7,5 +7,7 @@ namespace Globals
         public static SplitScreenMergingType CurrentSplitScreenMergingType = SplitScreenMergingType.None;
 
         public static RelativePlayerSpawnDistanceType CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.None;
+
+        public static string NumberOfLevels = string.Empty;
     }
 }

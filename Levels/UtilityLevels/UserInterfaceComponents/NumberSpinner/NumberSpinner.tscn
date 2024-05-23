@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvvcipol0i6h4"]
+
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/NumberSpinner/NumberSpinner.cs" id="1_wtu58"]
+
+[node name="NumberSpinner" type="Node2D"]
+script = ExtResource("1_wtu58")
+UsesInfinity = true
+
+[node name="NumberSpinnerButton" type="Button" parent="."]
+offset_right = 80.0
+offset_bottom = 46.0

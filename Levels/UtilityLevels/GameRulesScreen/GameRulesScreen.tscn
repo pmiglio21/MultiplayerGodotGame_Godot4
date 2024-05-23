@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=5 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
 [ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="2_qmecr"]
+[ext_resource type="PackedScene" uid="uid://cvvcipol0i6h4" path="res://Levels/UtilityLevels/UserInterfaceComponents/NumberSpinner/NumberSpinner.tscn" id="3_2icas"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
@@ -11,34 +12,38 @@ script = ExtResource("1_gwqco")
 
 [node name="TopText" type="RichTextLabel" parent="."]
 offset_left = 472.0
-offset_top = 249.0
+offset_top = 33.0
 offset_right = 668.0
-offset_bottom = 302.0
+offset_bottom = 86.0
 theme = SubResource("Theme_udowp")
 text = "Game Rules"
 
 [node name="SplitScreenOptionSelector" parent="." instance=ExtResource("2_qmecr")]
-position = Vector2(487, 301)
+position = Vector2(487, 85)
 scale = Vector2(1.25, 1.05882)
 LabelText = "Splitscreen"
 OptionSelectorType = 1
 
 [node name="RelativePlayerSpawnDistanceOptionSelector" parent="." instance=ExtResource("2_qmecr")]
-position = Vector2(487, 381)
+position = Vector2(487, 165)
 scale = Vector2(1.25787, 1.155)
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
 
 [node name="ReturnButton" type="Button" parent="."]
 offset_left = 500.0
-offset_top = 469.0
+offset_top = 318.0
 offset_right = 614.0
-offset_bottom = 534.0
+offset_bottom = 383.0
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
 offset_left = 502.0
-offset_top = 549.0
+offset_top = 398.0
 offset_right = 616.0
-offset_bottom = 614.0
+offset_bottom = 463.0
 text = "Continue"
+
+[node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
+position = Vector2(496, 250)
+scale = Vector2(1.52642, 1.21352)

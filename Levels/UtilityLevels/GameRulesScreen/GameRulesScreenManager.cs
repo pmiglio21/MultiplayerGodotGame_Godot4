@@ -18,6 +18,7 @@ namespace Levels.UtilityLevels
 
 		private OptionSelector _splitScreenOptionSelector;
 		private OptionSelector _relativePlayerSpawnDistanceOptionSelector;
+		private NumberSpinner _numberSpinner;
 		private Button _returnButton;
 		private Button _continueButton;
 
@@ -25,6 +26,7 @@ namespace Levels.UtilityLevels
 		{
 			_splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
 			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
+			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");		   
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
@@ -92,6 +94,10 @@ namespace Levels.UtilityLevels
 				}
 				else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
 				{
+					_numberSpinner.GetNumberSpinnerButtonButton().GrabFocus();
+				}
+				else if (_numberSpinner.GetNumberSpinnerButtonButton().HasFocus())
+				{
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus() && _continueButton.Visible)
@@ -107,6 +113,10 @@ namespace Levels.UtilityLevels
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus())
+				{
+					_numberSpinner.GetNumberSpinnerButtonButton().GrabFocus();
+				}
+				else if (_numberSpinner.GetNumberSpinnerButtonButton().HasFocus())
 				{
 					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
 				}
@@ -153,6 +163,8 @@ namespace Levels.UtilityLevels
 					CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
 				}
 			}
+
+			CurrentSaveGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButtonButton().Text;
 
 			//GD.Print($"0: {CurrentSaveGameRules.CurrentSplitScreenMergingType}");
 			//GD.Print($"1: {CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType}");
