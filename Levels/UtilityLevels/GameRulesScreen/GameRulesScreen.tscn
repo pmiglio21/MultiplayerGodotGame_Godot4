@@ -44,6 +44,13 @@ offset_right = 616.0
 offset_bottom = 463.0
 text = "Continue"
 
+[node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
+offset_left = 310.0
+offset_top = 266.0
+offset_right = 474.0
+offset_bottom = 303.0
+text = "Number of Levels"
+
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
 position = Vector2(496, 250)
 scale = Vector2(1.52642, 1.21352)
