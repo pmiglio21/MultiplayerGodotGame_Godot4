@@ -34,7 +34,7 @@ public partial class NumberSpinner : Node
 		{
 			int newNumber;
 
-			if (_numberSpinnerButton.Text == "inf")
+			if (_numberSpinnerButton.Text == GlobalConstants.Infinity)
 			{
 				newNumber = 0;
 			}
@@ -55,7 +55,7 @@ public partial class NumberSpinner : Node
 					}
 					else if (newNumber > MaxNumber && UsesInfinity)
 					{
-						_numberSpinnerButton.Text = "inf";
+						_numberSpinnerButton.Text = GlobalConstants.Infinity;
 					}
 				}
 			}

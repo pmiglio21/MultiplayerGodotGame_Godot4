@@ -8,15 +8,38 @@ using System.Linq;
 
 public partial class LevelHolder : Node
 {
+	private int _levelCounter;
+
 	public override void _Ready()
 	{
+		_levelCounter = 0;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (PlayerManager.ActivePlayers.All(x => x.IsWaitingForNextLevel))
+		if (CurrentSaveGameRules.NumberOfLevels != GlobalConstants.Infinity && _levelCounter < int.Parse(CurrentSaveGameRules.NumberOfLevels))
 		{
-			ResetSplitScreenManager();
+			if (PlayerManager.ActivePlayers.All(x => x.IsWaitingForNextLevel))
+			{
+				_levelCounter++;
+
+				if (_levelCounter != int.Parse(CurrentSaveGameRules.NumberOfLevels))
+				{
+					ResetSplitScreenManager();
+				}
+				else
+				{
+					PlayerManager.ActivePlayers.Clear();
+					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+				}
+			}
+		}
+		else if (CurrentSaveGameRules.NumberOfLevels == GlobalConstants.Infinity)
+		{
+			if (PlayerManager.ActivePlayers.All(x => x.IsWaitingForNextLevel))
+			{
+				ResetSplitScreenManager();
+			}
 		}
 	}
 

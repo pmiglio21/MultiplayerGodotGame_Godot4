@@ -54,3 +54,4 @@ text = "Number of Levels"
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
 position = Vector2(496, 250)
 scale = Vector2(1.52642, 1.21352)
+MinNumber = 1

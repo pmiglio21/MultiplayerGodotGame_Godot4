@@ -12,5 +12,7 @@ namespace Globals
         public static List<SubViewport> AvailableSubViewports = new List<SubViewport>();
 
         public static string PriorSceneName = string.Empty;
+
+        public static string Infinity = "inf";
     }
 }

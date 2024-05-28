@@ -127,6 +127,8 @@ namespace Scenes.UI.PlayerSelectScene
 					{
 						_playerSelectionChangedRecently = true;
 
+						//FIX THIS//-----------------------------------------------------------------------------------------
+						//This is where the warning is coming from...
 						EmitSignal(SignalName.FinishSelectionProcessStarted);
 					}
 
