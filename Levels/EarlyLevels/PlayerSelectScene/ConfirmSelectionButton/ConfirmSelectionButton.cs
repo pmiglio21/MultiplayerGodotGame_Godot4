@@ -82,12 +82,9 @@ namespace Scenes.UI.PlayerSelectScene
 
 				GD.Print("---------------------------------------");
 
-				//Load next scene
-				//GetTree().ChangeSceneToFile(LevelScenePaths.SplitScreenManagerPath);
-
 				GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayerSelectLevelPath;
 				GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
-            }
+			}
 		}
 
 		private void OnPlayerCharacterPicker_FinishSelectionProcess()

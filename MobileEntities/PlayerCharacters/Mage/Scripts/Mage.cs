@@ -38,26 +38,26 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			mageSpellInstance.Position = Position;
 
-            var viewportScene = GetParent().GetParent();
+			var viewportScene = GetParent().GetParent();
 			viewportScene.AddChild(mageSpellInstance);
 
-            var attackDirectionalInput = Vector2.Zero;
-            attackDirectionalInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
-            attackDirectionalInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
+			var attackDirectionalInput = Vector2.Zero;
+			attackDirectionalInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+			attackDirectionalInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
 
-            if (attackDirectionalInput == Vector2.Zero)
-            {
-                if (latestCardinalDirection == CardinalDirection.East)
-                {
-                    attackDirectionalInput = new Vector2(1, 0);
-                }
-                else if (latestCardinalDirection == CardinalDirection.West)
-                {
-                    attackDirectionalInput = new Vector2(-1, 0);
-                }
-            }
+			if (attackDirectionalInput == Vector2.Zero)
+			{
+				if (latestCardinalDirection == CardinalDirection.East)
+				{
+					attackDirectionalInput = new Vector2(1, 0);
+				}
+				else if (latestCardinalDirection == CardinalDirection.West)
+				{
+					attackDirectionalInput = new Vector2(-1, 0);
+				}
+			}
 
-            mageSpellInstance.MoveDirection = attackDirectionalInput;
-        }
+			mageSpellInstance.MoveDirection = attackDirectionalInput;
+		}
 	}
 }

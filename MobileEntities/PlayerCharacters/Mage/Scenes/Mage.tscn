@@ -151,7 +151,3 @@ position = Vector2(0, 2)
 
 [node name="FootBox" parent="." index="6"]
 position = Vector2(0, 10.875)
-
-[node name="VisibleOnScreenNotifier" parent="." index="7"]
-position = Vector2(-2.38419e-07, 1)
-scale = Vector2(0.8, 1.1)
