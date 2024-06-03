@@ -111,6 +111,20 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 					break;
 
+				case OptionSelectorType.LevelSize:
+
+					foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
+					{
+						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+						if (enumDescription != "None")
+						{
+							_options.Add(enumDescription);
+						}
+					}
+
+					break;
+
 				default:
 
 					_options = new List<string>();

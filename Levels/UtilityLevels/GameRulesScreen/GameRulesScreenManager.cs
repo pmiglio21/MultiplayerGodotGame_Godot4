@@ -19,6 +19,7 @@ namespace Levels.UtilityLevels
 		private OptionSelector _splitScreenOptionSelector;
 		private OptionSelector _relativePlayerSpawnDistanceOptionSelector;
 		private NumberSpinner _numberSpinner;
+		private OptionSelector _levelSizeSelector;
 		private Button _returnButton;
 		private Button _continueButton;
 
@@ -26,7 +27,8 @@ namespace Levels.UtilityLevels
 		{
 			_splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
 			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
-			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");		   
+			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");
+			_levelSizeSelector = GetNode<OptionSelector>("LevelSizeOptionSelector");
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
@@ -98,6 +100,10 @@ namespace Levels.UtilityLevels
 				}
 				else if (_numberSpinner.GetNumberSpinnerButtonButton().HasFocus())
 				{
+					_levelSizeSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_levelSizeSelector.GetOptionButton().HasFocus())
+				{
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus() && _continueButton.Visible)
@@ -113,6 +119,10 @@ namespace Levels.UtilityLevels
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus())
+				{
+					_levelSizeSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_levelSizeSelector.GetOptionButton().HasFocus())
 				{
 					_numberSpinner.GetNumberSpinnerButtonButton().GrabFocus();
 				}
@@ -166,8 +176,15 @@ namespace Levels.UtilityLevels
 
 			CurrentSaveGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButtonButton().Text;
 
-			//GD.Print($"0: {CurrentSaveGameRules.CurrentSplitScreenMergingType}");
-			//GD.Print($"1: {CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType}");
+			foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
+			{
+				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+				if (enumDescription != "None" && enumDescription == _levelSizeSelector.GetOptionButton().Text)
+				{
+					CurrentSaveGameRules.CurrentLevelSize = (LevelSize)enumValue;
+				}
+			}
 		}
 	}
 }

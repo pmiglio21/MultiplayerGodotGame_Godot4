@@ -30,18 +30,24 @@ scale = Vector2(1.25787, 1.155)
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
 
+[node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+position = Vector2(476, 320)
+scale = Vector2(1.58224, 1.33402)
+LabelText = "Level Size"
+OptionSelectorType = 3
+
 [node name="ReturnButton" type="Button" parent="."]
-offset_left = 500.0
-offset_top = 318.0
-offset_right = 614.0
-offset_bottom = 383.0
+offset_left = 498.0
+offset_top = 482.0
+offset_right = 612.0
+offset_bottom = 547.0
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
-offset_left = 502.0
-offset_top = 398.0
-offset_right = 616.0
-offset_bottom = 463.0
+offset_left = 500.0
+offset_top = 562.0
+offset_right = 614.0
+offset_bottom = 627.0
 text = "Continue"
 
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]

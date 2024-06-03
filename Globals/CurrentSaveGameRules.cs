@@ -9,5 +9,7 @@ namespace Globals
         public static RelativePlayerSpawnDistanceType CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.None;
 
         public static string NumberOfLevels = string.Empty;
+
+        public static LevelSize CurrentLevelSize = LevelSize.None;
     }
 }

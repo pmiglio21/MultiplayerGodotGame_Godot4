@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Enums.GameRules
 {
-    public enum OptionSelectorType
+    public enum LevelSize
     {
         None,
-        SplitScreenMergingType,
-        RelativePlayerSpawnDistance,
-        LevelSize
+        Tiny,
+        Small,
+        Medium,
+        Large,
+        Colossal,
+        Varied
     }
 }
