@@ -8,13 +8,22 @@ using Scenes.UI.PlayerSelectScene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 public partial class BaseOverworldLevel : Node
 {
-	#region TileMap Level Generation
-	
-	private List<Vector2I> _floorTileList = new List<Vector2I>();
+    #region TileMap Level Generation
+
+    private List<string> _floorOptions = new List<string>()
+    {
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorVerySmall.tscn",
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorSmall.tscn",
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorMedium.tscn",
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorLarge.tscn",
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorVeryLarge.tscn",
+        "res://Levels/OverworldLevels/TileMapping/Floor/FloorColossal.tscn"
+    };
+
+    private List<Vector2I> _floorTileList = new List<Vector2I>();
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -44,7 +53,9 @@ public partial class BaseOverworldLevel : Node
 
 	public override void _Ready()
 	{
-		_baseFloor = GetNode<Node2D>("BaseFloor");
+        _rng.Randomize();
+
+        SetupFloor();
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
@@ -55,8 +66,6 @@ public partial class BaseOverworldLevel : Node
 
 	private void GenerateInteriorWallsForLevel()
 	{
-		_rng.Randomize();
-
 		GenerateInteriorBlocksOnAllFloorTiles();
 
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
@@ -116,8 +125,48 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-	#region Path Generation
-	private void GenerateInteriorBlocksOnAllFloorTiles()
+    private void SetupFloor()
+    {
+        string newFloorPath = string.Empty;
+
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
+        {
+            newFloorPath = _floorOptions[0];
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
+        {
+            newFloorPath = _floorOptions[1];
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
+        {
+            newFloorPath = _floorOptions[2];
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
+        {
+            newFloorPath = _floorOptions[3];
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
+        {
+            newFloorPath = _floorOptions[4];
+        }
+        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
+        {
+            newFloorPath = _floorOptions[5];
+        }
+		else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
+        {
+			newFloorPath = _floorOptions[_rng.RandiRange(0, _floorOptions.Count - 1)];
+        }
+
+        GD.Print("New floor: " + newFloorPath);
+
+		_baseFloor = GD.Load<PackedScene>(newFloorPath).Instantiate() as Node2D;
+
+        AddChild(_baseFloor);
+    }
+
+    #region Path Generation
+    private void GenerateInteriorBlocksOnAllFloorTiles()
 	{
 		foreach (var tilePosition in _floorTileList)
 		{
@@ -142,7 +191,7 @@ public partial class BaseOverworldLevel : Node
 	{
 		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{
-			var floorTileIndex = (int)Math.Floor(_rng.RandfRange(0, _floorTileList.Count));
+			var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
 
 			var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
 
@@ -176,7 +225,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void GenerateSingleSpawnPoints()
 	{
-		var floorTileIndex = (int)Math.Floor(_rng.RandfRange(0, _floorTileList.Count));
+		var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
 
 		var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
 

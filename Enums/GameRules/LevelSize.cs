@@ -10,10 +10,11 @@ namespace Enums.GameRules
     public enum LevelSize
     {
         None,
-        Tiny,
+        VerySmall,
         Small,
         Medium,
         Large,
+        VeryLarge,
         Colossal,
         Varied
     }

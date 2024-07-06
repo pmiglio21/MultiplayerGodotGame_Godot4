@@ -24,7 +24,11 @@ size = Vector2i(576, 324)
 render_target_update_mode = 4
 
 [node name="PlayerCamera0" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_nt5ex")]
-limit_top = -32
+zoom = Vector2(0.5, 0.5)
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
 
 [node name="Level" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_sbvqd")]
 
@@ -39,6 +43,10 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera1" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("2_nt5ex")]
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
 
 [node name="SubViewportContainer3" type="SubViewportContainer" parent="GridContainer"]
 layout_mode = 2
@@ -51,6 +59,10 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera2" parent="GridContainer/SubViewportContainer3/SubViewport" instance=ExtResource("2_nt5ex")]
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
 
 [node name="SubViewportContainer4" type="SubViewportContainer" parent="GridContainer"]
 layout_mode = 2
@@ -63,3 +75,7 @@ size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera3" parent="GridContainer/SubViewportContainer4/SubViewport" instance=ExtResource("2_nt5ex")]
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000

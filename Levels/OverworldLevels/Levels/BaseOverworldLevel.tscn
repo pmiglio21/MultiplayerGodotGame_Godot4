@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://t1cyumqgdw24"]
+[gd_scene load_steps=3 format=3 uid="uid://t1cyumqgdw24"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_3clom"]
-[ext_resource type="PackedScene" uid="uid://c47ujelvkm14j" path="res://Levels/OverworldLevels/TileMapping/Floor/BaseFloor.tscn" id="4_4pted"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_1tjb3")
@@ -12,8 +11,6 @@ z_index = -2
 position = Vector2(883.275, 929.624)
 scale = Vector2(-158.403, -125.85)
 texture = ExtResource("2_3clom")
-
-[node name="BaseFloor" parent="." instance=ExtResource("4_4pted")]
 
 [node name="FogOfWar" type="Sprite2D" parent="."]
 position = Vector2(-305, -181)
