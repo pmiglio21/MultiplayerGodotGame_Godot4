@@ -38,7 +38,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		public override void _Process(double delta)
 		{
-		}
+
+        }
 
 		private List<SubViewport> GetSubViewports()
 		{
@@ -120,7 +121,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 			}
 
-			GD.Print($"Size per {GlobalGameComponents.AvailableSubViewports[0].Size}");
+			//GD.Print($"Size per {GlobalGameComponents.AvailableSubViewports[0].Size}");
+			//576 x 324
 		}
 
 		private void AdjustSharedScreenCameraView()
