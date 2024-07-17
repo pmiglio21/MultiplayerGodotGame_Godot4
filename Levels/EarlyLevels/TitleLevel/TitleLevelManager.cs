@@ -5,7 +5,7 @@ using Enums.GameRules;
 
 namespace Levels.EarlyLevels
 {
-	public partial class TitleLevelManager: Node
+	public partial class TitleLevelManager: CanvasLayer
 	{
 		private Button _localButton;
 		private Button _onlineButton;
@@ -15,11 +15,11 @@ namespace Levels.EarlyLevels
 
 		public override void _Ready()
 		{
-			_localButton = GetNode<Button>("LocalButton");
-			_onlineButton = GetNode<Button>("OnlineButton");
-			_gameRulesButton = GetNode<Button>("GameRulesButton");
-			_settingsButton = GetNode<Button>("SettingsButton");
-			_quitGameButton = GetNode<Button>("QuitGameButton");
+			_localButton = FindChild("LocalButton") as Button;
+			_onlineButton = FindChild("OnlineButton") as Button;
+			_gameRulesButton = FindChild("GameRulesButton") as Button;
+			_settingsButton = FindChild("SettingsButton") as Button;
+			_quitGameButton = FindChild("QuitGameButton") as Button;
 
 			_localButton.GrabFocus();
 		}

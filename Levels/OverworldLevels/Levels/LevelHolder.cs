@@ -5,6 +5,7 @@ using Levels.UtilityLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using System;
 using System.Linq;
+using static Godot.Window;
 
 public partial class LevelHolder : Node
 {
@@ -12,7 +13,9 @@ public partial class LevelHolder : Node
 
 	public override void _Ready()
 	{
-		_levelCounter = 0;
+		//GetTree().Root.ContentScaleMode = ContentScaleModeEnum.Disabled; 
+
+        _levelCounter = 0;
 	}
 
 	public override void _Process(double delta)

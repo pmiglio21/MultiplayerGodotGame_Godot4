@@ -5,48 +5,49 @@
 [sub_resource type="Theme" id="Theme_ijh7m"]
 default_font_size = 30
 
-[node name="TitleLevel" type="Node"]
+[node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_g22g1")
 
-[node name="TitleText" type="RichTextLabel" parent="."]
-offset_left = 448.0
-offset_top = 100.0
-offset_right = 672.0
-offset_bottom = 153.0
+[node name="GridContainer1" type="GridContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -87.5
+offset_right = 50.0
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleText" type="RichTextLabel" parent="GridContainer1"]
+custom_minimum_size = Vector2(215, 50)
+layout_mode = 2
+size_flags_horizontal = 4
 theme = SubResource("Theme_ijh7m")
 text = "Untitled Game"
 
-[node name="LocalButton" type="Button" parent="."]
-offset_left = 503.0
-offset_top = 159.0
-offset_right = 617.0
-offset_bottom = 224.0
+[node name="GridContainer2" type="GridContainer" parent="GridContainer1"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LocalButton" type="Button" parent="GridContainer1/GridContainer2"]
+layout_mode = 2
 text = "Local"
 
-[node name="OnlineButton" type="Button" parent="."]
-offset_left = 503.0
-offset_top = 232.0
-offset_right = 617.0
-offset_bottom = 297.0
+[node name="OnlineButton" type="Button" parent="GridContainer1/GridContainer2"]
+layout_mode = 2
 text = "Online"
 
-[node name="GameRulesButton" type="Button" parent="."]
-offset_left = 503.0
-offset_top = 308.0
-offset_right = 617.0
-offset_bottom = 373.0
+[node name="GameRulesButton" type="Button" parent="GridContainer1/GridContainer2"]
+layout_mode = 2
 text = "Game Rules"
 
-[node name="SettingsButton" type="Button" parent="."]
-offset_left = 503.0
-offset_top = 388.0
-offset_right = 617.0
-offset_bottom = 453.0
+[node name="SettingsButton" type="Button" parent="GridContainer1/GridContainer2"]
+layout_mode = 2
 text = "Settings"
 
-[node name="QuitGameButton" type="Button" parent="."]
-offset_left = 503.0
-offset_top = 468.0
-offset_right = 617.0
-offset_bottom = 533.0
+[node name="QuitGameButton" type="Button" parent="GridContainer1/GridContainer2"]
+layout_mode = 2
 text = "Quit"
