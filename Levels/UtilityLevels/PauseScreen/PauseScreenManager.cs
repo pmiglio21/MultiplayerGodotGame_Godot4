@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Levels.UtilityLevels
 {
-	public partial class PauseScreenManager : Node2D
+	public partial class PauseScreenManager : Control
 	{
 		public bool IsPauseScreenBeingShown = false;
 		public bool IsPauseScreenChildBeingShown = false;

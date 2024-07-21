@@ -5,7 +5,7 @@ using Enums.GameRules;
 
 namespace Levels.EarlyLevels
 {
-	public partial class TitleLevelManager: CanvasLayer
+	public partial class TitleLevelManager: Node
 	{
 		private Button _localButton;
 		private Button _onlineButton;

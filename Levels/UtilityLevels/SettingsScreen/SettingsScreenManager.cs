@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Levels.UtilityLevels
 {
-	public partial class SettingsScreenManager : Node2D
+	public partial class SettingsScreenManager : Control
 	{
 		public bool IsSettingsScreenBeingShown = false;
 
@@ -20,7 +20,7 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
-			_returnButton = GetNode<Button>("ReturnButton");
+			_returnButton = FindChild("ReturnButton") as Button;
 
 			GetPauseScreen();
 
