@@ -7,57 +7,59 @@
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
 
-[node name="GameRulesScreen" type="Node2D" groups=["SettingsScreen"]]
+[node name="GridContainer" type="GridContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -45.0
+offset_right = 39.5
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_gwqco")
 
 [node name="TopText" type="RichTextLabel" parent="."]
-offset_left = 472.0
-offset_top = 33.0
-offset_right = 668.0
-offset_bottom = 86.0
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 theme = SubResource("Theme_udowp")
 text = "Game Rules"
 
 [node name="SplitScreenOptionSelector" parent="." instance=ExtResource("2_qmecr")]
-position = Vector2(487, 85)
-scale = Vector2(1.25, 1.05882)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 LabelText = "Splitscreen"
 OptionSelectorType = 1
 
 [node name="RelativePlayerSpawnDistanceOptionSelector" parent="." instance=ExtResource("2_qmecr")]
-position = Vector2(487, 165)
-scale = Vector2(1.25787, 1.155)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
 
 [node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
-position = Vector2(476, 320)
-scale = Vector2(1.58224, 1.33402)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 LabelText = "Level Size"
 OptionSelectorType = 3
 
-[node name="ReturnButton" type="Button" parent="."]
-offset_left = 498.0
-offset_top = 482.0
-offset_right = 612.0
-offset_bottom = 547.0
-text = "Return"
-
-[node name="ContinueButton" type="Button" parent="."]
-offset_left = 500.0
-offset_top = 562.0
-offset_right = 614.0
-offset_bottom = 627.0
-text = "Continue"
-
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
-offset_left = 310.0
-offset_top = 266.0
-offset_right = 474.0
-offset_bottom = 303.0
+visible = false
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 text = "Number of Levels"
 
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
-position = Vector2(496, 250)
-scale = Vector2(1.52642, 1.21352)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
 MinNumber = 1
+
+[node name="ReturnButton" type="Button" parent="."]
+layout_mode = 2
+text = "Return"
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 2
+text = "Continue"

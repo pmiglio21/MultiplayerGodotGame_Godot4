@@ -5,10 +5,11 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Enums.GameRules;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents
 {
-	public partial class SplitScreenManager : CanvasLayer
+	public partial class SplitScreenManager : GridContainer
 	{
 
 		private List<Camera2D> _subViewportCameras = new List<Camera2D>();
@@ -18,38 +19,24 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
 			GlobalGameComponents.AvailableSubViewports = GetSubViewports();
 			_level = GlobalGameComponents.AvailableSubViewports[0].GetNode("Level");
-			SetSubViewportWorlds();
 
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(PlayerManager.ActivePlayers.Count == 1))
-			{
-				SetCamerasToPlayers();
-			}
+            RunScreenAdjustmentProcess();
 
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
-			{
-				AdjustScreenPerPlayerCameraView();
-			}
-			else 
-			{
-				AdjustSharedScreenCameraView();
-			}
-		}
-
-		public override void _Process(double delta)
-		{
-
+            GetTree().Root.SizeChanged += RunScreenAdjustmentProcess;
         }
+
+		//public override void _Process(double delta)
+		//{
+
+		//}
 
 		private List<SubViewport> GetSubViewports()
 		{
-			GridContainer gridContainer = GetNode<GridContainer>("GridContainer");
-
 			List<SubViewport> subViewports = new List<SubViewport>();
 
 			int cameraCount = 0;
 
-			foreach (var child in gridContainer.GetChildren())
+			foreach (var child in this.GetChildren())
 			{
 				if (child is SubViewportContainer)
 				{
@@ -65,6 +52,26 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 			return subViewports;
 		}
+
+		private void RunScreenAdjustmentProcess()
+		{
+            SetSubViewportWorlds();
+
+            if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+                (PlayerManager.ActivePlayers.Count == 1))
+            {
+                SetCamerasToPlayers();
+            }
+
+            if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+            {
+                AdjustScreenPerPlayerCameraView();
+            }
+            else
+            {
+                AdjustSharedScreenCameraView();
+            }
+        }
 
 		private void SetSubViewportWorlds()
 		{

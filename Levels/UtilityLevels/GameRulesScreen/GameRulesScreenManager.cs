@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Levels.UtilityLevels
 {
-	public partial class GameRulesScreenManager : Node2D
+	public partial class GameRulesScreenManager : Control
 	{
 		protected PauseScreenManager pauseScreen;
 

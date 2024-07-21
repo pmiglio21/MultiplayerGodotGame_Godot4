@@ -11,7 +11,7 @@ using Godot;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents
 {
-	public partial class OptionSelector : Node2D
+	public partial class OptionSelector : Control
 	{
 		#region Exported Properties
 		[Export]

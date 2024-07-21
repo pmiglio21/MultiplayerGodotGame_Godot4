@@ -2,7 +2,11 @@
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.cs" id="1_whrl2"]
 
-[node name="OptionSelector" type="Node2D"]
+[node name="OptionSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_whrl2")
 
 [node name="OptionLabel" type="Label" parent="."]

@@ -4,7 +4,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class NumberSpinner : Node
+public partial class NumberSpinner : Control
 {
 	#region Exported Properties
 	[Export]

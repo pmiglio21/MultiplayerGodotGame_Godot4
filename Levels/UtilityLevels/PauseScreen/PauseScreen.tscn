@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://jx5of1yg28rn" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="2_dkcpk"]
 
 [node name="GridContainer" type="GridContainer"]
+process_mode = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -47,6 +48,7 @@ focus_neighbor_top = NodePath("../ResumeGameButton")
 text = "Quit Game"
 
 [node name="SettingsScreen" parent="Control" instance=ExtResource("2_dkcpk")]
+visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
