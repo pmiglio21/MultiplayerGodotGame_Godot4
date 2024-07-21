@@ -9,7 +9,7 @@ using Enums;
 
 namespace Scenes.UI.PlayerSelectScene
 {
-	public partial class ConfirmSelectionButton : Node2D
+	public partial class ConfirmSelectionButton : Node
 	{
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()

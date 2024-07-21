@@ -3,26 +3,49 @@
 [ext_resource type="PackedScene" uid="uid://dkdont5cpaoeu" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.tscn" id="2_3pb1u"]
 [ext_resource type="PackedScene" uid="uid://cmob6mda775oe" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.tscn" id="2_nxjnc"]
 
-[node name="PlayerSelectLevel" type="Node2D"]
+[node name="PlayerSelectLevel" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PlayerCharacterPicker0" parent="." instance=ExtResource("2_3pb1u")]
-position = Vector2(77, 114)
+offset_left = -495.0
+offset_top = -232.2
+offset_right = -455.0
+offset_bottom = -192.2
 NumberOfCharactersNecessaryBeforeGivingAccess = 0
 
 [node name="PlayerCharacterPicker1" parent="." instance=ExtResource("2_3pb1u")]
-position = Vector2(225, 116)
+offset_left = -347.0
+offset_top = -230.2
+offset_right = -307.0
+offset_bottom = -190.2
 NumberOfCharactersNecessaryBeforeGivingAccess = 1
 
 [node name="PlayerCharacterPicker2" parent="." instance=ExtResource("2_3pb1u")]
-position = Vector2(371, 117)
+offset_left = -201.0
+offset_top = -229.2
+offset_right = -161.0
+offset_bottom = -189.2
 NumberOfCharactersNecessaryBeforeGivingAccess = 2
 
 [node name="PlayerCharacterPicker3" parent="." instance=ExtResource("2_3pb1u")]
-position = Vector2(517, 117)
+offset_left = -55.0
+offset_top = -229.2
+offset_right = -15.0
+offset_bottom = -189.2
 NumberOfCharactersNecessaryBeforeGivingAccess = 3
 
 [node name="ConfirmSelectionButton" parent="." instance=ExtResource("2_nxjnc")]
-position = Vector2(5, 7.2)
+offset_left = -567.0
+offset_top = -339.0
+offset_right = -527.0
+offset_bottom = -299.0
 
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
 [connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]

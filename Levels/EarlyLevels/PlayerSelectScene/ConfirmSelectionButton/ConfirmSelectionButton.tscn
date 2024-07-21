@@ -3,7 +3,11 @@
 [ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/ConfirmSelectionButton.cs" id="1_llcb1"]
 [ext_resource type="Texture2D" uid="uid://c5fh3k8xpyrw5" path="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png" id="2_eaa2q"]
 
-[node name="ConfirmSelectionButton" type="Node2D"]
+[node name="ConfirmSelectionButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_llcb1")
 
 [node name="Sprite" type="Sprite2D" parent="."]

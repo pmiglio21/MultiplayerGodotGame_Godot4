@@ -3,7 +3,11 @@
 [ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.cs" id="1_4xpsg"]
 [ext_resource type="Texture2D" uid="uid://7jf3s7aov0bg" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/BaseCharacter_PickerIcon.png" id="2_phv5d"]
 
-[node name="PlayerCharacterPicker" type="Node2D"]
+[node name="PlayerCharacterPicker" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_4xpsg")
 
 [node name="SelectedPlayerIcon" type="Sprite2D" parent="."]
