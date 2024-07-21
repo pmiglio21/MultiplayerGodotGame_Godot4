@@ -7,16 +7,15 @@
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
 
-[node name="GridContainer" type="GridContainer"]
+[node name="GameRulesScreen" type="Control"]
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.5
-offset_top = -45.0
-offset_right = 39.5
-offset_bottom = 45.0
+offset_left = -100.0
+offset_right = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gwqco")
@@ -24,42 +23,67 @@ script = ExtResource("1_gwqco")
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_top = -168.0
+offset_right = 200.0
+offset_bottom = -118.0
 theme = SubResource("Theme_udowp")
 text = "Game Rules"
 
 [node name="SplitScreenOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_top = -114.0
+offset_right = 200.0
+offset_bottom = -64.0
 LabelText = "Splitscreen"
 OptionSelectorType = 1
 
 [node name="RelativePlayerSpawnDistanceOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_top = -44.0
+offset_right = 200.0
+offset_bottom = 6.0
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
 
 [node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_left = 1.0
+offset_top = 27.0
+offset_right = 201.0
+offset_bottom = 77.0
 LabelText = "Level Size"
 OptionSelectorType = 3
 
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
-visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_left = -146.0
+offset_top = 107.0
+offset_right = 54.0
+offset_bottom = 157.0
 text = "Number of Levels"
 
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+offset_top = 98.0
+offset_right = 200.0
+offset_bottom = 148.0
 MinNumber = 1
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
+offset_top = 154.0
+offset_right = 200.0
+offset_bottom = 185.0
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 2
+offset_top = 189.0
+offset_right = 200.0
+offset_bottom = 220.0
 text = "Continue"

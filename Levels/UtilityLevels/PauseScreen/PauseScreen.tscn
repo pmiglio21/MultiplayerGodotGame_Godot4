@@ -3,51 +3,54 @@
 [ext_resource type="Script" path="res://Levels/UtilityLevels/PauseScreen/PauseScreenManager.cs" id="1_u56yh"]
 [ext_resource type="PackedScene" uid="uid://jx5of1yg28rn" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn" id="2_dkcpk"]
 
-[node name="GridContainer" type="GridContainer"]
+[node name="Control" type="Control" groups=["PauseScreen"]]
 process_mode = 2
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 27.0
+offset_top = -16.0
+offset_right = 27.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Control" type="Control" parent="." groups=["PauseScreen"]]
-process_mode = 2
-layout_mode = 2
 size_flags_horizontal = 4
 script = ExtResource("1_u56yh")
 
-[node name="ResumeGameButton" type="Button" parent="Control" groups=["ResumeGameButton"]]
+[node name="ResumeGameButton" type="Button" parent="." groups=["ResumeGameButton"]]
 process_mode = 2
 layout_mode = 0
-offset_left = 505.0
-offset_top = 244.0
-offset_right = 625.0
-offset_bottom = 275.0
+offset_left = -96.0
+offset_top = -52.0
+offset_right = 24.0
+offset_bottom = -21.0
 focus_neighbor_bottom = NodePath("../QuitGameButton")
 text = "Resume Game"
 
-[node name="SettingsButton" type="Button" parent="Control"]
+[node name="SettingsButton" type="Button" parent="."]
 process_mode = 2
 layout_mode = 0
-offset_left = 509.0
-offset_top = 293.0
-offset_right = 629.0
-offset_bottom = 324.0
+offset_left = -97.0
+offset_top = -3.0
+offset_right = 23.0
+offset_bottom = 28.0
 focus_neighbor_top = NodePath("../ResumeGameButton")
 text = "Settings"
 
-[node name="QuitGameButton" type="Button" parent="Control"]
+[node name="QuitGameButton" type="Button" parent="."]
 process_mode = 2
 layout_mode = 0
-offset_left = 512.0
-offset_top = 345.0
-offset_right = 632.0
-offset_bottom = 376.0
+offset_left = -94.0
+offset_top = 49.0
+offset_right = 26.0
+offset_bottom = 80.0
 focus_neighbor_top = NodePath("../ResumeGameButton")
 text = "Quit Game"
 
-[node name="SettingsScreen" parent="Control" instance=ExtResource("2_dkcpk")]
+[node name="SettingsScreen" parent="." instance=ExtResource("2_dkcpk")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -56,7 +59,6 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 0.0
-offset_top = 0.0
 offset_right = 61.0
 offset_bottom = 35.0
 grow_horizontal = 1
