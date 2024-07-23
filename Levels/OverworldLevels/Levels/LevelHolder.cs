@@ -13,8 +13,6 @@ public partial class LevelHolder : Node
 
 	public override void _Ready()
 	{
-		//GetTree().Root.ContentScaleMode = ContentScaleModeEnum.Disabled; 
-
         _levelCounter = 0;
 	}
 

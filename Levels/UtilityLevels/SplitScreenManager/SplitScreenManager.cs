@@ -20,34 +20,29 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			GlobalGameComponents.AvailableSubViewports = GetSubViewports();
 			_level = GlobalGameComponents.AvailableSubViewports[0].GetNode("Level");
 
+            SetSubViewportWorlds();
+
             RunScreenAdjustmentProcess();
 
+			//Lets subviewports scale as the window changes size
             GetTree().Root.SizeChanged += RunScreenAdjustmentProcess;
         }
-
-		//public override void _Process(double delta)
-		//{
-
-		//}
 
 		private List<SubViewport> GetSubViewports()
 		{
 			List<SubViewport> subViewports = new List<SubViewport>();
 
-			int cameraCount = 0;
+			int cameraCount = 1;
 
-			foreach (var child in this.GetChildren())
+			while (cameraCount < 5)
 			{
-				if (child is SubViewportContainer)
-				{
-					SubViewport subViewport = child.GetNode("SubViewport") as SubViewport;
+                SubViewport subViewport = FindChild($"SubViewport{cameraCount}") as SubViewport;
 
-					subViewports.Add(subViewport);
+                subViewports.Add(subViewport);
 
-					_subViewportCameras.Add(subViewport.GetNode<Camera2D>($"PlayerCamera{cameraCount}"));
-				}
+                _subViewportCameras.Add(subViewport.GetNode<Camera2D>($"PlayerCamera{cameraCount}"));
 
-				cameraCount++;
+                cameraCount++;
 			}
 
 			return subViewports;
@@ -55,8 +50,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void RunScreenAdjustmentProcess()
 		{
-            SetSubViewportWorlds();
-
             if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
                 (PlayerManager.ActivePlayers.Count == 1))
             {
@@ -97,9 +90,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void AdjustScreenPerPlayerCameraView()
 		{
-			Vector2I mainViewportSize = GetWindow().Size;
+            Vector2I mainViewportSize = (Vector2I)GetViewport().GetVisibleRect().Size;
 
-			if (PlayerManager.ActivePlayers.Count == 1)
+			//ADJUST ANCHORS SITUATIONALLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            if (PlayerManager.ActivePlayers.Count == 1)
 			{
 				GlobalGameComponents.AvailableSubViewports[0].Size = mainViewportSize;
 				GlobalGameComponents.AvailableSubViewports[1].Size = Vector2I.Zero;
@@ -127,9 +122,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				GlobalGameComponents.AvailableSubViewports[2].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 				GlobalGameComponents.AvailableSubViewports[3].Size = new Vector2I((mainViewportSize.X / 2), (mainViewportSize.Y / 2));
 			}
-
-			//GD.Print($"Size per {GlobalGameComponents.AvailableSubViewports[0].Size}");
-			//576 x 324
 		}
 
 		private void AdjustSharedScreenCameraView()
