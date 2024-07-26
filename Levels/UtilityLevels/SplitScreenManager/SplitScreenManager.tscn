@@ -24,7 +24,7 @@ script = ExtResource("1_rtyjs")
 [node name="SubViewportContainer1" type="SubViewportContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 10
-size_flags_vertical = 6
+size_flags_vertical = 10
 
 [node name="SubViewport1" type="SubViewport" parent="SubViewportContainer1"]
 transparent_bg = true
