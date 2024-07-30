@@ -50,8 +50,7 @@
               "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Scripts\\BaseCharacter.cs",
               "ViewState": "AQIAAIIAAAAAAAAAAAAgwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-25T22:08:29.222Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-25T22:08:29.222Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "Globals\\GlobalGameComponents.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T17:17:49.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-23T17:17:49.117Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\LevelHolder.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAA1wA8AAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T17:26:00.541Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T17:26:00.541Z"
             },
             {
               "$type": "Document",
@@ -87,7 +84,7 @@
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
               "RelativeToolTip": "Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAQwCQAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T13:28:01.263Z",
               "EditorCaption": ""
@@ -102,8 +99,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\Scripts\\BaseOverworldLevel.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAUwKQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T17:40:08.986Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T17:40:08.986Z"
             },
             {
               "$type": "Document",
@@ -115,8 +111,7 @@
               "RelativeToolTip": "Globals\\GlobalConstants.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T17:41:37.17Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T17:41:37.17Z"
             },
             {
               "$type": "Document",
@@ -128,8 +123,7 @@
               "RelativeToolTip": "Levels\\EarlyLevels\\PlayerSelectScene\\ConfirmSelectionButton\\ConfirmSelectionButton.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T17:24:18.872Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T17:24:18.872Z"
             }
           ]
         }
