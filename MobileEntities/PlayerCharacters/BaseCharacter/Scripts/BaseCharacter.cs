@@ -163,8 +163,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 				else if (_portalWaitTimer >= _portalWaitTimerMax && isInPortal)
 				{
-					//Portal jump
-
 					GD.Print("PORTAL JUMP");
 
 					_portalWaitTimer = 0;
@@ -207,15 +205,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			//if (this.PlayerNumber == 1)
-			//{
-			//	leftMainScreen = true;
-			//}
-
 			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
 			   (PlayerManager.ActivePlayers.Count == 1))
 			{
-				//Move camera depending on if they left the screen AND depending on the subviewports' size
 				playerCamera.GlobalPosition = this.GlobalPosition;
 			}
 		}
@@ -328,8 +320,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					moveDirection = Vector2.Zero;
 				}
-
-				//GD.Print($"Movement Vector: {moveDirection}");
 			}
 		}
 
@@ -338,35 +328,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			Velocity = moveDirection * speed;
 
 			MoveAndSlide();
-
-			//GD.Print($"Player {PlayerNumber} Transform: {Transform}");
-			//GD.Print($"Player {PlayerNumber} GlobalPosition: {GlobalPosition}");
-
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
-			{
-				//var canvasPos = GetGlobalTransform() * Position;
-				//Position = GetGlobalTransform().AffineInverse() * canvasPos;
-
-				//var screenCord = GetViewport().GetScreenTransform() * GetGlobalTransformWithCanvas() * Position;
-
-				//GD.Print($"Screen Coord: {screenCord}");
-
-
-
-				//var a = GlobalGameComponents.AvailableSubViewports[0].GetScreenTransform().;
-
-
-
-				//var posX = Mathf.Clamp(Position.X, 0, );
-				//var posY = Mathf.Clamp(Position.Y, 0, GlobalGameComponents.AvailableSubViewports[0].Position.Y);
-
-				//GD.Print($"GetWindow().Size: {GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().GetViewportRect().Size.X}, {GlobalGameComponents.AvailableSubViewports[0].GetCamera2D().GetViewportRect().Size.Y}");
-				//GD.Print($"Chosen Position: {posX}, {posY}");
-
-				
-
-				//Position = new Vector2(posX, posY);
-			}
 		}
 
 		private void SetAnimationToBePlayed()
@@ -375,14 +336,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				if (moveDirection == Vector2.Zero)
 				{
-					//GD.Print($"idling {latestCardinalDirection}");
 					PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Idle);
 				}
 				if (moveDirection != Vector2.Zero)
 				{
 					latestCardinalDirection = FindLatestCardinalDirection(latestCardinalDirection, moveDirection);
-
-					//GD.Print($"moving {latestCardinalDirection}");
 
 					PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
 				}
@@ -400,7 +358,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			if (_animationList.Contains($"{animationType}_{cardinalDirection}"))
 			{
-				//GD.Print($"Playing: {animationType}_{cardinalDirection}");
 				animationPlayer.Play($"{animationType}_{cardinalDirection}");
 			}
 		}
