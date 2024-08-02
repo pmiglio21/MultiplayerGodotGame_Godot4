@@ -24,13 +24,13 @@ namespace Scenes.UI.PlayerSelectScene
 				PlayerCharacterPickerManager.ActivePickers.All(x => x.SelectionHasBeenMade))
 			{
 				var sprite = this.GetNode("Sprite") as Sprite2D;
-				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png") as Texture2D;
+				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScreen/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png") as Texture2D;
 				sprite.Texture = newTexture;
 			}
 			else
 			{
 				var sprite = this.GetNode("Sprite") as Sprite2D;
-				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png") as Texture2D;
+				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScreen/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png") as Texture2D;
 				sprite.Texture = newTexture;
 			}
 		}
@@ -82,7 +82,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 				GD.Print("---------------------------------------");
 
-				GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayerSelectLevelPath;
+				GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayerSelectScreenPath;
 				GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
 			}
 		}

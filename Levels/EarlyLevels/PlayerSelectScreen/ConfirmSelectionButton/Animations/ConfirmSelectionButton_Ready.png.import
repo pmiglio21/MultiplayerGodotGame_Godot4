@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dpic8dvkdi1a4"
-path="res://.godot/imported/ConfirmSelectionButton_Ready.png-6cd5f43494d61f39baa3f79af8eaa70b.ctex"
+path="res://.godot/imported/ConfirmSelectionButton_Ready.png-02c8672466fb498f3bd7ab0ed9534f75.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png"
-dest_files=["res://.godot/imported/ConfirmSelectionButton_Ready.png-6cd5f43494d61f39baa3f79af8eaa70b.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png"
+dest_files=["res://.godot/imported/ConfirmSelectionButton_Ready.png-02c8672466fb498f3bd7ab0ed9534f75.ctex"]
 
 [params]
 

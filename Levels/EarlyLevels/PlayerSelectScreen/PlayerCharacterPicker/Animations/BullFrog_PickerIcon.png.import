@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bx5w4a8v5jryh"
-path="res://.godot/imported/BullFrog_PickerIcon.png-ac9ad1c1ddc81023e78431c7202b4f91.ctex"
+path="res://.godot/imported/BullFrog_PickerIcon.png-5bdc509b91aa3782124853c20a29e5bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/BullFrog_PickerIcon.png"
-dest_files=["res://.godot/imported/BullFrog_PickerIcon.png-ac9ad1c1ddc81023e78431c7202b4f91.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/BullFrog_PickerIcon.png"
+dest_files=["res://.godot/imported/BullFrog_PickerIcon.png-5bdc509b91aa3782124853c20a29e5bb.ctex"]
 
 [params]
 

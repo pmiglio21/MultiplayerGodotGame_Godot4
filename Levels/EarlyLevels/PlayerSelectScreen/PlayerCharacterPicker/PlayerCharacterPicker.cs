@@ -1,10 +1,7 @@
 using Enums;
 using Globals;
 using Globals.PlayerManagement;
-using MobileEntities.PlayerCharacters.Scripts;
 using Godot;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Scenes.UI.PlayerSelectScene
@@ -95,8 +92,8 @@ namespace Scenes.UI.PlayerSelectScene
 
 						if (goToTitleLevel && PlayerCharacterPickerManager.ActivePickers.Count == 0)
 						{
-							SwitchScenesFromPlayerSelectToTitle();
-						}
+                            GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
+                        }
 					}
 				}
 
@@ -360,11 +357,6 @@ namespace Scenes.UI.PlayerSelectScene
 		private bool IsSelectionEnabledForCurrentClass(Texture2D currentTexture)
 		{
 			return !PlayerCharacterPickerManager.ActivePickers.Any(x => x.SelectionHasBeenMade && x.PickerSprite.Texture == currentTexture); ;
-		}
-
-		private void SwitchScenesFromPlayerSelectToTitle()
-		{
-			GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
 		}
 
 		#region Signal Receptions

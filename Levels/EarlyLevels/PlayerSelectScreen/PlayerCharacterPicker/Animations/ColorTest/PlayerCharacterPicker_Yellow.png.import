@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb52r46n6ste8"
-path="res://.godot/imported/TreeFrog_PickerIcon.png-3031afa296bd624f3d1e34f808cbd20d.ctex"
+uid="uid://d3wxybsld8iw"
+path="res://.godot/imported/PlayerCharacterPicker_Yellow.png-7916257472a1d1f06b5230f963a6e46a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/TreeFrog_PickerIcon.png"
-dest_files=["res://.godot/imported/TreeFrog_PickerIcon.png-3031afa296bd624f3d1e34f808cbd20d.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/ColorTest/PlayerCharacterPicker_Yellow.png"
+dest_files=["res://.godot/imported/PlayerCharacterPicker_Yellow.png-7916257472a1d1f06b5230f963a6e46a.ctex"]
 
 [params]
 

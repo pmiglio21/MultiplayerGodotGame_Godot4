@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cf8ld0gid5wam"]
 
-[ext_resource type="Script" path="res://Levels/EarlyLevels/TitleLevel/TitleLevelManager.cs" id="1_g22g1"]
+[ext_resource type="Script" path="res://Levels/EarlyLevels/TitleScreen/TitleScreenManager.cs" id="1_thxbk"]
 
 [sub_resource type="Theme" id="Theme_ijh7m"]
 default_font_size = 30
@@ -16,7 +16,7 @@ offset_left = -107.5
 offset_right = 107.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_g22g1")
+script = ExtResource("1_thxbk")
 
 [node name="TitleText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(215, 50)
@@ -37,13 +37,9 @@ offset_right = 142.5
 offset_bottom = 114.0
 size_flags_horizontal = 4
 
-[node name="LocalButton" type="Button" parent="ButtonsGrid"]
+[node name="PlayButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
-text = "Local"
-
-[node name="OnlineButton" type="Button" parent="ButtonsGrid"]
-layout_mode = 2
-text = "Online"
+text = "Play"
 
 [node name="GameRulesButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2

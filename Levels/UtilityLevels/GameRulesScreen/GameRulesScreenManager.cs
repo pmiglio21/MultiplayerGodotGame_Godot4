@@ -32,7 +32,7 @@ namespace Levels.UtilityLevels
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
-			if (GlobalGameComponents.PriorSceneName == LevelScenePaths.PlayerSelectLevelPath)
+			if (GlobalGameComponents.PriorSceneName == LevelScenePaths.PlayerSelectScreenPath)
 			{
 				_continueButton.Show();
 			}

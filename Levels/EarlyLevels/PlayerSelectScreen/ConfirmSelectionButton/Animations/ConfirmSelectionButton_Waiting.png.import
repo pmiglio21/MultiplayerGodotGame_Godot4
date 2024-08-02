@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7jf3s7aov0bg"
-path.s3tc="res://.godot/imported/BaseCharacter_PickerIcon.png-5f0966cbe30de0e9e03fb40929fde3b3.s3tc.ctex"
+uid="uid://c5fh3k8xpyrw5"
+path.s3tc="res://.godot/imported/ConfirmSelectionButton_Waiting.png-c4aeb7f535130fe26107cbc8f40e5c7f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/BaseCharacter_PickerIcon.png"
-dest_files=["res://.godot/imported/BaseCharacter_PickerIcon.png-5f0966cbe30de0e9e03fb40929fde3b3.s3tc.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Waiting.png"
+dest_files=["res://.godot/imported/ConfirmSelectionButton_Waiting.png-c4aeb7f535130fe26107cbc8f40e5c7f.s3tc.ctex"]
 
 [params]
 

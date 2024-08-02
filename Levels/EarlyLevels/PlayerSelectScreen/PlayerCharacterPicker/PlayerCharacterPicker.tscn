@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dkdont5cpaoeu"]
 
-[ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/PlayerCharacterPicker.cs" id="1_4xpsg"]
-[ext_resource type="Texture2D" uid="uid://7jf3s7aov0bg" path="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/BaseCharacter_PickerIcon.png" id="2_phv5d"]
+[ext_resource type="Script" path="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/PlayerCharacterPicker.cs" id="1_4xpsg"]
+[ext_resource type="Texture2D" uid="uid://7jf3s7aov0bg" path="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/BaseCharacter_PickerIcon.png" id="2_phv5d"]
 
 [node name="PlayerCharacterPicker" type="Control"]
 layout_mode = 3

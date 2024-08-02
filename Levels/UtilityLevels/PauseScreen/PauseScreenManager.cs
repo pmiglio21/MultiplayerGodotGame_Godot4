@@ -129,7 +129,7 @@ namespace Levels.UtilityLevels
 				{
 					GetTree().Paused = false;
 					PlayerManager.ActivePlayers.Clear();
-					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 				}
 			}
 

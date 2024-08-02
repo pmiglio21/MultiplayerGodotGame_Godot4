@@ -31,7 +31,7 @@ public partial class LevelHolder : Node
 				else
 				{
 					PlayerManager.ActivePlayers.Clear();
-					GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 				}
 			}
 		}

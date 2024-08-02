@@ -133,7 +133,7 @@ namespace Levels.UtilityLevels
 			}
 			else
 			{
-				GetTree().ChangeSceneToFile(LevelScenePaths.TitleLevelPath);
+				GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 			}
 		}
 	}

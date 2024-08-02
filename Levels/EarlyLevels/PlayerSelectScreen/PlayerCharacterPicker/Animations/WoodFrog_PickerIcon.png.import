@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dssl37qwmlr8w"
-path="res://.godot/imported/WoodFrog_PickerIcon.png-b6f7e4920b1fdbb54ee6a6ee019024f8.ctex"
+path="res://.godot/imported/WoodFrog_PickerIcon.png-95cdaa0ae50d1fd423a73c222c0291a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/WoodFrog_PickerIcon.png"
-dest_files=["res://.godot/imported/WoodFrog_PickerIcon.png-b6f7e4920b1fdbb54ee6a6ee019024f8.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/WoodFrog_PickerIcon.png"
+dest_files=["res://.godot/imported/WoodFrog_PickerIcon.png-95cdaa0ae50d1fd423a73c222c0291a6.ctex"]
 
 [params]
 

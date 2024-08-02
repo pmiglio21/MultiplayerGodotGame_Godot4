@@ -1,27 +1,24 @@
 using Enums;
 using Globals;
 using Godot;
-using Enums.GameRules;
 
 namespace Levels.EarlyLevels
 {
-	public partial class TitleLevelManager: Node
+	public partial class TitleScreenManager: Node
 	{
-		private Button _localButton;
-		private Button _onlineButton;
+		private Button _playButton;
 		private Button _gameRulesButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
 		public override void _Ready()
 		{
-			_localButton = FindChild("LocalButton") as Button;
-			_onlineButton = FindChild("OnlineButton") as Button;
+			_playButton = FindChild("PlayButton") as Button;
 			_gameRulesButton = FindChild("GameRulesButton") as Button;
 			_settingsButton = FindChild("SettingsButton") as Button;
 			_quitGameButton = FindChild("QuitGameButton") as Button;
 
-			_localButton.GrabFocus();
+            _playButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -35,17 +32,13 @@ namespace Levels.EarlyLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-				if (_localButton.HasFocus())
+				if (_playButton.HasFocus())
 				{
-					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
+					GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
 				}
-				//else if (_onlineButton.HasFocus())
-				//{
-				//	GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectLevelPath);
-				//}
 				else if (_gameRulesButton.HasFocus())
 				{
-					GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleLevelPath;
+					GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleScreenPath;
 					GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
 				}
 				else if (_settingsButton.HasFocus())
@@ -63,13 +56,9 @@ namespace Levels.EarlyLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
 			{
-				if (_localButton.HasFocus())
+				if (_playButton.HasFocus())
 				{
-					_onlineButton.GrabFocus();
-				}
-				else if (_onlineButton.HasFocus())
-				{
-					_gameRulesButton.GrabFocus();
+                    _gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
@@ -93,11 +82,7 @@ namespace Levels.EarlyLevels
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_onlineButton.GrabFocus();
-				}
-				else if (_onlineButton.HasFocus())
-				{
-					_localButton.GrabFocus();
+					_playButton.GrabFocus();
 				}
 			}
 		}

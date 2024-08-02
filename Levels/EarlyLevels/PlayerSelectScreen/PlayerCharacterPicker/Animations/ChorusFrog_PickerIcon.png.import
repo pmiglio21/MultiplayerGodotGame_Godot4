@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3wxybsld8iw"
-path="res://.godot/imported/PlayerCharacterPicker_Yellow.png-38190198a9e333d289e9886e4d7980ff.ctex"
+uid="uid://blqj0q8r82h5p"
+path="res://.godot/imported/ChorusFrog_PickerIcon.png-c14e466becb81dbdc761c92fb2df5c8d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/EarlyLevels/PlayerSelectScene/PlayerCharacterPicker/Animations/ColorTest/PlayerCharacterPicker_Yellow.png"
-dest_files=["res://.godot/imported/PlayerCharacterPicker_Yellow.png-38190198a9e333d289e9886e4d7980ff.ctex"]
+source_file="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/ChorusFrog_PickerIcon.png"
+dest_files=["res://.godot/imported/ChorusFrog_PickerIcon.png-c14e466becb81dbdc761c92fb2df5c8d.ctex"]
 
 [params]
 
