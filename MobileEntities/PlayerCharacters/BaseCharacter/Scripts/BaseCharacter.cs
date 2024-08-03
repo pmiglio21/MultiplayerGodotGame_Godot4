@@ -196,7 +196,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 						finishedAttack = true;
 
-						//GD.Print("Attacking");
+						GD.Print("Attacking");
 					}
 
 					MoveHurtBoxes(latestCardinalDirection);
@@ -344,7 +344,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 					PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Move);
 				}
-
 			}
 			else if (isAttacking)
 			{
@@ -370,12 +369,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			string animationNameString = animationName.ToString();
 
-			//GD.Print($"{animationName} finished");
+			GD.Print($"{animationName} finished");
 			if (animationNameString.Contains(AnimationType.Attack.ToString()))
 			{
 				isAttacking = false;
 			}
-		}
+        }
 
 		#region Trigger Boxes
 		private void OnMainHitBoxAreaEntered(Area2D area)
