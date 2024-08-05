@@ -152,7 +152,6 @@ public partial class BaseOverworldLevel : Node
             maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
         }
 
-
         int x = 0;
 
 		while (x < maxNumberOfTiles)
@@ -161,8 +160,11 @@ public partial class BaseOverworldLevel : Node
 
             while (y < maxNumberOfTiles)
 			{
-				//How to do alternative tiles?
-				_tileMap.SetCell(0, new Vector2I(x, y), 1, new Vector2I(0, 0));
+				//How to make this dynamic? Need to find way to access atlas size.
+				var xAtlasCoord = _rng.RandiRange(0, 3);
+                var yAtlasCoord = _rng.RandiRange(0, 1);
+
+                _tileMap.SetCell(0, new Vector2I(x, y), 1, new Vector2I(xAtlasCoord, yAtlasCoord));
 
 				y++;
 			}
