@@ -13,18 +13,6 @@ public partial class BaseOverworldLevel : Node
 {
     #region TileMap Level Generation
 
-    private List<string> _floorOptions = new List<string>()
-    {
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorVerySmall.tscn",
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorSmall.tscn",
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorMedium.tscn",
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorLarge.tscn",
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorVeryLarge.tscn",
-        "res://Levels/OverworldLevels/TileMapping/Floor/FloorColossal.tscn"
-    };
-
-	private string _baseOverworldFloorScenePath = "res://Levels/OverworldLevels/TileMapping/Floor/OverworldLevelFloor.tscn";
-
     private List<Vector2I> _floorTileList = new List<Vector2I>();
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
@@ -47,7 +35,7 @@ public partial class BaseOverworldLevel : Node
 
 	#region Component Nodes
 
-	private Node2D _baseFloor = null;
+	private Node _baseFloor = null;
 
 	private TileMap _tileMap = null;
 
@@ -57,15 +45,15 @@ public partial class BaseOverworldLevel : Node
 	{
         _rng.Randomize();
 
-        SetupFloor();
+		_baseFloor = this.GetNode<Node>("BaseFloor");
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
-		LoadInFloorTiles(20, 20);
+		LoadInFloorTiles();
 
 		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
 
-		//GenerateInteriorWallsForLevel();
+		GenerateInteriorWallsForLevel();
 	}
 
 	private void GenerateInteriorWallsForLevel()
@@ -129,57 +117,49 @@ public partial class BaseOverworldLevel : Node
 		}
 	}
 
-    private void SetupFloor()
-    {
-        string newFloorPath = _baseOverworldFloorScenePath;
-
-        //string newFloorPath = string.Empty;
-
-        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
-        //      {
-        //          newFloorPath = _floorOptions[0];
-        //      }
-        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
-        //      {
-        //          newFloorPath = _floorOptions[1];
-        //      }
-        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
-        //      {
-        //          newFloorPath = _floorOptions[2];
-        //      }
-        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
-        //      {
-        //          newFloorPath = _floorOptions[3];
-        //      }
-        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
-        //      {
-        //          newFloorPath = _floorOptions[4];
-        //      }
-        //      else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
-        //      {
-        //          newFloorPath = _floorOptions[5];
-        //      }
-        //else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
-        //      {
-        //	newFloorPath = _floorOptions[_rng.RandiRange(0, _floorOptions.Count - 1)];
-        //      }
-
-        GD.Print("New floor: " + newFloorPath);
-
-		_baseFloor = GD.Load<PackedScene>(newFloorPath).Instantiate() as Node2D;
-
-        AddChild(_baseFloor);
-    }
-
-	private void LoadInFloorTiles(int xMax, int yMax)
+	private void LoadInFloorTiles()
 	{
-		int x = 0;
+		var maxNumberOfTiles = 0;
 
-		while (x < xMax)
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
+        {
+            maxNumberOfTiles = 20;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
+        {
+            maxNumberOfTiles = 40;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
+        {
+			maxNumberOfTiles = 60;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
+        {
+			maxNumberOfTiles = 80;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
+        {
+			maxNumberOfTiles = 100;
+        }
+        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
+        {
+			maxNumberOfTiles = 120;
+        }
+        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
+        {
+			var floorSizeOptions = new List<int>() { 20, 40, 60, 80, 100, 120 };
+
+            maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
+        }
+
+
+        int x = 0;
+
+		while (x < maxNumberOfTiles)
 		{
             int y = 0;
 
-            while (y < yMax)
+            while (y < maxNumberOfTiles)
 			{
 				//How to do alternative tiles?
 				_tileMap.SetCell(0, new Vector2I(x, y), 1, new Vector2I(0, 0));
