@@ -8,10 +8,11 @@ script = ExtResource("1_1tjb3")
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(883.275, 929.624)
-scale = Vector2(-158.403, -125.85)
+position = Vector2(594.368, 301.013)
+scale = Vector2(-21.2912, -7.58861)
 texture = ExtResource("2_3clom")
 
 [node name="FogOfWar" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-305, -181)
 centered = false

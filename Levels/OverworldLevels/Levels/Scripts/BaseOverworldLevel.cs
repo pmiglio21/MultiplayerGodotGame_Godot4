@@ -23,6 +23,8 @@ public partial class BaseOverworldLevel : Node
         "res://Levels/OverworldLevels/TileMapping/Floor/FloorColossal.tscn"
     };
 
+	private string _baseOverworldFloorScenePath = "res://Levels/OverworldLevels/TileMapping/Floor/OverworldLevelFloor.tscn";
+
     private List<Vector2I> _floorTileList = new List<Vector2I>();
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
@@ -59,9 +61,11 @@ public partial class BaseOverworldLevel : Node
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
+		LoadInFloorTiles(20, 20);
+
 		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
 
-		GenerateInteriorWallsForLevel();
+		//GenerateInteriorWallsForLevel();
 	}
 
 	private void GenerateInteriorWallsForLevel()
@@ -127,36 +131,38 @@ public partial class BaseOverworldLevel : Node
 
     private void SetupFloor()
     {
-        string newFloorPath = string.Empty;
+        string newFloorPath = _baseOverworldFloorScenePath;
 
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
-        {
-            newFloorPath = _floorOptions[0];
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
-        {
-            newFloorPath = _floorOptions[1];
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
-        {
-            newFloorPath = _floorOptions[2];
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
-        {
-            newFloorPath = _floorOptions[3];
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
-        {
-            newFloorPath = _floorOptions[4];
-        }
-        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
-        {
-            newFloorPath = _floorOptions[5];
-        }
-		else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
-        {
-			newFloorPath = _floorOptions[_rng.RandiRange(0, _floorOptions.Count - 1)];
-        }
+        //string newFloorPath = string.Empty;
+
+        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
+        //      {
+        //          newFloorPath = _floorOptions[0];
+        //      }
+        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
+        //      {
+        //          newFloorPath = _floorOptions[1];
+        //      }
+        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
+        //      {
+        //          newFloorPath = _floorOptions[2];
+        //      }
+        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
+        //      {
+        //          newFloorPath = _floorOptions[3];
+        //      }
+        //      if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
+        //      {
+        //          newFloorPath = _floorOptions[4];
+        //      }
+        //      else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
+        //      {
+        //          newFloorPath = _floorOptions[5];
+        //      }
+        //else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
+        //      {
+        //	newFloorPath = _floorOptions[_rng.RandiRange(0, _floorOptions.Count - 1)];
+        //      }
 
         GD.Print("New floor: " + newFloorPath);
 
@@ -164,6 +170,26 @@ public partial class BaseOverworldLevel : Node
 
         AddChild(_baseFloor);
     }
+
+	private void LoadInFloorTiles(int xMax, int yMax)
+	{
+		int x = 0;
+
+		while (x < xMax)
+		{
+            int y = 0;
+
+            while (y < yMax)
+			{
+				//How to do alternative tiles?
+				_tileMap.SetCell(0, new Vector2I(x, y), 1, new Vector2I(0, 0));
+
+				y++;
+			}
+
+			x++;
+		}
+	}
 
     #region Path Generation
     private void GenerateInteriorBlocksOnAllFloorTiles()
