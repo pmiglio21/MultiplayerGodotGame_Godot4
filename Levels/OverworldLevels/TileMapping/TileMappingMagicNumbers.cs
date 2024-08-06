@@ -8,8 +8,11 @@ namespace MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping
 {
     public static class TileMappingMagicNumbers
     {
-        public const int TileMapWallSpriteId = 0;
-        public const int TileMapFloorSpriteId = 1;
+        public const int TileMapFloorSpriteId = 0;
+        public const int TileMapWallSpriteId = 1;
+
+        public const int TileMapCaveFloorSpriteId = 10;
+        public const int TileMapCaveWallSpriteId = 11;
 
         // 32 * SQRT(2) = diagonal distance between interior blocks
         public const double DiagonalDistanceBetweenInteriorBlocks = 45.25483399593904;

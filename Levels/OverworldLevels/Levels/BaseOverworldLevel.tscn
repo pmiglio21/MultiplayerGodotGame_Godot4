@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/Scripts/BaseOverworldLevel.cs" id="1_1tjb3"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_3clom"]
-[ext_resource type="PackedScene" uid="uid://cvsevnj2cjexo" path="res://Levels/OverworldLevels/TileMapping/Floor/OverworldLevelFloor.tscn" id="3_iqnvh"]
+[ext_resource type="PackedScene" uid="uid://vl0was4eubql" path="res://Levels/OverworldLevels/TileMapping/Floor/OverworldLevelFloor.tscn" id="3_iqnvh"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_1tjb3")

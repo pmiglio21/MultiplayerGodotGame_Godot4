@@ -51,7 +51,7 @@ public partial class BaseOverworldLevel : Node
 
 		LoadInFloorTiles();
 
-		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapFloorSpriteId).ToList();
+		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCaveFloorSpriteId).ToList();
 
 		GenerateInteriorWallsForLevel();
 	}
@@ -115,7 +115,9 @@ public partial class BaseOverworldLevel : Node
 		{
 			SpawnPlayersNormal();
 		}
-	}
+
+        PaintInteriorWalls();
+    }
 
 	private void LoadInFloorTiles()
 	{
@@ -164,7 +166,7 @@ public partial class BaseOverworldLevel : Node
 				var xAtlasCoord = _rng.RandiRange(0, 3);
                 var yAtlasCoord = _rng.RandiRange(0, 1);
 
-                _tileMap.SetCell(0, new Vector2I(x, y), 1, new Vector2I(xAtlasCoord, yAtlasCoord));
+                _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCaveFloorSpriteId, new Vector2I(0, 0));
 
 				y++;
 			}
@@ -191,11 +193,22 @@ public partial class BaseOverworldLevel : Node
 			interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 			testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
-			_existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock, TestText = testText });
+			_existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(tilePosition.X, tilePosition.Y) });
 		}
 	}
 
-	private void GenerateMultipleSpawnPoints()
+	private void PaintInteriorWalls()
+	{
+        foreach (TileMapFloorGridSpace tileMapFloorGridSpace in _existingFloorGridSpaces)
+		{
+			if (tileMapFloorGridSpace.NumberOfSpawnPointWhoClearedIt == -1)
+			{
+                _tileMap.SetCell(0, tileMapFloorGridSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(0, 0));
+            }
+		}
+    }
+
+    private void GenerateMultipleSpawnPoints()
 	{
 		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{

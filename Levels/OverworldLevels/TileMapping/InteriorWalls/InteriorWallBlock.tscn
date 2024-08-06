@@ -1,6 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdhu1j2nvagsy"]
-
-[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="1_m03es"]
+[gd_scene load_steps=3 format=3 uid="uid://bdhu1j2nvagsy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa8xg"]
 size = Vector2(32, 32)
@@ -11,10 +9,8 @@ polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
 [node name="InteriorWallBlock" type="Node2D"]
 z_index = -2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_m03es")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 4
 
