@@ -19,6 +19,8 @@ public partial class BaseOverworldLevel : Node
 
 	private List<TileMapFloorGridSpace> _existingFloorGridSpaces = new List<TileMapFloorGridSpace>();
 
+	private int _maxNumberOfTiles = 0;
+
 	private PackedScene _interiorBlockScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorWallBlock.tscn");
 
 	private PackedScene _interiorBlockTestTextScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorBlockTestText.tscn");
@@ -116,51 +118,51 @@ public partial class BaseOverworldLevel : Node
 			SpawnPlayersNormal();
 		}
 
+		GenerateOutOfBoundsInteriorBlocks();
+
         PaintInteriorWalls();
     }
 
 	private void LoadInFloorTiles()
 	{
-		var maxNumberOfTiles = 0;
-
         if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
         {
-            maxNumberOfTiles = 20;
+            _maxNumberOfTiles = 20;
         }
         if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
         {
-            maxNumberOfTiles = 40;
+            _maxNumberOfTiles = 40;
         }
         if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
         {
-			maxNumberOfTiles = 60;
+            _maxNumberOfTiles = 60;
         }
         if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
         {
-			maxNumberOfTiles = 80;
+            _maxNumberOfTiles = 80;
         }
         if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
         {
-			maxNumberOfTiles = 100;
+            _maxNumberOfTiles = 100;
         }
         else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
         {
-			maxNumberOfTiles = 120;
+            _maxNumberOfTiles = 120;
         }
         else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
         {
 			var floorSizeOptions = new List<int>() { 20, 40, 60, 80, 100, 120 };
 
-            maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
+            _maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
         }
 
         int x = 0;
 
-		while (x < maxNumberOfTiles)
+		while (x < _maxNumberOfTiles)
 		{
             int y = 0;
 
-            while (y < maxNumberOfTiles)
+            while (y < _maxNumberOfTiles)
 			{
 				//How to make this dynamic? Need to find way to access atlas size.
 				var xAtlasCoord = _rng.RandiRange(0, 3);
@@ -180,22 +182,77 @@ public partial class BaseOverworldLevel : Node
 	{
 		foreach (var tilePosition in _floorTileList)
 		{
-			//Generate InteriorWallBlock at that position
-			var tempBlock = _interiorBlockScene.Instantiate();
-			var interiorBlock = tempBlock as Node2D;
-			AddChild(interiorBlock);
-
-			var tempTestText = _interiorBlockTestTextScene.Instantiate();
-			var testText = tempTestText as Node2D;
-			AddChild(testText);
-
-			var positionInLevel = interiorBlock.ToGlobal(_tileMap.MapToLocal(new Vector2I(tilePosition.X, tilePosition.Y)));
-			interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
-			testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
-
-			_existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(tilePosition.X, tilePosition.Y) });
-		}
+			GenerateInteriorBlock(tilePosition.X, tilePosition.Y);
+        }
 	}
+
+	private void GenerateOutOfBoundsInteriorBlocks()
+	{
+		int x = 0;
+		int y = 0;
+
+		//West border wall
+		x = -1;
+		y = -1;
+
+		while (y < (_maxNumberOfTiles + 1))
+		{
+            GenerateInteriorBlock(x, y);
+
+            y++;
+		}
+
+		//East border wall
+        x = _maxNumberOfTiles;
+        y = -1;
+
+        while (y < (_maxNumberOfTiles + 1))
+        {
+            GenerateInteriorBlock(x, y);
+
+            y++;
+        }
+
+		//North border wall
+        x = -1;
+        y = -1;
+
+        while (x < (_maxNumberOfTiles + 1))
+        {
+            GenerateInteriorBlock(x, y);
+
+            x++;
+        }
+
+		//South border wall
+        x = -1;
+        y = _maxNumberOfTiles;
+
+        while (x < (_maxNumberOfTiles + 1))
+        {
+			GenerateInteriorBlock(x, y);
+
+			x++;
+        }
+    }
+
+	private void GenerateInteriorBlock(int x, int y)
+	{
+        //Generate InteriorWallBlock at that position
+        var tempBlock = _interiorBlockScene.Instantiate();
+        var interiorBlock = tempBlock as Node2D;
+        AddChild(interiorBlock);
+
+        var tempTestText = _interiorBlockTestTextScene.Instantiate();
+        var testText = tempTestText as Node2D;
+        AddChild(testText);
+
+        var positionInLevel = interiorBlock.ToGlobal(_tileMap.MapToLocal(new Vector2I(x, y)));
+        interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
+        testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
+
+        _existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(x, y) });
+    }
 
 	private void PaintInteriorWalls()
 	{
@@ -203,7 +260,161 @@ public partial class BaseOverworldLevel : Node
 		{
 			if (tileMapFloorGridSpace.NumberOfSpawnPointWhoClearedIt == -1)
 			{
-                _tileMap.SetCell(0, tileMapFloorGridSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(0, 0));
+				var xAtlasCoord = 0;
+				var yAtlasCoord = 0;
+
+                TileMapFloorGridSpace northBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X, tileMapFloorGridSpace.TileMapPosition.Y - 1));
+                TileMapFloorGridSpace northEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y - 1));
+                TileMapFloorGridSpace eastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y));
+                TileMapFloorGridSpace southEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y + 1));
+                TileMapFloorGridSpace southBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X, tileMapFloorGridSpace.TileMapPosition.Y + 1));
+                TileMapFloorGridSpace southWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y + 1));
+                TileMapFloorGridSpace westBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y));
+                TileMapFloorGridSpace northWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y - 1));
+
+                //Floor all around
+                if ((northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 1;
+                    yAtlasCoord = 0;
+                }
+                //Floor everywhere but north 
+                else if ((northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    //xAtlasCoord = 1;
+                    //yAtlasCoord = 0;
+                }
+                //Floor everywhere but east
+                else if ((northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    //xAtlasCoord = 1;
+                    //yAtlasCoord = 0;
+                }
+                //Floor everywhere but south
+                else if ((northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    //xAtlasCoord = 1;
+                    //yAtlasCoord = 0;
+                }
+                //Floor everywhere but west
+                else if ((northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    //xAtlasCoord = 1;
+                    //yAtlasCoord = 0;
+                }
+                //Corner faces north east
+                else if ((northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 0;
+                    yAtlasCoord = 2;
+                }
+                //Corner faces south west
+                else if ((northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    && (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 3;
+                    yAtlasCoord = 2;
+                }
+                //Corner faces south east
+                else if ((southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1)
+					&& (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+					&& (eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1))
+				{
+					xAtlasCoord = 1;
+					yAtlasCoord = 2;
+				}
+				//Corner faces south west
+				else if ((southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1)
+					&& (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1) 
+					&& (westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1))
+				{
+					xAtlasCoord = 2;
+					yAtlasCoord = 2;
+				}
+                //Wall faces north
+                else if ((northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 0;
+                    yAtlasCoord = 1;
+                }
+                //Wall faces east
+                else if ((eastBlock != null && eastBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 1;
+                    yAtlasCoord = 1;
+                }
+                //Wall faces south
+                else if ((southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 2;
+                    yAtlasCoord = 1;
+                }
+                //Wall faces west
+                else if ((westBlock != null && westBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 3;
+                    yAtlasCoord = 1;
+                }
+                //Floor in north east
+                else if ((northEastBlock != null && northEastBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 0;
+                    yAtlasCoord = 3;
+                }
+                //Floor in south east
+                else if ((southEastBlock != null && southEastBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 1;
+                    yAtlasCoord = 3;
+                }
+                //Floor in south west
+                else if ((southWestBlock != null && southWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 2;
+                    yAtlasCoord = 3;
+                }
+                //Floor in north west
+                else if ((northWestBlock != null && northWestBlock.NumberOfSpawnPointWhoClearedIt != -1))
+                {
+                    xAtlasCoord = 3;
+                    yAtlasCoord = 3;
+                }
+
+                _tileMap.SetCell(0, tileMapFloorGridSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
             }
 		}
     }

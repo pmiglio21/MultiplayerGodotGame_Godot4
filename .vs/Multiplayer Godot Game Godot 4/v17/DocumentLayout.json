@@ -44,10 +44,9 @@
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\TileMapFloorGridSpace.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\TileMapFloorGridSpace.cs",
               "RelativeToolTip": "Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\TileMapFloorGridSpace.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA0AAAAgAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwA4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-06T17:49:28.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-06T17:49:28.593Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\TileMapping\\TileMappingMagicNumbers.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T11:43:50.245Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-05T11:43:50.245Z"
             },
             {
               "$type": "Document",
@@ -70,7 +68,7 @@
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\Levels\\Scripts\\BaseOverworldLevel.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\Levels\\Scripts\\BaseOverworldLevel.cs",
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\Scripts\\BaseOverworldLevel.cs",
-              "ViewState": "AQIAALEAAAAAAAAAAAAwwL8AAAADAAAA",
+              "ViewState": "AQIAAN4AAAAAAAAAAAAYwOIAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-05T11:34:39.949Z",
               "EditorCaption": ""
@@ -85,8 +83,7 @@
               "RelativeToolTip": "Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
               "ViewState": "AQIAAEQAAAAAAAAAAAAwwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T11:34:30.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-05T11:34:30.434Z"
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\LevelHolder.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-05T11:34:12.018Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-05T11:34:12.018Z"
             },
             {
               "$type": "Document",
@@ -111,8 +107,7 @@
               "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Scripts\\BaseCharacter.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-02T11:35:20.087Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-02T11:35:20.087Z"
             }
           ]
         }
