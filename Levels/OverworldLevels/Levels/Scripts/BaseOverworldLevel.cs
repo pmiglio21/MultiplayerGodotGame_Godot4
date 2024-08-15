@@ -8,6 +8,7 @@ using Scenes.UI.PlayerSelectScene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public partial class BaseOverworldLevel : Node
 {
@@ -55,10 +56,69 @@ public partial class BaseOverworldLevel : Node
 
 		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCaveFloorSpriteId).ToList();
 
-		GenerateInteriorWallsForLevel();
+        RunProceduralPathGeneration();
 	}
 
-	private void GenerateInteriorWallsForLevel()
+	#region Floor Generation
+
+	private void LoadInFloorTiles()
+    {
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
+        {
+            _maxNumberOfTiles = 20;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
+        {
+            _maxNumberOfTiles = 40;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
+        {
+            _maxNumberOfTiles = 60;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
+        {
+            _maxNumberOfTiles = 80;
+        }
+        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
+        {
+            _maxNumberOfTiles = 100;
+        }
+        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
+        {
+            _maxNumberOfTiles = 120;
+        }
+        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
+        {
+            var floorSizeOptions = new List<int>() { 20, 40, 60, 80, 100, 120 };
+
+            _maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
+        }
+
+        int x = 0;
+
+        while (x < _maxNumberOfTiles)
+        {
+            int y = 0;
+
+            while (y < _maxNumberOfTiles)
+            {
+                //How to make this dynamic? Need to find way to access atlas size.
+                var xAtlasCoord = _rng.RandiRange(0, 3);
+                var yAtlasCoord = _rng.RandiRange(0, 1);
+
+                _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCaveFloorSpriteId, new Vector2I(0, 0));
+
+                y++;
+            }
+
+            x++;
+        }
+    }
+
+	#endregion
+
+
+	private void RunProceduralPathGeneration()
 	{
 		GenerateInteriorBlocksOnAllFloorTiles();
 
@@ -107,6 +167,7 @@ public partial class BaseOverworldLevel : Node
 			CreatePathsBetweenPoints();
 		}
 
+		#region Spawn Key Objects
 		GenerateKeyMapItems();
 
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
@@ -117,67 +178,14 @@ public partial class BaseOverworldLevel : Node
 		{
 			SpawnPlayersNormal();
 		}
+		#endregion
 
 		GenerateOutOfBoundsInteriorBlocks();
 
         PaintInteriorWalls();
     }
 
-	private void LoadInFloorTiles()
-	{
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VerySmall)
-        {
-            _maxNumberOfTiles = 20;
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
-        {
-            _maxNumberOfTiles = 40;
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
-        {
-            _maxNumberOfTiles = 60;
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
-        {
-            _maxNumberOfTiles = 80;
-        }
-        if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.VeryLarge)
-        {
-            _maxNumberOfTiles = 100;
-        }
-        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Colossal)
-        {
-            _maxNumberOfTiles = 120;
-        }
-        else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
-        {
-			var floorSizeOptions = new List<int>() { 20, 40, 60, 80, 100, 120 };
-
-            _maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
-        }
-
-        int x = 0;
-
-		while (x < _maxNumberOfTiles)
-		{
-            int y = 0;
-
-            while (y < _maxNumberOfTiles)
-			{
-				//How to make this dynamic? Need to find way to access atlas size.
-				var xAtlasCoord = _rng.RandiRange(0, 3);
-                var yAtlasCoord = _rng.RandiRange(0, 1);
-
-                _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCaveFloorSpriteId, new Vector2I(0, 0));
-
-				y++;
-			}
-
-			x++;
-		}
-	}
-
-    #region Path Generation
+    #region Procedural Path Generation
     private void GenerateInteriorBlocksOnAllFloorTiles()
 	{
 		foreach (var tilePosition in _floorTileList)
@@ -186,7 +194,263 @@ public partial class BaseOverworldLevel : Node
         }
 	}
 
-	private void GenerateOutOfBoundsInteriorBlocks()
+    #region Spawn Point Generation
+
+    private void GenerateMultipleSpawnPoints()
+    {
+        for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
+        {
+            var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
+
+            var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
+
+            if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
+            {
+                var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
+
+                floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+
+                floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+                floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+
+                var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                richTextLabel.Text = spawnPointGeneratedCount.ToString();
+
+                //Clear out spawn point areas
+                foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
+                {
+                    if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+                    {
+                        currentFloorGridSpace.InteriorBlock.QueueFree();
+                        currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+
+                        var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                        rtl.Text = spawnPointGeneratedCount.ToString();
+                    }
+                }
+            }
+        }
+    }
+
+    private void GenerateSingleSpawnPoints()
+    {
+        var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
+
+        var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
+
+        if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
+        {
+            var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
+
+            floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+
+            floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+            floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = 0;
+
+            var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
+            richTextLabel.Text = "0";
+
+            //Clear out spawn point areas
+            foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
+            {
+                if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+                {
+                    currentFloorGridSpace.InteriorBlock.QueueFree();
+                    currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
+
+                    var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                    rtl.Text = "0";
+                }
+            }
+        }
+    }
+
+    //TODO: Check if this method and the other one are similar enough to just make into one method
+    private void CreatePathsBetweenSpawnPoints()
+    {
+        List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+
+        foreach (TileMapSpace startingSpawnPoint in spawnPoints)
+        {
+            TileMapSpace walkingFloorSpace = startingSpawnPoint;
+
+            List<TileMapSpace> availableSpawnPoints = spawnPoints.Where(x => x != startingSpawnPoint).ToList();
+
+            var targetSpawnPoint = availableSpawnPoints[_rng.RandiRange(0, availableSpawnPoints.Count - 1)];
+
+            //For some reason, trig circle is flipped across its y axis... whatever...
+            var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+
+            var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+
+            var changeInX = 0;
+            var changeInY = 0;
+
+            int iterationCount = 0;
+
+            //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+            while (true)
+            {
+                if (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
+                {
+                    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+
+                    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+
+                    iterationCount = 0;
+                }
+
+                if (_rng.RandfRange(0, 1) <= .5)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                    if (changeInX == 0)
+                    {
+                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    }
+                    else
+                    {
+                        changeInY = 0;
+                    }
+                }
+                else
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+                    if (changeInY == 0)
+                    {
+                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                    }
+                    else
+                    {
+                        changeInX = 0;
+                    }
+                }
+
+                var newPositionToCheck = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+
+                //Set walkingFloorSpace to somewhere adjacent to spawn
+                if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPositionToCheck)))
+                {
+                    var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPositionToCheck);
+
+                    if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingSpawnPoint)
+                    {
+                        if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+                        {
+                            floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+                        }
+
+                        var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
+
+                        walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
+
+                        var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                        rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                            numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                iterationCount++;
+            }
+        }
+    }
+
+    #endregion
+
+    private void CreatePathsBetweenPoints()
+    {
+        var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
+
+        TileMapSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
+
+        TileMapSpace walkingFloorSpace = startingPoint;
+
+        var availableTargetSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
+
+        var targetPoint = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
+
+        //For some reason, trig circle is flipped across its y axis... whatever...
+        var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
+
+        var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
+
+        var changeInX = 0;
+        var changeInY = 0;
+
+        int iterationCount = 0;
+
+        //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+        while (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
+        {
+            if (_rng.RandfRange(0, 1) <= .5)
+            {
+                changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                if (changeInX == 0)
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                }
+                else
+                {
+                    changeInY = 0;
+                }
+            }
+            else
+            {
+                changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+                if (changeInY == 0)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                }
+                else
+                {
+                    changeInX = 0;
+                }
+            }
+
+            var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+
+            //Set walkingFloorSpace to somewhere adjacent to spawn
+            if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
+            {
+                var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
+
+                if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
+                {
+                    if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+                    {
+                        floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+                    }
+
+                    var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
+
+                    walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+                    walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+
+                    var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                    rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+                    if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                        numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            iterationCount++;
+        }
+    }
+
+    private void GenerateOutOfBoundsInteriorBlocks()
 	{
 		int x = 0;
 		int y = 0;
@@ -283,258 +547,6 @@ public partial class BaseOverworldLevel : Node
             }
 		}
     }
-
-    private void GenerateMultipleSpawnPoints()
-	{
-		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
-		{
-			var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
-
-			var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
-
-			if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
-			{
-				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
-
-				floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
-
-				floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-				floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-
-				var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
-				richTextLabel.Text = spawnPointGeneratedCount.ToString();
-
-				//Clear out spawn point areas
-				foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
-				{
-					if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
-					{
-						currentFloorGridSpace.InteriorBlock.QueueFree();
-						currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-
-						var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-						rtl.Text = spawnPointGeneratedCount.ToString();
-					}
-				}
-			}
-		}
-	}
-
-	private void GenerateSingleSpawnPoints()
-	{
-		var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
-
-		var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
-
-		if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
-		{
-			var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
-
-			floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
-
-			floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-			floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = 0;
-
-			var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
-			richTextLabel.Text = "0";
-
-			//Clear out spawn point areas
-			foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
-			{
-				if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
-				{
-					currentFloorGridSpace.InteriorBlock.QueueFree();
-					currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
-
-					var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-					rtl.Text = "0";
-				}
-			}
-		}
-	}
-
-	//TODO: Check if this method and the other one are similar enough to just make into one method
-	private void CreatePathsBetweenSpawnPoints()
-	{
-		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
-
-		foreach (TileMapSpace startingSpawnPoint in spawnPoints)
-		{
-			TileMapSpace walkingFloorSpace = startingSpawnPoint;
-
-			List<TileMapSpace> availableSpawnPoints = spawnPoints.Where(x => x != startingSpawnPoint).ToList();
-
-			var targetSpawnPoint = availableSpawnPoints[_rng.RandiRange(0, availableSpawnPoints.Count-1)];
-
-			//For some reason, trig circle is flipped across its y axis... whatever...
-			var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
-
-			var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-
-			var changeInX = 0;
-			var changeInY = 0;
-
-			int iterationCount = 0;
-
-			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-			while (true)
-			{
-				if (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
-				{
-					angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
-
-					weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-
-					iterationCount = 0;
-				}
-
-				if (_rng.RandfRange(0, 1) <= .5)
-				{
-					changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-
-					if (changeInX == 0)
-					{
-						changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-					}
-					else
-					{
-						changeInY = 0;
-					}
-				}
-				else
-				{
-					changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-
-					if (changeInY == 0)
-					{
-						changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-					}
-					else
-					{
-						changeInX = 0;
-					}
-				}
-
-				var newPositionToCheck = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
-
-				//Set walkingFloorSpace to somewhere adjacent to spawn
-				if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPositionToCheck)))
-				{
-					var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPositionToCheck);
-
-					if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingSpawnPoint)
-					{
-						if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
-						{
-							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-						}
-
-						var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
-
-						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-						walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
-
-						var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-						rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-
-						if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
-						{
-							break;
-						}
-					}
-				}
-
-				iterationCount++;
-			}
-		}
-	}
-
-	private void CreatePathsBetweenPoints()
-	{
-		var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
-
-		TileMapSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
-
-		TileMapSpace walkingFloorSpace = startingPoint;
-
-		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
-
-		var targetPoint = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
-
-		//For some reason, trig circle is flipped across its y axis... whatever...
-		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
-
-		var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
-
-		var changeInX = 0;
-		var changeInY = 0;
-
-		int iterationCount = 0;
-
-		//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-		while (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
-		{
-			if (_rng.RandfRange(0, 1) <= .5)
-			{
-				changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-
-				if (changeInX == 0)
-				{
-					changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-				}
-				else
-				{
-					changeInY = 0;
-				}
-			}
-			else
-			{
-				changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-
-				if (changeInY == 0)
-				{
-					changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-				}
-				else
-				{
-					changeInX = 0;
-				}
-			}
-
-			var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
-
-			//Set walkingFloorSpace to somewhere adjacent to spawn
-			if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
-			{
-				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
-
-				if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
-				{
-					if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
-					{
-						floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-					}
-
-					var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
-
-					walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-					walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
-
-					var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-					rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-
-					if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-						numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
-					{
-						break;
-					}
-				}
-			}
-
-			iterationCount++;
-		}
-	}
 
 	#endregion
 
@@ -686,9 +698,5 @@ public partial class BaseOverworldLevel : Node
 	}
 
 	#endregion
-
-	//#region Level Cleanup
-
-	//#endregion
 
 }
