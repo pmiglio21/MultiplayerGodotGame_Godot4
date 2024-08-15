@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class TileMapFloorGridSpace 
+public partial class TileMapSpace 
 {
 	public Node2D InteriorBlock = null;
 

@@ -32,7 +32,7 @@ namespace Levels.UtilityLevels
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
-			if (GlobalGameComponents.PriorSceneName == LevelScenePaths.PlayerSelectScreenPath)
+			if (GlobalGameComponents.PriorSceneName == LevelScenePaths.PlayModeScreenPath)
 			{
 				_continueButton.Show();
 			}
@@ -65,7 +65,7 @@ namespace Levels.UtilityLevels
 					SaveOutGameRules();
 
 					//Maybe change this
-					GetTree().ChangeSceneToFile(LevelScenePaths.LevelHolderPath);
+					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
 				}
 				else
 				{

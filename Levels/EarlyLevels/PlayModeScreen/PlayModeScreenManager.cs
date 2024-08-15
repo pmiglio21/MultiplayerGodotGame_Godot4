@@ -29,7 +29,8 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
-                GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
+                GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayModeScreenPath;
+                GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
             }
         }
 

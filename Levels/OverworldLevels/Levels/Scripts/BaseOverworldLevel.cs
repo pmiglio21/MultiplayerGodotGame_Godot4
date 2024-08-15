@@ -17,7 +17,7 @@ public partial class BaseOverworldLevel : Node
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
-	private List<TileMapFloorGridSpace> _existingFloorGridSpaces = new List<TileMapFloorGridSpace>();
+	private List<TileMapSpace> _existingFloorGridSpaces = new List<TileMapSpace>();
 
 	private int _maxNumberOfTiles = 0;
 
@@ -251,26 +251,26 @@ public partial class BaseOverworldLevel : Node
         interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
         testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
-        _existingFloorGridSpaces.Add(new TileMapFloorGridSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(x, y) });
+        _existingFloorGridSpaces.Add(new TileMapSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(x, y) });
     }
 
 	private void PaintInteriorWalls()
 	{
-        foreach (TileMapFloorGridSpace tileMapFloorGridSpace in _existingFloorGridSpaces)
+        foreach (TileMapSpace TileMapSpace in _existingFloorGridSpaces)
 		{
-			if (tileMapFloorGridSpace.NumberOfSpawnPointWhoClearedIt == -1)
+			if (TileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
 			{
 				var xAtlasCoord = 0;
 				var yAtlasCoord = 0;
 
-                TileMapFloorGridSpace northBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X, tileMapFloorGridSpace.TileMapPosition.Y - 1));
-                TileMapFloorGridSpace northEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y - 1));
-                TileMapFloorGridSpace eastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y));
-                TileMapFloorGridSpace southEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X + 1, tileMapFloorGridSpace.TileMapPosition.Y + 1));
-                TileMapFloorGridSpace southBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X, tileMapFloorGridSpace.TileMapPosition.Y + 1));
-                TileMapFloorGridSpace southWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y + 1));
-                TileMapFloorGridSpace westBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y));
-                TileMapFloorGridSpace northWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapFloorGridSpace.TileMapPosition.X - 1, tileMapFloorGridSpace.TileMapPosition.Y - 1));
+                TileMapSpace northBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X, TileMapSpace.TileMapPosition.Y - 1));
+                TileMapSpace northEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X + 1, TileMapSpace.TileMapPosition.Y - 1));
+                TileMapSpace eastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X + 1, TileMapSpace.TileMapPosition.Y));
+                TileMapSpace southEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X + 1, TileMapSpace.TileMapPosition.Y + 1));
+                TileMapSpace southBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X, TileMapSpace.TileMapPosition.Y + 1));
+                TileMapSpace southWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X - 1, TileMapSpace.TileMapPosition.Y + 1));
+                TileMapSpace westBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X - 1, TileMapSpace.TileMapPosition.Y));
+                TileMapSpace northWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(TileMapSpace.TileMapPosition.X - 1, TileMapSpace.TileMapPosition.Y - 1));
 
                 //Block opens to at least the south
                 if ((southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1))
@@ -279,7 +279,7 @@ public partial class BaseOverworldLevel : Node
                     yAtlasCoord = 7;
                 }
 
-                _tileMap.SetCell(0, tileMapFloorGridSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
+                _tileMap.SetCell(0, TileMapSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
             }
 		}
     }
@@ -356,13 +356,13 @@ public partial class BaseOverworldLevel : Node
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
 	{
-		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
-		foreach (TileMapFloorGridSpace startingSpawnPoint in spawnPoints)
+		foreach (TileMapSpace startingSpawnPoint in spawnPoints)
 		{
-			TileMapFloorGridSpace walkingFloorSpace = startingSpawnPoint;
+			TileMapSpace walkingFloorSpace = startingSpawnPoint;
 
-			List<TileMapFloorGridSpace> availableSpawnPoints = spawnPoints.Where(x => x != startingSpawnPoint).ToList();
+			List<TileMapSpace> availableSpawnPoints = spawnPoints.Where(x => x != startingSpawnPoint).ToList();
 
 			var targetSpawnPoint = availableSpawnPoints[_rng.RandiRange(0, availableSpawnPoints.Count-1)];
 
@@ -454,9 +454,9 @@ public partial class BaseOverworldLevel : Node
 	{
 		var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
 
-		TileMapFloorGridSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
+		TileMapSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
 
-		TileMapFloorGridSpace walkingFloorSpace = startingPoint;
+		TileMapSpace walkingFloorSpace = startingPoint;
 
 		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
 
@@ -575,7 +575,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void SpawnPlayersClose()
 	{
-		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
 		int playerCount = 0;
 
@@ -609,7 +609,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void SpawnPlayersNormal()
 	{
-		List<TileMapFloorGridSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
 		int playerCount = 0;
 

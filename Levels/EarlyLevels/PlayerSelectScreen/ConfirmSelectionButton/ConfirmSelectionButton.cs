@@ -82,8 +82,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 				GD.Print("---------------------------------------");
 
-				GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayerSelectScreenPath;
-				GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
+				GetTree().ChangeSceneToFile(LevelScenePaths.LevelHolderPath);
 			}
 		}
 
