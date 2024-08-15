@@ -10,7 +10,6 @@ polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
 z_index = -2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 4
 

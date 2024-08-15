@@ -13,9 +13,4 @@ position = Vector2(818.118, 1006.94)
 scale = Vector2(-239.394, -196.397)
 texture = ExtResource("2_3clom")
 
-[node name="FogOfWar" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-305, -181)
-centered = false
-
 [node name="BaseFloor" parent="." instance=ExtResource("3_iqnvh")]

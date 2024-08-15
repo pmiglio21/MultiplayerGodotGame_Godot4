@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://vl0was4eubql"]
+[gd_scene load_steps=10 format=3 uid="uid://vl0was4eubql"]
 
 [ext_resource type="Texture2D" uid="uid://c3fef37yp6o6p" path="res://Levels/OverworldLevels/TileMapping/ExteriorWalls/BackWallTiles_0.png" id="1_5p00s"]
 [ext_resource type="Texture2D" uid="uid://bb3pk0vbk0l6m" path="res://Levels/OverworldLevels/TileMapping/Floor/FloorTiles/tile_atlas.png" id="2_88r1m"]
@@ -55,6 +55,22 @@ texture_region_size = Vector2i(32, 32)
 0:3/0 = 0
 1:3/0 = 0
 2:3/0 = 0
+3:7/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+3:5/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+1:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_s2gsf"]
 tile_size = Vector2i(32, 32)
@@ -64,57 +80,9 @@ sources/1 = SubResource("TileSetAtlasSource_0qtik")
 sources/0 = SubResource("TileSetAtlasSource_qm8vj")
 tile_proxies/coords_level = [[15, Vector2i(0, 0)], [17, Vector2i(0, 0)], [16, Vector2i(0, 0)], [17, Vector2i(1, 0)]]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wx3ld"]
-size = Vector2(1942, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8b7su"]
-size = Vector2(33, 1979)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ux6x7"]
-size = Vector2(1932, 12)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hhat0"]
-size = Vector2(21, 1967)
-
 [node name="BaseFloor" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_s2gsf")
 format = 2
 layer_0/z_index = -2
-
-[node name="TopWall" type="StaticBody2D" parent="."]
-position = Vector2(-2265, -2074)
-collision_layer = 4
-collision_mask = 524292
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
-position = Vector2(1021, -16)
-shape = SubResource("RectangleShape2D_wx3ld")
-
-[node name="RightWall" type="StaticBody2D" parent="."]
-position = Vector2(-2194, -2074)
-collision_layer = 4
-collision_mask = 524292
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
-position = Vector2(1904.5, 957.5)
-shape = SubResource("RectangleShape2D_8b7su")
-
-[node name="BottomWall" type="StaticBody2D" parent="."]
-position = Vector2(-2194, -2074)
-collision_layer = 4
-collision_mask = 524292
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
-position = Vector2(947, 1926)
-shape = SubResource("RectangleShape2D_ux6x7")
-
-[node name="LeftWall" type="StaticBody2D" parent="."]
-position = Vector2(-2265, -2074)
-collision_layer = 4
-collision_mask = 524292
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
-position = Vector2(60.5, 952.5)
-shape = SubResource("RectangleShape2D_hhat0")
