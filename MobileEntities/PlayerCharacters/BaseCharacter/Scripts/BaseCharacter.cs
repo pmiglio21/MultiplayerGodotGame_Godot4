@@ -145,6 +145,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Process(double delta)
 		{
+			ZIndex = (int)this.GlobalPosition.Y;
+
 			if (characterStats.Health.HealthAmount <= 0)
 			{
 				isDead = true;

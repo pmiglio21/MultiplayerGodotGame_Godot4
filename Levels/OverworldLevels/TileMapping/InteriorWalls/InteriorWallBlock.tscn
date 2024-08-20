@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdhu1j2nvagsy"]
+[gd_scene load_steps=4 format=3 uid="uid://bdhu1j2nvagsy"]
+
+[ext_resource type="Script" path="res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorWallBlock.cs" id="1_vvg7f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aa8xg"]
 size = Vector2(32, 32)
@@ -7,15 +9,15 @@ size = Vector2(32, 32)
 polygon = PackedVector2Array(-16, -16, -16, 16, 16, 16, 16, -16)
 
 [node name="InteriorWallBlock" type="Node2D"]
-z_index = -2
+script = ExtResource("1_vvg7f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(3.05176e-05, 3.05176e-05)
-rotation = -3.14159
 shape = SubResource("RectangleShape2D_aa8xg")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
