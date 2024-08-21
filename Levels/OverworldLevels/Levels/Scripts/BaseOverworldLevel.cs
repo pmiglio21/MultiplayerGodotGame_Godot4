@@ -180,8 +180,6 @@ public partial class BaseOverworldLevel : Node
 		}
 		#endregion
 
-		GenerateOutOfBoundsInteriorBlocks();
-
         PaintInteriorWalls();
     }
 
@@ -220,7 +218,9 @@ public partial class BaseOverworldLevel : Node
                 //Clear out spawn point areas
                 foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
                 {
-                    if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+                    if (currentFloorGridSpace.TileMapPosition.X != 0 && currentFloorGridSpace.TileMapPosition.Y != 0 
+                        && currentFloorGridSpace.TileMapPosition.X != _maxNumberOfTiles - 1 && currentFloorGridSpace.TileMapPosition.Y != _maxNumberOfTiles - 1
+                        && floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
                     {
                         currentFloorGridSpace.InteriorBlock.QueueFree();
                         currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
@@ -328,10 +328,12 @@ public partial class BaseOverworldLevel : Node
                     }
                 }
 
-                var newPositionToCheck = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+                var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
                 //Set walkingFloorSpace to somewhere adjacent to spawn
-                if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPositionToCheck)))
+                //Instead of using any, just check that new x and y are within the max dimension range
+                if (newPositionToCheck.X != 0 && newPositionToCheck.Y != 0 && newPositionToCheck.X != _maxNumberOfTiles - 1 && newPositionToCheck.Y != _maxNumberOfTiles - 1 &&
+                    _existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
                 {
                     var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPositionToCheck);
 
@@ -417,12 +419,13 @@ public partial class BaseOverworldLevel : Node
                 }
             }
 
-            var newPosition = new Vector2I(_tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).X + changeInX, _tileMap.LocalToMap(walkingFloorSpace.InteriorBlock.GlobalPosition).Y + changeInY);
+            var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
             //Set walkingFloorSpace to somewhere adjacent to spawn
-            if (_existingFloorGridSpaces.Any(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == _tileMap.LocalToMap(newPosition)))
+            if (newPositionToCheck.X != 0 && newPositionToCheck.Y != 0 && newPositionToCheck.X != _maxNumberOfTiles - 1 && newPositionToCheck.Y != _maxNumberOfTiles - 1 && 
+                _existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
             {
-                var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPosition);
+                var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
 
                 if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
                 {
@@ -448,56 +451,6 @@ public partial class BaseOverworldLevel : Node
             }
 
             iterationCount++;
-        }
-    }
-
-    private void GenerateOutOfBoundsInteriorBlocks()
-	{
-		int x = 0;
-		int y = 0;
-
-		//West border wall
-		x = -1;
-		y = -1;
-
-		while (y < (_maxNumberOfTiles + 1))
-		{
-            GenerateInteriorBlock(x, y);
-
-            y++;
-		}
-
-		//East border wall
-        x = _maxNumberOfTiles;
-        y = -1;
-
-        while (y < (_maxNumberOfTiles + 1))
-        {
-            GenerateInteriorBlock(x, y);
-
-            y++;
-        }
-
-		//North border wall
-        x = -1;
-        y = -1;
-
-        while (x < (_maxNumberOfTiles + 1))
-        {
-            GenerateInteriorBlock(x, y);
-
-            x++;
-        }
-
-		//South border wall
-        x = -1;
-        y = _maxNumberOfTiles;
-
-        while (x < (_maxNumberOfTiles + 1))
-        {
-			GenerateInteriorBlock(x, y);
-
-			x++;
         }
     }
 
