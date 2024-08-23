@@ -54,7 +54,9 @@ public partial class BaseOverworldLevel : Node
 
 		LoadInFloorTiles();
 
-		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCaveFloorSpriteId).ToList();
+		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCaveFloorSpriteId)
+                                 .Where(tile => IsBlockInsideBorders(tile))
+                                 .ToList();
 
         RunProceduralPathGeneration();
 	}
@@ -210,8 +212,7 @@ public partial class BaseOverworldLevel : Node
                 //Clear out spawn point areas
                 foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
                 {
-                    if (currentFloorGridSpace.TileMapPosition.X != 0 && currentFloorGridSpace.TileMapPosition.Y != 0 
-                        && currentFloorGridSpace.TileMapPosition.X != _maxNumberOfTiles - 1 && currentFloorGridSpace.TileMapPosition.Y != _maxNumberOfTiles - 1
+                    if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition)
                         && floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
                     {
                         currentFloorGridSpace.InteriorBlock.QueueFree();
@@ -246,7 +247,8 @@ public partial class BaseOverworldLevel : Node
             //Clear out spawn point areas
             foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
             {
-                if (floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+                if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition) &&
+                    floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
                 {
                     currentFloorGridSpace.InteriorBlock.QueueFree();
                     currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
@@ -324,7 +326,7 @@ public partial class BaseOverworldLevel : Node
 
                 //Set walkingFloorSpace to somewhere adjacent to spawn
                 //Instead of using any, just check that new x and y are within the max dimension range
-                if (newPositionToCheck.X != 0 && newPositionToCheck.Y != 0 && newPositionToCheck.X != _maxNumberOfTiles - 1 && newPositionToCheck.Y != _maxNumberOfTiles - 1 &&
+                if (IsBlockInsideBorders(newPositionToCheck) &&
                     _existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
                 {
                     var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPositionToCheck);
@@ -414,7 +416,7 @@ public partial class BaseOverworldLevel : Node
             var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
             //Set walkingFloorSpace to somewhere adjacent to spawn
-            if (newPositionToCheck.X != 0 && newPositionToCheck.Y != 0 && newPositionToCheck.X != _maxNumberOfTiles - 1 && newPositionToCheck.Y != _maxNumberOfTiles - 1 && 
+            if (IsBlockInsideBorders(newPositionToCheck) && 
                 _existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
             {
                 var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
@@ -529,6 +531,11 @@ public partial class BaseOverworldLevel : Node
                 //_tileMap.SetCell(0, tileMapSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
             }
 		}
+    }
+
+    private bool IsBlockInsideBorders(Vector2I vector)
+    {
+        return vector.X != 0 && vector.Y != 0 && vector.X != _maxNumberOfTiles - 1 && vector.Y != _maxNumberOfTiles - 1;
     }
 
 	#endregion
