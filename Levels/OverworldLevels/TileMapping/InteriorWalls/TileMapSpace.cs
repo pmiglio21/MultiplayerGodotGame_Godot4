@@ -12,4 +12,6 @@ public partial class TileMapSpace
 	public Node2D TestText = null;
 
 	public Vector2I TileMapPosition = Vector2I.Zero;
+
+	public int ExistingTileMapSpacesIndex = -1;
 }

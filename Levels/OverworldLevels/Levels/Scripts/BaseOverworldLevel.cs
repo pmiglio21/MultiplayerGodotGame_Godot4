@@ -108,6 +108,8 @@ public partial class BaseOverworldLevel : Node
 
                 _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCaveFloorSpriteId, new Vector2I(0, 0));
 
+                GenerateInteriorBlock(x, y);
+
                 y++;
             }
 
@@ -120,8 +122,6 @@ public partial class BaseOverworldLevel : Node
 
 	private void RunProceduralPathGeneration()
 	{
-		GenerateInteriorBlocksOnAllFloorTiles();
-
 		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			GenerateSingleSpawnPoints();
@@ -178,20 +178,12 @@ public partial class BaseOverworldLevel : Node
 		{
 			SpawnPlayersNormal();
 		}
-		#endregion
+        #endregion
 
         PaintInteriorWalls();
     }
 
     #region Procedural Path Generation
-    //Do this in the same loop as creating floor tiles
-    private void GenerateInteriorBlocksOnAllFloorTiles()
-	{
-		foreach (var tilePosition in _floorTileList)
-		{
-			GenerateInteriorBlock(tilePosition.X, tilePosition.Y);
-        }
-	}
 
     #region Spawn Point Generation
 
@@ -470,7 +462,14 @@ public partial class BaseOverworldLevel : Node
         interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
         testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
-        _existingFloorGridSpaces.Add(new TileMapSpace() { InteriorBlock = interiorBlock, TestText = testText, TileMapPosition = new Vector2I(x, y) });
+        _existingFloorGridSpaces.Add(
+            new TileMapSpace() 
+            { 
+                InteriorBlock = interiorBlock, 
+                TestText = testText, 
+                TileMapPosition = new Vector2I(x, y),
+                ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
+            });
     }
 
 	private void PaintInteriorWalls()
@@ -484,17 +483,30 @@ public partial class BaseOverworldLevel : Node
                 Texture2D newTexture = ResourceLoader.Load("res://Levels/OverworldLevels/TileMapping/InteriorWalls/CaveWall_2.png") as Texture2D;
                 interiorBlockSprite.Texture = newTexture;
 
-    //            var xAtlasCoord = 0;
-				//var yAtlasCoord = 0;
+                int northBlockIndex = -1;
+                TileMapSpace northBlock = null;
 
-                TileMapSpace northBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X, tileMapSpace.TileMapPosition.Y - 1));
-                TileMapSpace northEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X + 1, tileMapSpace.TileMapPosition.Y - 1));
-                TileMapSpace eastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X + 1, tileMapSpace.TileMapPosition.Y));
-                TileMapSpace southEastBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X + 1, tileMapSpace.TileMapPosition.Y + 1));
-                TileMapSpace southBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X, tileMapSpace.TileMapPosition.Y + 1));
-                TileMapSpace southWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X - 1, tileMapSpace.TileMapPosition.Y + 1));
-                TileMapSpace westBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X - 1, tileMapSpace.TileMapPosition.Y));
-                TileMapSpace northWestBlock = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == new Vector2I(tileMapSpace.TileMapPosition.X - 1, tileMapSpace.TileMapPosition.Y - 1));
+                //if current index isn't the very top
+                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
+                {
+                    northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
+                    northBlock = _existingFloorGridSpaces[northBlockIndex];
+                }
+
+                int southBlockIndex = -1;
+                TileMapSpace southBlock = null;
+
+                //if current index isn't the very bottom
+                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && 
+                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != (_existingFloorGridSpaces.Count - 1))
+                {
+                    southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
+                    southBlock = _existingFloorGridSpaces[southBlockIndex];
+                }
+
+                //var xAtlasCoord = 0;
+                //var yAtlasCoord = 0;
 
                 //Block opens to at least the south
                 if ((southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1))
@@ -513,8 +525,6 @@ public partial class BaseOverworldLevel : Node
                     collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
                     collisionShape.Position = new Vector2(0, 8);
                 }
-
-
 
                 //_tileMap.SetCell(0, tileMapSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
             }
