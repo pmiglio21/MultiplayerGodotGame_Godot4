@@ -476,61 +476,63 @@ public partial class BaseOverworldLevel : Node
 
 	private void PaintInteriorWalls()
 	{
-        foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
-		{
-			if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
-			{
-                var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
-
-                Texture2D newTexture = ResourceLoader.Load("res://Levels/OverworldLevels/TileMapping/InteriorWalls/CaveWall_2.png") as Texture2D;
-                interiorBlockSprite.Texture = newTexture;
-
-                int northBlockIndex = -1;
-                TileMapSpace northBlock = null;
-
-                //if current index isn't the very top
-                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
+        try
+        {
+            foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
+            {
+                if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
                 {
-                    northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
-                    northBlock = _existingFloorGridSpaces[northBlockIndex];
+                    var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+
+                    Texture2D newTexture = ResourceLoader.Load("res://Levels/OverworldLevels/TileMapping/InteriorWalls/CaveWall_2.png") as Texture2D;
+                    interiorBlockSprite.Texture = newTexture;
+
+                    int northBlockIndex = -1;
+                    TileMapSpace northBlock = null;
+
+                    //if current index isn't the very top
+                    if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+                        _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
+                    {
+                        northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
+
+                        northBlock = _existingFloorGridSpaces[northBlockIndex];
+                    }
+
+                    int southBlockIndex = -1;
+                    TileMapSpace southBlock = null;
+
+                    //if current index isn't the very bottom
+                    if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+                        _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
+                    {
+                        southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
+
+                        southBlock = _existingFloorGridSpaces[southBlockIndex];
+                    }
+
+                    //Block opens to at least the north
+                    if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    {
+                        var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+
+                        collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
+                        collisionShape.Position = new Vector2(0, 8);
+                    }
+
+                    //Block opens to at least the south
+                    if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                    {
+                        Texture2D newTexture2 = ResourceLoader.Load("res://Levels/OverworldLevels/TileMapping/InteriorWalls/CaveWall_1.png") as Texture2D;
+                        interiorBlockSprite.Texture = newTexture2;
+                    }
                 }
-
-                int southBlockIndex = -1;
-                TileMapSpace southBlock = null;
-
-                //if current index isn't the very bottom
-                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && 
-                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != (_existingFloorGridSpaces.Count - 1))
-                {
-                    southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
-                    southBlock = _existingFloorGridSpaces[southBlockIndex];
-                }
-
-                //var xAtlasCoord = 0;
-                //var yAtlasCoord = 0;
-
-                //Block opens to at least the south
-                if ((southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1))
-                {
-                    //xAtlasCoord = 1;
-                    //yAtlasCoord = 7;
-
-                    Texture2D newTexture2 = ResourceLoader.Load("res://Levels/OverworldLevels/TileMapping/InteriorWalls/CaveWall_1.png") as Texture2D;
-                    interiorBlockSprite.Texture = newTexture2;
-                }
-
-                if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                {
-                    var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                    collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                    collisionShape.Position = new Vector2(0, 8);
-                }
-
-                //_tileMap.SetCell(0, tileMapSpace.TileMapPosition, TileMappingMagicNumbers.TileMapCaveWallSpriteId, new Vector2I(xAtlasCoord, yAtlasCoord));
             }
-		}
+        }
+        catch (Exception ex)
+        {
+            //Don't know what to do here
+        }
     }
 
     private bool IsBlockInsideBorders(Vector2I vector)
