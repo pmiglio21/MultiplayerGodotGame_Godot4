@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://c1eji8458cjqx"]
 
-[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_t5014"]
-[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Rogue/Scripts/Rogue.cs" id="2_38rth"]
+[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_t5014"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Rogue/Rogue.cs" id="2_38rth"]
 [ext_resource type="Texture2D" uid="uid://coop7xgg46ebq" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/East/RogueIdle_0.png" id="3_i3au4"]
 [ext_resource type="Texture2D" uid="uid://ivejeh8dtryi" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/East/RogueIdle_1.png" id="4_6sqcm"]
 [ext_resource type="Texture2D" uid="uid://c6lrj88wbrtjm" path="res://MobileEntities/PlayerCharacters/Rogue/Sprites/Idle/West/RogueIdle_2.png" id="5_d86m1"]

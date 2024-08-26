@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://t31er3ewqfvm"]
 
-[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_bll5p"]
-[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Scripts/Mage.cs" id="2_bqvon"]
+[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_bll5p"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Mage/Mage.cs" id="2_bqvon"]
 [ext_resource type="Texture2D" uid="uid://cutumgesh3756" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Attack/East/MageAttack_1.png" id="3_30v7l"]
 [ext_resource type="Texture2D" uid="uid://b4yxx44u1mhyd" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_2.png" id="3_jv88t"]
 [ext_resource type="Texture2D" uid="uid://b3a5pprb4trov" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_1.png" id="3_rmgbw"]

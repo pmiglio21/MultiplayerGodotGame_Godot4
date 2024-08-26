@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dowausv2otjir"]
 
-[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Scenes/BaseCharacter.tscn" id="1_cx27y"]
-[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Cleric/Scripts/Cleric.cs" id="2_tbyem"]
+[ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_cx27y"]
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Cleric/Cleric.cs" id="2_tbyem"]
 [ext_resource type="Texture2D" uid="uid://d3hwo0gmftg55" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/East/ClericIdle_0.png" id="3_bd41j"]
 [ext_resource type="Texture2D" uid="uid://dxya6ca7tof2c" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/East/ClericIdle_1.png" id="4_a0pcg"]
 [ext_resource type="Texture2D" uid="uid://djbrgi4ck5tyu" path="res://MobileEntities/PlayerCharacters/Cleric/Sprites/Idle/West/ClericIdle_2.png" id="5_1v8gv"]
