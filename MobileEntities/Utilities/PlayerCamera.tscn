@@ -28,6 +28,7 @@ size = Vector2(23, 391.5)
 
 [node name="PlayerCamera" type="Camera2D"]
 zoom = Vector2(2, 2)
+process_callback = 0
 limit_left = 0
 limit_top = 32
 limit_right = 1888
