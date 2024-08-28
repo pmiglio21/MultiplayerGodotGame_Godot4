@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://gvduncuyxglt"]
+[gd_scene load_steps=6 format=3 uid="uid://gvduncuyxglt"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.cs" id="1_rtyjs"]
 [ext_resource type="PackedScene" uid="uid://t1cyumqgdw24" path="res://Levels/OverworldLevels/Levels/BaseOverworldLevel.tscn" id="1_sbvqd"]
 [ext_resource type="PackedScene" uid="uid://dfxuhtvhblj48" path="res://MobileEntities/Utilities/PlayerCamera.tscn" id="2_nt5ex"]
+[ext_resource type="Texture2D" uid="uid://dcef0ht73r31s" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_8gw0d"]
+[ext_resource type="Texture2D" uid="uid://f1p4ddu7d10u" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_Idle_UPDATED_64.png" id="5_wbnkr"]
 
 [node name="SplitScreenManager" type="GridContainer" groups=["SplitScreenManager"]]
 anchors_preset = 8
@@ -29,12 +31,11 @@ size_flags_vertical = 10
 [node name="SubViewport1" type="SubViewport" parent="SubViewportContainer1"]
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(576, 324)
 render_target_update_mode = 4
 
 [node name="PlayerCamera1" parent="SubViewportContainer1/SubViewport1" instance=ExtResource("2_nt5ex")]
-zoom = Vector2(4, 4)
-process_callback = 0
 limit_left = -10000000
 limit_top = -10000000
 limit_right = 10000000
@@ -50,12 +51,12 @@ size_flags_vertical = 6
 [node name="SubViewport2" type="SubViewport" parent="SubViewportContainer2"]
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(576, 324)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera2" parent="SubViewportContainer2/SubViewport2" instance=ExtResource("2_nt5ex")]
-process_callback = 0
 limit_left = -10000000
 limit_top = -10000000
 limit_right = 10000000
@@ -69,12 +70,12 @@ size_flags_vertical = 6
 [node name="SubViewport3" type="SubViewport" parent="SubViewportContainer3"]
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(576, 324)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera3" parent="SubViewportContainer3/SubViewport3" instance=ExtResource("2_nt5ex")]
-process_callback = 0
 limit_left = -10000000
 limit_top = -10000000
 limit_right = 10000000
@@ -88,13 +89,21 @@ size_flags_vertical = 6
 [node name="SubViewport4" type="SubViewport" parent="SubViewportContainer4"]
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(576, 324)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="PlayerCamera4" parent="SubViewportContainer4/SubViewport4" instance=ExtResource("2_nt5ex")]
-process_callback = 0
 limit_left = -10000000
 limit_top = -10000000
 limit_right = 10000000
 limit_bottom = 10000000
+
+[node name="KnightIdle0" type="Sprite2D" parent="."]
+position = Vector2(114, -56)
+texture = ExtResource("4_8gw0d")
+
+[node name="KnightIdleUpdated64" type="Sprite2D" parent="."]
+position = Vector2(150, -52)
+texture = ExtResource("5_wbnkr")
