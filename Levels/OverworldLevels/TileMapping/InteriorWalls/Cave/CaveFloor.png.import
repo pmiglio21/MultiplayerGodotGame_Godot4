@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bco6y5oeolbr"
-path="res://.godot/imported/Knight_Idle_UPDATED.png-08742c35801544024636f62c26ed625b.ctex"
+uid="uid://b3nydpqlk7e47"
+path="res://.godot/imported/CaveFloor.png-13b827c428f2201a90e7c6d06696b0b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Knight_Idle_UPDATED.png"
-dest_files=["res://.godot/imported/Knight_Idle_UPDATED.png-08742c35801544024636f62c26ed625b.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Cave/CaveFloor.png"
+dest_files=["res://.godot/imported/CaveFloor.png-13b827c428f2201a90e7c6d06696b0b3.ctex"]
 
 [params]
 

@@ -36,7 +36,7 @@ script = ExtResource("1_5r31n")
 metadata/_edit_horizontal_guides_ = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_1gb6x")
+texture = ExtResource("4_6hybf")
 
 [node name="CollisionArea" type="Area2D" parent="." groups=["PortalArea"]]
 
