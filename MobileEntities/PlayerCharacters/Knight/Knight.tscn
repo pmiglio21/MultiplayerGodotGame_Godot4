@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=9 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
 [ext_resource type="Texture2D" uid="uid://d22c2xu18q0u6" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_Idle_UPDATED.png" id="4_0aq3y"]
-[ext_resource type="Texture2D" uid="uid://f1p4ddu7d10u" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_Idle_UPDATED_64.png" id="4_xf0mk"]
 [ext_resource type="Texture2D" uid="uid://bs16yjy6cwln6" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_2.png" id="5_m11ch"]
 [ext_resource type="Texture2D" uid="uid://bfhms8l4cwdgu" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 
@@ -52,7 +51,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("4_xf0mk")
+texture = ExtResource("4_0aq3y")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

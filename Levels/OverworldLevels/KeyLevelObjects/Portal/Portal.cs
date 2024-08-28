@@ -13,8 +13,13 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 		private bool _isAreaEntered = false;
 		private List<string> _playersInArea = new List<string>();
 
+		private AnimationPlayer _animationPlayer;
+
 		public override void _Ready()
 		{
+			_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
+			_animationPlayer.Play("Idle");
 		}
 
 		public override void _Process(double delta)
