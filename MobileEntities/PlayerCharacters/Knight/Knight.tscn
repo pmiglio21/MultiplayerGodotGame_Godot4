@@ -1,14 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=10 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
-[ext_resource type="Texture2D" uid="uid://d22c2xu18q0u6" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_Idle_UPDATED.png" id="4_0aq3y"]
-[ext_resource type="Texture2D" uid="uid://bs16yjy6cwln6" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_2.png" id="5_m11ch"]
-[ext_resource type="Texture2D" uid="uid://bfhms8l4cwdgu" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
+[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_ny757"]
+[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png" id="5_e76a1"]
+[ext_resource type="Texture2D" uid="uid://b5cuf2qljscmx" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_2.png" id="5_m11ch"]
+[ext_resource type="Texture2D" uid="uid://2pxqj7dynkb8" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 
 [sub_resource type="Animation" id="Animation_eqtv1"]
 resource_name = "Idle_East"
-length = 0.6
+length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -17,15 +18,15 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("4_0aq3y")]
+"values": [ExtResource("4_ny757"), ExtResource("5_e76a1")]
 }
 
 [sub_resource type="Animation" id="Animation_syps0"]
 resource_name = "Idle_West"
-length = 0.6
+length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,7 +35,7 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [ExtResource("5_m11ch"), ExtResource("6_xutwp")]
@@ -51,7 +52,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("4_0aq3y")
+texture = ExtResource("5_m11ch")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
