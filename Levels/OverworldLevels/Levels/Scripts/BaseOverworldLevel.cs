@@ -54,9 +54,22 @@ public partial class BaseOverworldLevel : Node
 
 		LoadInFloorTiles();
 
-		_floorTileList = _tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
+
+        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 0)
                                  .Where(tile => IsBlockInsideBorders(tile))
-                                 .ToList();
+                                 .ToList());
+
+        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 1)
+                                 .Where(tile => IsBlockInsideBorders(tile))
+                                 .ToList());
+        
+        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 2)
+                                 .Where(tile => IsBlockInsideBorders(tile))
+                                 .ToList()); 
+        
+        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 3)
+                                 .Where(tile => IsBlockInsideBorders(tile))
+                                 .ToList());
 
         RunProceduralPathGeneration();
 	}
@@ -108,7 +121,9 @@ public partial class BaseOverworldLevel : Node
                 //var xAtlasCoord = _rng.RandiRange(0, 3);
                 //var yAtlasCoord = _rng.RandiRange(0, 1);
 
-                _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCastleFloorAtlasId, new Vector2I(0, 0));
+                var atlasId = _rng.RandiRange(0, 3);
+
+                _tileMap.SetCell(0, new Vector2I(x, y), atlasId, new Vector2I(0, 0));
 
                 GenerateInteriorBlock(x, y);
 
