@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dibuce6csnq3n"
-path="res://.godot/imported/tile_4.png-3c19c9701d052784b26bec9379e8b857.ctex"
+uid="uid://vq4hyxdj21ax"
+path="res://.godot/imported/CastleOverview.png-f69fde216037d617597ec8bb626fa0ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/Floor/FloorTiles/tile_4.png"
-dest_files=["res://.godot/imported/tile_4.png-3c19c9701d052784b26bec9379e8b857.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview.png"
+dest_files=["res://.godot/imported/CastleOverview.png-f69fde216037d617597ec8bb626fa0ca.ctex"]
 
 [params]
 
