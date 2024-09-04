@@ -11,7 +11,7 @@
 
 [sub_resource type="Animation" id="Animation_eqtv1"]
 resource_name = "Idle_East"
-length = 0.5
+length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -20,15 +20,15 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"times": PackedFloat32Array(0.1, 1.2, 1.5, 1.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("4_ny757"), ExtResource("5_e76a1"), ExtResource("3_bjke3"), ExtResource("5_e76a1")]
 }
 
-[sub_resource type="Animation" id="Animation_syps0"]
+[sub_resource type="Animation" id="Animation_0ujs5"]
 resource_name = "Idle_West"
-length = 0.5
+length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -37,7 +37,7 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4),
+"times": PackedFloat32Array(0.1, 1.2, 1.5, 1.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("6_xutwp"), ExtResource("3_o5mq7"), ExtResource("8_s0shy"), ExtResource("3_o5mq7")]
@@ -46,7 +46,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
 "Idle_East": SubResource("Animation_eqtv1"),
-"Idle_West": SubResource("Animation_syps0")
+"Idle_West": SubResource("Animation_0ujs5")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
@@ -54,7 +54,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("5_e76a1")
+texture = ExtResource("6_xutwp")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

@@ -499,7 +499,9 @@ public partial class BaseOverworldLevel : Node
                 {
                     var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
-                    Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview.png") as Texture2D;
+                    var overviewIndex = _rng.RandiRange(0, 3);
+
+                    Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
                     interiorBlockSprite.Texture = newTexture;
 
                     int northBlockIndex = -1;
@@ -540,7 +542,7 @@ public partial class BaseOverworldLevel : Node
                     {
                         var textureIndex = _rng.RandiRange(0, 5);
 
-                        Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
+                        Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{0}.png") as Texture2D;
                         interiorBlockSprite.Texture = newTexture2;
                     }
                 }

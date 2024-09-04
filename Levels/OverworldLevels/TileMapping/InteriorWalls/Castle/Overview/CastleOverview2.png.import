@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm24253un4a67"
-path="res://.godot/imported/MageIdle_1.png-10d2885949600b01893fd0a6655c3dd0.ctex"
+uid="uid://ur4iril6rdsu"
+path="res://.godot/imported/CastleOverview2.png-38776177a37dbea99b45c3af490ee815.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_1.png"
-dest_files=["res://.godot/imported/MageIdle_1.png-10d2885949600b01893fd0a6655c3dd0.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview2.png"
+dest_files=["res://.godot/imported/CastleOverview2.png-38776177a37dbea99b45c3af490ee815.ctex"]
 
 [params]
 
