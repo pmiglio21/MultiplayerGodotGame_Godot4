@@ -39,16 +39,25 @@ size_flags_horizontal = 4
 
 [node name="PlayButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
+focus_mode = 1
 text = "Play"
 
 [node name="GameRulesButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
+focus_mode = 1
 text = "Game Rules"
 
 [node name="SettingsButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
+focus_mode = 1
 text = "Settings"
 
 [node name="QuitGameButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
+focus_mode = 1
 text = "Quit"
+
+[node name="InputTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
