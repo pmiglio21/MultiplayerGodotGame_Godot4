@@ -97,61 +97,58 @@ namespace Levels.UtilityLevels
 
 		private void GetNavigationInput()
 		{
-			if (_inputTimer.IsStopped())
-			{
-                if (UniversalInputHelper.IsActionPressed(InputType.MoveSouth))
+            if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
+            {
+                if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
                 {
-                    if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
-                    {
-                        _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
-                    }
-                    else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
-                    {
-                        _levelSizeSelector.GetOptionButton().GrabFocus();
-                    }
-                    else if (_levelSizeSelector.GetOptionButton().HasFocus())
-                    {
-                        _numberSpinner.GetNumberSpinnerButton().GrabFocus();
-                    }
-                    else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-                    {
-                        _returnButton.GrabFocus();
-                    }
-                    else if (_returnButton.HasFocus() && _continueButton.Visible)
-                    {
-                        _continueButton.GrabFocus();
-                    }
-
-                    _inputTimer.Start();
+                    _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+                }
+                else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
+                {
+                    _levelSizeSelector.GetOptionButton().GrabFocus();
+                }
+                else if (_levelSizeSelector.GetOptionButton().HasFocus())
+                {
+                    _numberSpinner.GetNumberSpinnerButton().GrabFocus();
+                }
+                else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+                {
+                    _returnButton.GrabFocus();
+                }
+                else if (_returnButton.HasFocus() && _continueButton.Visible)
+                {
+                    _continueButton.GrabFocus();
                 }
 
-                if (UniversalInputHelper.IsActionPressed(InputType.MoveNorth))
-                {
-                    if (_continueButton.HasFocus() && _continueButton.Visible)
-                    {
-                        _returnButton.GrabFocus();
-                    }
-                    else if (_returnButton.HasFocus())
-                    {
-                        _numberSpinner.GetNumberSpinnerButton().GrabFocus();
-                    }
-                    else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-                    {
-                        _levelSizeSelector.GetOptionButton().GrabFocus();
-                    }
-                    else if (_levelSizeSelector.GetOptionButton().HasFocus())
-                    {
-                        _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
-                    }
-                    else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
-                    {
-                        _splitScreenOptionSelector.GetOptionButton().GrabFocus();
-                    }
-
-                    _inputTimer.Start();
-                }
+                _inputTimer.Start();
             }
-		}
+
+            else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
+            {
+                if (_continueButton.HasFocus() && _continueButton.Visible)
+                {
+                    _returnButton.GrabFocus();
+                }
+                else if (_returnButton.HasFocus())
+                {
+                    _numberSpinner.GetNumberSpinnerButton().GrabFocus();
+                }
+                else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+                {
+                    _levelSizeSelector.GetOptionButton().GrabFocus();
+                }
+                else if (_levelSizeSelector.GetOptionButton().HasFocus())
+                {
+                    _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+                }
+                else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
+                {
+                    _splitScreenOptionSelector.GetOptionButton().GrabFocus();
+                }
+
+                _inputTimer.Start();
+            }
+        }
 
 		public void GrabFocusOfTopButton()
 		{

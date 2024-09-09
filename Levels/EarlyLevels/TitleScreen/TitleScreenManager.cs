@@ -61,7 +61,7 @@ namespace Levels.EarlyLevels
 
 		private void GetNavigationInput()
 		{
-			if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionPressed(InputType.MoveSouth))
+			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
 				if (_playButton.HasFocus())
 				{
@@ -78,7 +78,7 @@ namespace Levels.EarlyLevels
 
 				_inputTimer.Start();
 			}
-			else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionPressed(InputType.MoveNorth))
+			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
 			{
 				if (_quitGameButton.HasFocus())
 				{

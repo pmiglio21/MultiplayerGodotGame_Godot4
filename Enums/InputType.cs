@@ -26,5 +26,7 @@ namespace Enums
         //Shoulder buttons
 
         //D-Pad buttons
+        DPadNorth,
+        DPadSouth
     }
 }
