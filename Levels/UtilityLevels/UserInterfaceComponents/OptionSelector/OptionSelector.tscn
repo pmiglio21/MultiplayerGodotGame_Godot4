@@ -10,12 +10,16 @@ offset_bottom = 40.0
 script = ExtResource("1_whrl2")
 
 [node name="OptionLabel" type="Label" parent="."]
+layout_mode = 0
 offset_left = -182.0
 offset_right = -22.0
 offset_bottom = 60.0
+focus_mode = 1
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="OptionButton" type="Button" parent="."]
+layout_mode = 0
 offset_right = 110.0
 offset_bottom = 62.0
+focus_mode = 1

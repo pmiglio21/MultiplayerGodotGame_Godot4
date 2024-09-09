@@ -83,7 +83,7 @@ public partial class NumberSpinner : Control
 		}
 	}
 
-	public Button GetNumberSpinnerButtonButton()
+	public Button GetNumberSpinnerButton()
 	{
 		return _numberSpinnerButton;
 	}

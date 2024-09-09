@@ -20,6 +20,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gwqco")
 
+[node name="InputTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+autostart = true
+
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
@@ -35,6 +40,7 @@ layout_mode = 2
 offset_top = -114.0
 offset_right = 200.0
 offset_bottom = -64.0
+focus_mode = 1
 LabelText = "Splitscreen"
 OptionSelectorType = 1
 
@@ -44,6 +50,7 @@ layout_mode = 2
 offset_top = -44.0
 offset_right = 200.0
 offset_bottom = 6.0
+focus_mode = 1
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
 
@@ -54,6 +61,7 @@ offset_left = 1.0
 offset_top = 27.0
 offset_right = 201.0
 offset_bottom = 77.0
+focus_mode = 1
 LabelText = "Level Size"
 OptionSelectorType = 3
 
@@ -64,6 +72,7 @@ offset_left = -146.0
 offset_top = 107.0
 offset_right = 54.0
 offset_bottom = 157.0
+focus_mode = 1
 text = "Number of Levels"
 
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
@@ -72,6 +81,7 @@ layout_mode = 2
 offset_top = 98.0
 offset_right = 200.0
 offset_bottom = 148.0
+focus_mode = 1
 MinNumber = 1
 
 [node name="ReturnButton" type="Button" parent="."]
@@ -79,6 +89,7 @@ layout_mode = 2
 offset_top = 154.0
 offset_right = 200.0
 offset_bottom = 185.0
+focus_mode = 1
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
@@ -86,4 +97,5 @@ layout_mode = 2
 offset_top = 189.0
 offset_right = 200.0
 offset_bottom = 220.0
+focus_mode = 1
 text = "Continue"

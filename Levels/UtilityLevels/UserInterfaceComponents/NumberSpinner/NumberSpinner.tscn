@@ -10,5 +10,7 @@ offset_bottom = 40.0
 script = ExtResource("1_wtu58")
 
 [node name="NumberSpinnerButton" type="Button" parent="."]
+layout_mode = 0
 offset_right = 80.0
 offset_bottom = 46.0
+focus_mode = 1

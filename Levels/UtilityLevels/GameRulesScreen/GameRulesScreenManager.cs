@@ -16,7 +16,8 @@ namespace Levels.UtilityLevels
 	{
 		protected PauseScreenManager pauseScreen;
 
-		private OptionSelector _splitScreenOptionSelector;
+        private Timer _inputTimer;
+        private OptionSelector _splitScreenOptionSelector;
 		private OptionSelector _relativePlayerSpawnDistanceOptionSelector;
 		private NumberSpinner _numberSpinner;
 		private OptionSelector _levelSizeSelector;
@@ -25,7 +26,8 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
-			_splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
+            _inputTimer = FindChild("InputTimer") as Timer;
+            _splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
 			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
 			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");
 			_levelSizeSelector = GetNode<OptionSelector>("LevelSizeOptionSelector");
@@ -47,94 +49,108 @@ namespace Levels.UtilityLevels
 
 		public override void _Process(double delta)
 		{
-			GetButtonInput();
+			GetButtonPressInput();
 
 			GetNavigationInput();
 		}
 
-		private void GetButtonInput()
+		private void GetButtonPressInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			if (_inputTimer.IsStopped())
 			{
-				if (_returnButton.HasFocus())
-				{
-					ReturnToPriorScene();
-				}
-				else if (_continueButton.HasFocus())
-				{
-					SaveOutGameRules();
+                if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+                {
+                    if (_returnButton.HasFocus())
+                    {
+                        ReturnToPriorScene();
+                    }
+                    else if (_continueButton.HasFocus())
+                    {
+                        SaveOutGameRules();
 
-					//Maybe change this
-					GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
-				}
-				else
-				{
-					if (_continueButton.Visible)
-					{
-						_continueButton.GrabFocus();
-					}
-					else if (_returnButton.Visible)
-					{
-						_returnButton.GrabFocus();
-					}
-				}
-			}
+                        //Maybe change this
+                        GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
+                    }
+                    else
+                    {
+                        if (_continueButton.Visible)
+                        {
+                            _continueButton.GrabFocus();
+                        }
+                        else if (_returnButton.Visible)
+                        {
+                            _returnButton.GrabFocus();
+                        }
+                    }
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
-			{
-				ReturnToPriorScene();
-			}
+                    _inputTimer.Start();
+                }
+
+                if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+                {
+                    ReturnToPriorScene();
+
+                    _inputTimer.Start();
+                }
+            }
 		}
 
 		private void GetNavigationInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
+			if (_inputTimer.IsStopped())
 			{
-				if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
-				{
-					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
-				{
-					_numberSpinner.GetNumberSpinnerButtonButton().GrabFocus();
-				}
-				else if (_numberSpinner.GetNumberSpinnerButtonButton().HasFocus())
-				{
-					_levelSizeSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_levelSizeSelector.GetOptionButton().HasFocus())
-				{
-					_returnButton.GrabFocus();
-				}
-				else if (_returnButton.HasFocus() && _continueButton.Visible)
-				{
-					_continueButton.GrabFocus();
-				}
-			}
+                if (UniversalInputHelper.IsActionPressed(InputType.MoveSouth))
+                {
+                    if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
+                    {
+                        _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+                    }
+                    else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
+                    {
+                        _levelSizeSelector.GetOptionButton().GrabFocus();
+                    }
+                    else if (_levelSizeSelector.GetOptionButton().HasFocus())
+                    {
+                        _numberSpinner.GetNumberSpinnerButton().GrabFocus();
+                    }
+                    else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+                    {
+                        _returnButton.GrabFocus();
+                    }
+                    else if (_returnButton.HasFocus() && _continueButton.Visible)
+                    {
+                        _continueButton.GrabFocus();
+                    }
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
-			{
-				if (_continueButton.HasFocus() && _continueButton.Visible)
-				{
-					_returnButton.GrabFocus();
-				}
-				else if (_returnButton.HasFocus())
-				{
-					_levelSizeSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_levelSizeSelector.GetOptionButton().HasFocus())
-				{
-					_numberSpinner.GetNumberSpinnerButtonButton().GrabFocus();
-				}
-				else if (_numberSpinner.GetNumberSpinnerButtonButton().HasFocus())
-				{
-					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
-				{
-					_splitScreenOptionSelector.GetOptionButton().GrabFocus();
-				}
-			}
+                    _inputTimer.Start();
+                }
+
+                if (UniversalInputHelper.IsActionPressed(InputType.MoveNorth))
+                {
+                    if (_continueButton.HasFocus() && _continueButton.Visible)
+                    {
+                        _returnButton.GrabFocus();
+                    }
+                    else if (_returnButton.HasFocus())
+                    {
+                        _numberSpinner.GetNumberSpinnerButton().GrabFocus();
+                    }
+                    else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+                    {
+                        _levelSizeSelector.GetOptionButton().GrabFocus();
+                    }
+                    else if (_levelSizeSelector.GetOptionButton().HasFocus())
+                    {
+                        _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+                    }
+                    else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
+                    {
+                        _splitScreenOptionSelector.GetOptionButton().GrabFocus();
+                    }
+
+                    _inputTimer.Start();
+                }
+            }
 		}
 
 		public void GrabFocusOfTopButton()
@@ -174,7 +190,7 @@ namespace Levels.UtilityLevels
 				}
 			}
 
-			CurrentSaveGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButtonButton().Text;
+			CurrentSaveGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
 
 			foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
 			{
