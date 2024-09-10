@@ -567,7 +567,7 @@ public partial class BaseOverworldLevel : Node
 	{
 		GeneratePortal();
 
-		GenerateSwitches();
+		//GenerateSwitches();
 	}
 
 	private void GeneratePortal() 

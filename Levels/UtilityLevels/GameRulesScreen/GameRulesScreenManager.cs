@@ -56,44 +56,41 @@ namespace Levels.UtilityLevels
 
 		private void GetButtonPressInput()
 		{
-			if (_inputTimer.IsStopped())
-			{
-                if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
-                {
-                    if (_returnButton.HasFocus())
-                    {
-                        ReturnToPriorScene();
-                    }
-                    else if (_continueButton.HasFocus())
-                    {
-                        SaveOutGameRules();
-
-                        //Maybe change this
-                        GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
-                    }
-                    else
-                    {
-                        if (_continueButton.Visible)
-                        {
-                            _continueButton.GrabFocus();
-                        }
-                        else if (_returnButton.Visible)
-                        {
-                            _returnButton.GrabFocus();
-                        }
-                    }
-
-                    _inputTimer.Start();
-                }
-
-                if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+            if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+            {
+                if (_returnButton.HasFocus())
                 {
                     ReturnToPriorScene();
-
-                    _inputTimer.Start();
                 }
+                else if (_continueButton.HasFocus())
+                {
+                    SaveOutGameRules();
+
+                    //Maybe change this
+                    GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
+                }
+                else
+                {
+                    if (_continueButton.Visible)
+                    {
+                        _continueButton.GrabFocus();
+                    }
+                    else if (_returnButton.Visible)
+                    {
+                        _returnButton.GrabFocus();
+                    }
+                }
+
+                _inputTimer.Start();
             }
-		}
+
+            if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+            {
+                ReturnToPriorScene();
+
+                _inputTimer.Start();
+            }
+        }
 
 		private void GetNavigationInput()
 		{
@@ -122,7 +119,6 @@ namespace Levels.UtilityLevels
 
                 _inputTimer.Start();
             }
-
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
             {
                 if (_continueButton.HasFocus() && _continueButton.Visible)

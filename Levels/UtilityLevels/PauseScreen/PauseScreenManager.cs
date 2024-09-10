@@ -21,19 +21,17 @@ namespace Levels.UtilityLevels
 		private const int _pauseTimerMax = 15;
 		private bool _pauseChangedRecently = false;
 
-		private int _inputTimer = 0;
-		private const int _inputTimerMax = 15;
-		private bool _inputChangedRecently = false;
-
-		private Button _resumeGameButton;
+        private Timer _inputTimer;
+        private Button _resumeGameButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
 		private SettingsScreenManager _settingsScreen;
 
 		public override void _Ready()
-		{
-			_resumeGameButton = GetNode<Button>("ResumeGameButton");
+        {
+            _inputTimer = FindChild("InputTimer") as Timer;
+            _resumeGameButton = GetNode<Button>("ResumeGameButton");
 			_settingsButton = GetNode<Button>("SettingsButton");
 			_quitGameButton = GetNode<Button>("QuitGameButton");
 
@@ -58,13 +56,13 @@ namespace Levels.UtilityLevels
 
 			if (IsPauseScreenBeingShown && !IsPauseScreenChildBeingShown)
 			{
-				GetButtonInput();
+				GetButtonPressInput();
 
 				GetNavigationInput();
 			}
 		}
 
-		private void GetButtonInput()
+		private void GetButtonPressInput()
 		{
 			#region Pause Timer Setup
 			//Pause button hit by player
@@ -86,25 +84,7 @@ namespace Levels.UtilityLevels
 			}
 			#endregion
 
-			#region Input Timer Setup
-			//Button input hit by player
-			if (!_inputChangedRecently && _inputTimer < _inputTimerMax)
-			{
-				_inputChangedRecently = true;
-			}
-
-			//Let input timer go
-			if (_inputChangedRecently && _inputTimer < _inputTimerMax)
-			{
-				_inputTimer++;
-			}
-			else
-			{
-				_inputChangedRecently = false;
-			}
-			#endregion
-
-			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.StartButton) || UniversalInputHelper.IsActionPressed(InputType.SouthButton)))
 			{
 				if (_resumeGameButton.HasFocus())
 				{
@@ -131,43 +111,46 @@ namespace Levels.UtilityLevels
 					PlayerManager.ActivePlayers.Clear();
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 				}
-			}
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+                _inputTimer.Start();
+            }
+
+			if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionPressed(InputType.EastButton))
 			{
 				_resumeGameButton.GrabFocus();
-			}
+
+                _inputTimer.Start();
+            }
 		}
 
 		private void GetNavigationInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
+			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
 				if (_resumeGameButton.HasFocus())
 				{
 					_settingsButton.GrabFocus();
-					_inputTimer = 0;
 				}
 				else if (_settingsButton.HasFocus())
 				{
 					_quitGameButton.GrabFocus();
-					_inputTimer = 0;
 				}
-			}
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
+                _inputTimer.Start();
+            }
+			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
 			{
 				if (_quitGameButton.HasFocus())
 				{
 					_settingsButton.GrabFocus();
-					_inputTimer = 0;
 				}
 				else if (_settingsButton.HasFocus())
 				{
 					_resumeGameButton.GrabFocus();
-					_inputTimer = 0;
 				}
-			}
+
+                _inputTimer.Start();
+            }
 		}
 
 		public void GrabFocusOfTopButton()
