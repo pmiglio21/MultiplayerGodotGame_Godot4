@@ -84,7 +84,7 @@ namespace Levels.UtilityLevels
 			}
 			#endregion
 
-			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.StartButton) || UniversalInputHelper.IsActionPressed(InputType.SouthButton)))
+			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton)))
 			{
 				if (_resumeGameButton.HasFocus())
 				{
@@ -94,8 +94,7 @@ namespace Levels.UtilityLevels
 						IsPauseScreenBeingShown = false;
 					}
 				}
-
-				if (_settingsButton.HasFocus())
+				else if (_settingsButton.HasFocus())
 				{
 					_settingsScreen.IsSettingsScreenBeingShown = true;
 					_settingsScreen.GrabFocusOfTopButton();
@@ -104,8 +103,7 @@ namespace Levels.UtilityLevels
 
 					HideAllButThisChildScreen(_settingsScreen);
 				}
-
-				if (_quitGameButton.HasFocus())
+				else if (_quitGameButton.HasFocus())
 				{
 					GetTree().Paused = false;
 					PlayerManager.ActivePlayers.Clear();
@@ -115,7 +113,7 @@ namespace Levels.UtilityLevels
                 _inputTimer.Start();
             }
 
-			if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionPressed(InputType.EastButton))
+			if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
 				_resumeGameButton.GrabFocus();
 
