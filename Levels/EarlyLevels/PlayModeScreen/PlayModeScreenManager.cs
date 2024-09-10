@@ -45,7 +45,7 @@ public partial class PlayModeScreenManager : GridContainer
 
     private void GetNavigationInput()
     {
-        if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
+        if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadEast))
         {
             if (_localButton.HasFocus())
             {
@@ -53,7 +53,7 @@ public partial class PlayModeScreenManager : GridContainer
             }
         }
 
-        if (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
+        if (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadWest))
         {
             if (_onlineButton.HasFocus())
             {
