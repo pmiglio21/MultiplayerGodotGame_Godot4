@@ -54,20 +54,7 @@ public partial class BaseOverworldLevel : Node
 
 		LoadInFloorTiles();
 
-
-        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 0)
-                                 .Where(tile => IsBlockInsideBorders(tile))
-                                 .ToList());
-
-        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 1)
-                                 .Where(tile => IsBlockInsideBorders(tile))
-                                 .ToList());
-        
-        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 2)
-                                 .Where(tile => IsBlockInsideBorders(tile))
-                                 .ToList()); 
-        
-        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, 3)
+        _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
                                  .Where(tile => IsBlockInsideBorders(tile))
                                  .ToList());
 
@@ -118,12 +105,10 @@ public partial class BaseOverworldLevel : Node
             while (y < _maxNumberOfTiles)
             {
                 //How to make this dynamic? Need to find way to access atlas size.
-                //var xAtlasCoord = _rng.RandiRange(0, 3);
-                //var yAtlasCoord = _rng.RandiRange(0, 1);
+                var xAtlasCoord = _rng.RandiRange(0, 3);
+                var yAtlasCoord = _rng.RandiRange(0, 0);
 
-                var atlasId = _rng.RandiRange(0, 3);
-
-                _tileMap.SetCell(0, new Vector2I(x, y), atlasId, new Vector2I(0, 0));
+                _tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCastleFloorAtlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
 
                 GenerateInteriorBlock(x, y);
 
@@ -540,9 +525,9 @@ public partial class BaseOverworldLevel : Node
                     //Block opens to at least the south
                     if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
                     {
-                        var textureIndex = _rng.RandiRange(0, 5);
+                        var textureIndex = _rng.RandiRange(0, 1);
 
-                        Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{0}.png") as Texture2D;
+                        Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
                         interiorBlockSprite.Texture = newTexture2;
                     }
                 }
