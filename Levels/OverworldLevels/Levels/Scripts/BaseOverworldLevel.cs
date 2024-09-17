@@ -525,7 +525,7 @@ public partial class BaseOverworldLevel : Node
                     //Block opens to at least the south
                     if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
                     {
-                        var textureIndex = _rng.RandiRange(0, 1);
+                        var textureIndex = _rng.RandiRange(0, 5);
 
                         Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
                         interiorBlockSprite.Texture = newTexture2;
