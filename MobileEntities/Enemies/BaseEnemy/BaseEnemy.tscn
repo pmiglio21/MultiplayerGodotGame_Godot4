@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp2csqmog36w"]
+[gd_scene load_steps=5 format=3 uid="uid://cp2csqmog36w"]
 
-[ext_resource type="Script" path="res://MobileEntities/Enemies/BaseEnemy/Scripts/BaseEnemy.cs" id="1_14wtk"]
+[ext_resource type="Script" path="res://MobileEntities/Enemies/BaseEnemy/BaseEnemy.cs" id="1_14wtk"]
 [ext_resource type="PackedScene" uid="uid://b5osh7vwxfkjk" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHitBox.tscn" id="1_tcsid"]
 [ext_resource type="PackedScene" uid="uid://c3oowxqwvi1bx" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHurtBox.tscn" id="2_sfuwj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyttv"]
+size = Vector2(27, 2)
 
 [node name="EnemyBody" type="CharacterBody2D" groups=["Enemy"]]
 script = ExtResource("1_14wtk")
@@ -15,6 +18,9 @@ root_node = NodePath("")
 [node name="MainHitBox" parent="." instance=ExtResource("1_tcsid")]
 
 [node name="MainHurtBox" parent="." instance=ExtResource("2_sfuwj")]
+
+[node name="FootBox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_oyttv")
 
 [connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
 [connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]

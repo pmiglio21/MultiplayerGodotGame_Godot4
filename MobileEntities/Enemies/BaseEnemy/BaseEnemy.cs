@@ -1,30 +1,51 @@
+using Enums;
 using Godot;
-using System;
 
 namespace MobileEntities.Enemies.Scripts
 {
 	public partial class BaseEnemy : BaseMobileEntity
 	{
+		#region Components
+
 		protected Area2D mainHurtBox;
 		protected CollisionShape2D mainHurtBoxCollisionShape;
 		protected Area2D mainHitBox;
 		protected CollisionShape2D mainHitBoxCollisionShape;
+		protected AnimationPlayer animationPlayer;
+
+		#endregion
+
+		protected EnemyType enemyType;
+
+		#region On Ready
 
 		public override void _Ready()
 		{
-			mainHurtBox = GetNode<Area2D>("MainHurtBox");
-			mainHurtBoxCollisionShape = mainHurtBox.GetNode<CollisionShape2D>("CollisionShape");
-			mainHurtBoxCollisionShape.Scale = new Vector2(1, 1);
+            InitializeComponents();
 
-			mainHitBox = GetNode<Area2D>("MainHitBox");
-			mainHitBoxCollisionShape = mainHitBox.GetNode<CollisionShape2D>("CollisionShape");
-			mainHitBoxCollisionShape.Scale = new Vector2(1, 1);
-			//mainHitBoxCollisionShape.Disabled = true;
-		}
+            InitializeEnemySpecificProperties();
+        }
+
+		private void InitializeComponents()
+		{
+            mainHurtBox = GetNode<Area2D>("MainHurtBox");
+            mainHurtBoxCollisionShape = mainHurtBox.GetNode<CollisionShape2D>("CollisionShape");
+            mainHurtBoxCollisionShape.Scale = new Vector2(1, 1);
+
+            mainHitBox = GetNode<Area2D>("MainHitBox");
+            mainHitBoxCollisionShape = mainHitBox.GetNode<CollisionShape2D>("CollisionShape");
+            mainHitBoxCollisionShape.Scale = new Vector2(1, 1);
+            //mainHitBoxCollisionShape.Disabled = true;
+
+            animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+			animationPlayer.Play("IdleEast");
+        }
+
+		#endregion
 
 		public override void _Process(double delta)
 		{
-			InitializeEnemySpecificProperties();
+			
 		}
 
 		protected virtual void InitializeEnemySpecificProperties() { }

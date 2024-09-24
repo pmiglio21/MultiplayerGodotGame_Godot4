@@ -1,6 +1,6 @@
+using Enums;
 using Godot;
 using MobileEntities.CharacterStats;
-using System;
 
 namespace MobileEntities.Enemies.Scripts
 {
@@ -8,6 +8,8 @@ namespace MobileEntities.Enemies.Scripts
 	{
 		protected override void InitializeEnemySpecificProperties()
 		{
+			enemyType = EnemyType.Slime;
+
 			characterStats = new Stats(4);
 		}
 	}
