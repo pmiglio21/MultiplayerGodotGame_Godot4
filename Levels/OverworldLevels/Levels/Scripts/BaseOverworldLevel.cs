@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MobileEntities.Enemies.Scripts;
 
 public partial class BaseOverworldLevel : Node
 {
@@ -34,11 +35,18 @@ public partial class BaseOverworldLevel : Node
 
 	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
 
-	#endregion
+    #endregion
 
-	#region Component Nodes
+    #region Enemy Generation
 
-	private Node _baseFloor = null;
+    private int _enemyCountMax = 5;
+    private int _enemyCount = 0;
+
+    #endregion
+
+    #region Component Nodes
+
+    private Node _baseFloor = null;
 
 	private TileMap _tileMap = null;
 
@@ -120,7 +128,6 @@ public partial class BaseOverworldLevel : Node
     }
 
 	#endregion
-
 
 	private void RunProceduralPathGeneration()
 	{
@@ -205,6 +212,7 @@ public partial class BaseOverworldLevel : Node
 
                 floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
                 floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+                floorGridSpaceWithMatchingPosition.IsCleared = true;
 
                 var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
                 richTextLabel.Text = spawnPointGeneratedCount.ToString();
@@ -217,6 +225,7 @@ public partial class BaseOverworldLevel : Node
                     {
                         currentFloorGridSpace.InteriorBlock.QueueFree();
                         currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+                        currentFloorGridSpace.IsCleared = true;
 
                         var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
                         rtl.Text = spawnPointGeneratedCount.ToString();
@@ -240,6 +249,7 @@ public partial class BaseOverworldLevel : Node
 
             floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
             floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = 0;
+            floorGridSpaceWithMatchingPosition.IsCleared = true;
 
             var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
             richTextLabel.Text = "0";
@@ -252,6 +262,7 @@ public partial class BaseOverworldLevel : Node
                 {
                     currentFloorGridSpace.InteriorBlock.QueueFree();
                     currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
+                    currentFloorGridSpace.IsCleared = true;
 
                     var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
                     rtl.Text = "0";
@@ -336,6 +347,7 @@ public partial class BaseOverworldLevel : Node
                         if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
                         {
                             floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+                            floorGridSpaceWithMatchingPosition.IsCleared = true;
                         }
 
                         var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
@@ -426,6 +438,7 @@ public partial class BaseOverworldLevel : Node
                     if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
                     {
                         floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+                        floorGridSpaceWithMatchingPosition.IsCleared = true;
                     }
 
                     var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
@@ -470,72 +483,66 @@ public partial class BaseOverworldLevel : Node
                 InteriorBlock = interiorBlock, 
                 TestText = testText, 
                 TileMapPosition = new Vector2I(x, y),
+                ActualGlobalPosition = _tileMap.MapToLocal(new Vector2I(x, y)),
                 ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
             });
     }
 
 	private void PaintInteriorWalls()
 	{
-        try
+        foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
         {
-            foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
+            if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
             {
-                if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
+                var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+
+                var overviewIndex = _rng.RandiRange(0, 3);
+
+                Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
+                interiorBlockSprite.Texture = newTexture;
+
+                int northBlockIndex = -1;
+                TileMapSpace northBlock = null;
+
+                //if current index isn't the very top
+                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
                 {
-                    var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+                    northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
 
-                    var overviewIndex = _rng.RandiRange(0, 3);
+                    northBlock = _existingFloorGridSpaces[northBlockIndex];
+                }
 
-                    Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
-                    interiorBlockSprite.Texture = newTexture;
+                int southBlockIndex = -1;
+                TileMapSpace southBlock = null;
 
-                    int northBlockIndex = -1;
-                    TileMapSpace northBlock = null;
+                //if current index isn't the very bottom
+                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
+                {
+                    southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
 
-                    //if current index isn't the very top
-                    if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                        _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
-                    {
-                        northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
+                    southBlock = _existingFloorGridSpaces[southBlockIndex];
+                }
 
-                        northBlock = _existingFloorGridSpaces[northBlockIndex];
-                    }
+                //Block opens to at least the north
+                if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                {
+                    var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
 
-                    int southBlockIndex = -1;
-                    TileMapSpace southBlock = null;
+                    collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
+                    collisionShape.Position = new Vector2(0, 8);
+                }
 
-                    //if current index isn't the very bottom
-                    if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                        _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
-                    {
-                        southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
+                //Block opens to at least the south
+                if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+                {
+                    var textureIndex = _rng.RandiRange(0, 5);
 
-                        southBlock = _existingFloorGridSpaces[southBlockIndex];
-                    }
-
-                    //Block opens to at least the north
-                    if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                    {
-                        var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                        collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                        collisionShape.Position = new Vector2(0, 8);
-                    }
-
-                    //Block opens to at least the south
-                    if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                    {
-                        var textureIndex = _rng.RandiRange(0, 5);
-
-                        Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
-                        interiorBlockSprite.Texture = newTexture2;
-                    }
+                    Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
+                    interiorBlockSprite.Texture = newTexture2;
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            //Don't know what to do here
         }
     }
 
@@ -637,11 +644,11 @@ public partial class BaseOverworldLevel : Node
 		PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
-	#endregion
+    #endregion
 
-	#region Direction-Changing Utility Methods
+    #region Direction-Changing Utility Methods
 
-	private int SetRandomChangeInDirection(int weightedValue = 1)
+    private int SetRandomChangeInDirection(int weightedValue = 1)
 	{
 		var randChance = _rng.RandfRange(0, 1);
 
@@ -693,6 +700,31 @@ public partial class BaseOverworldLevel : Node
 		return new Tuple<int, int>(weightedXValue, weightedYValue); ;
 	}
 
-	#endregion
+    #endregion
 
+    public override void _Process(double delta)
+    {
+        SpawnEnemies();
+    }
+
+    #region Enemy Generation
+
+    private void SpawnEnemies()
+    {
+        while (_enemyCount < _enemyCountMax)
+        {
+            var tempEnemy = GD.Load<PackedScene>(EnemyScenePaths.SlimeScenePath).Instantiate();
+
+            var enemy = tempEnemy as BaseEnemy;
+            AddChild(enemy);
+
+            var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
+
+            enemy.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+
+            _enemyCount++;
+        }
+    }
+
+    #endregion
 }
