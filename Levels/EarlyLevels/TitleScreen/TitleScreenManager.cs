@@ -6,57 +6,57 @@ namespace Levels.EarlyLevels
 {
 	public partial class TitleScreenManager: Node
 	{
-        private Timer _inputTimer;
-        private Button _playButton;
+		private Timer _inputTimer;
+		private Button _playButton;
 		private Button _gameRulesButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
 		public override void _Ready()
-        {
+		{
 			_inputTimer = FindChild("InputTimer") as Timer;
-            _playButton = FindChild("PlayButton") as Button;
+			_playButton = FindChild("PlayButton") as Button;
 			_gameRulesButton = FindChild("GameRulesButton") as Button;
 			_settingsButton = FindChild("SettingsButton") as Button;
 			_quitGameButton = FindChild("QuitGameButton") as Button;
 
-            _playButton.GrabFocus();
+			_playButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
 		{
-            GetButtonPressInput();
+			GetButtonPressInput();
 
-            GetNavigationInput();
-        }
+			GetNavigationInput();
+		}
 
 		private void GetButtonPressInput()
 		{
 			if (_inputTimer.IsStopped())
 			{
-                if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
-                {
-                    if (_playButton.HasFocus())
-                    {
-                        GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
-                    }
-                    else if (_gameRulesButton.HasFocus())
-                    {
-                        GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleScreenPath;
-                        GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
-                    }
-                    else if (_settingsButton.HasFocus())
-                    {
-                        GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
-                    }
-                    else if (_quitGameButton.HasFocus())
-                    {
-                        GetTree().Quit();
-                    }
+				if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+				{
+					if (_playButton.HasFocus())
+					{
+						GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
+					}
+					else if (_gameRulesButton.HasFocus())
+					{
+						GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleScreenPath;
+						GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
+					}
+					else if (_settingsButton.HasFocus())
+					{
+						GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
+					}
+					else if (_quitGameButton.HasFocus())
+					{
+						GetTree().Quit();
+					}
 
-                    _inputTimer.Start();
-                }
-            }
+					_inputTimer.Start();
+				}
+			}
 		}
 
 		private void GetNavigationInput()

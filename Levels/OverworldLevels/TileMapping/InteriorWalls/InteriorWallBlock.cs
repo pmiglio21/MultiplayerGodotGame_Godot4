@@ -11,6 +11,6 @@ public partial class InteriorWallBlock : Node2D
 
 	public override void _Process(double delta)
 	{
-        ZIndex = (int)this.GlobalPosition.Y;
-    }
+		ZIndex = (int)this.GlobalPosition.Y;
+	}
 }

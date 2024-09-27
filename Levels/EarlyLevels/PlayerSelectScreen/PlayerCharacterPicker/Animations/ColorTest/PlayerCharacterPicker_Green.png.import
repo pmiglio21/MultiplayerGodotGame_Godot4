@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbuusgc2apkn3"
 path.s3tc="res://.godot/imported/PlayerCharacterPicker_Green.png-ee494ff6ed2d5cdd2c326e8998c1eccd.s3tc.ctex"
-path.etc2="res://.godot/imported/PlayerCharacterPicker_Green.png-ee494ff6ed2d5cdd2c326e8998c1eccd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterPicker/Animations/ColorTest/PlayerCharacterPicker_Green.png"
-dest_files=["res://.godot/imported/PlayerCharacterPicker_Green.png-ee494ff6ed2d5cdd2c326e8998c1eccd.s3tc.ctex", "res://.godot/imported/PlayerCharacterPicker_Green.png-ee494ff6ed2d5cdd2c326e8998c1eccd.etc2.ctex"]
+dest_files=["res://.godot/imported/PlayerCharacterPicker_Green.png-ee494ff6ed2d5cdd2c326e8998c1eccd.s3tc.ctex"]
 
 [params]
 

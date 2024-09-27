@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace Enums.GameRules
 {
-    public enum LevelSize
-    {
-        None,
-        VerySmall,
-        Small,
-        Medium,
-        Large,
-        VeryLarge,
-        Colossal,
-        Varied
-    }
+	public enum LevelSize
+	{
+		None,
+		Small,
+		Medium,
+		Large,
+		Varied
+	}
 }

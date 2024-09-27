@@ -21,25 +21,25 @@ namespace MobileEntities.Enemies.Scripts
 
 		public override void _Ready()
 		{
-            InitializeComponents();
+			InitializeComponents();
 
-            InitializeEnemySpecificProperties();
-        }
+			InitializeEnemySpecificProperties();
+		}
 
 		private void InitializeComponents()
 		{
-            mainHurtBox = GetNode<Area2D>("MainHurtBox");
-            mainHurtBoxCollisionShape = mainHurtBox.GetNode<CollisionShape2D>("CollisionShape");
-            mainHurtBoxCollisionShape.Scale = new Vector2(1, 1);
+			mainHurtBox = GetNode<Area2D>("MainHurtBox");
+			mainHurtBoxCollisionShape = mainHurtBox.GetNode<CollisionShape2D>("CollisionShape");
+			mainHurtBoxCollisionShape.Scale = new Vector2(1, 1);
 
-            mainHitBox = GetNode<Area2D>("MainHitBox");
-            mainHitBoxCollisionShape = mainHitBox.GetNode<CollisionShape2D>("CollisionShape");
-            mainHitBoxCollisionShape.Scale = new Vector2(1, 1);
-            //mainHitBoxCollisionShape.Disabled = true;
+			mainHitBox = GetNode<Area2D>("MainHitBox");
+			mainHitBoxCollisionShape = mainHitBox.GetNode<CollisionShape2D>("CollisionShape");
+			mainHitBoxCollisionShape.Scale = new Vector2(1, 1);
+			//mainHitBoxCollisionShape.Disabled = true;
 
-            animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-			animationPlayer.Play("IdleEast");
-        }
+			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+			//animationPlayer.Play("IdleEast");
+		}
 
 		#endregion
 
