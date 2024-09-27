@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ski2r0ediecx"]
+[gd_scene load_steps=8 format=3 uid="uid://ski2r0ediecx"]
 
 [ext_resource type="PackedScene" uid="uid://cp2csqmog36w" path="res://MobileEntities/Enemies/BaseEnemy/BaseEnemy.tscn" id="1_siiyb"]
 [ext_resource type="Script" path="res://MobileEntities/Enemies/Slime/Slime.cs" id="2_nvxdg"]
-[ext_resource type="Texture2D" uid="uid://bbsx5wtpafrk3" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_4.png" id="3_3ts82"]
-[ext_resource type="Texture2D" uid="uid://3vuox2at00vb" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/SlimeIdle/SlimeIdle_0.png" id="3_h35lr"]
-[ext_resource type="Texture2D" uid="uid://coxqilaidabpv" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_3.png" id="4_sr6ol"]
-[ext_resource type="Texture2D" uid="uid://bx3hsryn1x3pw" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_5.png" id="5_g63vp"]
+[ext_resource type="Texture2D" uid="uid://3vuox2at00vb" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_0.png" id="4_spfs1"]
+[ext_resource type="Texture2D" uid="uid://casjslch4qfqw" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_1.png" id="5_g82gx"]
+[ext_resource type="Texture2D" uid="uid://cnaoswamto05x" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_2.png" id="6_ymess"]
 
 [sub_resource type="Animation" id="Animation_0t152"]
 resource_name = "IdleEast"
@@ -21,7 +20,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4, 0.9, 1.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("4_sr6ol"), ExtResource("3_3ts82"), ExtResource("5_g63vp"), ExtResource("3_3ts82")]
+"values": [ExtResource("4_spfs1"), ExtResource("5_g82gx"), ExtResource("6_ymess"), ExtResource("5_g82gx")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r0maq"]
@@ -33,7 +32,7 @@ _data = {
 script = ExtResource("2_nvxdg")
 
 [node name="EnemySprite" parent="." index="0"]
-texture = ExtResource("3_h35lr")
+texture = ExtResource("4_spfs1")
 
 [node name="AnimationPlayer" parent="." index="1"]
 root_node = NodePath("../EnemySprite")

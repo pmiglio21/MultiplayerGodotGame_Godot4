@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://casjslch4qfqw"
-path="res://.godot/imported/SlimeIdle_1.png-a1b34ffc9530c72faeafa374564d2be1.ctex"
+uid="uid://dj3rcylgbxe2y"
+path="res://.godot/imported/SlimeIdle_3.png-313b16fdffa3f92aec14710884a59d34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/Enemies/Slime/Sprites/Idle/West/SlimeIdle_1.png"
-dest_files=["res://.godot/imported/SlimeIdle_1.png-a1b34ffc9530c72faeafa374564d2be1.ctex"]
+source_file="res://MobileEntities/Enemies/Slime/Sprites/Idle/West/SlimeIdle_3.png"
+dest_files=["res://.godot/imported/SlimeIdle_3.png-313b16fdffa3f92aec14710884a59d34.ctex"]
 
 [params]
 
