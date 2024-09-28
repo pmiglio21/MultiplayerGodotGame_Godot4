@@ -376,7 +376,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				isAttacking = false;
 			}
-        }
+		}
 
 		#region Trigger Boxes
 		private void OnMainHitBoxAreaEntered(Area2D area)
