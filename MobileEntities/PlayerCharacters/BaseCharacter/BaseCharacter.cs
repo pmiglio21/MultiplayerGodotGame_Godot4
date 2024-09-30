@@ -308,21 +308,34 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected void GetMovementInput()
 		{
-			if (!isAttacking)
-			{
-				moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
-				moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
+			moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+			moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
 
-				if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
-				{
-					//if you want to check input for walking and running speeds, do it here
-					moveDirection = moveInput.Normalized();
-				}
-				else
-				{
-					moveDirection = Vector2.Zero;
-				}
+			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
+			{
+				//if you want to check input for walking and running speeds, do it here
+				moveDirection = moveInput.Normalized();
 			}
+			else
+			{
+				moveDirection = Vector2.Zero;
+			}
+
+   //         if (!isAttacking)
+			//{
+			//	moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
+			//	moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
+
+			//	if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
+			//	{
+			//		//if you want to check input for walking and running speeds, do it here
+			//		moveDirection = moveInput.Normalized();
+			//	}
+			//	else
+			//	{
+			//		moveDirection = Vector2.Zero;
+			//	}
+			//}
 		}
 
 		private void MovePlayer()

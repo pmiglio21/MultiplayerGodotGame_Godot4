@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjjqegdpl7y1y"]
+[gd_scene load_steps=13 format=3 uid="uid://bjjqegdpl7y1y"]
 
+[ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Attacks/KnightSlash.cs" id="1_6pdwu"]
 [ext_resource type="Texture2D" uid="uid://b1e8us1fyjsok" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Attack/Slash/KnightSlash_2/KnightSlash_0.png" id="1_dftwk"]
 [ext_resource type="Texture2D" uid="uid://cs5egikinbsle" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Attack/Slash/KnightSlash_2/KnightSlash_1.png" id="2_3alif"]
 [ext_resource type="Texture2D" uid="uid://b2dca44wq5g1f" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Attack/Slash/KnightSlash_2/KnightSlash_2.png" id="3_28fm4"]
@@ -31,11 +32,14 @@ _data = {
 }
 
 [node name="KnightSlash" type="Node2D"]
+script = ExtResource("1_6pdwu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("9_k3kyc")
+texture = ExtResource("1_dftwk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8chuf")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationPlayerAnimationFinished"]
