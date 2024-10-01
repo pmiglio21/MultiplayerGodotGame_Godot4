@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://MobileEntities/Enemies/Slime/Slime.cs" id="2_nvxdg"]
 [ext_resource type="Texture2D" uid="uid://3vuox2at00vb" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/SlimeIdle/SlimeIdle_0.png" id="4_spfs1"]
 [ext_resource type="Texture2D" uid="uid://casjslch4qfqw" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/SlimeIdle/SlimeIdle_1.png" id="5_g82gx"]
-[ext_resource type="Texture2D" uid="uid://cnaoswamto05x" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/SlimeIdle/SlimeIdle_2.png" id="6_ymess"]
+[ext_resource type="Texture2D" uid="uid://cnaoswamto05x" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_2.png" id="6_ymess"]
 
 [sub_resource type="Animation" id="Animation_0t152"]
 resource_name = "IdleEast"
