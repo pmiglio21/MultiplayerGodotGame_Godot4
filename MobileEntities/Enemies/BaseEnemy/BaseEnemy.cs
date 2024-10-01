@@ -38,7 +38,7 @@ namespace MobileEntities.Enemies.Scripts
 			//mainHitBoxCollisionShape.Disabled = true;
 
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-			animationPlayer.Play("IdleEast");
+			animationPlayer.Play("Idle_East");
 		}
 
 		#endregion

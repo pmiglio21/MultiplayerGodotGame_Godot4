@@ -7,9 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://b3a5pprb4trov" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_1.png" id="3_rmgbw"]
 [ext_resource type="Texture2D" uid="uid://ha6gq6aiqmii" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/West/MageIdle_3.png" id="6_lu70i"]
 [ext_resource type="Texture2D" uid="uid://c80jtuaoxy34c" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_0.png" id="8_qd3vw"]
-[ext_resource type="Texture2D" uid="uid://ccporsup2aw4j" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_0.png" id="8_wue1i"]
+[ext_resource type="Texture2D" uid="uid://ccporsup2aw4j" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/Piskel/Mage_Idle/MageIdle_0.png" id="8_wue1i"]
 [ext_resource type="Texture2D" uid="uid://oryjtauh7o37" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/East/MageMove_2.png" id="9_76g5b"]
-[ext_resource type="Texture2D" uid="uid://dm24253un4a67" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageIdle_1.png" id="9_hgbku"]
+[ext_resource type="Texture2D" uid="uid://dm24253un4a67" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/Piskel/Mage_Idle/MageIdle_1.png" id="9_hgbku"]
 [ext_resource type="Texture2D" uid="uid://be5p5x7022afh" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_3.png" id="10_folld"]
 [ext_resource type="Texture2D" uid="uid://xt0tywqicipa" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_4.png" id="11_q40wi"]
 [ext_resource type="Texture2D" uid="uid://o3c2awnc2k0k" path="res://MobileEntities/PlayerCharacters/Mage/Sprites/Move/West/MageMove_5.png" id="12_6natn"]
@@ -132,7 +132,7 @@ script = ExtResource("2_bqvon")
 characterClass = 2
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("3_jv88t")
+texture = ExtResource("14_04utc")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cnaoswamto05x" path="res://MobileEntities/Enemies/Slime/Sprites/Idle/East/SlimeIdle_2.png" id="6_ymess"]
 
 [sub_resource type="Animation" id="Animation_0t152"]
-resource_name = "IdleEast"
+resource_name = "Idle_East"
 length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
@@ -25,7 +25,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r0maq"]
 _data = {
-"IdleEast": SubResource("Animation_0t152")
+"Idle_East": SubResource("Animation_0t152")
 }
 
 [node name="BaseEnemy" instance=ExtResource("1_siiyb")]
