@@ -9,7 +9,14 @@ namespace Enums
     public enum CardinalDirection
     {
         Center,
+
+        North,
+        NorthEast,
         East,
-        West
+        SouthEast,
+        South,
+        SouthWest,
+        West,
+        NorthWest
     }
 }

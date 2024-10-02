@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=16 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
@@ -45,7 +45,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_r73ib"]
 resource_name = "Attack_East"
-length = 2.0
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -53,15 +53,15 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1.2, 1.5, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_g7qoj"), ExtResource("5_6g2fj"), ExtResource("3_bjke3"), ExtResource("5_6g2fj")]
+"values": [ExtResource("4_g7qoj")]
 }
 
 [sub_resource type="Animation" id="Animation_qt6yc"]
 resource_name = "Attack_West"
-length = 2.0
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -69,15 +69,49 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1.2, 1.5, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_xutwp"), ExtResource("3_o5mq7"), ExtResource("8_s0shy"), ExtResource("3_o5mq7")]
+"values": [ExtResource("6_xutwp")]
+}
+
+[sub_resource type="Animation" id="Animation_cttcp"]
+resource_name = "Attack_South"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_xutwp")]
+}
+
+[sub_resource type="Animation" id="Animation_rubnm"]
+resource_name = "Attack_North"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_g7qoj")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
 "Attack_East": SubResource("Animation_r73ib"),
+"Attack_North": SubResource("Animation_rubnm"),
+"Attack_South": SubResource("Animation_cttcp"),
 "Attack_West": SubResource("Animation_qt6yc"),
 "Idle_East": SubResource("Animation_eqtv1"),
 "Idle_West": SubResource("Animation_0ujs5")

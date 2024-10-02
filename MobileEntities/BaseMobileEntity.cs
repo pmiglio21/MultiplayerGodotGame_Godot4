@@ -16,18 +16,42 @@ namespace MobileEntities
 		{
 			CardinalDirection latestCardinalDirection = lastUsedCardinalDirection;
 
-			if (moveDirection.X > 0)
+            if (moveDirection.X == 0 && moveDirection.Y < 0)
+            {
+                latestCardinalDirection = CardinalDirection.North;
+            }
+            else if (moveDirection.X > 0 && moveDirection.Y < 0)
+            {
+                latestCardinalDirection = CardinalDirection.NorthEast;
+            }
+            else if (moveDirection.X > 0 && moveDirection.Y == 0)
 			{
 				latestCardinalDirection = CardinalDirection.East;
 			}
-			else if (moveDirection.X < 0)
+            else if (moveDirection.X > 0 && moveDirection.Y > 0)
+            {
+                latestCardinalDirection = CardinalDirection.SouthEast;
+            }
+            else if (moveDirection.X == 0 && moveDirection.Y > 0)
+            {
+                latestCardinalDirection = CardinalDirection.South;
+            }
+            else if (moveDirection.X < 0 && moveDirection.Y > 0)
+            {
+                latestCardinalDirection = CardinalDirection.SouthWest;
+            }
+            else if (moveDirection.X < 0 && moveDirection.Y == 0)
 			{
 				latestCardinalDirection = CardinalDirection.West;
 			}
+            else if (moveDirection.X < 0 && moveDirection.Y < 0)
+            {
+                latestCardinalDirection = CardinalDirection.NorthWest;
+            }
 
-			//GD.Print(latestCardinalDirection);
+            //GD.Print(latestCardinalDirection);
 
-			return latestCardinalDirection;
+            return latestCardinalDirection;
 		}
 
 		protected void FlipCharacter(Vector3 moveDirection, Sprite2D playerSprite)
