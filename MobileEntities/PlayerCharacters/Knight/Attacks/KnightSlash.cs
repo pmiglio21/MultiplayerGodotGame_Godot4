@@ -17,12 +17,12 @@ namespace MobileEntities.PlayerCharacters.Knight
 			_animationPlayer.Play("Active");
 		}
 
-        public override void _PhysicsProcess(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
-            _animationPlayer.Advance(delta * 2);
-        }
+			_animationPlayer.Advance(delta * 2);
+		}
 
-        private void OnAnimationPlayerAnimationFinished(StringName anim_name)
+		private void OnAnimationPlayerAnimationFinished(StringName anim_name)
 		{
 			QueueFree();
 		}
