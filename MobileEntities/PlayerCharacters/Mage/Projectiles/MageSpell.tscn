@@ -4,14 +4,14 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tcfn5"]
 
-[node name="MageSpell" type="CharacterBody2D"]
+[node name="MageSpell" type="CharacterBody2D" groups=["PlayerAttack"]]
 script = ExtResource("1_ep6tg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
-[node name="Area" type="Area2D" parent="." groups=["PlayerProjectileTriggerBox"]]
+[node name="Area" type="Area2D" parent="." groups=["PlayerAttack"]]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Area"]
 shape = SubResource("RectangleShape2D_tcfn5")

@@ -10,7 +10,7 @@ namespace MobileEntities.Enemies.Scripts
 		{
 			enemyType = EnemyType.Slime;
 
-			characterStats = new Stats(4);
+			characterStats = new Stats(3);
 		}
 	}
 }

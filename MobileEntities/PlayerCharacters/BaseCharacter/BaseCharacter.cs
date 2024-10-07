@@ -392,17 +392,6 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		}
 
 		#region Trigger Boxes
-		private void OnMainHitBoxAreaEntered(Area2D area)
-		{
-			//GD.Print("Player Hit Entered");
-		}
-
-
-		private void OnMainHitBoxAreaExited(Area2D area)
-		{
-			//GD.Print("Player Hit Exited");
-		}
-
 
 		private void OnMainHurtBoxAreaEntered(Area2D area)
 		{

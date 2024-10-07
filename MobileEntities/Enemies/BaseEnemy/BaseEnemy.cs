@@ -12,10 +12,11 @@ namespace MobileEntities.Enemies.Scripts
 		protected Area2D mainHitBox;
 		protected CollisionShape2D mainHitBoxCollisionShape;
 		protected AnimationPlayer animationPlayer;
+        protected Timer gracePeriodTimer;
 
-		#endregion
+        #endregion
 
-		protected EnemyType enemyType;
+        protected EnemyType enemyType;
 
 		#region On Ready
 
@@ -39,14 +40,16 @@ namespace MobileEntities.Enemies.Scripts
 
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 			animationPlayer.Play("Idle_East");
-		}
+
+            gracePeriodTimer = FindChild("GracePeriodTimer") as Timer;
+        }
 
 		#endregion
 
 		public override void _Process(double delta)
 		{
-			
-		}
+            ZIndex = (int)this.GlobalPosition.Y;
+        }
 
 		protected virtual void InitializeEnemySpecificProperties() { }
 
@@ -68,7 +71,7 @@ namespace MobileEntities.Enemies.Scripts
 
 		private void OnMainHurtBoxAreaEntered(Area2D area)
 		{
-			if (area.IsInGroup("PlayerProjectileTriggerBox"))
+			if (area.IsInGroup("PlayerProjectileTriggerBox") || area.IsInGroup("PlayerHitBox"))
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
@@ -76,7 +79,21 @@ namespace MobileEntities.Enemies.Scripts
 				{
 					GD.Print("Enemy Hurt Entered");
 
-					characterStats.Health.HealthAmount -= 1;
+					if (gracePeriodTimer.IsStopped())
+					{
+						characterStats.Health.HealthAmount -= 1;
+
+						GD.Print($"Health: {characterStats.Health.HealthAmount}");
+
+						if (characterStats.Health.HealthAmount <= 0)
+						{
+							this.QueueFree();
+						}
+						else
+						{
+                            gracePeriodTimer.Start();
+                        }
+					}
 				}
 			}
 		}

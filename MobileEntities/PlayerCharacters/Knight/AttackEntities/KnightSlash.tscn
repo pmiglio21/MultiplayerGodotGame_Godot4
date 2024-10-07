@@ -36,23 +36,23 @@ _data = {
 script = ExtResource("1_6pdwu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("9_k3kyc")
+texture = ExtResource("1_dftwk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8chuf")
 }
 
-[node name="TriggerArea" parent="." instance=ExtResource("11_nbi7v")]
+[node name="TriggerArea" parent="." groups=["PlayerAttack"] instance=ExtResource("11_nbi7v")]
 position = Vector2(0, -2)
 scale = Vector2(0.8, 0.3)
 
-[node name="TriggerArea2" parent="." instance=ExtResource("11_nbi7v")]
+[node name="TriggerArea2" parent="." groups=["PlayerAttack"] instance=ExtResource("11_nbi7v")]
 position = Vector2(-10, 1)
 rotation = -0.785398
 scale = Vector2(0.5, 0.2)
 
-[node name="TriggerArea3" parent="." instance=ExtResource("11_nbi7v")]
+[node name="TriggerArea3" parent="." groups=["PlayerAttack"] instance=ExtResource("11_nbi7v")]
 position = Vector2(10, 1)
 rotation = 0.785398
 scale = Vector2(0.5, 0.2)
