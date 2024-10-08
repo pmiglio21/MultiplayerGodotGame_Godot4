@@ -1,5 +1,8 @@
 using Enums;
+using Globals.PlayerManagement;
 using Godot;
+using MobileEntities.PlayerCharacters.Scripts;
+using System.Collections.Generic;
 
 namespace MobileEntities.Enemies.Scripts
 {
@@ -12,11 +15,11 @@ namespace MobileEntities.Enemies.Scripts
 		protected Area2D mainHitBox;
 		protected CollisionShape2D mainHitBoxCollisionShape;
 		protected AnimationPlayer animationPlayer;
-        protected Timer gracePeriodTimer;
+		protected Timer gracePeriodTimer;
 
-        #endregion
+		#endregion
 
-        protected EnemyType enemyType;
+		protected EnemyType enemyType;
 
 		#region On Ready
 
@@ -41,23 +44,46 @@ namespace MobileEntities.Enemies.Scripts
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 			animationPlayer.Play("Idle_East");
 
-            gracePeriodTimer = FindChild("GracePeriodTimer") as Timer;
-        }
+			gracePeriodTimer = FindChild("GracePeriodTimer") as Timer;
+		}
 
 		#endregion
 
 		public override void _Process(double delta)
 		{
-            ZIndex = (int)this.GlobalPosition.Y;
-        }
+			ZIndex = (int)this.GlobalPosition.Y;
+
+			MoveEnemy();
+		}
 
 		protected virtual void InitializeEnemySpecificProperties() { }
 
-		#region	Signal Receptions
+		protected virtual void MoveEnemy() { }
 
-		#region Trigger Boxes
+        protected BaseCharacter FindClosestPlayer()
+        {
+			BaseCharacter closestPlayer = null;
+			float minDistance = float.MaxValue; 
 
-		private void OnMainHitBoxAreaEntered(Area2D area)
+			foreach (var player in PlayerManager.ActivePlayers)
+			{
+				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
+
+                if (newDistance <= 200 && newDistance < minDistance)
+				{
+                    closestPlayer = player;
+					minDistance = newDistance;
+                }
+			}
+
+			return closestPlayer;
+        }
+
+        #region	Signal Receptions
+
+        #region Trigger Boxes
+
+        private void OnMainHitBoxAreaEntered(Area2D area)
 		{
 			//GD.Print("Enemy Hit Entered");
 		}

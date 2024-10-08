@@ -8,7 +8,7 @@ namespace MobileEntities
 	public partial class BaseMobileEntity : CharacterBody2D
 	{
 		#region Entity Stats
-		protected Stats characterStats = new Stats(1);
+		protected Stats characterStats;
 		#endregion
 
 		#region MobileEntity Movement Helpers

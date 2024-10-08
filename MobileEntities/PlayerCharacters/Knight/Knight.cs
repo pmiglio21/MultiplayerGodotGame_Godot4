@@ -2,8 +2,6 @@ using Enums;
 using Godot;
 using MobileEntities.CharacterStats;
 using MobileEntities.PlayerCharacters.Knight;
-using MobileEntities.PlayerCharacters;
-using System;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
