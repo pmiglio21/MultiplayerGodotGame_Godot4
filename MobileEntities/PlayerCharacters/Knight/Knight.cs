@@ -13,7 +13,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected override void InitializeClassSpecificProperties()
 		{
-			characterStats = new Stats(10);
+			characterStats = new Stats(3);
 		}
 
 		protected override void RunAttack()

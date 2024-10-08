@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MobileEntities.CharacterStats;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
@@ -115,7 +116,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Ready()
 		{
-			InitializeClassSpecificProperties();
+            InitializeClassSpecificProperties();
 
 			#region Initializing Components
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -151,10 +152,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				isDead = true;
 
-				//REMOVE THIS LATER
-				//isControllable = false;
+				isControllable = false;
 
-				PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
+				GD.Print("DEAD");
+
+				//PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
 			}
 
 			if (isControllable)
@@ -399,12 +401,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
-				//if (!collisionShape.Disabled)
-				//{
-				//	GD.Print("Player Hurt Entered");
+				if (!collisionShape.Disabled)
+				{
+					GD.Print($"Player Hurt Entered - Health: {characterStats.Health.HealthAmount}");
 
-				//	characterStats.Health.HealthAmount -= 1;
-				//}
+					characterStats.Health.HealthAmount -= 1;
+				}
 			}
 			else if (area.IsInGroup("PortalArea"))
 			{
