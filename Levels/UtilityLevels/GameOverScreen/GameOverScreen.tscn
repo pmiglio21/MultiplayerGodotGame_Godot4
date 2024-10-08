@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqiql8cy5n54a"]
+
+[ext_resource type="Script" path="res://Levels/UtilityLevels/GameOverScreen/GameOverScreenManager.cs" id="1_oks3g"]
+
+[node name="GameOverScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oks3g")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 321.0
+offset_top = 94.0
+offset_right = 818.0
+offset_bottom = 215.0
+theme_override_font_sizes/normal_font_size = 80
+text = "GAME OVER"
+
+[node name="ToTitleScreenButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 278.0
+offset_right = 641.0
+offset_bottom = 340.0
+text = "To Title Screen"

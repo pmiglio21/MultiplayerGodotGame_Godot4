@@ -692,6 +692,13 @@ public partial class BaseOverworldLevel : Node
 
 	public override void _Process(double delta)
 	{
+		if (PlayerManager.ActivePlayers.All(x => x.IsDead))
+		{
+			PlayerManager.ActivePlayers.Clear();
+
+            GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
+        }
+
 		SpawnEnemies();
 	}
 

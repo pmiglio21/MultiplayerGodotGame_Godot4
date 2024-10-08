@@ -80,7 +80,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected bool finishedAttack = false;
 
-		protected bool isDead = false;
+		public bool IsDead = false;
 
 		protected bool isInPortal = false;
 
@@ -147,7 +147,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			if (characterStats.Health.HealthAmount <= 0)
 			{
-				isDead = true;
+                IsDead = true;
 
 				isControllable = false;
 

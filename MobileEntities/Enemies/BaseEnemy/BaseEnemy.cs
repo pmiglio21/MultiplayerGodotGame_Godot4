@@ -97,7 +97,7 @@ namespace MobileEntities.Enemies.Scripts
 
 		private void OnMainHurtBoxAreaEntered(Area2D area)
 		{
-			if (area.IsInGroup("PlayerProjectileTriggerBox") || area.IsInGroup("PlayerHitBox"))
+			if (area.IsInGroup("PlayerAttack") || area.IsInGroup("PlayerHitBox"))
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 

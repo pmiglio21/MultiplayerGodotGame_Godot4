@@ -4,7 +4,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tcfn5"]
 
-[node name="MageSpell" type="CharacterBody2D" groups=["PlayerAttack"]]
+[node name="MageSpell" type="CharacterBody2D"]
 script = ExtResource("1_ep6tg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
