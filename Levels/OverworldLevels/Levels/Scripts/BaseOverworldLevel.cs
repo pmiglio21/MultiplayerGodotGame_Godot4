@@ -699,7 +699,12 @@ public partial class BaseOverworldLevel : Node
             GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
         }
 
-		SpawnEnemies();
+        _enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
+
+		if (_enemyCount < _enemyCountMax)
+		{
+            SpawnEnemies();
+        }
 	}
 
 	#region Enemy Generation
