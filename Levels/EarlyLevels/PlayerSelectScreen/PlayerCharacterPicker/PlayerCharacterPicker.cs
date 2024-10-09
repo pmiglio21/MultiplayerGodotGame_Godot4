@@ -260,18 +260,9 @@ namespace Scenes.UI.PlayerSelectScene
 					startingTexture = ResourceLoader.Load(PlayerManager.AvailablePlayerImageOptions[0]) as Texture2D;
 				}
 
-				_isSelectionEnabled = IsSelectionEnabledForCurrentClass(startingTexture);
+                PickerSprite.Modulate = _defaultTone;
 
-				if (!_isSelectionEnabled)
-				{
-					PickerSprite.Modulate = _deniedTone;
-				}
-				else
-				{
-					PickerSprite.Modulate = _defaultTone;
-				}
-
-				PickerSprite.Texture = startingTexture;
+                PickerSprite.Texture = startingTexture;
 				#endregion
 
 				CurrentPickerIsActivated = true;
@@ -308,17 +299,8 @@ namespace Scenes.UI.PlayerSelectScene
 
 				_playerSelectionChangedRecently = true;
 
-				_isSelectionEnabled = IsSelectionEnabledForCurrentClass(newTexture);
-
-				if (!_isSelectionEnabled)
-				{
-					PickerSprite.Modulate = _deniedTone;
-				}
-				else
-				{
-					PickerSprite.Modulate = _defaultTone;
-				}
-			}
+                PickerSprite.Modulate = _defaultTone;
+            }
 			else if (Input.IsActionPressed($"MoveWest_{CurrentDeviceId}"))
 			{
 				int matchingIndex = PlayerManager.AvailablePlayerImageOptions.IndexOf(PickerSprite.Texture.ResourcePath);
@@ -340,23 +322,8 @@ namespace Scenes.UI.PlayerSelectScene
 
 				_playerSelectionChangedRecently = true;
 
-				_isSelectionEnabled = IsSelectionEnabledForCurrentClass(newTexture);
-
-				if (!_isSelectionEnabled)
-				{
-					PickerSprite.Modulate = _deniedTone;
-				}
-				else
-				{
-					PickerSprite.Modulate = _defaultTone;
-				}
-			}
-		}
-
-		//Checks if class has been selected by another active picker - meaning two players can't be the same character at once
-		private bool IsSelectionEnabledForCurrentClass(Texture2D currentTexture)
-		{
-			return !PlayerCharacterPickerManager.ActivePickers.Any(x => x.SelectionHasBeenMade && x.PickerSprite.Texture == currentTexture); ;
+                PickerSprite.Modulate = _defaultTone;
+            }
 		}
 
 		#region Signal Receptions

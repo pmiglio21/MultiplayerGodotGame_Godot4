@@ -3,24 +3,32 @@
 [ext_resource type="Script" path="res://Levels/EarlyLevels/PlayModeScreen/PlayModeScreenManager.cs" id="1_68c1k"]
 
 [node name="PlayModeScreen" type="GridContainer"]
-anchors_preset = -1
-anchor_left = -0.034
-anchor_top = -0.179
-anchor_right = -0.034
-anchor_bottom = -0.179
-offset_left = 48.168
-offset_top = 122.992
-offset_right = 1172.17
-offset_bottom = 757.992
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 columns = 2
 script = ExtResource("1_68c1k")
 
 [node name="LocalButton" type="Button" parent="."]
 custom_minimum_size = Vector2(560, 635)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Local"
 
 [node name="OnlineButton" type="Button" parent="."]
 custom_minimum_size = Vector2(560, 635)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Online"

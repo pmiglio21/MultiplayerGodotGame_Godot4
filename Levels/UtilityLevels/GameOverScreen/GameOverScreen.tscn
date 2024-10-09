@@ -4,26 +4,28 @@
 
 [node name="GameOverScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oks3g")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 321.0
-offset_top = 94.0
-offset_right = 818.0
-offset_bottom = 215.0
+offset_left = -255.0
+offset_top = -120.0
+offset_right = 242.0
+offset_bottom = 1.0
 theme_override_font_sizes/normal_font_size = 80
 text = "GAME OVER"
 
 [node name="ToTitleScreenButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 495.0
-offset_top = 278.0
-offset_right = 641.0
-offset_bottom = 340.0
+offset_left = -81.0
+offset_top = 64.0
+offset_right = 65.0
+offset_bottom = 126.0
 text = "To Title Screen"

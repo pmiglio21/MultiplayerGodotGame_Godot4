@@ -130,10 +130,8 @@ libraries = {
 }
 
 [node name="MainHurtBox" parent="." index="2"]
-visible = false
 position = Vector2(0, 2)
 scale = Vector2(-0.0548879, -1.31183)
 
 [node name="FootBox" parent="." index="5"]
-visible = false
 position = Vector2(0.5, 11)
