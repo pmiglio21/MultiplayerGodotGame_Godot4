@@ -41,7 +41,6 @@ namespace Levels.UtilityLevels
 			else
 			{
 				_continueButton.Hide();
-
 			}
 
 			_splitScreenOptionSelector.GetOptionButton().GrabFocus();
@@ -56,7 +55,7 @@ namespace Levels.UtilityLevels
 
 		private void GetButtonPressInput()
 		{
-            if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+            if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
             {
                 if (_returnButton.HasFocus())
                 {
@@ -80,15 +79,11 @@ namespace Levels.UtilityLevels
                         _returnButton.GrabFocus();
                     }
                 }
-
-                _inputTimer.Start();
             }
 
-            if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+            if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
             {
                 ReturnToPriorScene();
-
-                _inputTimer.Start();
             }
         }
 

@@ -21,17 +21,17 @@ namespace Levels.UtilityLevels
 		private const int _pauseTimerMax = 15;
 		private bool _pauseChangedRecently = false;
 
-        private Timer _inputTimer;
-        private Button _resumeGameButton;
+		private Timer _inputTimer;
+		private Button _resumeGameButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
 		private SettingsScreenManager _settingsScreen;
 
 		public override void _Ready()
-        {
-            _inputTimer = FindChild("InputTimer") as Timer;
-            _resumeGameButton = GetNode<Button>("ResumeGameButton");
+		{
+			_inputTimer = FindChild("InputTimer") as Timer;
+			_resumeGameButton = GetNode<Button>("ResumeGameButton");
 			_settingsButton = GetNode<Button>("SettingsButton");
 			_quitGameButton = GetNode<Button>("QuitGameButton");
 
@@ -84,7 +84,7 @@ namespace Levels.UtilityLevels
 			}
 			#endregion
 
-			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton)))
+			if ((UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton)))
 			{
 				if (_resumeGameButton.HasFocus())
 				{
@@ -109,16 +109,12 @@ namespace Levels.UtilityLevels
 					PlayerManager.ActivePlayers.Clear();
 					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 				}
+			}
 
-                _inputTimer.Start();
-            }
-
-			if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
 				_resumeGameButton.GrabFocus();
-
-                _inputTimer.Start();
-            }
+			}
 		}
 
 		private void GetNavigationInput()
@@ -134,8 +130,8 @@ namespace Levels.UtilityLevels
 					_quitGameButton.GrabFocus();
 				}
 
-                _inputTimer.Start();
-            }
+				_inputTimer.Start();
+			}
 			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
 			{
 				if (_quitGameButton.HasFocus())
@@ -147,8 +143,8 @@ namespace Levels.UtilityLevels
 					_resumeGameButton.GrabFocus();
 				}
 
-                _inputTimer.Start();
-            }
+				_inputTimer.Start();
+			}
 		}
 
 		public void GrabFocusOfTopButton()
