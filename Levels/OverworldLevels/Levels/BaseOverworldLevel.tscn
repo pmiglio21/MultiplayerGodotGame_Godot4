@@ -14,3 +14,7 @@ scale = Vector2(-239.394, -196.397)
 texture = ExtResource("2_3clom")
 
 [node name="BaseFloor" parent="." instance=ExtResource("3_iqnvh")]
+
+[node name="EnemyRespawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

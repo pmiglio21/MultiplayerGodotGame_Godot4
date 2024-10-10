@@ -1,3 +1,4 @@
+using Enums;
 using Globals;
 using Globals.PlayerManagement;
 using Godot;
@@ -46,9 +47,11 @@ public partial class BaseOverworldLevel : Node
 
 	#region Component Nodes
 
-	private Node _baseFloor = null;
+	private Node _baseFloor;
 
-	private TileMap _tileMap = null;
+	private TileMap _tileMap;
+
+	private Timer _enemyRespawnTimer;
 
 	#endregion
 
@@ -60,6 +63,9 @@ public partial class BaseOverworldLevel : Node
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
+		_enemyRespawnTimer = this.GetNode<Timer>("EnemyRespawnTimer");
+
+
 		LoadInFloorTiles();
 
 		_floorTileList.AddRange(_tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
@@ -67,6 +73,12 @@ public partial class BaseOverworldLevel : Node
 								 .ToList());
 
 		RunProceduralPathGeneration();
+
+		while (_enemyCount < _enemyCountMax)
+		{
+			SpawnEnemy();
+		}	 
+		_enemyRespawnTimer.Start();
 	}
 
 	#region Floor Generation
@@ -478,61 +490,61 @@ public partial class BaseOverworldLevel : Node
 
 	private void PaintInteriorWalls()
 	{
-        foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
-        {
-            if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
-            {
-                var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+		foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
+		{
+			if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
+			{
+				var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
-                var overviewIndex = _rng.RandiRange(0, 3);
+				var overviewIndex = _rng.RandiRange(0, 3);
 
-                Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
-                interiorBlockSprite.Texture = newTexture;
+				Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
+				interiorBlockSprite.Texture = newTexture;
 
-                int northBlockIndex = -1;
-                TileMapSpace northBlock = null;
+				int northBlockIndex = -1;
+				TileMapSpace northBlock = null;
 
-                //if current index isn't the very top
-                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
-                {
-                    northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
+				//if current index isn't the very top
+				if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
+					_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
+				{
+					northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
 
-                    northBlock = _existingFloorGridSpaces[northBlockIndex];
-                }
+					northBlock = _existingFloorGridSpaces[northBlockIndex];
+				}
 
-                int southBlockIndex = -1;
-                TileMapSpace southBlock = null;
+				int southBlockIndex = -1;
+				TileMapSpace southBlock = null;
 
-                //if current index isn't the very bottom
-                if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && tileMapSpace.ExistingTileMapSpacesIndex != _existingFloorGridSpaces.Count - 1 &&
-                    _maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
-                {
-                    southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
+				//if current index isn't the very bottom
+				if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && tileMapSpace.ExistingTileMapSpacesIndex != _existingFloorGridSpaces.Count - 1 &&
+					_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
+				{
+					southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
 
-                    southBlock = _existingFloorGridSpaces[southBlockIndex];
-                }
+					southBlock = _existingFloorGridSpaces[southBlockIndex];
+				}
 
-                //Block opens to at least the north
-                if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                {
-                    var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+				//Block opens to at least the north
+				if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
+				{
+					var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
 
-                    collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                    collisionShape.Position = new Vector2(0, 8);
-                }
+					collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
+					collisionShape.Position = new Vector2(0, 8);
+				}
 
-                //Block opens to at least the south
-                if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                {
-                    var textureIndex = _rng.RandiRange(0, 5);
+				//Block opens to at least the south
+				if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
+				{
+					var textureIndex = _rng.RandiRange(0, 5);
 
-                    Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
-                    interiorBlockSprite.Texture = newTexture2;
-                }
-            }
-        }
-    }
+					Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
+					interiorBlockSprite.Texture = newTexture2;
+				}
+			}
+		}
+	}
 
 	private bool IsBlockInsideBorders(Vector2I vector)
 	{
@@ -696,34 +708,50 @@ public partial class BaseOverworldLevel : Node
 		{
 			PlayerManager.ActivePlayers.Clear();
 
-            GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
-        }
+			GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
+		}
 
-        _enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
+		_enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
 
-		if (_enemyCount < _enemyCountMax)
-		{
-            SpawnEnemies();
-        }
+		SpawnEnemies();
 	}
 
 	#region Enemy Generation
 
+	private List<string> _enemyList = new List<string>()
+	{
+		EnemyType.Slime.ToString()
+	};
+
 	private void SpawnEnemies()
 	{
-		while (_enemyCount < _enemyCountMax)
+		if (_enemyRespawnTimer.IsStopped() &&_enemyCount < _enemyCountMax)
 		{
-			var tempEnemy = GD.Load<PackedScene>(EnemyScenePaths.SlimeScenePath).Instantiate();
+			int availableEnemyCount = _enemyCountMax - _enemyCount;
 
-			var enemy = tempEnemy as BaseEnemy;
-			AddChild(enemy);
+			int chanceOfSpawning = _rng.RandiRange(1, 100) + availableEnemyCount * 10;
 
-			var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
+			if (chanceOfSpawning > 80)
+			{
+				SpawnEnemy();
+			}
 
-			enemy.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
-
-			_enemyCount++;
+			_enemyRespawnTimer.Start();
 		}
+	}
+
+	private void SpawnEnemy()
+	{
+		var tempEnemy = GD.Load<PackedScene>(EnemyScenePaths.SlimeScenePath).Instantiate();
+
+		var enemy = tempEnemy as BaseEnemy;
+		AddChild(enemy);
+
+		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
+
+		enemy.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+
+		_enemyCount++;
 	}
 
 	#endregion

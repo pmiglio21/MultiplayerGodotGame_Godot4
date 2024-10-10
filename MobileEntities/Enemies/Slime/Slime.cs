@@ -22,14 +22,14 @@ namespace MobileEntities.Enemies.Scripts
 			{
 				var direction = (closestPlayer.GlobalPosition - GlobalPosition).Normalized();
 
-                Velocity = direction * 5;
-            }
+				Velocity = direction * 5;
+			}
 			else
 			{
-                Velocity = Vector2.Zero;
-            }
+				Velocity = Vector2.Zero;
+			}
 
-            MoveAndSlide();
-        }
+			MoveAndSlide();
+		}
 	}
 }

@@ -113,7 +113,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Ready()
 		{
-            InitializeClassSpecificProperties();
+			InitializeClassSpecificProperties();
 
 			#region Initializing Components
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -147,7 +147,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			if (characterStats.Health.HealthAmount <= 0)
 			{
-                IsDead = true;
+				IsDead = true;
 
 				isControllable = false;
 

@@ -60,8 +60,8 @@ namespace MobileEntities.Enemies.Scripts
 
 		protected virtual void MoveEnemy() { }
 
-        protected BaseCharacter FindClosestPlayer()
-        {
+		protected BaseCharacter FindClosestPlayer()
+		{
 			BaseCharacter closestPlayer = null;
 			float minDistance = float.MaxValue; 
 
@@ -69,21 +69,21 @@ namespace MobileEntities.Enemies.Scripts
 			{
 				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
 
-                if (newDistance <= 200 && newDistance < minDistance)
+				if (newDistance <= 200 && newDistance < minDistance)
 				{
-                    closestPlayer = player;
+					closestPlayer = player;
 					minDistance = newDistance;
-                }
+				}
 			}
 
 			return closestPlayer;
-        }
+		}
 
-        #region	Signal Receptions
+		#region	Signal Receptions
 
-        #region Trigger Boxes
+		#region Trigger Boxes
 
-        private void OnMainHitBoxAreaEntered(Area2D area)
+		private void OnMainHitBoxAreaEntered(Area2D area)
 		{
 			//GD.Print("Enemy Hit Entered");
 		}
@@ -117,8 +117,8 @@ namespace MobileEntities.Enemies.Scripts
 						}
 						else
 						{
-                            gracePeriodTimer.Start();
-                        }
+							gracePeriodTimer.Start();
+						}
 					}
 				}
 			}
