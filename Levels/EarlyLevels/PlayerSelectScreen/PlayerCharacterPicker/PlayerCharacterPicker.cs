@@ -9,8 +9,8 @@ namespace Scenes.UI.PlayerSelectScene
 	public partial class PlayerCharacterPicker : Node
 	{
 		#region Signals
-		[Signal]
-		public delegate void PlayerSelectionOccurredEventHandler(Sprite2D pickerSprite, bool selectionHasBeenMade);
+		//[Signal]
+		//public delegate void PlayerSelectionOccurredEventHandler(Sprite2D pickerSprite, bool selectionHasBeenMade);
 
 		[Signal]
 		public delegate void FinishSelectionProcessStartedEventHandler();
@@ -57,8 +57,6 @@ namespace Scenes.UI.PlayerSelectScene
 		private Color _defaultTone = new Color(1, 1, 1);
 
 		private Color _selectedTone = new Color(.5f, 1f, .5f);
-
-		private Color _deniedTone = new Color(.25f, .25f, .25f);
 
 		#endregion
 
@@ -144,7 +142,7 @@ namespace Scenes.UI.PlayerSelectScene
 							SelectionHasBeenMade = true;
 							PickerSprite.Modulate = _selectedTone;
 
-							EmitSignal(SignalName.PlayerSelectionOccurred, PickerSprite, SelectionHasBeenMade);
+							//EmitSignal(SignalName.PlayerSelectionOccurred, PickerSprite, SelectionHasBeenMade);
 						}
 					}
 
@@ -158,7 +156,7 @@ namespace Scenes.UI.PlayerSelectScene
 							SelectionHasBeenMade = false;
 							PickerSprite.Modulate = _defaultTone;
 
-							EmitSignal(SignalName.PlayerSelectionOccurred, PickerSprite, SelectionHasBeenMade);
+							//EmitSignal(SignalName.PlayerSelectionOccurred, PickerSprite, SelectionHasBeenMade);
 						}
 					}
 
@@ -325,36 +323,5 @@ namespace Scenes.UI.PlayerSelectScene
                 PickerSprite.Modulate = _defaultTone;
             }
 		}
-
-		#region Signal Receptions
-		//Receiving this signal from the other 3 pickers (NOT itself)
-		//This event allows players to pick only unique classes.
-		//TODO: I feel like this could certainly be more organized
-		private void OnPlayerCharacterPicker_PlayerSelectionOccurred(Sprite2D pickerSprite, bool selectionHasBeenMade)
-		{
-			//Changes player selection enabled/disabled depending on what other pickers have chosen.
-			if (CurrentPickerIsActivated && !SelectionHasBeenMade && pickerSprite.Texture == PickerSprite.Texture)
-			{
-				if (selectionHasBeenMade)
-				{
-					_isSelectionEnabled = (pickerSprite.Texture != PickerSprite.Texture);
-				}
-				else
-				{
-					_isSelectionEnabled = (pickerSprite.Texture == PickerSprite.Texture);
-				}
-				
-				if (_isSelectionEnabled && !SelectionHasBeenMade)
-				{
-					PickerSprite.Modulate = _defaultTone;
-				}
-				else if (!_isSelectionEnabled && !SelectionHasBeenMade)
-				{
-					PickerSprite.Modulate = _deniedTone;
-				}
-			}
-		}
-
-		#endregion
 	}
 }

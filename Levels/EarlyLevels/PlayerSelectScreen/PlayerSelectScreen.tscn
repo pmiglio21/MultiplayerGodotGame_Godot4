@@ -48,18 +48,6 @@ offset_right = -527.0
 offset_bottom = -299.0
 
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker0" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker1" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker1" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker2" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker2" to="PlayerCharacterPicker3" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker3" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker0" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker1" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
-[connection signal="PlayerSelectionOccurred" from="PlayerCharacterPicker3" to="PlayerCharacterPicker2" method="OnPlayerCharacterPicker_PlayerSelectionOccurred"]
