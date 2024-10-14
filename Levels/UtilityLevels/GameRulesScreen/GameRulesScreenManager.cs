@@ -5,6 +5,7 @@ using Globals.PlayerManagement;
 using Godot;
 using Levels.OverworldLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
+using Models;
 using Scenes.UI.PlayerSelectScene;
 using System;
 using System.ComponentModel;
@@ -14,6 +15,8 @@ namespace Levels.UtilityLevels
 {
 	public partial class GameRulesScreenManager : Control
 	{
+        public GameRules CurrentGameRules = new GameRules();
+
 		protected PauseScreenManager pauseScreen;
 
         private Timer _inputTimer;
@@ -164,7 +167,7 @@ namespace Levels.UtilityLevels
 
 				if (enumDescription != "None" && enumDescription == _splitScreenOptionSelector.GetOptionButton().Text)
 				{
-					CurrentSaveGameRules.CurrentSplitScreenMergingType = (SplitScreenMergingType)enumValue;
+                    CurrentGameRules.CurrentSplitScreenMergingType = (SplitScreenMergingType)enumValue;
 				}
 			}
 
@@ -174,11 +177,11 @@ namespace Levels.UtilityLevels
 
 				if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().Text)
 				{
-					CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
+					CurrentGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
 				}
 			}
 
-			CurrentSaveGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
+			CurrentGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
 
 			foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
 			{
@@ -186,7 +189,7 @@ namespace Levels.UtilityLevels
 
 				if (enumDescription != "None" && enumDescription == _levelSizeSelector.GetOptionButton().Text)
 				{
-					CurrentSaveGameRules.CurrentLevelSize = (LevelSize)enumValue;
+					CurrentGameRules.CurrentLevelSize = (LevelSize)enumValue;
 				}
 			}
 		}

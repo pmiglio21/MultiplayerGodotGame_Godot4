@@ -9,6 +9,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 {
 	public partial class SplitScreenManager : GridContainer
 	{
+		private LevelHolder _parentLevelHolder;
 		private List<Camera2D> _subViewportCameras = new List<Camera2D>();
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
 		private List<SubViewportContainer> _availableSubViewportContainers = new List<SubViewportContainer>();
@@ -17,19 +18,21 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		public override void _Ready()
 		{
+			_parentLevelHolder = GetParent() as LevelHolder;
+
 			_availableSubViewports = GetSubViewports();
 			_availableSubViewportContainers = GetSubViewportContainers();
 
 			SetSubViewportWorlds();
 
 			//Lets subviewports scale as the window changes size
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
 				GetTree().Root.SizeChanged += AdjustScreenPerPlayerCameraView;
 			}
 
 			//Call it on its own to set cameras initially
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
 				(PlayerManager.ActivePlayers.Count == 1))
 			{
 				SetCamerasToPlayers();
@@ -44,7 +47,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			{
 				//Do this to load in scene and adjust the screen size right away.
 				//Root.SizeChanged event doesn't happen after the scene loads, so we have to adjust the screen ourselves at the start of the scene.
-				if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+				if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 				{
 					SetCamerasToPlayers();
 
@@ -95,7 +98,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void RunScreenAdjustmentProcess()
 		{
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
 				AdjustScreenPerPlayerCameraView();
 			}

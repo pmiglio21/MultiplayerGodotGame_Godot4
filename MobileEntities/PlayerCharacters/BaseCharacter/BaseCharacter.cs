@@ -12,8 +12,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 {
 	public partial class BaseCharacter : BaseMobileEntity
 	{
-		#region Components
-		[Export]
+        private LevelHolder _parentLevelHolder;
+
+        #region Components
+        [Export]
 		protected PlayableCharacterClass characterClass;
 
 		protected AnimationPlayer animationPlayer;
@@ -113,7 +115,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Ready()
 		{
-			InitializeClassSpecificProperties();
+			_parentLevelHolder = GetNode<LevelHolder>("LevelHolder");
+
+
+            InitializeClassSpecificProperties();
 
 			#region Initializing Components
 			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -206,7 +211,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
 			   (PlayerManager.ActivePlayers.Count == 1))
 			{
 				playerCamera.GlobalPosition = this.GlobalPosition;

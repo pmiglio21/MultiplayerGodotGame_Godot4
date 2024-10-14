@@ -3,28 +3,30 @@ using Globals.PlayerManagement;
 using Godot;
 using Levels.UtilityLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
+using Models;
 using System;
 using System.Linq;
-using static Godot.Window;
 
 public partial class LevelHolder : Node
 {
+	public GameRules CurrentGameRules = new GameRules();
+
 	private int _levelCounter;
 
 	public override void _Ready()
 	{
-        _levelCounter = 0;
+		_levelCounter = 0;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (CurrentSaveGameRules.NumberOfLevels != GlobalConstants.Infinity && _levelCounter < int.Parse(CurrentSaveGameRules.NumberOfLevels))
+		if (CurrentGameRules.NumberOfLevels != GlobalConstants.Infinity && _levelCounter < int.Parse(CurrentGameRules.NumberOfLevels))
 		{
 			if (PlayerManager.ActivePlayers.All(x => x.IsWaitingForNextLevel))
 			{
 				_levelCounter++;
 
-				if (_levelCounter != int.Parse(CurrentSaveGameRules.NumberOfLevels))
+				if (_levelCounter != int.Parse(CurrentGameRules.NumberOfLevels))
 				{
 					ResetSplitScreenManager();
 				}
@@ -35,7 +37,7 @@ public partial class LevelHolder : Node
 				}
 			}
 		}
-		else if (CurrentSaveGameRules.NumberOfLevels == GlobalConstants.Infinity)
+		else if (CurrentGameRules.NumberOfLevels == GlobalConstants.Infinity)
 		{
 			if (PlayerManager.ActivePlayers.All(x => x.IsWaitingForNextLevel))
 			{

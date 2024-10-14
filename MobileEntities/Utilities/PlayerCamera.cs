@@ -9,7 +9,9 @@ namespace Levels.OverworldLevels.Utilities
 {
 	public partial class PlayerCamera : Camera2D
 	{
-		private CharacterBody2D _parentPlayer;
+        private LevelHolder _parentLevelHolder;
+
+        private CharacterBody2D _parentPlayer;
 		private List<StaticBody2D> _cameraWalls = new List<StaticBody2D>();
 		private List<Area2D> _wallAreas = new List<Area2D>();
 		private bool _isCameraSetBetweenPlayers = false;
@@ -17,13 +19,15 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Ready()
 		{
-			_parentPlayer = GetParent() as CharacterBody2D;
+			_parentLevelHolder = GetNode<LevelHolder>("LevelHolder");
+
+            _parentPlayer = GetParent() as CharacterBody2D;
 
 			GetCameraWalls();
 
 			GetWallAreas();
 
-			if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 			{
 				SetCameraToPlayerPositionMidpoint(1, true);
 			}
@@ -38,11 +42,11 @@ namespace Levels.OverworldLevels.Utilities
 
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
-				if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
+				if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
 				{
 					RunSharedScreenAdjustedProcess();
 				}
-				else if (CurrentSaveGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+				else if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 				{
 					RunSharedScreenLockedProcess(delta);
 				}
@@ -56,7 +60,7 @@ namespace Levels.OverworldLevels.Utilities
 				_cameraWalls.Add(cameraWall as StaticBody2D);
 			}
 
-			if (this.Name != "PlayerCamera0" || CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			if (this.Name != "PlayerCamera0" || _parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
 			{
 				if (_cameraWalls != null)
 				{
@@ -77,7 +81,7 @@ namespace Levels.OverworldLevels.Utilities
 				_wallAreas.Add(wallArea as Area2D);
 			}
 
-			if (this.Name != "PlayerCamera0" || CurrentSaveGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			if (this.Name != "PlayerCamera0" || _parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
 			{
 				if (_wallAreas != null)
 				{

@@ -14,6 +14,8 @@ using MobileEntities.Enemies.Scripts;
 
 public partial class BaseOverworldLevel : Node
 {
+	private LevelHolder _parentLevelHolder;
+
 	#region TileMap Level Generation
 
 	private List<Vector2I> _floorTileList = new List<Vector2I>();
@@ -59,7 +61,9 @@ public partial class BaseOverworldLevel : Node
 	{
 		_rng.Randomize();
 
-		_baseFloor = this.GetNode<Node>("BaseFloor");
+        _parentLevelHolder = this.GetNode<LevelHolder>("LevelHolder");
+
+        _baseFloor = this.GetNode<Node>("BaseFloor");
 
 		_tileMap = _baseFloor.GetNode<TileMap>("TileMap");
 
@@ -85,19 +89,19 @@ public partial class BaseOverworldLevel : Node
 
 	private void LoadInFloorTiles()
 	{
-		if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Small)
+		if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
 		{
 			_maxNumberOfTiles = 20;
 		}
-		else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Medium)
+		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Medium)
 		{
 			_maxNumberOfTiles = 40;
 		}
-		else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Large)
+		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Large)
 		{
 			_maxNumberOfTiles = 60;
 		}
-		else if (CurrentSaveGameRules.CurrentLevelSize == LevelSize.Varied)
+		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Varied)
 		{
 			var floorSizeOptions = new List<int>() { 20, 40, 60 };
 
@@ -131,7 +135,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void RunProceduralPathGeneration()
 	{
-		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+		if (_parentLevelHolder.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			GenerateSingleSpawnPoints();
 		}
@@ -179,7 +183,7 @@ public partial class BaseOverworldLevel : Node
 		#region Spawn Key Objects
 		GenerateKeyMapItems();
 
-		if (CurrentSaveGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+		if (_parentLevelHolder.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			SpawnPlayersClose();
 		}
@@ -704,7 +708,7 @@ public partial class BaseOverworldLevel : Node
 
 	public override void _Process(double delta)
 	{
-		if (PlayerManager.ActivePlayers.All(x => x.IsDead))
+		if (PlayerManager.ActivePlayers.Count > 0 && PlayerManager.ActivePlayers.All(x => x.IsDead))
 		{
 			PlayerManager.ActivePlayers.Clear();
 
