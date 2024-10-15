@@ -1,20 +1,34 @@
 using Enums;
 using Globals;
 using Godot;
+using Root;
 
 namespace Levels.EarlyLevels
 {
 	public partial class TitleScreenManager: Node
 	{
+		private RootSceneSwapper _rootSceneSwapper;
+
 		private Timer _inputTimer;
 		private Button _playButton;
 		private Button _gameRulesButton;
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
-		public override void _Ready()
+        [Signal]
+        public delegate void GoToPlayModeScreenEventHandler();
+
+        [Signal]
+        public delegate void GoToGameRulesScreenEventHandler();
+
+        [Signal]
+        public delegate void GoToSettingsScreenEventHandler();
+
+        public override void _Ready()
 		{
-			_inputTimer = FindChild("InputTimer") as Timer;
+			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+            _inputTimer = FindChild("InputTimer") as Timer;
 			_playButton = FindChild("PlayButton") as Button;
 			_gameRulesButton = FindChild("GameRulesButton") as Button;
 			_settingsButton = FindChild("SettingsButton") as Button;
@@ -36,16 +50,17 @@ namespace Levels.EarlyLevels
             {
                 if (_playButton.HasFocus())
                 {
-                    GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
+                    EmitSignal(SignalName.GoToPlayModeScreen);
                 }
                 else if (_gameRulesButton.HasFocus())
                 {
-                    GlobalGameComponents.PriorSceneName = LevelScenePaths.TitleScreenPath;
-                    GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
+                    _rootSceneSwapper.PriorSceneName = LevelScenePaths.TitleScreenPath;
+
+                    EmitSignal(SignalName.GoToGameRulesScreen);
                 }
                 else if (_settingsButton.HasFocus())
                 {
-                    GetTree().ChangeSceneToFile(LevelScenePaths.SettingsScreenPath);
+                    EmitSignal(SignalName.GoToSettingsScreen);
                 }
                 else if (_quitGameButton.HasFocus())
                 {

@@ -50,6 +50,7 @@ public partial class PlayModeScreenManager : GridContainer
             if (_localButton.HasFocus())
             {
                 _onlineButton.GrabFocus();
+                GD.Print("Reached online");
             }
         }
 
@@ -58,6 +59,7 @@ public partial class PlayModeScreenManager : GridContainer
             if (_onlineButton.HasFocus())
             {
                 _localButton.GrabFocus();
+                GD.Print("Reached local");
             }
         }
     }

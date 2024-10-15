@@ -5,7 +5,7 @@
 [sub_resource type="Theme" id="Theme_ijh7m"]
 default_font_size = 30
 
-[node name="RootControl" type="Control"]
+[node name="TitleScreenRoot" type="Control" groups=["TitleScreenManager"]]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
