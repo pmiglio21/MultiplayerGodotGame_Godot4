@@ -27,7 +27,10 @@ namespace Levels.UtilityLevels
 		private Button _returnButton;
 		private Button _continueButton;
 
-		public override void _Ready()
+        [Signal]
+        public delegate void GoToTitleScreenEventHandler();
+
+        public override void _Ready()
 		{
             _inputTimer = FindChild("InputTimer") as Timer;
             _splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
@@ -151,12 +154,14 @@ namespace Levels.UtilityLevels
 
 		private void ReturnToPriorScene()
 		{
-			SaveOutGameRules();
+            SaveOutGameRules();
 
-			PlayerManager.ActivePlayers.Clear();
+            PlayerManager.ActivePlayers.Clear();
 			PlayerCharacterPickerManager.ActivePickers.Clear();
 
-			GetTree().ChangeSceneToFile(GlobalGameComponents.PriorSceneName);
+            EmitSignal(SignalName.GoToTitleScreen);
+
+			//GetTree().ChangeSceneToFile(GlobalGameComponents.PriorSceneName);
 		}
 
 		private void SaveOutGameRules()

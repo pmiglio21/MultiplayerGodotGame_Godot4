@@ -1,15 +1,23 @@
 using Enums;
 using Globals;
 using Godot;
+using Root;
 using System;
 
 public partial class PlayModeScreenManager : GridContainer
 {
+    private RootSceneSwapper _rootSceneSwapper;
+
     private Button _localButton;
     private Button _onlineButton;
 
+    [Signal]
+    public delegate void GoToTitleScreenEventHandler();
+
     public override void _Ready()
     {
+        _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
         _localButton = FindChild("LocalButton") as Button;
         _onlineButton = FindChild("OnlineButton") as Button;
 
@@ -38,7 +46,8 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
-                GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
+                EmitSignal(SignalName.GoToTitleScreen);
+                //GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
             }
         }
     }

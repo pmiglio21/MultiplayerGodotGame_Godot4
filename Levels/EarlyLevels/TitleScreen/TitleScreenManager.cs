@@ -106,5 +106,10 @@ namespace Levels.EarlyLevels
 				_inputTimer.Start();
 			}
 		}
-	}
+
+        public void GrabFocusOfTopButton()
+        {
+            _playButton.GrabFocus();
+        }
+    }
 }

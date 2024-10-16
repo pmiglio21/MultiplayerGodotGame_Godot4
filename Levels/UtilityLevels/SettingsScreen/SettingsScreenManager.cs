@@ -18,7 +18,10 @@ namespace Levels.UtilityLevels
 
 		private Button _returnButton;
 
-		public override void _Ready()
+        [Signal]
+        public delegate void GoToTitleScreenEventHandler();
+
+        public override void _Ready()
 		{
 			_returnButton = FindChild("ReturnButton") as Button;
 
@@ -133,7 +136,8 @@ namespace Levels.UtilityLevels
 			}
 			else
 			{
-				GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
+                EmitSignal(SignalName.GoToTitleScreen);
+                //GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ namespace Root
 
         #region Go-To-Screens Methods
 
-        #region Go To Play Mode Screen
+        #region Play Mode Screen
 
         private void OnTitleScreenRootGoToPlayModeScreen()
         {
@@ -45,14 +45,21 @@ namespace Root
         {
             _playModeScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayModeScreenPath).Instantiate() as PlayModeScreenManager;
 
+            _playModeScreenManager.GoToTitleScreen += OnPlayModeScreenGoToTitleScreen;
+
             _rootGuiControl.AddChild(_playModeScreenManager);
 
             _rootGuiControl.RemoveChild(_titleScreenManager);
         }
 
+        public void OnPlayModeScreenGoToTitleScreen()
+        {
+            ChangeSceneToTitleScreen(_playModeScreenManager);
+        }
+
         #endregion
 
-        #region Go To Game Rules Screen
+        #region Game Rules Screen
 
         private void OnTitleScreenRootGoToGameRulesScreen()
         {
@@ -63,14 +70,21 @@ namespace Root
         {
             _gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
 
+            _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
+
             _rootGuiControl.AddChild(_gameRulesScreenManager);
 
             _rootGuiControl.RemoveChild(_titleScreenManager);
         }
 
+        public void OnGameRulesScreenGoToTitleScreen()
+        {
+            ChangeSceneToTitleScreen(_gameRulesScreenManager);
+        }
+
         #endregion
 
-        #region Go To Settings Screen
+        #region Settings Screen
 
         private void OnTitleScreenRootGoToSettingsScreen()
         {
@@ -81,12 +95,28 @@ namespace Root
         {
             _settingsScreenManager = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath).Instantiate() as SettingsScreenManager;
 
+            _settingsScreenManager.GoToTitleScreen += OnSettingsScreenGoToTitleScreen;
+
             _rootGuiControl.AddChild(_settingsScreenManager);
 
             _rootGuiControl.RemoveChild(_titleScreenManager);
         }
 
+        public void OnSettingsScreenGoToTitleScreen()
+        {
+            ChangeSceneToTitleScreen(_settingsScreenManager);
+        }
+
         #endregion
+
+        private void ChangeSceneToTitleScreen(Control currentUiScene)
+        {
+            _rootGuiControl.AddChild(_titleScreenManager);
+
+            _rootGuiControl.RemoveChild(currentUiScene);
+
+            _titleScreenManager.GrabFocusOfTopButton();
+        }
 
         #endregion
     }
