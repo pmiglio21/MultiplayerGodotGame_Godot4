@@ -11,6 +11,7 @@ namespace Root
         #region "Global" Properties
 
         public ScreenNames PriorSceneName;
+        //public static string Infinity = "inf";
 
         #endregion
 

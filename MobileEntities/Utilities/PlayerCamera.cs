@@ -37,9 +37,6 @@ namespace Levels.OverworldLevels.Utilities
 		{
 			//GD.Print($"Is camera set at midpoint yet? {_isCameraSetBetweenPlayers}");
 
-			//GD.Print($"Viewport 0 Rect: {GlobalGameComponents.AvailableSubViewports[0].GetVisibleRect()}");
-			//GD.Print($"Viewport 1 Rect: {GlobalGameComponents.AvailableSubViewports[1].GetVisibleRect()}");
-
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
 				if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
