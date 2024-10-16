@@ -2,13 +2,16 @@ using Enums;
 using Globals;
 using Godot;
 using Levels.OverworldLevels;
+using Root;
 using System.Linq;
 
 namespace Levels.UtilityLevels
 {
 	public partial class SettingsScreenManager : Control
 	{
-		public bool IsSettingsScreenBeingShown = false;
+        private RootSceneSwapper _rootSceneSwapper;
+
+        public bool IsSettingsScreenBeingShown = false;
 
 		private int _inputTimer = 0;
 		private const int _inputTimerMax = 15;
@@ -23,7 +26,9 @@ namespace Levels.UtilityLevels
 
         public override void _Ready()
 		{
-			_returnButton = FindChild("ReturnButton") as Button;
+            _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+            _returnButton = FindChild("ReturnButton") as Button;
 
 			GetPauseScreen();
 
@@ -134,10 +139,11 @@ namespace Levels.UtilityLevels
 
 				pauseScreen.GrabFocusOfSettingsButton();
 			}
-			else
+            else
 			{
+                _rootSceneSwapper.PriorSceneName = ScreenNames.Settings;
+
                 EmitSignal(SignalName.GoToTitleScreen);
-                //GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
 			}
 		}
 	}

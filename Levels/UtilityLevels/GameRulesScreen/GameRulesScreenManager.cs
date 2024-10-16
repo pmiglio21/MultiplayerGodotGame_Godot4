@@ -6,6 +6,7 @@ using Godot;
 using Levels.OverworldLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using Models;
+using Root;
 using Scenes.UI.PlayerSelectScene;
 using System;
 using System.ComponentModel;
@@ -15,9 +16,11 @@ namespace Levels.UtilityLevels
 {
 	public partial class GameRulesScreenManager : Control
 	{
+        private RootSceneSwapper _rootSceneSwapper;
+
         public GameRules CurrentGameRules = new GameRules();
 
-		protected PauseScreenManager pauseScreen;
+        #region Components
 
         private Timer _inputTimer;
         private OptionSelector _splitScreenOptionSelector;
@@ -27,11 +30,22 @@ namespace Levels.UtilityLevels
 		private Button _returnButton;
 		private Button _continueButton;
 
+        #endregion
+
+        #region Signals
+
         [Signal]
         public delegate void GoToTitleScreenEventHandler();
 
+        [Signal]
+        public delegate void GoToPlayModeScreenEventHandler();
+
+        #endregion
+
         public override void _Ready()
 		{
+            _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
             _inputTimer = FindChild("InputTimer") as Timer;
             _splitScreenOptionSelector = GetNode<OptionSelector>("SplitScreenOptionSelector");
 			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
@@ -40,7 +54,7 @@ namespace Levels.UtilityLevels
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
-			if (GlobalGameComponents.PriorSceneName == LevelScenePaths.PlayModeScreenPath)
+			if (_rootSceneSwapper.PriorSceneName == ScreenNames.PlayMode)
 			{
 				_continueButton.Show();
 			}
@@ -159,9 +173,14 @@ namespace Levels.UtilityLevels
             PlayerManager.ActivePlayers.Clear();
 			PlayerCharacterPickerManager.ActivePickers.Clear();
 
-            EmitSignal(SignalName.GoToTitleScreen);
-
-			//GetTree().ChangeSceneToFile(GlobalGameComponents.PriorSceneName);
+            if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
+            {
+                EmitSignal(SignalName.GoToTitleScreen);
+            }
+            else if (_rootSceneSwapper.PriorSceneName == ScreenNames.PlayMode)
+            {
+                EmitSignal(SignalName.GoToPlayModeScreen);
+            }
 		}
 
 		private void SaveOutGameRules()

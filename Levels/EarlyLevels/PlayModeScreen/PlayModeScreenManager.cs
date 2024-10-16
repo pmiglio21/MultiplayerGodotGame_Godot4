@@ -8,11 +8,22 @@ public partial class PlayModeScreenManager : GridContainer
 {
     private RootSceneSwapper _rootSceneSwapper;
 
+    #region Components
+
     private Button _localButton;
     private Button _onlineButton;
 
+    #endregion
+
+    #region Signals
+
     [Signal]
     public delegate void GoToTitleScreenEventHandler();
+
+    [Signal]
+    public delegate void GoToGameRulesScreenEventHandler();
+
+    #endregion
 
     public override void _Ready()
     {
@@ -37,18 +48,17 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
-                GlobalGameComponents.PriorSceneName = LevelScenePaths.PlayModeScreenPath;
-                GetTree().ChangeSceneToFile(LevelScenePaths.GameRulesScreenPath);
+                _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
+
+                EmitSignal(SignalName.GoToGameRulesScreen);
             }
         }
 
-        if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+        if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
         {
-            if (_localButton.HasFocus())
-            {
-                EmitSignal(SignalName.GoToTitleScreen);
-                //GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
-            }
+            _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
+
+            EmitSignal(SignalName.GoToTitleScreen);
         }
     }
 
@@ -59,7 +69,6 @@ public partial class PlayModeScreenManager : GridContainer
             if (_localButton.HasFocus())
             {
                 _onlineButton.GrabFocus();
-                GD.Print("Reached online");
             }
         }
 
@@ -68,8 +77,12 @@ public partial class PlayModeScreenManager : GridContainer
             if (_onlineButton.HasFocus())
             {
                 _localButton.GrabFocus();
-                GD.Print("Reached local");
             }
         }
+    }
+
+    public void GrabFocusOfFirstButton()
+    {
+        _localButton.GrabFocus();
     }
 }

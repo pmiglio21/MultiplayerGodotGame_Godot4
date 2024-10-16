@@ -1,4 +1,5 @@
-﻿using Globals;
+﻿using Enums;
+using Globals;
 using Godot;
 using Levels.UtilityLevels;
 using Levels.EarlyLevels;
@@ -9,7 +10,7 @@ namespace Root
     {
         #region "Global" Properties
 
-        public string PriorSceneName;
+        public ScreenNames PriorSceneName;
 
         #endregion
 
@@ -34,73 +35,54 @@ namespace Root
 
         #region Go-To-Screens Methods
 
-        #region Play Mode Screen
+        #region From Title Screen
 
         private void OnTitleScreenRootGoToPlayModeScreen()
         {
-            ChangeSceneToPlayModeScreen();
+            ChangeSceneToPlayModeScreen(_titleScreenManager);
         }
-
-        private void ChangeSceneToPlayModeScreen()
-        {
-            _playModeScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayModeScreenPath).Instantiate() as PlayModeScreenManager;
-
-            _playModeScreenManager.GoToTitleScreen += OnPlayModeScreenGoToTitleScreen;
-
-            _rootGuiControl.AddChild(_playModeScreenManager);
-
-            _rootGuiControl.RemoveChild(_titleScreenManager);
-        }
-
-        public void OnPlayModeScreenGoToTitleScreen()
-        {
-            ChangeSceneToTitleScreen(_playModeScreenManager);
-        }
-
-        #endregion
-
-        #region Game Rules Screen
 
         private void OnTitleScreenRootGoToGameRulesScreen()
         {
-            ChangeSceneToGameRulesScreen();
+            ChangeSceneToGameRulesScreen(_titleScreenManager);
         }
-
-        private void ChangeSceneToGameRulesScreen()
-        {
-            _gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
-
-            _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
-
-            _rootGuiControl.AddChild(_gameRulesScreenManager);
-
-            _rootGuiControl.RemoveChild(_titleScreenManager);
-        }
-
-        public void OnGameRulesScreenGoToTitleScreen()
-        {
-            ChangeSceneToTitleScreen(_gameRulesScreenManager);
-        }
-
-        #endregion
-
-        #region Settings Screen
 
         private void OnTitleScreenRootGoToSettingsScreen()
         {
             ChangeSceneToSettingsScreen();
         }
 
-        private void ChangeSceneToSettingsScreen()
+        #endregion
+
+        #region From Play Mode Screen
+
+        public void OnPlayModeScreenGoToTitleScreen()
         {
-            _settingsScreenManager = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath).Instantiate() as SettingsScreenManager;
-
-            _settingsScreenManager.GoToTitleScreen += OnSettingsScreenGoToTitleScreen;
-
-            _rootGuiControl.AddChild(_settingsScreenManager);
-
-            _rootGuiControl.RemoveChild(_titleScreenManager);
+            ChangeSceneToTitleScreen(_playModeScreenManager);
         }
+
+        public void OnPlayModeScreenGoToGameRulesScreen()
+        {
+            ChangeSceneToGameRulesScreen(_playModeScreenManager);
+        }
+
+        #endregion
+
+        #region Game Rules Screen
+
+        public void OnGameRulesScreenGoToTitleScreen()
+        {
+            ChangeSceneToTitleScreen(_gameRulesScreenManager);
+        }
+
+        public void OnGameRulesScreenGoToPlayModeScreen()
+        {
+            ChangeSceneToPlayModeScreen(_gameRulesScreenManager);
+        }
+
+        #endregion
+
+        #region Settings Screen
 
         public void OnSettingsScreenGoToTitleScreen()
         {
@@ -108,6 +90,8 @@ namespace Root
         }
 
         #endregion
+
+        #region General Use
 
         private void ChangeSceneToTitleScreen(Control currentUiScene)
         {
@@ -117,6 +101,58 @@ namespace Root
 
             _titleScreenManager.GrabFocusOfTopButton();
         }
+
+        private void ChangeSceneToPlayModeScreen(Control currentUIScene)
+        {
+            if (_playModeScreenManager == null)
+            {
+                _playModeScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayModeScreenPath).Instantiate() as PlayModeScreenManager;
+
+                _playModeScreenManager.GoToTitleScreen += OnPlayModeScreenGoToTitleScreen;
+                _playModeScreenManager.GoToGameRulesScreen += OnPlayModeScreenGoToGameRulesScreen;
+            }
+
+            _rootGuiControl.AddChild(_playModeScreenManager);
+
+            _rootGuiControl.RemoveChild(currentUIScene);
+
+            _playModeScreenManager.GrabFocusOfFirstButton();
+        }
+
+        private void ChangeSceneToGameRulesScreen(Control currentUiScene)
+        {
+            if (_gameRulesScreenManager == null)
+            {
+                _gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
+
+                _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
+                _gameRulesScreenManager.GoToPlayModeScreen += OnGameRulesScreenGoToPlayModeScreen;
+            }
+
+            _rootGuiControl.AddChild(_gameRulesScreenManager);
+
+            _rootGuiControl.RemoveChild(currentUiScene);
+
+            _gameRulesScreenManager.GrabFocusOfTopButton();
+        }
+
+        private void ChangeSceneToSettingsScreen()
+        {
+            if (_settingsScreenManager == null)
+            {
+                _settingsScreenManager = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath).Instantiate() as SettingsScreenManager;
+
+                _settingsScreenManager.GoToTitleScreen += OnSettingsScreenGoToTitleScreen;
+            }
+
+            _rootGuiControl.AddChild(_settingsScreenManager);
+
+            _rootGuiControl.RemoveChild(_titleScreenManager);
+
+            _settingsScreenManager.GrabFocusOfTopButton();
+        }
+
+        #endregion
 
         #endregion
     }

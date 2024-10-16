@@ -5,7 +5,7 @@ using Root;
 
 namespace Levels.EarlyLevels
 {
-	public partial class TitleScreenManager: Node
+	public partial class TitleScreenManager: Control
 	{
 		private RootSceneSwapper _rootSceneSwapper;
 
@@ -15,7 +15,9 @@ namespace Levels.EarlyLevels
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
-        [Signal]
+		#region Signals
+
+		[Signal]
         public delegate void GoToPlayModeScreenEventHandler();
 
         [Signal]
@@ -24,7 +26,9 @@ namespace Levels.EarlyLevels
         [Signal]
         public delegate void GoToSettingsScreenEventHandler();
 
-        public override void _Ready()
+		#endregion
+
+		public override void _Ready()
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
@@ -54,7 +58,7 @@ namespace Levels.EarlyLevels
                 }
                 else if (_gameRulesButton.HasFocus())
                 {
-                    _rootSceneSwapper.PriorSceneName = LevelScenePaths.TitleScreenPath;
+                    _rootSceneSwapper.PriorSceneName = ScreenNames.Title;
 
                     EmitSignal(SignalName.GoToGameRulesScreen);
                 }

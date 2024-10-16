@@ -9,8 +9,6 @@ namespace Globals
 {
     public static class GlobalGameComponents
     {
-        public static string PriorSceneName = string.Empty;
-
         public static string Infinity = "inf";
     }
 }
