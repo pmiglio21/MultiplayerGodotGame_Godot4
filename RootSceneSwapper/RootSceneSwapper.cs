@@ -32,6 +32,8 @@ namespace Root
             _rootGuiControl = FindChild("GUI") as Control;
 
             _titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
+
+            _titleScreenManager.QuitGame += QuitGame;
         }
 
         #region Go-To-Screens Methods
@@ -151,6 +153,17 @@ namespace Root
             _rootGuiControl.RemoveChild(_titleScreenManager);
 
             _settingsScreenManager.GrabFocusOfTopButton();
+        }
+
+        private void QuitGame()
+        {
+            //Need this or else game confuses memory while quitting
+            _titleScreenManager?.QueueFree();
+            _playModeScreenManager?.QueueFree();
+            _gameRulesScreenManager?.QueueFree();
+            _settingsScreenManager?.QueueFree();
+
+            GetTree().Quit();
         }
 
         #endregion

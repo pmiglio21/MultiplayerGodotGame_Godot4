@@ -26,9 +26,12 @@ namespace Levels.EarlyLevels
         [Signal]
         public delegate void GoToSettingsScreenEventHandler();
 
-		#endregion
+        [Signal]
+        public delegate void QuitGameEventHandler();
 
-		public override void _Ready()
+        #endregion
+
+        public override void _Ready()
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
@@ -68,7 +71,7 @@ namespace Levels.EarlyLevels
                 }
                 else if (_quitGameButton.HasFocus())
                 {
-                    GetTree().Quit();
+                    EmitSignal(SignalName.QuitGame);
                 }
             }
         }
