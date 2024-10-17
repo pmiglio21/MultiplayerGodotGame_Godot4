@@ -40,6 +40,9 @@ namespace Levels.UtilityLevels
         [Signal]
         public delegate void GoToPlayModeScreenEventHandler();
 
+        [Signal]
+        public delegate void GoToPlayerCharacterSelectScreenEventHandler();
+
         #endregion
 
         public override void _Ready()
@@ -85,8 +88,7 @@ namespace Levels.UtilityLevels
                 {
                     SaveOutGameRules();
 
-                    //Maybe change this
-                    GetTree().ChangeSceneToFile(LevelScenePaths.PlayerSelectScreenPath);
+                    EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
                 }
                 else
                 {

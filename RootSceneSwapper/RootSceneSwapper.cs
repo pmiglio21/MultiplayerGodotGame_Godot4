@@ -11,7 +11,6 @@ namespace Root
         #region "Global" Properties
 
         public ScreenNames PriorSceneName;
-        //public static string Infinity = "inf";
 
         #endregion
 
@@ -23,7 +22,7 @@ namespace Root
         private PlayModeScreenManager _playModeScreenManager; 
         private GameRulesScreenManager _gameRulesScreenManager; 
         private SettingsScreenManager _settingsScreenManager;
-        //private PlayerSelectScreenManager _playerSelectScreenManager;
+        private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager;
 
         #endregion
 
@@ -83,6 +82,11 @@ namespace Root
             ChangeSceneToPlayModeScreen(_gameRulesScreenManager);
         }
 
+        public void OnGameRulesScreenGoToPlayerCharacterSelectScreen()
+        {
+            ChangeSceneToPlayerCharacterSelectScreen(_gameRulesScreenManager);
+        }
+
         #endregion
 
         #region Settings Screen
@@ -90,6 +94,15 @@ namespace Root
         public void OnSettingsScreenGoToTitleScreen()
         {
             ChangeSceneToTitleScreen(_settingsScreenManager);
+        }
+
+        #endregion
+
+        #region Player Character Select Screen
+
+        public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
+        {
+            ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
         }
 
         #endregion
@@ -130,6 +143,7 @@ namespace Root
 
                 _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
                 _gameRulesScreenManager.GoToPlayModeScreen += OnGameRulesScreenGoToPlayModeScreen;
+                _gameRulesScreenManager.GoToPlayerCharacterSelectScreen += OnGameRulesScreenGoToPlayerCharacterSelectScreen;
             }
 
             _rootGuiControl.AddChild(_gameRulesScreenManager);
@@ -155,6 +169,34 @@ namespace Root
             _settingsScreenManager.GrabFocusOfTopButton();
         }
 
+        private void ChangeSceneToPlayerCharacterSelectScreen(Control currentUiScene)
+        {
+            if (_playerCharacterSelectScreenManager == null)
+            {
+                _playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
+
+                _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
+            }
+
+            _rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
+
+            _rootGuiControl.RemoveChild(currentUiScene);
+        }
+
+        private void ChangeSceneToDungeonLevelHolderScreen(Control currentUiScene)
+        {
+            //if (_playerCharacterSelectScreenManager == null)
+            //{
+            //    _playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
+
+            //    _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
+            //}
+
+            //_rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
+
+            _rootGuiControl.RemoveChild(currentUiScene);
+        }
+
         private void QuitGame()
         {
             //Need this or else game confuses memory while quitting
@@ -162,6 +204,7 @@ namespace Root
             _playModeScreenManager?.QueueFree();
             _gameRulesScreenManager?.QueueFree();
             _settingsScreenManager?.QueueFree();
+            _playerCharacterSelectScreenManager?.QueueFree();
 
             GetTree().Quit();
         }

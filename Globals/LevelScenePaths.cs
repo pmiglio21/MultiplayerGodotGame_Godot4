@@ -10,7 +10,7 @@ namespace Globals
     {
         #region Early Scenes
         public const string TitleScreenPath = "res://Levels/EarlyLevels/TitleScreen/TitleScreen.tscn";
-        public const string PlayerSelectScreenPath = "res://Levels/EarlyLevels/PlayerSelectScreen/PlayerSelectScreen.tscn";
+        public const string PlayerCharacterSelectScreenPath = "res://Levels/EarlyLevels/PlayerSelectScreen/PlayerCharacterSelectScreen.tscn";
         public const string PlayModeScreenPath = "res://Levels/EarlyLevels/PlayModeScreen/PlayModeScreen.tscn";
         #endregion
 

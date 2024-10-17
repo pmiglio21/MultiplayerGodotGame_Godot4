@@ -14,7 +14,12 @@ namespace Scenes.UI.PlayerSelectScene
 
 		[Signal]
 		public delegate void FinishSelectionProcessStartedEventHandler();
-		#endregion
+
+        [Signal]
+        public delegate void TellPlayerCharacterSelectScreenToGoToGameRulesScreenEventHandler();
+        #endregion
+
+        private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager;
 
 		#region Exported Properties
 		//Crucial for character picker activation to work in the proper order - needs to be set in the editor (for now)
@@ -62,7 +67,9 @@ namespace Scenes.UI.PlayerSelectScene
 
 		public override void _Ready()
 		{
-			PickerSprite = GetNode<Sprite2D>("SelectedPlayerIcon");
+			_playerCharacterSelectScreenManager = GetParent() as PlayerCharacterSelectScreenManager;
+
+            PickerSprite = GetNode<Sprite2D>("SelectedPlayerIcon");
 		}
 
 		public override void _Process(double delta)
@@ -90,7 +97,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 						if (goToTitleLevel && PlayerCharacterPickerManager.ActivePickers.Count == 0)
 						{
-                            GetTree().ChangeSceneToFile(LevelScenePaths.PlayModeScreenPath);
+							EmitSignal(SignalName.TellPlayerCharacterSelectScreenToGoToGameRulesScreen);
                         }
 					}
 				}
