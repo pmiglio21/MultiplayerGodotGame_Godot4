@@ -1,7 +1,6 @@
 using Enums;
 using Enums.GameRules;
 using Globals;
-using Globals.PlayerManagement;
 using Godot;
 using Levels.OverworldLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;

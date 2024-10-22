@@ -1,6 +1,5 @@
 using Enums;
 using Globals;
-using Globals.PlayerManagement;
 using Godot;
 using Levels.UtilityLevels;
 using Enums.GameRules;

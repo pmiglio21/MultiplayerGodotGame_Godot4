@@ -1,5 +1,4 @@
 using Globals;
-using Globals.PlayerManagement;
 using Godot;
 using Levels.UtilityLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;

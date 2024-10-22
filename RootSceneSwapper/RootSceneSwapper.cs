@@ -249,6 +249,7 @@ namespace Root
             _gameRulesScreenManager?.QueueFree();
             _settingsScreenManager?.QueueFree();
             _playerCharacterSelectScreenManager?.QueueFree();
+            _dungeonLevelSwapper?.QueueFree();
 
             GetTree().Quit();
         }

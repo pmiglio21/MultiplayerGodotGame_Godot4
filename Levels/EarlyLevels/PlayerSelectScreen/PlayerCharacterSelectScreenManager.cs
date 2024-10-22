@@ -1,5 +1,5 @@
 using Enums;
-using Globals.PlayerManagement;
+using Globals;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
@@ -58,9 +58,9 @@ public partial class PlayerCharacterSelectScreenManager : Control
             {
                 var currentPickerSprite = picker.GetNode("SelectedPlayerIcon") as Sprite2D;
 
-                int matchingIndex = PlayerManager.AvailablePlayerImageOptions.IndexOf(currentPickerSprite.Texture.ResourcePath);
+                int matchingIndex = PlayerCharacterClassManagement.AvailablePlayerImageOptions.IndexOf(currentPickerSprite.Texture.ResourcePath);
 
-                var scene = GD.Load<PackedScene>(PlayerManager.AvailablePlayerSceneOptions[matchingIndex]);
+                var scene = GD.Load<PackedScene>(PlayerCharacterClassManagement.AvailablePlayerSceneOptions[matchingIndex]);
                 var instance = scene.Instantiate();
 
                 //For ease of access

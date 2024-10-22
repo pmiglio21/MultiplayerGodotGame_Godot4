@@ -1,5 +1,4 @@
 using Enums;
-using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
 using Root;

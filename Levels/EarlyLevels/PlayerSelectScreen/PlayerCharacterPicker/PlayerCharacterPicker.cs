@@ -1,6 +1,5 @@
 using Enums;
 using Globals;
-using Globals.PlayerManagement;
 using Godot;
 using System.Linq;
 
@@ -174,7 +173,7 @@ namespace Scenes.UI.PlayerSelectScene
 					{
 						_playerSelectionChangedRecently = true;
 
-						Texture2D newTexture = ResourceLoader.Load(PlayerManager.DefaultPickerImageOption) as Texture2D;
+						Texture2D newTexture = ResourceLoader.Load(PlayerCharacterClassManagement.DefaultPickerImageOption) as Texture2D;
 						PickerSprite.Texture = newTexture;
 
                         _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Remove(this);
@@ -245,7 +244,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 				if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count > 0)
 				{
-					foreach (string imageName in PlayerManager.AvailablePlayerImageOptions)
+					foreach (string imageName in PlayerCharacterClassManagement.AvailablePlayerImageOptions)
 					{
 						Texture2D textureToCheck = ResourceLoader.Load(imageName) as Texture2D;
 
@@ -264,7 +263,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 				if (startingTexture == null)
 				{
-					startingTexture = ResourceLoader.Load(PlayerManager.AvailablePlayerImageOptions[0]) as Texture2D;
+					startingTexture = ResourceLoader.Load(PlayerCharacterClassManagement.AvailablePlayerImageOptions[0]) as Texture2D;
 				}
 
                 PickerSprite.Modulate = _defaultTone;
@@ -287,11 +286,11 @@ namespace Scenes.UI.PlayerSelectScene
 
 			if (Input.IsActionPressed($"MoveEast_{CurrentDeviceId}"))
 			{
-				int matchingIndex = PlayerManager.AvailablePlayerImageOptions.IndexOf(PickerSprite.Texture.ResourcePath);
+				int matchingIndex = PlayerCharacterClassManagement.AvailablePlayerImageOptions.IndexOf(PickerSprite.Texture.ResourcePath);
 
 				int lookupIndex;
 
-				if (matchingIndex == PlayerManager.AvailablePlayerImageOptions.Count - 1 || matchingIndex == -1)
+				if (matchingIndex == PlayerCharacterClassManagement.AvailablePlayerImageOptions.Count - 1 || matchingIndex == -1)
 				{
 					lookupIndex = 0;
 				}
@@ -300,7 +299,7 @@ namespace Scenes.UI.PlayerSelectScene
 					lookupIndex = matchingIndex + 1;
 				}
 
-				Texture2D newTexture = ResourceLoader.Load(PlayerManager.AvailablePlayerImageOptions[lookupIndex]) as Texture2D;
+				Texture2D newTexture = ResourceLoader.Load(PlayerCharacterClassManagement.AvailablePlayerImageOptions[lookupIndex]) as Texture2D;
 
 				PickerSprite.Texture = newTexture;
 
@@ -310,20 +309,20 @@ namespace Scenes.UI.PlayerSelectScene
             }
 			else if (Input.IsActionPressed($"MoveWest_{CurrentDeviceId}"))
 			{
-				int matchingIndex = PlayerManager.AvailablePlayerImageOptions.IndexOf(PickerSprite.Texture.ResourcePath);
+				int matchingIndex = PlayerCharacterClassManagement.AvailablePlayerImageOptions.IndexOf(PickerSprite.Texture.ResourcePath);
 
 				int lookupIndex;
 
 				if (matchingIndex == 0 || matchingIndex == -1)
 				{
-					lookupIndex = PlayerManager.AvailablePlayerImageOptions.Count - 1;
+					lookupIndex = PlayerCharacterClassManagement.AvailablePlayerImageOptions.Count - 1;
 				}
 				else
 				{
 					lookupIndex = matchingIndex - 1;
 				}
 
-				Texture2D newTexture = ResourceLoader.Load(PlayerManager.AvailablePlayerImageOptions[lookupIndex]) as Texture2D;
+				Texture2D newTexture = ResourceLoader.Load(PlayerCharacterClassManagement.AvailablePlayerImageOptions[lookupIndex]) as Texture2D;
 
 				PickerSprite.Texture = newTexture;
 

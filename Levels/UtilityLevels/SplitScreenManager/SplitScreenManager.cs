@@ -1,5 +1,3 @@
-using Globals;
-using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
 using Enums.GameRules;

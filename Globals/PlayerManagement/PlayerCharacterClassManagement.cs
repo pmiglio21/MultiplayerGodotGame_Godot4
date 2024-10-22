@@ -1,12 +1,9 @@
-using MobileEntities.PlayerCharacters.Scripts;
 using System.Collections.Generic;
 
-namespace Globals.PlayerManagement
+namespace Globals
 {
-	public static class PlayerManager
+	public static class PlayerCharacterClassManagement
 	{
-		//public static List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
-
 		#region Player Selection Properties
 
 		public static List<string> AvailablePlayerSceneOptions = new List<string>()
