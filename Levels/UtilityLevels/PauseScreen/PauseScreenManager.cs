@@ -115,9 +115,11 @@ namespace Levels.UtilityLevels
 				}
 				else if (_quitGameButton.HasFocus())
 				{
-					GetTree().Paused = false;
+                    GetTree().Paused = false;
 
-					EmitSignal(SignalName.GoToTitleScreen);
+					this.Hide();
+
+                    EmitSignal(SignalName.GoToTitleScreen);
 				}
 			}
 

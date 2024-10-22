@@ -129,7 +129,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void AdjustScreenPerPlayerCameraView()
 		{
-			Vector2I mainViewportSize = GetTree().Root.Size;
+			var tree = GetTree();
+
+            Vector2I mainViewportSize = tree.Root.Size;
 
 			if (_parentDungeonLevelSwapper.ActivePlayers.Count == 1)
 			{

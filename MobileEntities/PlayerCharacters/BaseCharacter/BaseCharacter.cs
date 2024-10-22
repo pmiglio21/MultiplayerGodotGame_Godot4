@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Root;
+using MobileEntities.CharacterStats;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
@@ -238,7 +239,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			InputMap.ActionSetDeadzone($"MoveNorth_{DeviceIdentifier}", moveInputDeadzone);
 		}
 
-		protected virtual void InitializeClassSpecificProperties() { }
+		protected virtual void InitializeClassSpecificProperties() 
+		{
+            characterStats = new Stats(3);
+        }
 
 		protected virtual void MoveHurtBoxes(CardinalDirection hurtBoxDirection) { }
 
