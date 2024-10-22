@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://t1cyumqgdw24"]
+
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/BaseDungeonLevel.cs" id="1_u85ix"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_8bk4s"]
+[ext_resource type="PackedScene" uid="uid://vl0was4eubql" path="res://Levels/OverworldLevels/TileMapping/Floor/OverworldLevelFloor.tscn" id="3_5cr4r"]
+
+[node name="Level" type="Node"]
+script = ExtResource("1_u85ix")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(818.118, 1006.94)
+scale = Vector2(-239.394, -196.397)
+texture = ExtResource("2_8bk4s")
+
+[node name="BaseFloor" parent="." instance=ExtResource("3_5cr4r")]
+
+[node name="EnemyRespawnTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using MobileEntities.Enemies.Scripts;
 using Root;
 
-public partial class BaseOverworldLevel : Node
+public partial class BaseDungeonLevel : Node
 {
 	private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
