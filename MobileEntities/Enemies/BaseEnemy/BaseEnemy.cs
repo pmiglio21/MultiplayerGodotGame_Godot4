@@ -8,7 +8,7 @@ namespace MobileEntities.Enemies.Scripts
 {
 	public partial class BaseEnemy : BaseMobileEntity
 	{
-        private LevelHolder _parentDungeonLevelSwapper;
+        private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         #region Components
 

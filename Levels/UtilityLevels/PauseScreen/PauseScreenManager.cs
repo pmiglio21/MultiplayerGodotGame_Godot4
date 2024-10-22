@@ -11,7 +11,7 @@ namespace Levels.UtilityLevels
 {
 	public partial class PauseScreenManager : Control
 	{
-        private LevelHolder _parentDungeonLevelSwapper;
+        private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         #region Signals
 
@@ -38,7 +38,7 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
-            _parentDungeonLevelSwapper = GetParent() as LevelHolder;
+            _parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
 
             _inputTimer = FindChild("InputTimer") as Timer;
 			_resumeGameButton = GetNode<Button>("ResumeGameButton");

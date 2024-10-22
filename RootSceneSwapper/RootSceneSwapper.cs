@@ -31,7 +31,7 @@ namespace Root
         private GameRulesScreenManager _gameRulesScreenManager; 
         private SettingsScreenManager _settingsScreenManager;
         private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager; 
-        private LevelHolder _dungeonLevelSwapper;
+        private DungeonLevelSwapper _dungeonLevelSwapper;
 
         #endregion
 
@@ -227,7 +227,7 @@ namespace Root
 
         private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
         {
-            _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.LevelHolderPath).Instantiate() as LevelHolder;
+            _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
             _dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
 
@@ -257,7 +257,7 @@ namespace Root
 
         #endregion
 
-        public LevelHolder GetDungeonLevelSwapper()
+        public DungeonLevelSwapper GetDungeonLevelSwapper()
         {
             return _dungeonLevelSwapper;
         }

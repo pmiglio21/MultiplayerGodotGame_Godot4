@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class LevelHolder : Node
+public partial class DungeonLevelSwapper : Node
 {
 	private RootSceneSwapper _rootSceneSwapper;
     private PauseScreenManager _pauseScreenManager;

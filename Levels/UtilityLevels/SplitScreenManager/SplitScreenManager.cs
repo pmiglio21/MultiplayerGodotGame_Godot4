@@ -7,7 +7,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 {
 	public partial class SplitScreenManager : GridContainer
 	{
-		private LevelHolder _parentDungeonLevelSwapper;
+		private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         private List<Camera2D> _subViewportCameras = new List<Camera2D>();
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
@@ -17,7 +17,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		public override void _Ready()
 		{
-            _parentDungeonLevelSwapper = GetParent() as LevelHolder;
+            _parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
 
             _availableSubViewports = GetSubViewports();
 			_availableSubViewportContainers = GetSubViewportContainers();

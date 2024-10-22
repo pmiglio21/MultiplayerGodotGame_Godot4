@@ -14,7 +14,7 @@ using Root;
 
 public partial class BaseOverworldLevel : Node
 {
-	private LevelHolder _parentDungeonLevelSwapper;
+	private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
     #region TileMap Level Generation
 

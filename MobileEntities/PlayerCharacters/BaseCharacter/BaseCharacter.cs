@@ -13,7 +13,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 {
 	public partial class BaseCharacter : BaseMobileEntity
 	{
-        private LevelHolder _parentDungeonLevelSwapper;
+        private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         #region Components
         [Export]

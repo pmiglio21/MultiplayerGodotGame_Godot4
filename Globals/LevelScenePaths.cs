@@ -23,7 +23,7 @@ namespace Globals
         #endregion
 
         #region Utility Scenes
-        public const string LevelHolderPath = "res://Levels/OverworldLevels/Levels/LevelHolder.tscn";
+        public const string DungeonLevelSwapperPath = "res://Levels/OverworldLevels/Levels/DungeonLevelSwapper.tscn";
         public const string SplitScreenManagerPath = "res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.tscn";
         public const string GameRulesScreenPath = "res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreen.tscn";
         public const string SettingsScreenPath = "res://Levels/UtilityLevels/SettingsScreen/SettingsScreen.tscn";

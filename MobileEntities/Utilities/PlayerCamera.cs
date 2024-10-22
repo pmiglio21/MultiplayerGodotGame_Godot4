@@ -9,7 +9,7 @@ namespace Levels.OverworldLevels.Utilities
 {
 	public partial class PlayerCamera : Camera2D
 	{
-        private LevelHolder _parentDungeonLevelSwapper;
+        private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         private CharacterBody2D _parentPlayer;
 		private List<StaticBody2D> _cameraWalls = new List<StaticBody2D>();
