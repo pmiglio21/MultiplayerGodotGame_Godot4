@@ -10,7 +10,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 	public partial class SplitScreenManager : GridContainer
 	{
 		private LevelHolder _parentDungeonLevelSwapper;
-		private List<Camera2D> _subViewportCameras = new List<Camera2D>();
+
+        private List<Camera2D> _subViewportCameras = new List<Camera2D>();
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
 		private List<SubViewportContainer> _availableSubViewportContainers = new List<SubViewportContainer>();
 
@@ -20,7 +21,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
             _parentDungeonLevelSwapper = GetParent() as LevelHolder;
 
-			_availableSubViewports = GetSubViewports();
+            _availableSubViewports = GetSubViewports();
 			_availableSubViewportContainers = GetSubViewportContainers();
 
 			SetSubViewportWorlds();
@@ -214,5 +215,5 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 			GD.Print($"Size shared {_availableSubViewports[0].Size}");
 		}
-	}
+    }
 }

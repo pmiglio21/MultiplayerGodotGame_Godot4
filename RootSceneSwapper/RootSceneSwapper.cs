@@ -124,8 +124,15 @@ namespace Root
         public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
         {
             ChangeSceneToDungeonLevelSwapperScreen(_playerCharacterSelectScreenManager);
+        }
 
-            
+        #endregion
+
+        #region Dungeon Level Swapper Screen
+
+        public void OnDungeonLevelSwapperScreenGoToTitleScreen()
+        {
+            ChangeSceneToTitleScreen(_dungeonLevelSwapper);
         }
 
         #endregion
@@ -137,6 +144,15 @@ namespace Root
             _rootGuiControl.AddChild(_titleScreenManager);
 
             _rootGuiControl.RemoveChild(currentUiScene);
+
+            _titleScreenManager.GrabFocusOfTopButton();
+        }
+
+        private void ChangeSceneToTitleScreen(Node currentScene)
+        {
+            _rootGuiControl.AddChild(_titleScreenManager);
+
+            _rootGuiControl.RemoveChild(currentScene);
 
             _titleScreenManager.GrabFocusOfTopButton();
         }
@@ -212,6 +228,8 @@ namespace Root
             if (_dungeonLevelSwapper == null)
             {
                 _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.LevelHolderPath).Instantiate() as LevelHolder;
+
+                _dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
 
                 _dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
                 _dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;

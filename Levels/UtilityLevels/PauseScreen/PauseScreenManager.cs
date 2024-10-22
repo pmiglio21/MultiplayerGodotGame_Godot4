@@ -14,6 +14,13 @@ namespace Levels.UtilityLevels
 	{
         private LevelHolder _parentDungeonLevelSwapper;
 
+        #region Signals
+
+        [Signal]
+        public delegate void GoToTitleScreenEventHandler();
+
+        #endregion
+
         public bool IsPauseScreenBeingShown = false;
 		public bool IsPauseScreenChildBeingShown = false;
 
@@ -32,7 +39,7 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
-            _parentDungeonLevelSwapper = GetNode<LevelHolder>("LevelHolder");
+            _parentDungeonLevelSwapper = GetParent() as LevelHolder;
 
             _inputTimer = FindChild("InputTimer") as Timer;
 			_resumeGameButton = GetNode<Button>("ResumeGameButton");
@@ -110,8 +117,8 @@ namespace Levels.UtilityLevels
 				else if (_quitGameButton.HasFocus())
 				{
 					GetTree().Paused = false;
-                    _parentDungeonLevelSwapper.ActivePlayers.Clear();
-					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
+
+					EmitSignal(SignalName.GoToTitleScreen);
 				}
 			}
 

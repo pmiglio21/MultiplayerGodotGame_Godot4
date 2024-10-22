@@ -13,8 +13,17 @@ using System.Linq;
 public partial class LevelHolder : Node
 {
 	private RootSceneSwapper _rootSceneSwapper;
+    private PauseScreenManager _pauseScreenManager;
+    private SplitScreenManager _latestSplitScreenManager;
 
-	public GameRules CurrentGameRules = new GameRules();
+    #region Signals
+
+    [Signal]
+    public delegate void GoToTitleScreenEventHandler();
+
+    #endregion
+
+    public GameRules CurrentGameRules = new GameRules();
     public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 
     private int _levelCounter;
@@ -22,6 +31,10 @@ public partial class LevelHolder : Node
 	public override void _Ready()
 	{
         //_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+        _pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
+        _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
+
+        _latestSplitScreenManager = GetNode<SplitScreenManager>("SplitScreenManager");
 
         _levelCounter = 0;
 	}
@@ -40,8 +53,7 @@ public partial class LevelHolder : Node
 				}
 				else
 				{
-                    ActivePlayers.Clear();
-					GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
+                    ChangeScreenToTitleScreen();
 				}
 			}
 		}
@@ -70,12 +82,18 @@ public partial class LevelHolder : Node
 			parent.RemoveChild(player);
 		}
 
-		//Remove pause screen node from original SplitScreenManager
-		var pauseScreen = GetTree().GetNodesInGroup("PauseScreen").FirstOrDefault() as PauseScreenManager;
-		pauseScreen.Reparent(nextSplitScreenManager);
+        //Remove pause screen node from original SplitScreenManager
+        _pauseScreenManager.Reparent(nextSplitScreenManager);
 
 		this.AddChild(nextSplitScreenManager);
 
-		currentSplitScreenManager.QueueFree();
+		_latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
+
+        currentSplitScreenManager.QueueFree();
 	}
+
+	private void ChangeScreenToTitleScreen()
+	{
+        EmitSignal(SignalName.GoToTitleScreen);
+    }
 }
