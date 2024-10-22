@@ -50,10 +50,14 @@ offset_right = -527.0
 offset_bottom = -299.0
 
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper" from="PlayerCharacterPicker0" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper"]
 [connection signal="TellPlayerCharacterSelectScreenToGoToGameRulesScreen" from="PlayerCharacterPicker0" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker1" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper" from="PlayerCharacterPicker1" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper"]
 [connection signal="TellPlayerCharacterSelectScreenToGoToGameRulesScreen" from="PlayerCharacterPicker1" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker2" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper" from="PlayerCharacterPicker2" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper"]
 [connection signal="TellPlayerCharacterSelectScreenToGoToGameRulesScreen" from="PlayerCharacterPicker2" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen"]
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker3" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
+[connection signal="TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper" from="PlayerCharacterPicker3" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper"]
 [connection signal="TellPlayerCharacterSelectScreenToGoToGameRulesScreen" from="PlayerCharacterPicker3" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen"]

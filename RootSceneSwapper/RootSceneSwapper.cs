@@ -3,6 +3,7 @@ using Globals;
 using Godot;
 using Levels.UtilityLevels;
 using Levels.EarlyLevels;
+using Models;
 
 namespace Root
 {
@@ -11,6 +12,7 @@ namespace Root
         #region "Global" Properties
 
         public ScreenNames PriorSceneName;
+        public GameRules CurrentGameRules = new GameRules();
 
         #endregion
 
@@ -22,7 +24,8 @@ namespace Root
         private PlayModeScreenManager _playModeScreenManager; 
         private GameRulesScreenManager _gameRulesScreenManager; 
         private SettingsScreenManager _settingsScreenManager;
-        private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager;
+        private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager; 
+        private LevelHolder _dungeonLevelSwapper;
 
         #endregion
 
@@ -105,6 +108,11 @@ namespace Root
             ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
         }
 
+        public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
+        {
+            ChangeSceneToDungeonLevelSwapperScreen(_playerCharacterSelectScreenManager);
+        }
+
         #endregion
 
         #region General Use
@@ -175,7 +183,8 @@ namespace Root
             {
                 _playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
 
-                _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
+                _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen; 
+                _playerCharacterSelectScreenManager.GoToDungeonLevelSwapper += OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper;
             }
 
             _rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
@@ -183,16 +192,16 @@ namespace Root
             _rootGuiControl.RemoveChild(currentUiScene);
         }
 
-        private void ChangeSceneToDungeonLevelHolderScreen(Control currentUiScene)
+        private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
         {
-            //if (_playerCharacterSelectScreenManager == null)
-            //{
-            //    _playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
+            if (_dungeonLevelSwapper == null)
+            {
+                _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.LevelHolderPath).Instantiate() as LevelHolder;
 
-            //    _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
-            //}
+                //_dungeonLevelSwapper.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
+            }
 
-            //_rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
+            _rootGuiControl.AddChild(_dungeonLevelSwapper);
 
             _rootGuiControl.RemoveChild(currentUiScene);
         }
@@ -212,5 +221,10 @@ namespace Root
         #endregion
 
         #endregion
+
+        public LevelHolder GetDungeonLevelSwapper()
+        {
+            return _dungeonLevelSwapper;
+        }
     }
 }

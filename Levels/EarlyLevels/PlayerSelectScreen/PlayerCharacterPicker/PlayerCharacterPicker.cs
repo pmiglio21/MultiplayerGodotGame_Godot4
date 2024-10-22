@@ -9,14 +9,16 @@ namespace Scenes.UI.PlayerSelectScene
 	public partial class PlayerCharacterPicker : Node
 	{
 		#region Signals
-		//[Signal]
-		//public delegate void PlayerSelectionOccurredEventHandler(Sprite2D pickerSprite, bool selectionHasBeenMade);
-
+		
 		[Signal]
 		public delegate void FinishSelectionProcessStartedEventHandler();
 
         [Signal]
         public delegate void TellPlayerCharacterSelectScreenToGoToGameRulesScreenEventHandler();
+
+        [Signal]
+        public delegate void TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapperEventHandler();
+
         #endregion
 
         private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager;
@@ -75,7 +77,7 @@ namespace Scenes.UI.PlayerSelectScene
 		public override void _Process(double delta)
 		{
 			if (!CurrentPickerIsActivated && 
-				NumberOfCharactersNecessaryBeforeGivingAccess <= PlayerCharacterPickerManager.ActivePickers.Count)
+				NumberOfCharactersNecessaryBeforeGivingAccess <= _playerCharacterSelectScreenManager.ActivePickers.Count)
 			{
 				//See if user wants to go back to Title Level
 				if (!CurrentPickerIsActivated)
@@ -95,7 +97,7 @@ namespace Scenes.UI.PlayerSelectScene
 					{
 						bool goToTitleLevel = UniversalInputHelper.IsActionJustPressed(InputType.EastButton);
 
-						if (goToTitleLevel && PlayerCharacterPickerManager.ActivePickers.Count == 0)
+						if (goToTitleLevel && _playerCharacterSelectScreenManager.ActivePickers.Count == 0)
 						{
 							EmitSignal(SignalName.TellPlayerCharacterSelectScreenToGoToGameRulesScreen);
                         }
@@ -131,8 +133,8 @@ namespace Scenes.UI.PlayerSelectScene
 
 						//FIX THIS//-----------------------------------------------------------------------------------------
 						//This is where the warning is coming from...
-						EmitSignal(SignalName.FinishSelectionProcessStarted);
-					}
+                        EmitSignal(SignalName.TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper);
+                    }
 
 					//Select character
 					if (!SelectionHasBeenMade)
@@ -175,7 +177,7 @@ namespace Scenes.UI.PlayerSelectScene
 						Texture2D newTexture = ResourceLoader.Load(PlayerManager.DefaultPickerImageOption) as Texture2D;
 						PickerSprite.Texture = newTexture;
 
-						PlayerCharacterPickerManager.ActivePickers.Remove(this);
+                        _playerCharacterSelectScreenManager.ActivePickers.Remove(this);
 
 						CurrentPickerIsActivated = false;
 
@@ -194,23 +196,23 @@ namespace Scenes.UI.PlayerSelectScene
 		{
 			bool isWakeUp0 = false, isWakeUp1 = false, isWakeUp2 = false, isWakeUp3 = false, isWakeUpKeyboard = false;
 
-			if (PlayerCharacterPickerManager.ActivePickers.Count(x => x.CurrentDeviceId == "0") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePickers.Count(x => x.CurrentDeviceId == "0") == 0)
 			{
 				isWakeUp0 = Input.IsActionJustPressed($"SouthButton_0") || Input.IsActionJustPressed($"StartButton_0");
 			}
-			if (PlayerCharacterPickerManager.ActivePickers.Count(x => x.CurrentDeviceId == "1") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePickers.Count(x => x.CurrentDeviceId == "1") == 0)
 			{
 				isWakeUp1 = Input.IsActionJustPressed($"SouthButton_1") || Input.IsActionJustPressed($"StartButton_1");
 			}
-			if (PlayerCharacterPickerManager.ActivePickers.Count(x => x.CurrentDeviceId == "2") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePickers.Count(x => x.CurrentDeviceId == "2") == 0)
 			{
 				isWakeUp2 = Input.IsActionJustPressed($"SouthButton_2") || Input.IsActionJustPressed($"StartButton_2");
 			}
-			if (PlayerCharacterPickerManager.ActivePickers.Count(x => x.CurrentDeviceId == "3") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePickers.Count(x => x.CurrentDeviceId == "3") == 0)
 			{
 				isWakeUp3 = Input.IsActionJustPressed($"SouthButton_3") || Input.IsActionJustPressed($"StartButton_3");
 			}
-			if (PlayerCharacterPickerManager.ActivePickers.Count(x => x.CurrentDeviceId == "Keyboard") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePickers.Count(x => x.CurrentDeviceId == "Keyboard") == 0)
 			{
 				isWakeUpKeyboard = Input.IsActionJustPressed($"SouthButton_Keyboard") || Input.IsActionJustPressed($"StartButton_Keyboard");
 			}
@@ -241,13 +243,13 @@ namespace Scenes.UI.PlayerSelectScene
 				#region Initial Texture Setting
 				Texture2D startingTexture = null;
 
-				if (PlayerCharacterPickerManager.ActivePickers.Count > 0)
+				if (_playerCharacterSelectScreenManager.ActivePickers.Count > 0)
 				{
 					foreach (string imageName in PlayerManager.AvailablePlayerImageOptions)
 					{
 						Texture2D textureToCheck = ResourceLoader.Load(imageName) as Texture2D;
 
-						if (PlayerCharacterPickerManager.ActivePickers.Any(x => x.SelectionHasBeenMade && x.PickerSprite.Texture == textureToCheck))
+						if (_playerCharacterSelectScreenManager.ActivePickers.Any(x => x.SelectionHasBeenMade && x.PickerSprite.Texture == textureToCheck))
 						{
 							continue;
 						}
@@ -272,7 +274,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 				CurrentPickerIsActivated = true;
 				_playerSelectionChangedRecently = true;
-				PlayerCharacterPickerManager.ActivePickers.Add(this);
+                _playerCharacterSelectScreenManager.ActivePickers.Add(this);
 
 				GD.Print($"Added device: {CurrentDeviceId}");
 			}

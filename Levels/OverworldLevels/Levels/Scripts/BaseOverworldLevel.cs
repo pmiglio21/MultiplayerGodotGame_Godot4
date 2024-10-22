@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MobileEntities.Enemies.Scripts;
+using Root;
 
 public partial class BaseOverworldLevel : Node
 {
-	private LevelHolder _parentLevelHolder;
+	private LevelHolder _parentDungeonLevelSwapper;
 
 	#region TileMap Level Generation
 
@@ -61,7 +62,9 @@ public partial class BaseOverworldLevel : Node
 	{
 		_rng.Randomize();
 
-        _parentLevelHolder = this.GetNode<LevelHolder>("LevelHolder");
+        RootSceneSwapper rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+        _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
 
         _baseFloor = this.GetNode<Node>("BaseFloor");
 
@@ -89,19 +92,19 @@ public partial class BaseOverworldLevel : Node
 
 	private void LoadInFloorTiles()
 	{
-		if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
+		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
 		{
 			_maxNumberOfTiles = 20;
 		}
-		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Medium)
+		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Medium)
 		{
 			_maxNumberOfTiles = 40;
 		}
-		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Large)
+		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Large)
 		{
 			_maxNumberOfTiles = 60;
 		}
-		else if (_parentLevelHolder.CurrentGameRules.CurrentLevelSize == LevelSize.Varied)
+		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Varied)
 		{
 			var floorSizeOptions = new List<int>() { 20, 40, 60 };
 
@@ -135,7 +138,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void RunProceduralPathGeneration()
 	{
-		if (_parentLevelHolder.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			GenerateSingleSpawnPoints();
 		}
@@ -183,7 +186,7 @@ public partial class BaseOverworldLevel : Node
 		#region Spawn Key Objects
 		GenerateKeyMapItems();
 
-		if (_parentLevelHolder.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
 			SpawnPlayersClose();
 		}
@@ -623,7 +626,7 @@ public partial class BaseOverworldLevel : Node
 
 		GD.Print("---------------------------------------");
 
-		PlayerCharacterPickerManager.ActivePickers.Clear();
+		//PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
 	private void SpawnPlayersNormal()
@@ -645,7 +648,7 @@ public partial class BaseOverworldLevel : Node
 
 		GD.Print("---------------------------------------");
 
-		PlayerCharacterPickerManager.ActivePickers.Clear();
+		//PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
 	#endregion

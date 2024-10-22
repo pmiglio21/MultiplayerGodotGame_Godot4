@@ -4,12 +4,13 @@ using Globals;
 using Enums.GameRules;
 using System.Linq;
 using System.Collections.Generic;
+using Root;
 
 namespace Levels.OverworldLevels.Utilities
 {
 	public partial class PlayerCamera : Camera2D
 	{
-        private LevelHolder _parentLevelHolder;
+        private LevelHolder _parentDungeonLevelSwapper;
 
         private CharacterBody2D _parentPlayer;
 		private List<StaticBody2D> _cameraWalls = new List<StaticBody2D>();
@@ -19,7 +20,9 @@ namespace Levels.OverworldLevels.Utilities
 
 		public override void _Ready()
 		{
-			_parentLevelHolder = GetNode<LevelHolder>("LevelHolder");
+            RootSceneSwapper rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+            _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
 
             _parentPlayer = GetParent() as CharacterBody2D;
 
@@ -27,7 +30,7 @@ namespace Levels.OverworldLevels.Utilities
 
 			GetWallAreas();
 
-			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 			{
 				SetCameraToPlayerPositionMidpoint(1, true);
 			}
@@ -39,11 +42,11 @@ namespace Levels.OverworldLevels.Utilities
 
 			if (PlayerManager.ActivePlayers.Count > 1)
 			{
-				if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
+				if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
 				{
 					RunSharedScreenAdjustedProcess();
 				}
-				else if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
+				else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenLocked)
 				{
 					RunSharedScreenLockedProcess(delta);
 				}
@@ -57,7 +60,7 @@ namespace Levels.OverworldLevels.Utilities
 				_cameraWalls.Add(cameraWall as StaticBody2D);
 			}
 
-			if (this.Name != "PlayerCamera0" || _parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			if (this.Name != "PlayerCamera0" || _parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
 			{
 				if (_cameraWalls != null)
 				{
@@ -78,7 +81,7 @@ namespace Levels.OverworldLevels.Utilities
 				_wallAreas.Add(wallArea as Area2D);
 			}
 
-			if (this.Name != "PlayerCamera0" || _parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
+			if (this.Name != "PlayerCamera0" || _parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType != SplitScreenMergingType.SharedScreenLocked)
 			{
 				if (_wallAreas != null)
 				{

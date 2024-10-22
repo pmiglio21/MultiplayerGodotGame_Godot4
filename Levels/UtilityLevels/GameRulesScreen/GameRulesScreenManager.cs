@@ -172,8 +172,8 @@ namespace Levels.UtilityLevels
 		{
             SaveOutGameRules();
 
-            PlayerManager.ActivePlayers.Clear();
-			PlayerCharacterPickerManager.ActivePickers.Clear();
+   //         PlayerManager.ActivePlayers.Clear();
+			//PlayerCharacterPickerManager.ActivePickers.Clear();
 
             if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
             {
@@ -218,6 +218,8 @@ namespace Levels.UtilityLevels
 					CurrentGameRules.CurrentLevelSize = (LevelSize)enumValue;
 				}
 			}
-		}
+
+            _rootSceneSwapper.CurrentGameRules = CurrentGameRules;
+        }
 	}
 }
