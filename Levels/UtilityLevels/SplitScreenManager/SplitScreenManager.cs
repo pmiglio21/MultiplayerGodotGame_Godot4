@@ -9,7 +9,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 {
 	public partial class SplitScreenManager : GridContainer
 	{
-		private LevelHolder _parentLevelHolder;
+		private LevelHolder _parentDungeonLevelSwapper;
 		private List<Camera2D> _subViewportCameras = new List<Camera2D>();
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
 		private List<SubViewportContainer> _availableSubViewportContainers = new List<SubViewportContainer>();
@@ -18,7 +18,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		public override void _Ready()
 		{
-			_parentLevelHolder = GetParent() as LevelHolder;
+            _parentDungeonLevelSwapper = GetParent() as LevelHolder;
 
 			_availableSubViewports = GetSubViewports();
 			_availableSubViewportContainers = GetSubViewportContainers();
@@ -26,14 +26,14 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			SetSubViewportWorlds();
 
 			//Lets subviewports scale as the window changes size
-			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
 				GetTree().Root.SizeChanged += AdjustScreenPerPlayerCameraView;
 			}
 
 			//Call it on its own to set cameras initially
-			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(PlayerManager.ActivePlayers.Count == 1))
+			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+				(_parentDungeonLevelSwapper.ActivePlayers.Count == 1))
 			{
 				SetCamerasToPlayers();
 			}
@@ -47,7 +47,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			{
 				//Do this to load in scene and adjust the screen size right away.
 				//Root.SizeChanged event doesn't happen after the scene loads, so we have to adjust the screen ourselves at the start of the scene.
-				if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+				if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 				{
 					SetCamerasToPlayers();
 
@@ -98,7 +98,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void RunScreenAdjustmentProcess()
 		{
-			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
+			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
 			{
 				AdjustScreenPerPlayerCameraView();
 			}
@@ -120,7 +120,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
 			int playerCount = 0;
 
-			foreach (BaseCharacter player in PlayerManager.ActivePlayers)
+			foreach (BaseCharacter player in _parentDungeonLevelSwapper.ActivePlayers)
 			{
 				player.playerCamera = _subViewportCameras[playerCount];
 
@@ -132,7 +132,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
 			Vector2I mainViewportSize = GetTree().Root.Size;
 
-			if (PlayerManager.ActivePlayers.Count == 1)
+			if (_parentDungeonLevelSwapper.ActivePlayers.Count == 1)
 			{
 				//GridContainer only needs one column
 				this.Columns = 1;
@@ -149,7 +149,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkCenter | SizeFlags.Expand;
 				_availableSubViewports[0].Size = mainViewportSize;
 			}
-			else if (PlayerManager.ActivePlayers.Count == 2)
+			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 2)
 			{
 				//Remove all but the first and second SubviewportContainer
 				for (int i = 2; i < _availableSubViewportContainers.Count; i++)
@@ -167,7 +167,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				_availableSubViewportContainers[1].SizeFlagsVertical = SizeFlags.ShrinkCenter | SizeFlags.Expand;
 				_availableSubViewports[1].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y);
 			}
-			else if (PlayerManager.ActivePlayers.Count == 3)
+			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 3)
 			{
 				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
 				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;
@@ -183,7 +183,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				
 				_availableSubViewports[3].Size = Vector2I.Zero;
 			}
-			else if (PlayerManager.ActivePlayers.Count == 4)
+			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 4)
 			{
 				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
 				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;

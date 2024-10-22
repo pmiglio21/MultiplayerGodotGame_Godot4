@@ -16,8 +16,8 @@ namespace Scenes.UI.PlayerSelectScene
 
 		public override void _Process(double delta)
 		{
-			if (_playerCharacterSelectScreenManager.ActivePickers.Count != 0 &&
-                _playerCharacterSelectScreenManager.ActivePickers.All(x => x.SelectionHasBeenMade))
+			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count != 0 &&
+                _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.All(x => x.SelectionHasBeenMade))
 			{
 				var sprite = this.GetNode("Sprite") as Sprite2D;
 				Texture2D newTexture = ResourceLoader.Load("res://Levels/EarlyLevels/PlayerSelectScreen/ConfirmSelectionButton/Animations/ConfirmSelectionButton_Ready.png") as Texture2D;

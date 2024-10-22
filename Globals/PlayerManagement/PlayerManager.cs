@@ -5,7 +5,7 @@ namespace Globals.PlayerManagement
 {
 	public static class PlayerManager
 	{
-		public static List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
+		//public static List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 
 		#region Player Selection Properties
 

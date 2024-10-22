@@ -20,13 +20,15 @@ public partial class PlayerCharacterSelectScreenManager : Control
 
     #region Properties
 
-    public List<PlayerCharacterPicker> ActivePickers = new List<PlayerCharacterPicker>();
+    public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
+
+    public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
 
     #endregion
 
     public override void _Ready()
 	{
-        ActivePickers.Clear();
+        ActivePlayerCharacterPickers.Clear();
     }
 
 	public override void _Process(double delta)
@@ -35,7 +37,7 @@ public partial class PlayerCharacterSelectScreenManager : Control
 
 	private void OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen()
 	{
-        ActivePickers.Clear();
+        
 
         EmitSignal(SignalName.GoToGameRulesScreen);
 	}
@@ -49,10 +51,10 @@ public partial class PlayerCharacterSelectScreenManager : Control
 
     private void FinishSelectionForAllPickers()
     {
-        if (ActivePickers.Count(x => x.SelectionHasBeenMade && x.CurrentPickerIsActivated) == ActivePickers.Count)
+        if (ActivePlayerCharacterPickers.Count(x => x.SelectionHasBeenMade && x.CurrentPickerIsActivated) == ActivePlayerCharacterPickers.Count)
         {
             //Instances all characters from the currently activated pickers
-            foreach (var picker in ActivePickers)
+            foreach (var picker in ActivePlayerCharacterPickers)
             {
                 var currentPickerSprite = picker.GetNode("SelectedPlayerIcon") as Sprite2D;
 
@@ -66,10 +68,10 @@ public partial class PlayerCharacterSelectScreenManager : Control
 
                 instanceAsBaseCharacter.CharacterClassName = DeterminePlayableCharacterClass(instance);
 
-                instanceAsBaseCharacter.PlayerNumber = PlayerManager.ActivePlayers.Count;
+                instanceAsBaseCharacter.PlayerNumber = ActivePlayers.Count;
                 instanceAsBaseCharacter.DeviceIdentifier = picker.CurrentDeviceId.ToString();
 
-                PlayerManager.ActivePlayers.Add(instanceAsBaseCharacter);
+                ActivePlayers.Add(instanceAsBaseCharacter);
 
                 GD.Print($"Added Player: {instanceAsBaseCharacter.PlayerNumber} on Device {instanceAsBaseCharacter.DeviceIdentifier}");
 

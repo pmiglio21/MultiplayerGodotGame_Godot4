@@ -144,7 +144,7 @@ public partial class BaseOverworldLevel : Node
 		}
 		else
 		{
-			if (PlayerManager.ActivePlayers.Count > 1)
+			if (_parentDungeonLevelSwapper.ActivePlayers.Count > 1)
 			{
 				GenerateMultipleSpawnPoints();
 
@@ -158,7 +158,7 @@ public partial class BaseOverworldLevel : Node
 
 		float percentageOfFloorToCover = 0;
 
-		switch (PlayerManager.ActivePlayers.Count)
+		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
 		{
 			case 1:
 				percentageOfFloorToCover = .125f;
@@ -205,7 +205,7 @@ public partial class BaseOverworldLevel : Node
 
 	private void GenerateMultipleSpawnPoints()
 	{
-		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < PlayerManager.ActivePlayers.Count; spawnPointGeneratedCount++)
+		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
 		{
 			var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
 
@@ -601,7 +601,7 @@ public partial class BaseOverworldLevel : Node
 
 		int playerCount = 0;
 
-		foreach (BaseCharacter character in PlayerManager.ActivePlayers)
+		foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
 		{
 			if (playerCount == 0)
 			{
@@ -614,7 +614,7 @@ public partial class BaseOverworldLevel : Node
 				float changeInX = _rng.RandfRange(-30, 30);
 				float changeInY = _rng.RandfRange(-30, 30);
 
-				character.GlobalPosition = new Vector2(PlayerManager.ActivePlayers[0].GlobalPosition.X + changeInX, PlayerManager.ActivePlayers[0].GlobalPosition.Y + changeInY);
+				character.GlobalPosition = new Vector2(_parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.X + changeInX, _parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.Y + changeInY);
 
 				AddChild(character);
 			}
@@ -635,7 +635,7 @@ public partial class BaseOverworldLevel : Node
 
 		int playerCount = 0;
 
-		foreach (BaseCharacter character in PlayerManager.ActivePlayers)
+		foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
 		{
 			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
 
@@ -711,9 +711,9 @@ public partial class BaseOverworldLevel : Node
 
 	public override void _Process(double delta)
 	{
-		if (PlayerManager.ActivePlayers.Count > 0 && PlayerManager.ActivePlayers.All(x => x.IsDead))
+		if (_parentDungeonLevelSwapper.ActivePlayers.Count > 0 && _parentDungeonLevelSwapper.ActivePlayers.All(x => x.IsDead))
 		{
-			PlayerManager.ActivePlayers.Clear();
+            _parentDungeonLevelSwapper.ActivePlayers.Clear();
 
 			GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
 		}

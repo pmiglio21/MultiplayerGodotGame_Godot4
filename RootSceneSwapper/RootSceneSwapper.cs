@@ -4,6 +4,9 @@ using Godot;
 using Levels.UtilityLevels;
 using Levels.EarlyLevels;
 using Models;
+using MobileEntities.PlayerCharacters.Scripts;
+using Scenes.UI.PlayerSelectScene;
+using System.Collections.Generic;
 
 namespace Root
 {
@@ -13,6 +16,9 @@ namespace Root
 
         public ScreenNames PriorSceneName;
         public GameRules CurrentGameRules = new GameRules();
+
+        public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
+        public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
 
         #endregion
 
@@ -77,11 +83,15 @@ namespace Root
 
         public void OnGameRulesScreenGoToTitleScreen()
         {
+            this.CurrentGameRules = new GameRules();
+
             ChangeSceneToTitleScreen(_gameRulesScreenManager);
         }
 
         public void OnGameRulesScreenGoToPlayModeScreen()
         {
+            this.CurrentGameRules = _gameRulesScreenManager.CurrentGameRules;
+
             ChangeSceneToPlayModeScreen(_gameRulesScreenManager);
         }
 
@@ -105,12 +115,17 @@ namespace Root
 
         public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
         {
+            this.ActivePlayers.Clear();
+            this.ActivePlayerCharacterPickers.Clear();
+
             ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
         }
 
         public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
         {
             ChangeSceneToDungeonLevelSwapperScreen(_playerCharacterSelectScreenManager);
+
+            
         }
 
         #endregion
@@ -198,7 +213,9 @@ namespace Root
             {
                 _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.LevelHolderPath).Instantiate() as LevelHolder;
 
-                //_dungeonLevelSwapper.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen;
+                _dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
+                _dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
+                this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
             }
 
             _rootGuiControl.AddChild(_dungeonLevelSwapper);

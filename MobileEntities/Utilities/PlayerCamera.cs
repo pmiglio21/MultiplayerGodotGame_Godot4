@@ -40,7 +40,7 @@ namespace Levels.OverworldLevels.Utilities
 		{
 			//GD.Print($"Is camera set at midpoint yet? {_isCameraSetBetweenPlayers}");
 
-			if (PlayerManager.ActivePlayers.Count > 1)
+			if (_parentDungeonLevelSwapper.ActivePlayers.Count > 1)
 			{
 				if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.SharedScreenAdjust)
 				{
@@ -127,12 +127,12 @@ namespace Levels.OverworldLevels.Utilities
 			//Determine Camera point (middle of all players)
 			Vector2 midpointVector = new Vector2();
 
-			foreach (var player in PlayerManager.ActivePlayers)
+			foreach (var player in _parentDungeonLevelSwapper.ActivePlayers)
 			{
 				midpointVector += player.GlobalPosition;
 			}
 
-			midpointVector = midpointVector / PlayerManager.ActivePlayers.Count;
+			midpointVector = midpointVector / _parentDungeonLevelSwapper.ActivePlayers.Count;
 
 			if (doLerp)
 			{
@@ -154,9 +154,9 @@ namespace Levels.OverworldLevels.Utilities
 			float farthestDistanceBetweenPlayers = float.MinValue;
 
 
-			foreach (var firstPlayer in PlayerManager.ActivePlayers)
+			foreach (var firstPlayer in _parentDungeonLevelSwapper.ActivePlayers)
 			{
-				foreach (var secondPlayer in PlayerManager.ActivePlayers.Where(x => x.PlayerNumber != firstPlayer.PlayerNumber))
+				foreach (var secondPlayer in _parentDungeonLevelSwapper.ActivePlayers.Where(x => x.PlayerNumber != firstPlayer.PlayerNumber))
 				{
 					if (firstPlayer.GlobalPosition.DistanceTo(secondPlayer.GlobalPosition) > farthestDistanceBetweenPlayers)
 					{

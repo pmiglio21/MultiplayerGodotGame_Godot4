@@ -7,12 +7,13 @@ using Enums.GameRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Root;
 
 namespace MobileEntities.PlayerCharacters.Scripts
 {
 	public partial class BaseCharacter : BaseMobileEntity
 	{
-        private LevelHolder _parentLevelHolder;
+        private LevelHolder _parentDungeonLevelSwapper;
 
         #region Components
         [Export]
@@ -115,7 +116,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _Ready()
 		{
-			_parentLevelHolder = GetNode<LevelHolder>("LevelHolder");
+            RootSceneSwapper rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+            _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
 
 
             InitializeClassSpecificProperties();
@@ -211,8 +214,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			if (_parentLevelHolder.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-			   (PlayerManager.ActivePlayers.Count == 1))
+			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
+			   (_parentDungeonLevelSwapper.ActivePlayers.Count == 1))
 			{
 				playerCamera.GlobalPosition = this.GlobalPosition;
 			}

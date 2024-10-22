@@ -2,15 +2,18 @@ using Enums;
 using Globals.PlayerManagement;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
+using Root;
 using System.Collections.Generic;
 
 namespace MobileEntities.Enemies.Scripts
 {
 	public partial class BaseEnemy : BaseMobileEntity
 	{
-		#region Components
+        private LevelHolder _parentDungeonLevelSwapper;
 
-		protected Area2D mainHurtBox;
+        #region Components
+
+        protected Area2D mainHurtBox;
 		protected CollisionShape2D mainHurtBoxCollisionShape;
 		protected Area2D mainHitBox;
 		protected CollisionShape2D mainHitBoxCollisionShape;
@@ -25,7 +28,12 @@ namespace MobileEntities.Enemies.Scripts
 
 		public override void _Ready()
 		{
-			InitializeComponents();
+            RootSceneSwapper rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
+            _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
+
+
+            InitializeComponents();
 
 			InitializeEnemySpecificProperties();
 		}
@@ -65,7 +73,7 @@ namespace MobileEntities.Enemies.Scripts
 			BaseCharacter closestPlayer = null;
 			float minDistance = float.MaxValue; 
 
-			foreach (var player in PlayerManager.ActivePlayers)
+			foreach (var player in _parentDungeonLevelSwapper.ActivePlayers)
 			{
 				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
 
