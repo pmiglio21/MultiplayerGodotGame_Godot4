@@ -8,6 +8,13 @@ namespace Levels.UtilityLevels
 {
     public partial class GameOverScreenManager : Control
     {
+        #region Signals
+
+        [Signal]
+        public delegate void GoToTitleScreenEventHandler();
+
+        #endregion
+
         public bool IsSettingsScreenBeingShown = false;
 
         private int _inputTimer = 0;
@@ -54,7 +61,7 @@ namespace Levels.UtilityLevels
                 {
                     if (!_inputChangedRecently)
                     {
-                        GetTree().ChangeSceneToFile(LevelScenePaths.TitleScreenPath);
+                        EmitSignal(SignalName.GoToTitleScreen);
 
                         _inputTimer = 0;
                     }

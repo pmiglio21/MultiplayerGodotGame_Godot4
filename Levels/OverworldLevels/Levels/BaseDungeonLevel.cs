@@ -16,6 +16,13 @@ public partial class BaseDungeonLevel : Node
 {
 	private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
+    #region Signals
+
+    [Signal]
+    public delegate void GoToGameOverScreenEventHandler();
+
+    #endregion
+
     #region TileMap Level Generation
 
     private List<Vector2I> _floorTileList = new List<Vector2I>();
@@ -714,10 +721,13 @@ public partial class BaseDungeonLevel : Node
 		{
             _parentDungeonLevelSwapper.ActivePlayers.Clear();
 
-			GetTree().ChangeSceneToFile(LevelScenePaths.GameOverScreenPath);
+			EmitSignal(SignalName.GoToGameOverScreen);
 		}
 
-		_enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
+		if (GetTree() != null)
+		{
+            _enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
+        }
 
 		SpawnEnemies();
 	}

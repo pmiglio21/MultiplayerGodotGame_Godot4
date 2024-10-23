@@ -32,6 +32,7 @@ namespace Root
         private SettingsScreenManager _settingsScreenManager;
         private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager; 
         private DungeonLevelSwapper _dungeonLevelSwapper;
+        private GameOverScreenManager _gameOverScreenManager;
 
         #endregion
 
@@ -149,6 +150,24 @@ namespace Root
             //}
         }
 
+        public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
+        {
+            _playerCharacterSelectScreenManager = null;
+
+            ChangeSceneToGameOverScreen(_dungeonLevelSwapper);
+        }
+
+        #endregion
+
+        #region Game Over Screen
+
+        public void OnGameOverScreenGoToTitleScreen()
+        {
+            _playerCharacterSelectScreenManager = null;
+
+            ChangeSceneToTitleScreen(_gameOverScreenManager);
+        }
+
         #endregion
 
         #region General Use
@@ -239,15 +258,28 @@ namespace Root
 
         private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
         {
+            //Doesn't need to be checked for null, just reset every time
             _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
             _dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
+            _dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
 
             _dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
             _dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
             this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
 
             _rootGuiControl.AddChild(_dungeonLevelSwapper);
+
+            _rootGuiControl.RemoveChild(currentUiScene);
+        }
+
+        private void ChangeSceneToGameOverScreen(Node currentUiScene)
+        {
+            _gameOverScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameOverScreenPath).Instantiate() as GameOverScreenManager;
+
+            _gameOverScreenManager.GoToTitleScreen += OnGameOverScreenGoToTitleScreen;
+
+            _rootGuiControl.AddChild(_gameOverScreenManager);
 
             _rootGuiControl.RemoveChild(currentUiScene);
         }

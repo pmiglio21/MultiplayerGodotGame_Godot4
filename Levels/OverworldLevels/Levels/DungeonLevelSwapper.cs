@@ -14,18 +14,22 @@ public partial class DungeonLevelSwapper : Node
 	private RootSceneSwapper _rootSceneSwapper;
     private PauseScreenManager _pauseScreenManager;
     private SplitScreenManager _latestSplitScreenManager;
+    private BaseDungeonLevel _latestBaseDungeonLevel;
 
     #region Signals
 
     [Signal]
     public delegate void GoToTitleScreenEventHandler();
 
+    [Signal]
+    public delegate void GoToGameOverScreenEventHandler();
+
     #endregion
 
     public GameRules CurrentGameRules = new GameRules();
     public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 
-    private int _levelCounter;
+    private int _levelCounter = 0;
 
 	public override void _Ready()
 	{
@@ -35,7 +39,8 @@ public partial class DungeonLevelSwapper : Node
 
         _latestSplitScreenManager = GetNode<SplitScreenManager>("SplitScreenManager");
 
-        _levelCounter = 0;
+		_latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+		_latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
 	}
 
 	public override void _Process(double delta)
@@ -88,11 +93,19 @@ public partial class DungeonLevelSwapper : Node
 
 		_latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
 
+        _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+        _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
+
         currentSplitScreenManager.QueueFree();
 	}
 
 	private void ChangeScreenToTitleScreen()
 	{
         EmitSignal(SignalName.GoToTitleScreen);
+    }
+
+	private void ChangeSceneToGameOverScreen()
+	{
+        EmitSignal(SignalName.GoToGameOverScreen);
     }
 }
