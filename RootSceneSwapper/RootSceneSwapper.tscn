@@ -3,20 +3,18 @@
 [ext_resource type="Script" path="res://RootSceneSwapper/RootSceneSwapper.cs" id="1_rbios"]
 [ext_resource type="PackedScene" uid="uid://cf8ld0gid5wam" path="res://Levels/EarlyLevels/TitleScreen/TitleScreen.tscn" id="2_an2j4"]
 
-[node name="RootSceneSwapper" type="Node2D"]
+[node name="RootSceneSwapper" type="Node"]
 script = ExtResource("1_rbios")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="TitleScreenRoot" parent="GUI" instance=ExtResource("2_an2j4")]
 layout_mode = 1
@@ -24,7 +22,3 @@ offset_left = -94.0
 offset_top = 2.0
 offset_right = -94.0
 offset_bottom = 2.0
-
-[connection signal="GoToGameRulesScreen" from="GUI/TitleScreenRoot" to="." method="OnTitleScreenRootGoToGameRulesScreen"]
-[connection signal="GoToPlayModeScreen" from="GUI/TitleScreenRoot" to="." method="OnTitleScreenRootGoToPlayModeScreen"]
-[connection signal="GoToSettingsScreen" from="GUI/TitleScreenRoot" to="." method="OnTitleScreenRootGoToSettingsScreen"]

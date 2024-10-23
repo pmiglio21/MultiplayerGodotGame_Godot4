@@ -37,10 +37,17 @@ namespace Root
 
         public override void _Ready()
         {
+            GetTree().Root.SizeChanged += CentralizeGui;
+
             _rootGuiControl = FindChild("GUI") as Control;
+
+            CentralizeGui();
 
             _titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
+            _titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
+            _titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen; 
+            _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
             _titleScreenManager.QuitGame += QuitGame;
         }
 
@@ -135,6 +142,11 @@ namespace Root
             _playerCharacterSelectScreenManager = null;
 
             ChangeSceneToTitleScreen(_dungeonLevelSwapper);
+
+            //if (_dungeonLevelSwapper != null)
+            //{
+            //    _dungeonLevelSwapper.QueueFree();
+            //}
         }
 
         #endregion
@@ -251,6 +263,15 @@ namespace Root
             _dungeonLevelSwapper?.QueueFree();
 
             GetTree().Quit();
+        }
+
+        private void CentralizeGui()
+        {
+            //var tree = GetTree();
+
+            //Vector2I mainViewportSize = tree.Root.Size;
+
+            //_rootGuiControl.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
         }
 
         #endregion
