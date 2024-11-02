@@ -22,7 +22,13 @@ namespace Root
 
 		#endregion
 
+		#region Components
+
 		private Control _rootGuiControl;
+
+		private AudioStreamPlayer _audioStreamPlayer;
+
+		#endregion
 
 		#region Screen Managers
 
@@ -41,6 +47,7 @@ namespace Root
 			GetTree().Root.SizeChanged += CentralizeGui;
 
 			_rootGuiControl = FindChild("GUI") as Control;
+			_audioStreamPlayer = FindChild("AudioStreamPlayer") as AudioStreamPlayer;
 
 			CentralizeGui();
 
@@ -50,6 +57,11 @@ namespace Root
 			_titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen; 
 			_titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
+		}
+
+		public DungeonLevelSwapper GetDungeonLevelSwapper()
+		{
+			return _dungeonLevelSwapper;
 		}
 
 		#region Go-To-Screens Methods
@@ -310,9 +322,35 @@ namespace Root
 
 		#endregion
 
-		public DungeonLevelSwapper GetDungeonLevelSwapper()
+		#region UI Sound Players
+
+		public void PlayButtonMoveSound()
 		{
-			return _dungeonLevelSwapper;
+			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiMoveSoundPath) as AudioStream;
+
+			_audioStreamPlayer.Stream = audioStream;
+
+			_audioStreamPlayer.Play();
 		}
+
+		public void PlayButtonSelectSound()
+		{
+			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiButtonSelectSoundPath) as AudioStream;
+
+			_audioStreamPlayer.Stream = audioStream;
+
+			_audioStreamPlayer.Play();
+		}
+
+		public void PlayReturnToPreviousScreenSound()
+		{
+			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiReturnToPreviousScreenSoundPath) as AudioStream;
+
+			_audioStreamPlayer.Stream = audioStream;
+
+			_audioStreamPlayer.Play();
+		}
+
+		#endregion
 	}
 }
