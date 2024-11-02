@@ -1,16 +1,14 @@
 using Enums;
 using Globals;
 using Godot;
-using Levels.UtilityLevels;
-using Enums.GameRules;
-using System;
-using System.Linq;
+using Root;
 
 
 namespace Levels.UtilityLevels
 {
 	public partial class PauseScreenManager : Control
 	{
+		private RootSceneSwapper _rootSceneSwapper;
 		private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
 		#region Signals
@@ -38,6 +36,7 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
+			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 			_parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
 
 			_inputTimer = FindChild("InputTimer") as Timer;
@@ -101,11 +100,15 @@ namespace Levels.UtilityLevels
 					//Get pause input once timer lets up
 					if (!_pauseChangedRecently)
 					{
+						_rootSceneSwapper.PlayButtonSelectSound();
+
 						IsPauseScreenBeingShown = false;
 					}
 				}
 				else if (_settingsButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayButtonSelectSound();
+
 					_settingsScreen.IsSettingsScreenBeingShown = true;
 					_settingsScreen.GrabFocusOfTopButton();
 
@@ -115,6 +118,8 @@ namespace Levels.UtilityLevels
 				}
 				else if (_quitGameButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
 					GetTree().Paused = false;
 
 					this.Hide();
@@ -125,6 +130,8 @@ namespace Levels.UtilityLevels
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
+				_rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
 				_resumeGameButton.GrabFocus();
 			}
 		}
@@ -135,10 +142,14 @@ namespace Levels.UtilityLevels
 			{
 				if (_resumeGameButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
 					_quitGameButton.GrabFocus();
 				}
 
@@ -148,10 +159,14 @@ namespace Levels.UtilityLevels
 			{
 				if (_quitGameButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
 					_resumeGameButton.GrabFocus();
 				}
 

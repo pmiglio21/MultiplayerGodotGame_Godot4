@@ -1,6 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
+using Root;
 using System;
 using System.Linq;
 
@@ -8,6 +9,8 @@ namespace Levels.UtilityLevels
 {
     public partial class GameOverScreenManager : Control
     {
+        private RootSceneSwapper _rootSceneSwapper;
+
         #region Signals
 
         [Signal]
@@ -25,6 +28,8 @@ namespace Levels.UtilityLevels
 
         public override void _Ready()
         {
+            _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+
             _toTitleScreenButton = FindChild("ToTitleScreenButton") as Button;
 
             _toTitleScreenButton.GrabFocus();
@@ -61,6 +66,8 @@ namespace Levels.UtilityLevels
                 {
                     if (!_inputChangedRecently)
                     {
+                        _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
                         EmitSignal(SignalName.GoToTitleScreen);
 
                         _inputTimer = 0;

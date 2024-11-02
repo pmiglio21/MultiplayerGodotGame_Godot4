@@ -81,10 +81,14 @@ namespace Levels.UtilityLevels
             {
                 if (_returnButton.HasFocus())
                 {
+                    _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
                     ReturnToPriorScene();
                 }
                 else if (_continueButton.HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonSelectSound();
+
                     SaveOutGameRules();
 
                     EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
@@ -114,22 +118,32 @@ namespace Levels.UtilityLevels
             {
                 if (_splitScreenOptionSelector.GetOptionButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
                 }
                 else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _levelSizeSelector.GetOptionButton().GrabFocus();
                 }
                 else if (_levelSizeSelector.GetOptionButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _numberSpinner.GetNumberSpinnerButton().GrabFocus();
                 }
                 else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _returnButton.GrabFocus();
                 }
                 else if (_returnButton.HasFocus() && _continueButton.Visible)
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _continueButton.GrabFocus();
                 }
 
@@ -139,22 +153,32 @@ namespace Levels.UtilityLevels
             {
                 if (_continueButton.HasFocus() && _continueButton.Visible)
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _returnButton.GrabFocus();
                 }
                 else if (_returnButton.HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _numberSpinner.GetNumberSpinnerButton().GrabFocus();
                 }
                 else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _levelSizeSelector.GetOptionButton().GrabFocus();
                 }
                 else if (_levelSizeSelector.GetOptionButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
                 }
                 else if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
                 {
+                    _rootSceneSwapper.PlayButtonMoveSound();
+
                     _splitScreenOptionSelector.GetOptionButton().GrabFocus();
                 }
 
@@ -170,9 +194,6 @@ namespace Levels.UtilityLevels
 		private void ReturnToPriorScene()
 		{
             SaveOutGameRules();
-
-   //         PlayerManager.ActivePlayers.Clear();
-			//PlayerCharacterPickerManager.ActivePickers.Clear();
 
             if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
             {

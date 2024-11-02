@@ -18,24 +18,24 @@ namespace Levels.EarlyLevels
 		#region Signals
 
 		[Signal]
-        public delegate void GoToPlayModeScreenEventHandler();
+		public delegate void GoToPlayModeScreenEventHandler();
 
-        [Signal]
-        public delegate void GoToGameRulesScreenEventHandler();
+		[Signal]
+		public delegate void GoToGameRulesScreenEventHandler();
 
-        [Signal]
-        public delegate void GoToSettingsScreenEventHandler();
+		[Signal]
+		public delegate void GoToSettingsScreenEventHandler();
 
-        [Signal]
-        public delegate void QuitGameEventHandler();
+		[Signal]
+		public delegate void QuitGameEventHandler();
 
-        #endregion
+		#endregion
 
-        public override void _Ready()
+		public override void _Ready()
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 			
-            _inputTimer = FindChild("InputTimer") as Timer;
+			_inputTimer = FindChild("InputTimer") as Timer;
 			_playButton = FindChild("PlayButton") as Button;
 			_gameRulesButton = FindChild("GameRulesButton") as Button;
 			_settingsButton = FindChild("SettingsButton") as Button;
@@ -53,58 +53,58 @@ namespace Levels.EarlyLevels
 
 		private void GetButtonPressInput()
 		{
-            if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
-            {
-                if (_playButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayButtonSelectSound();
+			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			{
+				if (_playButton.HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonSelectSound();
 
-                    EmitSignal(SignalName.GoToPlayModeScreen);
-                }
-                else if (_gameRulesButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayButtonSelectSound();
+					EmitSignal(SignalName.GoToPlayModeScreen);
+				}
+				else if (_gameRulesButton.HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonSelectSound();
 
-                    _rootSceneSwapper.PriorSceneName = ScreenNames.Title;
+					_rootSceneSwapper.PriorSceneName = ScreenNames.Title;
 
-                    EmitSignal(SignalName.GoToGameRulesScreen);
-                }
-                else if (_settingsButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayButtonSelectSound();
+					EmitSignal(SignalName.GoToGameRulesScreen);
+				}
+				else if (_settingsButton.HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonSelectSound();
 
-                    EmitSignal(SignalName.GoToSettingsScreen);
-                }
-                else if (_quitGameButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayButtonSelectSound();
+					EmitSignal(SignalName.GoToSettingsScreen);
+				}
+				else if (_quitGameButton.HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonSelectSound();
 
-                    EmitSignal(SignalName.QuitGame);
-                }
-            }
-        }
+					EmitSignal(SignalName.QuitGame);
+				}
+			}
+		}
 
 		private void GetNavigationInput()
 		{
 			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
-                if(_playButton.HasFocus())
+				if(_playButton.HasFocus())
 				{
 					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _gameRulesButton.GrabFocus();
+					_gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-                    _rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _settingsButton.GrabFocus();
+					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-                    _rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _quitGameButton.GrabFocus();
+					_quitGameButton.GrabFocus();
 				}
 
 				_inputTimer.Start();
@@ -113,30 +113,30 @@ namespace Levels.EarlyLevels
 			{
 				if (_quitGameButton.HasFocus())
 				{
-                    _rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _settingsButton.GrabFocus();
+					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-                    _rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _gameRulesButton.GrabFocus();
+					_gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-                    _rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayButtonMoveSound();
 
-                    _playButton.GrabFocus();
+					_playButton.GrabFocus();
 				}
 
 				_inputTimer.Start();
 			}
 		}
 
-        public void GrabFocusOfTopButton()
-        {
-            _playButton.GrabFocus();
-        }
-    }
+		public void GrabFocusOfTopButton()
+		{
+			_playButton.GrabFocus();
+		}
+	}
 }

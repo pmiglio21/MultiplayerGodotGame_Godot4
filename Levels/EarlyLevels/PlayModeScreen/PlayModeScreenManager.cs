@@ -48,6 +48,8 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
+                _rootSceneSwapper.PlayButtonSelectSound();
+
                 _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
 
                 EmitSignal(SignalName.GoToGameRulesScreen);
@@ -56,6 +58,8 @@ public partial class PlayModeScreenManager : GridContainer
 
         if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
         {
+            _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
             _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
 
             EmitSignal(SignalName.GoToTitleScreen);
@@ -68,6 +72,8 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
+                _rootSceneSwapper.PlayButtonSelectSound();
+
                 _onlineButton.GrabFocus();
             }
         }
@@ -76,6 +82,8 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_onlineButton.HasFocus())
             {
+                _rootSceneSwapper.PlayButtonSelectSound();
+
                 _localButton.GrabFocus();
             }
         }

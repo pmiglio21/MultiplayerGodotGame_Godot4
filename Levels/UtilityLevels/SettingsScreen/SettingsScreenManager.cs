@@ -1,7 +1,6 @@
 using Enums;
 using Globals;
 using Godot;
-using Levels.OverworldLevels;
 using Root;
 using System.Linq;
 
@@ -83,7 +82,9 @@ namespace Levels.UtilityLevels
 				{
 					if (!_inputChangedRecently)
 					{
-						ReturnToPriorScene();
+                        _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
+                        ReturnToPriorScene();
 
 						_inputTimer = 0;
 					}
@@ -94,7 +95,9 @@ namespace Levels.UtilityLevels
 			{
 				if (!_inputChangedRecently)
 				{
-					ReturnToPriorScene();
+                    _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+
+                    ReturnToPriorScene();
 
 					_inputTimer = 0;
 				}
@@ -105,11 +108,12 @@ namespace Levels.UtilityLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
 			{
-				//if (_returnButton.HasFocus())
-				//{
-				//	_settingsButton.GrabFocus();
-				//}
-			}
+                //if (_returnButton.HasFocus())
+                //{
+                //  _rootSceneSwapper.PlayButtonSelectSound();
+                //	_settingsButton.GrabFocus();
+                //}
+            }
 		}
 
 		private void GetPauseScreen()
