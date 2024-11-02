@@ -8,6 +8,7 @@ namespace Levels.EarlyLevels
 	public partial class TitleScreenManager: Control
 	{
 		private RootSceneSwapper _rootSceneSwapper;
+		private AudioStreamPlayer _audioStreamPlayer;
 
 		private Timer _inputTimer;
 		private Button _playButton;
@@ -34,6 +35,7 @@ namespace Levels.EarlyLevels
         public override void _Ready()
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+			_audioStreamPlayer = _rootSceneSwapper.FindChild("AudioStreamPlayer") as AudioStreamPlayer;
 
             _inputTimer = FindChild("InputTimer") as Timer;
 			_playButton = FindChild("PlayButton") as Button;
@@ -57,20 +59,28 @@ namespace Levels.EarlyLevels
             {
                 if (_playButton.HasFocus())
                 {
+                    PlayButtonSelectSound();
+
                     EmitSignal(SignalName.GoToPlayModeScreen);
                 }
                 else if (_gameRulesButton.HasFocus())
                 {
+                    PlayButtonSelectSound();
+
                     _rootSceneSwapper.PriorSceneName = ScreenNames.Title;
 
                     EmitSignal(SignalName.GoToGameRulesScreen);
                 }
                 else if (_settingsButton.HasFocus())
                 {
+                    PlayButtonSelectSound();
+
                     EmitSignal(SignalName.GoToSettingsScreen);
                 }
                 else if (_quitGameButton.HasFocus())
                 {
+                    PlayButtonSelectSound();
+
                     EmitSignal(SignalName.QuitGame);
                 }
             }
@@ -80,17 +90,23 @@ namespace Levels.EarlyLevels
 		{
 			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
-				if (_playButton.HasFocus())
+                if(_playButton.HasFocus())
 				{
-					_gameRulesButton.GrabFocus();
+					PlayButtonMoveSound();
+
+                    _gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_settingsButton.GrabFocus();
+                    PlayButtonMoveSound();
+
+                    _settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_quitGameButton.GrabFocus();
+                    PlayButtonMoveSound();
+
+                    _quitGameButton.GrabFocus();
 				}
 
 				_inputTimer.Start();
@@ -99,15 +115,21 @@ namespace Levels.EarlyLevels
 			{
 				if (_quitGameButton.HasFocus())
 				{
-					_settingsButton.GrabFocus();
+                    PlayButtonMoveSound();
+
+                    _settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_gameRulesButton.GrabFocus();
+                    PlayButtonMoveSound();
+
+                    _gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_playButton.GrabFocus();
+                    PlayButtonMoveSound();
+
+                    _playButton.GrabFocus();
 				}
 
 				_inputTimer.Start();
@@ -118,5 +140,32 @@ namespace Levels.EarlyLevels
         {
             _playButton.GrabFocus();
         }
+
+		private void PlayButtonMoveSound()
+		{
+            AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiMoveSoundPath) as AudioStream;
+
+            _audioStreamPlayer.Stream = audioStream;
+
+            _audioStreamPlayer.Play();
+        }
+
+        private void PlayButtonSelectSound()
+        {
+            AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiButtonSelectSoundPath) as AudioStream;
+
+            _audioStreamPlayer.Stream = audioStream;
+
+            _audioStreamPlayer.Play();
+        }
+
+        //private void PlayReturnToPreviousScreenSound()
+        //{
+        //    AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiReturnToPreviousScreenSoundPath) as AudioStream;
+
+        //    _audioStreamPlayer.Stream = audioStream;
+
+        //    _audioStreamPlayer.Play();
+        //}
     }
 }

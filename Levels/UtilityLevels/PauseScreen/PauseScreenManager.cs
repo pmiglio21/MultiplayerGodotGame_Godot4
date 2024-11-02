@@ -11,16 +11,16 @@ namespace Levels.UtilityLevels
 {
 	public partial class PauseScreenManager : Control
 	{
-        private DungeonLevelSwapper _parentDungeonLevelSwapper;
+		private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
-        #region Signals
+		#region Signals
 
-        [Signal]
-        public delegate void GoToTitleScreenEventHandler();
+		[Signal]
+		public delegate void GoToTitleScreenEventHandler();
 
-        #endregion
+		#endregion
 
-        public bool IsPauseScreenBeingShown = false;
+		public bool IsPauseScreenBeingShown = false;
 		public bool IsPauseScreenChildBeingShown = false;
 
 		//Necessary to keep pause screen from immediately unpausing
@@ -38,9 +38,9 @@ namespace Levels.UtilityLevels
 
 		public override void _Ready()
 		{
-            _parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
+			_parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
 
-            _inputTimer = FindChild("InputTimer") as Timer;
+			_inputTimer = FindChild("InputTimer") as Timer;
 			_resumeGameButton = GetNode<Button>("ResumeGameButton");
 			_settingsButton = GetNode<Button>("SettingsButton");
 			_quitGameButton = GetNode<Button>("QuitGameButton");
@@ -115,11 +115,11 @@ namespace Levels.UtilityLevels
 				}
 				else if (_quitGameButton.HasFocus())
 				{
-                    GetTree().Paused = false;
+					GetTree().Paused = false;
 
 					this.Hide();
 
-                    EmitSignal(SignalName.GoToTitleScreen);
+					EmitSignal(SignalName.GoToTitleScreen);
 				}
 			}
 

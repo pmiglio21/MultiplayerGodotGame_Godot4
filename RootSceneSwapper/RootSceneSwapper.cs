@@ -1,4 +1,4 @@
-﻿using Enums;
+using Enums;
 using Globals;
 using Godot;
 using Levels.UtilityLevels;
@@ -10,309 +10,309 @@ using System.Collections.Generic;
 
 namespace Root
 {
-    public partial class RootSceneSwapper : Node
-    {
-        #region "Global" Properties
+	public partial class RootSceneSwapper : Node
+	{
+		#region "Global" Properties
 
-        public ScreenNames PriorSceneName;
-        public GameRules CurrentGameRules = new GameRules();
+		public ScreenNames PriorSceneName;
+		public GameRules CurrentGameRules = new GameRules();
 
-        public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
-        public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
+		public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
+		public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
 
-        #endregion
+		#endregion
 
-        private Control _rootGuiControl;
+		private Control _rootGuiControl;
 
-        #region Screen Managers
+		#region Screen Managers
 
-        private TitleScreenManager _titleScreenManager;
-        private PlayModeScreenManager _playModeScreenManager; 
-        private GameRulesScreenManager _gameRulesScreenManager; 
-        private SettingsScreenManager _settingsScreenManager;
-        private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager; 
-        private DungeonLevelSwapper _dungeonLevelSwapper;
-        private GameOverScreenManager _gameOverScreenManager;
+		private TitleScreenManager _titleScreenManager;
+		private PlayModeScreenManager _playModeScreenManager; 
+		private GameRulesScreenManager _gameRulesScreenManager; 
+		private SettingsScreenManager _settingsScreenManager;
+		private PlayerCharacterSelectScreenManager _playerCharacterSelectScreenManager; 
+		private DungeonLevelSwapper _dungeonLevelSwapper;
+		private GameOverScreenManager _gameOverScreenManager;
 
-        #endregion
+		#endregion
 
-        public override void _Ready()
-        {
-            GetTree().Root.SizeChanged += CentralizeGui;
+		public override void _Ready()
+		{
+			GetTree().Root.SizeChanged += CentralizeGui;
 
-            _rootGuiControl = FindChild("GUI") as Control;
+			_rootGuiControl = FindChild("GUI") as Control;
 
-            CentralizeGui();
+			CentralizeGui();
 
-            _titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
+			_titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
-            _titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
-            _titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen; 
-            _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
-            _titleScreenManager.QuitGame += QuitGame;
-        }
+			_titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
+			_titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen; 
+			_titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
+			_titleScreenManager.QuitGame += QuitGame;
+		}
 
-        #region Go-To-Screens Methods
+		#region Go-To-Screens Methods
 
-        #region From Title Screen
+		#region From Title Screen
 
-        private void OnTitleScreenRootGoToPlayModeScreen()
-        {
-            ChangeSceneToPlayModeScreen(_titleScreenManager);
-        }
+		private void OnTitleScreenRootGoToPlayModeScreen()
+		{
+			ChangeSceneToPlayModeScreen(_titleScreenManager);
+		}
 
-        private void OnTitleScreenRootGoToGameRulesScreen()
-        {
-            ChangeSceneToGameRulesScreen(_titleScreenManager);
-        }
+		private void OnTitleScreenRootGoToGameRulesScreen()
+		{
+			ChangeSceneToGameRulesScreen(_titleScreenManager);
+		}
 
-        private void OnTitleScreenRootGoToSettingsScreen()
-        {
-            ChangeSceneToSettingsScreen();
-        }
+		private void OnTitleScreenRootGoToSettingsScreen()
+		{
+			ChangeSceneToSettingsScreen();
+		}
 
-        #endregion
+		#endregion
 
-        #region From Play Mode Screen
+		#region From Play Mode Screen
 
-        public void OnPlayModeScreenGoToTitleScreen()
-        {
-            ChangeSceneToTitleScreen(_playModeScreenManager);
-        }
+		public void OnPlayModeScreenGoToTitleScreen()
+		{
+			ChangeSceneToTitleScreen(_playModeScreenManager);
+		}
 
-        public void OnPlayModeScreenGoToGameRulesScreen()
-        {
-            ChangeSceneToGameRulesScreen(_playModeScreenManager);
-        }
+		public void OnPlayModeScreenGoToGameRulesScreen()
+		{
+			ChangeSceneToGameRulesScreen(_playModeScreenManager);
+		}
 
-        #endregion
+		#endregion
 
-        #region Game Rules Screen
+		#region Game Rules Screen
 
-        public void OnGameRulesScreenGoToTitleScreen()
-        {
-            this.CurrentGameRules = new GameRules();
+		public void OnGameRulesScreenGoToTitleScreen()
+		{
+			this.CurrentGameRules = new GameRules();
 
-            ChangeSceneToTitleScreen(_gameRulesScreenManager);
-        }
+			ChangeSceneToTitleScreen(_gameRulesScreenManager);
+		}
 
-        public void OnGameRulesScreenGoToPlayModeScreen()
-        {
-            this.CurrentGameRules = _gameRulesScreenManager.CurrentGameRules;
+		public void OnGameRulesScreenGoToPlayModeScreen()
+		{
+			this.CurrentGameRules = _gameRulesScreenManager.CurrentGameRules;
 
-            ChangeSceneToPlayModeScreen(_gameRulesScreenManager);
-        }
+			ChangeSceneToPlayModeScreen(_gameRulesScreenManager);
+		}
 
-        public void OnGameRulesScreenGoToPlayerCharacterSelectScreen()
-        {
-            ChangeSceneToPlayerCharacterSelectScreen(_gameRulesScreenManager);
-        }
+		public void OnGameRulesScreenGoToPlayerCharacterSelectScreen()
+		{
+			ChangeSceneToPlayerCharacterSelectScreen(_gameRulesScreenManager);
+		}
 
-        #endregion
+		#endregion
 
-        #region Settings Screen
+		#region Settings Screen
 
-        public void OnSettingsScreenGoToTitleScreen()
-        {
-            ChangeSceneToTitleScreen(_settingsScreenManager);
-        }
+		public void OnSettingsScreenGoToTitleScreen()
+		{
+			ChangeSceneToTitleScreen(_settingsScreenManager);
+		}
 
-        #endregion
+		#endregion
 
-        #region Player Character Select Screen
+		#region Player Character Select Screen
 
-        public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
-        {
-            this.ActivePlayers.Clear();
-            this.ActivePlayerCharacterPickers.Clear();
+		public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
+		{
+			this.ActivePlayers.Clear();
+			this.ActivePlayerCharacterPickers.Clear();
 
-            ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
-        }
+			ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
+		}
 
-        public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
-        {
-            ChangeSceneToDungeonLevelSwapperScreen(_playerCharacterSelectScreenManager);
-        }
+		public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
+		{
+			ChangeSceneToDungeonLevelSwapperScreen(_playerCharacterSelectScreenManager);
+		}
 
-        #endregion
+		#endregion
 
-        #region Dungeon Level Swapper Screen
+		#region Dungeon Level Swapper Screen
 
-        public void OnDungeonLevelSwapperScreenGoToTitleScreen()
-        {
-            _playerCharacterSelectScreenManager = null;
+		public void OnDungeonLevelSwapperScreenGoToTitleScreen()
+		{
+			_playerCharacterSelectScreenManager = null;
 
-            ChangeSceneToTitleScreen(_dungeonLevelSwapper);
+			ChangeSceneToTitleScreen(_dungeonLevelSwapper);
 
-            //if (_dungeonLevelSwapper != null)
-            //{
-            //    _dungeonLevelSwapper.QueueFree();
-            //}
-        }
+			//if (_dungeonLevelSwapper != null)
+			//{
+			//    _dungeonLevelSwapper.QueueFree();
+			//}
+		}
 
-        public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
-        {
-            _playerCharacterSelectScreenManager = null;
+		public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
+		{
+			_playerCharacterSelectScreenManager = null;
 
-            ChangeSceneToGameOverScreen(_dungeonLevelSwapper);
-        }
+			ChangeSceneToGameOverScreen(_dungeonLevelSwapper);
+		}
 
-        #endregion
+		#endregion
 
-        #region Game Over Screen
+		#region Game Over Screen
 
-        public void OnGameOverScreenGoToTitleScreen()
-        {
-            _playerCharacterSelectScreenManager = null;
+		public void OnGameOverScreenGoToTitleScreen()
+		{
+			_playerCharacterSelectScreenManager = null;
 
-            ChangeSceneToTitleScreen(_gameOverScreenManager);
-        }
+			ChangeSceneToTitleScreen(_gameOverScreenManager);
+		}
 
-        #endregion
+		#endregion
 
-        #region General Use
+		#region General Use
 
-        private void ChangeSceneToTitleScreen(Control currentUiScene)
-        {
-            _rootGuiControl.AddChild(_titleScreenManager);
+		private void ChangeSceneToTitleScreen(Control currentUiScene)
+		{
+			_rootGuiControl.AddChild(_titleScreenManager);
 
-            _rootGuiControl.RemoveChild(currentUiScene);
+			_rootGuiControl.RemoveChild(currentUiScene);
 
-            _titleScreenManager.GrabFocusOfTopButton();
-        }
+			_titleScreenManager.GrabFocusOfTopButton();
+		}
 
-        private void ChangeSceneToTitleScreen(Node currentScene)
-        {
-            _rootGuiControl.AddChild(_titleScreenManager);
+		private void ChangeSceneToTitleScreen(Node currentScene)
+		{
+			_rootGuiControl.AddChild(_titleScreenManager);
 
-            _rootGuiControl.RemoveChild(currentScene);
+			_rootGuiControl.RemoveChild(currentScene);
 
-            _titleScreenManager.GrabFocusOfTopButton();
-        }
+			_titleScreenManager.GrabFocusOfTopButton();
+		}
 
-        private void ChangeSceneToPlayModeScreen(Control currentUIScene)
-        {
-            if (_playModeScreenManager == null)
-            {
-                _playModeScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayModeScreenPath).Instantiate() as PlayModeScreenManager;
+		private void ChangeSceneToPlayModeScreen(Control currentUIScene)
+		{
+			if (_playModeScreenManager == null)
+			{
+				_playModeScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayModeScreenPath).Instantiate() as PlayModeScreenManager;
 
-                _playModeScreenManager.GoToTitleScreen += OnPlayModeScreenGoToTitleScreen;
-                _playModeScreenManager.GoToGameRulesScreen += OnPlayModeScreenGoToGameRulesScreen;
-            }
+				_playModeScreenManager.GoToTitleScreen += OnPlayModeScreenGoToTitleScreen;
+				_playModeScreenManager.GoToGameRulesScreen += OnPlayModeScreenGoToGameRulesScreen;
+			}
 
-            _rootGuiControl.AddChild(_playModeScreenManager);
+			_rootGuiControl.AddChild(_playModeScreenManager);
 
-            _rootGuiControl.RemoveChild(currentUIScene);
+			_rootGuiControl.RemoveChild(currentUIScene);
 
-            _playModeScreenManager.GrabFocusOfFirstButton();
-        }
+			_playModeScreenManager.GrabFocusOfFirstButton();
+		}
 
-        private void ChangeSceneToGameRulesScreen(Control currentUiScene)
-        {
-            if (_gameRulesScreenManager == null)
-            {
-                _gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
+		private void ChangeSceneToGameRulesScreen(Control currentUiScene)
+		{
+			if (_gameRulesScreenManager == null)
+			{
+				_gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
 
-                _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
-                _gameRulesScreenManager.GoToPlayModeScreen += OnGameRulesScreenGoToPlayModeScreen;
-                _gameRulesScreenManager.GoToPlayerCharacterSelectScreen += OnGameRulesScreenGoToPlayerCharacterSelectScreen;
-            }
+				_gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
+				_gameRulesScreenManager.GoToPlayModeScreen += OnGameRulesScreenGoToPlayModeScreen;
+				_gameRulesScreenManager.GoToPlayerCharacterSelectScreen += OnGameRulesScreenGoToPlayerCharacterSelectScreen;
+			}
 
-            _rootGuiControl.AddChild(_gameRulesScreenManager);
+			_rootGuiControl.AddChild(_gameRulesScreenManager);
 
-            _rootGuiControl.RemoveChild(currentUiScene);
+			_rootGuiControl.RemoveChild(currentUiScene);
 
-            _gameRulesScreenManager.GrabFocusOfTopButton();
-        }
+			_gameRulesScreenManager.GrabFocusOfTopButton();
+		}
 
-        private void ChangeSceneToSettingsScreen()
-        {
-            if (_settingsScreenManager == null)
-            {
-                _settingsScreenManager = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath).Instantiate() as SettingsScreenManager;
+		private void ChangeSceneToSettingsScreen()
+		{
+			if (_settingsScreenManager == null)
+			{
+				_settingsScreenManager = GD.Load<PackedScene>(LevelScenePaths.SettingsScreenPath).Instantiate() as SettingsScreenManager;
 
-                _settingsScreenManager.GoToTitleScreen += OnSettingsScreenGoToTitleScreen;
-            }
+				_settingsScreenManager.GoToTitleScreen += OnSettingsScreenGoToTitleScreen;
+			}
 
-            _rootGuiControl.AddChild(_settingsScreenManager);
+			_rootGuiControl.AddChild(_settingsScreenManager);
 
-            _rootGuiControl.RemoveChild(_titleScreenManager);
+			_rootGuiControl.RemoveChild(_titleScreenManager);
 
-            _settingsScreenManager.GrabFocusOfTopButton();
-        }
+			_settingsScreenManager.GrabFocusOfTopButton();
+		}
 
-        private void ChangeSceneToPlayerCharacterSelectScreen(Control currentUiScene)
-        {
-            if (_playerCharacterSelectScreenManager == null)
-            {
-                _playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
+		private void ChangeSceneToPlayerCharacterSelectScreen(Control currentUiScene)
+		{
+			if (_playerCharacterSelectScreenManager == null)
+			{
+				_playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
 
-                _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen; 
-                _playerCharacterSelectScreenManager.GoToDungeonLevelSwapper += OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper;
-            }
+				_playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen; 
+				_playerCharacterSelectScreenManager.GoToDungeonLevelSwapper += OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper;
+			}
 
-            _rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
+			_rootGuiControl.AddChild(_playerCharacterSelectScreenManager);
 
-            _rootGuiControl.RemoveChild(currentUiScene);
-        }
+			_rootGuiControl.RemoveChild(currentUiScene);
+		}
 
-        private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
-        {
-            //Doesn't need to be checked for null, just reset every time
-            _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
+		private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
+		{
+			//Doesn't need to be checked for null, just reset every time
+			_dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
-            _dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
-            _dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
+			_dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
+			_dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
 
-            _dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
-            _dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
-            this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
+			_dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
+			_dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
+			this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
 
-            _rootGuiControl.AddChild(_dungeonLevelSwapper);
+			_rootGuiControl.AddChild(_dungeonLevelSwapper);
 
-            _rootGuiControl.RemoveChild(currentUiScene);
-        }
+			_rootGuiControl.RemoveChild(currentUiScene);
+		}
 
-        private void ChangeSceneToGameOverScreen(Node currentUiScene)
-        {
-            _gameOverScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameOverScreenPath).Instantiate() as GameOverScreenManager;
+		private void ChangeSceneToGameOverScreen(Node currentUiScene)
+		{
+			_gameOverScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameOverScreenPath).Instantiate() as GameOverScreenManager;
 
-            _gameOverScreenManager.GoToTitleScreen += OnGameOverScreenGoToTitleScreen;
+			_gameOverScreenManager.GoToTitleScreen += OnGameOverScreenGoToTitleScreen;
 
-            _rootGuiControl.AddChild(_gameOverScreenManager);
+			_rootGuiControl.AddChild(_gameOverScreenManager);
 
-            _rootGuiControl.RemoveChild(currentUiScene);
-        }
+			_rootGuiControl.RemoveChild(currentUiScene);
+		}
 
-        private void QuitGame()
-        {
-            //Need this or else game confuses memory while quitting
-            _titleScreenManager?.QueueFree();
-            _playModeScreenManager?.QueueFree();
-            _gameRulesScreenManager?.QueueFree();
-            _settingsScreenManager?.QueueFree();
-            _playerCharacterSelectScreenManager?.QueueFree();
-            _dungeonLevelSwapper?.QueueFree();
+		private void QuitGame()
+		{
+			//Need this or else game confuses memory while quitting
+			_titleScreenManager?.QueueFree();
+			_playModeScreenManager?.QueueFree();
+			_gameRulesScreenManager?.QueueFree();
+			_settingsScreenManager?.QueueFree();
+			_playerCharacterSelectScreenManager?.QueueFree();
+			_dungeonLevelSwapper?.QueueFree();
 
-            GetTree().Quit();
-        }
+			GetTree().Quit();
+		}
 
-        private void CentralizeGui()
-        {
-            //var tree = GetTree();
+		private void CentralizeGui()
+		{
+			//var tree = GetTree();
 
-            //Vector2I mainViewportSize = tree.Root.Size;
+			//Vector2I mainViewportSize = tree.Root.Size;
 
-            //_rootGuiControl.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
-        }
+			//_rootGuiControl.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+		}
 
-        #endregion
+		#endregion
 
-        #endregion
+		#endregion
 
-        public DungeonLevelSwapper GetDungeonLevelSwapper()
-        {
-            return _dungeonLevelSwapper;
-        }
-    }
+		public DungeonLevelSwapper GetDungeonLevelSwapper()
+		{
+			return _dungeonLevelSwapper;
+		}
+	}
 }
