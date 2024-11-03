@@ -24,7 +24,7 @@ public partial class BaseDungeonLevel : Node
 
     #region TileMap Level Generation
 
-    private List<Vector2I> _floorTileList = new List<Vector2I>();
+    private List<Vector2I> _possibleFloorSpaces = new List<Vector2I>();
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -77,15 +77,15 @@ public partial class BaseDungeonLevel : Node
 
 		_enemyRespawnTimer = this.GetNode<Timer>("EnemyRespawnTimer");
 
-		if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
-		{
-            LoadInCastleFloorTiles();
+		
 
-            _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
-                                 .Where(tile => IsBlockInsideBorders(tile))
-                                 .ToList());
+		SetPossibleFloorTiles();
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        {
+            
         }
-		else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
 		{
 
 		}
@@ -101,7 +101,7 @@ public partial class BaseDungeonLevel : Node
 
 	#region Floor Generation
 
-	private void LoadInCastleFloorTiles()
+	private void SetPossibleFloorTiles()
 	{
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
 		{
@@ -122,28 +122,14 @@ public partial class BaseDungeonLevel : Node
 			_maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
 		}
 
-		int x = 0;
-
-		while (x < _maxNumberOfTiles)
-		{
-			int y = 0;
-
-			while (y < _maxNumberOfTiles)
-			{
-				//How to make this dynamic? Need to find way to access atlas size.
-				var xAtlasCoord = _rng.RandiRange(0, 3);
-				var yAtlasCoord = _rng.RandiRange(0, 0);
-
-				_tileMap.SetCell(0, new Vector2I(x, y), TileMappingMagicNumbers.TileMapCastleFloorAtlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
-
-				GenerateInteriorBlock(x, y);
-
-				y++;
-			}
-
-			x++;
-		}
-	}
+		for (int x = 0; x < _maxNumberOfTiles; x++)
+        {
+			for (int y = 0; y < _maxNumberOfTiles; y++)
+            {
+                _possibleFloorSpaces.Add(new Vector2I(x, y));
+            }
+        }
+    }
 
 	#endregion
 
@@ -167,35 +153,35 @@ public partial class BaseDungeonLevel : Node
 			}
 		}
 
-		float percentageOfFloorToCover = 0;
+		//float percentageOfFloorToCover = 0;
 
-		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
-		{
-			case 1:
-				percentageOfFloorToCover = .125f;
-				break;
-			case 2:
-				percentageOfFloorToCover = .25f;
-				break;
-			case 3:
-				percentageOfFloorToCover = .333f;
-				break;
-			case 4:
-				percentageOfFloorToCover = .4f;
-				break;
-			default:
-				percentageOfFloorToCover = .25f;
-				break;
-		}
+		//switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
+		//{
+		//	case 1:
+		//		percentageOfFloorToCover = .125f;
+		//		break;
+		//	case 2:
+		//		percentageOfFloorToCover = .25f;
+		//		break;
+		//	case 3:
+		//		percentageOfFloorToCover = .333f;
+		//		break;
+		//	case 4:
+		//		percentageOfFloorToCover = .4f;
+		//		break;
+		//	default:
+		//		percentageOfFloorToCover = .25f;
+		//		break;
+		//}
 
-		//TODO: Get this to work concurrently
-		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
-		{
-			CreatePathsBetweenPoints();
-		}
+		////TODO: Get this to work concurrently
+		//while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
+		//{
+		//	CreatePathsBetweenPoints();
+		//}
 
-		#region Spawn Key Objects
-		GenerateKeyMapItems();
+		//#region Spawn Key Objects
+		//GenerateKeyMapItems();
 
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
@@ -205,9 +191,9 @@ public partial class BaseDungeonLevel : Node
 		{
 			SpawnPlayersNormal();
 		}
-		#endregion
+		//#endregion
 
-		PaintInteriorWalls();
+		//PaintInteriorWalls();
 	}
 
 	#region Procedural Path Generation
@@ -216,78 +202,99 @@ public partial class BaseDungeonLevel : Node
 
 	private void GenerateMultipleSpawnPoints()
 	{
-		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
-		{
-			var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
+		//for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
+		//{
+		//	var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
 
-			var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
+		//	var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
 
-			if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
-			{
-				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
+		//	if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
+		//	{
+		//		var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
 
-				floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+		//		floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
 
-				floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-				floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-				floorGridSpaceWithMatchingPosition.IsCleared = true;
+		//		floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
+		//		floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+		//		floorGridSpaceWithMatchingPosition.IsCleared = true;
 
-				var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
-				richTextLabel.Text = spawnPointGeneratedCount.ToString();
+		//		var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
+		//		richTextLabel.Text = spawnPointGeneratedCount.ToString();
 
-				//Clear out spawn point areas
-				foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
-				{
-					if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition)
-						&& floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
-					{
-						currentFloorGridSpace.InteriorBlock.QueueFree();
-						currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-						currentFloorGridSpace.IsCleared = true;
+		//		//Clear out spawn point areas
+		//		foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
+		//		{
+		//			if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition)
+		//				&& floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
+		//			{
+		//				currentFloorGridSpace.InteriorBlock.QueueFree();
+		//				currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
+		//				currentFloorGridSpace.IsCleared = true;
 
-						var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-						rtl.Text = spawnPointGeneratedCount.ToString();
-					}
-				}
-			}
-		}
+		//				var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+		//				rtl.Text = spawnPointGeneratedCount.ToString();
+		//			}
+		//		}
+		//	}
+		//}
 	}
 
 	private void GenerateSingleSpawnPoints()
 	{
-		var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
+        //Get a random space in possible floor spaces to pick as spawn point
+        var floorTileIndex = _rng.RandiRange(0, _possibleFloorSpaces.Count - 1);
 
-		var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
+        //Create Spawn Point
+        var newSpawnPoint_TileMapSpace = new TileMapSpace();
 
-		if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
-		{
-			var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
+        if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == _possibleFloorSpaces[floorTileIndex]))
+        {
+            newSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == _possibleFloorSpaces[floorTileIndex]);
+        }
+        else
+        {
+            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorSpaces[floorTileIndex].X, _possibleFloorSpaces[floorTileIndex].Y);
 
-			floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
+            _existingFloorGridSpaces.Add(newSpawnPoint_TileMapSpace);
+        }
 
-			floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-			floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = 0;
-			floorGridSpaceWithMatchingPosition.IsCleared = true;
+        newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
 
-			var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
-			richTextLabel.Text = "0";
+        newSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
+        newSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 0;
+        newSpawnPoint_TileMapSpace.IsCleared = true;
 
-			//Clear out spawn point areas
-			foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
-			{
-				if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition) &&
-					floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
-				{
-					currentFloorGridSpace.InteriorBlock.QueueFree();
-					currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = 0;
-					currentFloorGridSpace.IsCleared = true;
+        var richTextLabel = newSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+        richTextLabel.Text = "0";
 
-					var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-					rtl.Text = "0";
-				}
-			}
-		}
-	}
+        //Clear out area near spawn point
+        var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Where(
+            floorSpace => (floorSpace != newSpawnPoint_TileMapSpace.TileMapPosition &&
+                          ((Vector2)newSpawnPoint_TileMapSpace.TileMapPosition).DistanceTo(floorSpace) <= Math.Sqrt(2))).ToList();
+
+        foreach (Vector2I floorSpaceAdjacentToSpawnPoint in floorSpacesAdjacentToSpawnPoint)
+        {
+            var nearSpawnPoint_TileMapSpace = new TileMapSpace();
+
+            if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == floorSpaceAdjacentToSpawnPoint))
+            {
+                nearSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == floorSpaceAdjacentToSpawnPoint);
+            }
+            else
+            {
+                nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint.X, floorSpaceAdjacentToSpawnPoint.Y);
+
+                _existingFloorGridSpaces.Add(nearSpawnPoint_TileMapSpace);
+            }
+
+            nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
+            nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 0;
+            nearSpawnPoint_TileMapSpace.IsCleared = true;
+
+            var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+            rtl.Text = "0";
+        }
+    }
 
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
@@ -479,7 +486,7 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	private void GenerateInteriorBlock(int x, int y)
+	private TileMapSpace CreateDefaultTileMapSpace(int x, int y)
 	{
 		//Generate InteriorWallBlock at that position
 		var tempBlock = _interiorBlockScene.Instantiate();
@@ -495,15 +502,16 @@ public partial class BaseDungeonLevel : Node
 		interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 		testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
-		_existingFloorGridSpaces.Add(
-			new TileMapSpace() 
-			{ 
-				InteriorBlock = interiorBlock, 
-				TestText = testText, 
-				TileMapPosition = new Vector2I(x, y),
-				ActualGlobalPosition = _tileMap.MapToLocal(new Vector2I(x, y)),
-				ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
-			});
+		TileMapSpace newTileMapSpace = new TileMapSpace()
+		{
+			InteriorBlock = interiorBlock,
+			TestText = testText,
+			TileMapPosition = new Vector2I(x, y),
+			ActualGlobalPosition = _tileMap.MapToLocal(new Vector2I(x, y)),
+			ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
+		};
+
+		return newTileMapSpace;
 	}
 
 	private void PaintInteriorWalls()
@@ -560,6 +568,11 @@ public partial class BaseDungeonLevel : Node
 					Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
 					interiorBlockSprite.Texture = newTexture2;
 				}
+
+				//if (tileMapSpace.InteriorBlock)
+				//{
+
+				//}
 			}
 		}
 	}
