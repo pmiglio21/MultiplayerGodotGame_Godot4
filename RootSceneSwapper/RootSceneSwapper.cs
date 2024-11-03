@@ -94,6 +94,8 @@ namespace Root
 
 		public void OnPlayModeScreenGoToGameRulesScreen()
 		{
+			PriorSceneName = ScreenNames.PlayMode;
+
 			ChangeSceneToGameRulesScreen(_playModeScreenManager);
 		}
 

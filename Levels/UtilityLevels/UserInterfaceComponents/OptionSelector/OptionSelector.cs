@@ -83,20 +83,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 					
 					break;
 
-				case OptionSelectorType.SplitScreenMergingType:
-
-					foreach (var enumValue in Enum.GetValues(typeof(SplitScreenMergingType)))
-					{
-						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-						if (enumDescription != "None")
-						{
-							_options.Add(enumDescription);
-						}
-					}
-
-					break;
-
 				case OptionSelectorType.RelativePlayerSpawnDistance:
 
 					foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))

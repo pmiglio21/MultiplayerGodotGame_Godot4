@@ -9,7 +9,7 @@ namespace Models
 {
     public class GameRules
     {
-        public SplitScreenMergingType CurrentSplitScreenMergingType = SplitScreenMergingType.None;
+        public BiomeType BiomeType = BiomeType.None;
 
         public RelativePlayerSpawnDistanceType CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.None;
 

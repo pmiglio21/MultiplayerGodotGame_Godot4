@@ -214,12 +214,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				}
 			}
 
-			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-			   (_parentDungeonLevelSwapper.ActivePlayers.Count == 1))
-			{
-				playerCamera.GlobalPosition = this.GlobalPosition;
-			}
-		}
+            playerCamera.GlobalPosition = this.GlobalPosition;
+        }
 
 		public override void _PhysicsProcess(double delta)
 		{

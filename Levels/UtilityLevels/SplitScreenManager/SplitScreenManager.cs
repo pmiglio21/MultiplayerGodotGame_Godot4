@@ -24,36 +24,26 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 			SetSubViewportWorlds();
 
-			//Lets subviewports scale as the window changes size
-			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
-			{
-				GetTree().Root.SizeChanged += AdjustScreenPerPlayerCameraView;
-			}
+            //Lets subviewports scale as the window changes size
+            GetTree().Root.SizeChanged += AdjustScreenPerPlayerCameraView;
 
-			//Call it on its own to set cameras initially
-			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer ||
-				(_parentDungeonLevelSwapper.ActivePlayers.Count == 1))
-			{
-				SetCamerasToPlayers();
-			}
+            //Call it on its own to set cameras initially
+            SetCamerasToPlayers();
 
-			RunScreenAdjustmentProcess();
+            RunScreenAdjustmentProcess();
 		}
 
 		public override void _Process(double delta)
 		{
 			if (!hasSceneLoaded)
 			{
-				//Do this to load in scene and adjust the screen size right away.
-				//Root.SizeChanged event doesn't happen after the scene loads, so we have to adjust the screen ourselves at the start of the scene.
-				if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
-				{
-					SetCamerasToPlayers();
+                //Do this to load in scene and adjust the screen size right away.
+                //Root.SizeChanged event doesn't happen after the scene loads, so we have to adjust the screen ourselves at the start of the scene.
+                SetCamerasToPlayers();
 
-					AdjustScreenPerPlayerCameraView();
-				}
+                AdjustScreenPerPlayerCameraView();
 
-				hasSceneLoaded = true;
+                hasSceneLoaded = true;
 			}
 		}
 
@@ -97,15 +87,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void RunScreenAdjustmentProcess()
 		{
-			if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentSplitScreenMergingType == SplitScreenMergingType.ScreenPerPlayer)
-			{
-				AdjustScreenPerPlayerCameraView();
-			}
-			else
-			{
-				AdjustSharedScreenCameraView();
-			}
-		}
+            AdjustScreenPerPlayerCameraView();
+        }
 
 		private void SetSubViewportWorlds()
 		{
