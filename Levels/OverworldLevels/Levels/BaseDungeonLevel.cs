@@ -4,7 +4,6 @@ using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
 using Enums.GameRules;
 using MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping;
-using Scenes.UI.PlayerSelectScene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,12 +77,18 @@ public partial class BaseDungeonLevel : Node
 
 		_enemyRespawnTimer = this.GetNode<Timer>("EnemyRespawnTimer");
 
+		if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+		{
+            LoadInCastleFloorTiles();
 
-		LoadInFloorTiles();
+            _floorTileList.AddRange(_tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
+                                 .Where(tile => IsBlockInsideBorders(tile))
+                                 .ToList());
+        }
+		else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+		{
 
-		_floorTileList.AddRange(_tileMap.GetUsedCellsById(0, TileMappingMagicNumbers.TileMapCastleFloorAtlasId)
-								 .Where(tile => IsBlockInsideBorders(tile))
-								 .ToList());
+		}
 
 		RunProceduralPathGeneration();
 
@@ -96,7 +101,7 @@ public partial class BaseDungeonLevel : Node
 
 	#region Floor Generation
 
-	private void LoadInFloorTiles()
+	private void LoadInCastleFloorTiles()
 	{
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
 		{
