@@ -100,14 +100,14 @@ namespace Levels.UtilityLevels
 					//Get pause input once timer lets up
 					if (!_pauseChangedRecently)
 					{
-						_rootSceneSwapper.PlayButtonSelectSound();
+						_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 						IsPauseScreenBeingShown = false;
 					}
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					_settingsScreen.IsSettingsScreenBeingShown = true;
 					_settingsScreen.GrabFocusOfTopButton();
@@ -118,7 +118,7 @@ namespace Levels.UtilityLevels
 				}
 				else if (_quitGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayReturnToPreviousScreenSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
 					GetTree().Paused = false;
 
@@ -130,7 +130,7 @@ namespace Levels.UtilityLevels
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-				_rootSceneSwapper.PlayReturnToPreviousScreenSound();
+				_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
 				_resumeGameButton.GrabFocus();
 			}
@@ -142,13 +142,13 @@ namespace Levels.UtilityLevels
 			{
 				if (_resumeGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_quitGameButton.GrabFocus();
 				}
@@ -159,13 +159,13 @@ namespace Levels.UtilityLevels
 			{
 				if (_quitGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_resumeGameButton.GrabFocus();
 				}

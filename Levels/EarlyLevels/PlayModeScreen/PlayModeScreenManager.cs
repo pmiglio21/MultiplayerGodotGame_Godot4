@@ -48,7 +48,7 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
-                _rootSceneSwapper.PlayButtonSelectSound();
+                _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
                 _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
 
@@ -58,7 +58,7 @@ public partial class PlayModeScreenManager : GridContainer
 
         if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
         {
-            _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
             _rootSceneSwapper.PriorSceneName = ScreenNames.PlayMode;
 
@@ -72,7 +72,7 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_localButton.HasFocus())
             {
-                _rootSceneSwapper.PlayButtonSelectSound();
+                _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
                 _onlineButton.GrabFocus();
             }
@@ -82,7 +82,7 @@ public partial class PlayModeScreenManager : GridContainer
         {
             if (_onlineButton.HasFocus())
             {
-                _rootSceneSwapper.PlayButtonSelectSound();
+                _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
                 _localButton.GrabFocus();
             }

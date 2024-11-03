@@ -44,12 +44,8 @@ namespace Root
 
 		public override void _Ready()
 		{
-			GetTree().Root.SizeChanged += CentralizeGui;
-
 			_rootGuiControl = FindChild("GUI") as Control;
 			_uiAudioStreamPlayer = FindChild("UiSoundEffectsAudioStreamPlayer") as AudioStreamPlayer;
-
-			CentralizeGui();
 
 			_titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
@@ -311,42 +307,15 @@ namespace Root
 			GetTree().Quit();
 		}
 
-		private void CentralizeGui()
-		{
-			//var tree = GetTree();
-
-			//Vector2I mainViewportSize = tree.Root.Size;
-
-			//_rootGuiControl.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
-		}
-
 		#endregion
 
 		#endregion
 
 		#region UI Sound Players
 
-		public void PlayButtonMoveSound()
+		public void PlayUiSoundEffect(string soundPath)
 		{
-			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiMoveSoundPath) as AudioStream;
-
-			_uiAudioStreamPlayer.Stream = audioStream;
-
-			_uiAudioStreamPlayer.Play();
-		}
-
-		public void PlayButtonSelectSound()
-		{
-			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiButtonSelectSoundPath) as AudioStream;
-
-			_uiAudioStreamPlayer.Stream = audioStream;
-
-			_uiAudioStreamPlayer.Play();
-		}
-
-		public void PlayReturnToPreviousScreenSound()
-		{
-			AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.UiReturnToPreviousScreenSoundPath) as AudioStream;
+			AudioStream audioStream = ResourceLoader.Load(soundPath) as AudioStream;
 
 			_uiAudioStreamPlayer.Stream = audioStream;
 

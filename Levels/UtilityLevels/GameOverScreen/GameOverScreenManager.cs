@@ -66,7 +66,7 @@ namespace Levels.UtilityLevels
                 {
                     if (!_inputChangedRecently)
                     {
-                        _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+                        _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
                         EmitSignal(SignalName.GoToTitleScreen);
 

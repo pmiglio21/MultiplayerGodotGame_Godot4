@@ -81,13 +81,13 @@ namespace Levels.UtilityLevels
 			{
 				if (_returnButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayReturnToPreviousScreenSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
 					ReturnToPriorScene();
 				}
 				else if (_continueButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					SaveOutGameRules();
 
@@ -118,31 +118,31 @@ namespace Levels.UtilityLevels
 			{
 				if (_biomeTypeSelector.GetOptionButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
 				}
 				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_levelSizeSelector.GetOptionButton().GrabFocus();
 				}
 				else if (_levelSizeSelector.GetOptionButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_numberSpinner.GetNumberSpinnerButton().GrabFocus();
 				}
 				else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus() && _continueButton.Visible)
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_continueButton.GrabFocus();
 				}
@@ -153,31 +153,31 @@ namespace Levels.UtilityLevels
 			{
 				if (_continueButton.HasFocus() && _continueButton.Visible)
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_returnButton.GrabFocus();
 				}
 				else if (_returnButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_numberSpinner.GetNumberSpinnerButton().GrabFocus();
 				}
 				else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_levelSizeSelector.GetOptionButton().GrabFocus();
 				}
 				else if (_levelSizeSelector.GetOptionButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
 				}
 				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_biomeTypeSelector.GetOptionButton().GrabFocus();
 				}

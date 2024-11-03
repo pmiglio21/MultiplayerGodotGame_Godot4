@@ -57,13 +57,13 @@ namespace Levels.EarlyLevels
 			{
 				if (_playButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					EmitSignal(SignalName.GoToPlayModeScreen);
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					_rootSceneSwapper.PriorSceneName = ScreenNames.Title;
 
@@ -71,13 +71,13 @@ namespace Levels.EarlyLevels
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					EmitSignal(SignalName.GoToSettingsScreen);
 				}
 				else if (_quitGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonSelectSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
 					EmitSignal(SignalName.QuitGame);
 				}
@@ -90,19 +90,19 @@ namespace Levels.EarlyLevels
 			{
 				if(_playButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_quitGameButton.GrabFocus();
 				}
@@ -113,19 +113,19 @@ namespace Levels.EarlyLevels
 			{
 				if (_quitGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_settingsButton.GrabFocus();
 				}
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_gameRulesButton.GrabFocus();
 				}
 				else if (_gameRulesButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayButtonMoveSound();
+					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
 					_playButton.GrabFocus();
 				}

@@ -82,7 +82,7 @@ namespace Levels.UtilityLevels
 				{
 					if (!_inputChangedRecently)
 					{
-                        _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+                        _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
                         ReturnToPriorScene();
 
@@ -95,7 +95,7 @@ namespace Levels.UtilityLevels
 			{
 				if (!_inputChangedRecently)
 				{
-                    _rootSceneSwapper.PlayReturnToPreviousScreenSound();
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
                     ReturnToPriorScene();
 
@@ -110,7 +110,7 @@ namespace Levels.UtilityLevels
 			{
                 //if (_returnButton.HasFocus())
                 //{
-                //  _rootSceneSwapper.PlayButtonSelectSound();
+                //  _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                 //	_settingsButton.GrabFocus();
                 //}
             }
