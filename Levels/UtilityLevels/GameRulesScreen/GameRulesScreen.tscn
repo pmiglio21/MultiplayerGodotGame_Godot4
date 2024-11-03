@@ -28,19 +28,28 @@ autostart = true
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_top = -168.0
-offset_right = 200.0
-offset_bottom = -118.0
+offset_left = 2.0
+offset_top = -254.0
+offset_right = 202.0
+offset_bottom = -204.0
 theme = SubResource("Theme_udowp")
 text = "Game Rules"
+
+[node name="BiomeTypeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+offset_left = -268.0
+offset_top = -118.0
+offset_right = -150.0
+offset_bottom = -62.0
+LabelText = "Biome"
+OptionSelectorType = 1
 
 [node name="RelativePlayerSpawnDistanceOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -4.0
-offset_top = -112.0
-offset_right = 196.0
-offset_bottom = -62.0
+offset_left = -268.0
+offset_top = -42.0
+offset_right = -68.0
+offset_bottom = 8.0
 focus_mode = 1
 LabelText = "Relative Spawn Distance"
 OptionSelectorType = 2
@@ -48,10 +57,10 @@ OptionSelectorType = 2
 [node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -3.0
-offset_top = -41.0
-offset_right = 197.0
-offset_bottom = 9.0
+offset_left = -267.0
+offset_top = 29.0
+offset_right = -67.0
+offset_bottom = 79.0
 focus_mode = 1
 LabelText = "Level Size"
 OptionSelectorType = 3
@@ -59,37 +68,37 @@ OptionSelectorType = 3
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -150.0
-offset_top = 39.0
-offset_right = 50.0
-offset_bottom = 89.0
+offset_left = -414.0
+offset_top = 109.0
+offset_right = -214.0
+offset_bottom = 159.0
 focus_mode = 1
 text = "Number of Levels"
 
 [node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -4.0
-offset_top = 30.0
-offset_right = 196.0
-offset_bottom = 80.0
+offset_left = -268.0
+offset_top = 100.0
+offset_right = -68.0
+offset_bottom = 150.0
 focus_mode = 1
 MinNumber = 1
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = -4.0
-offset_top = 86.0
-offset_right = 196.0
-offset_bottom = 117.0
+offset_left = 6.0
+offset_top = 166.0
+offset_right = 206.0
+offset_bottom = 197.0
 focus_mode = 1
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = -4.0
-offset_top = 121.0
-offset_right = 196.0
-offset_bottom = 152.0
+offset_left = 6.0
+offset_top = 201.0
+offset_right = 206.0
+offset_bottom = 232.0
 focus_mode = 1
 text = "Continue"

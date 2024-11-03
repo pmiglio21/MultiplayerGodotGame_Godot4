@@ -23,4 +23,4 @@ offset_top = 2.0
 offset_right = -94.0
 offset_bottom = 2.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="UiSoundEffectsAudioStreamPlayer" type="AudioStreamPlayer" parent="."]

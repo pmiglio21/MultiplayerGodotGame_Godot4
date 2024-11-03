@@ -9,7 +9,7 @@ namespace Enums.GameRules
     public enum OptionSelectorType
     {
         None,
-        SplitScreenMergingType,
+        BiomeType,
         RelativePlayerSpawnDistance,
         LevelSize
     }

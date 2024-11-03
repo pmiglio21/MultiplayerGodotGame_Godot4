@@ -83,7 +83,21 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 					
 					break;
 
-				case OptionSelectorType.RelativePlayerSpawnDistance:
+                case OptionSelectorType.BiomeType:
+
+                    foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
+                    {
+                        var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+                        if (enumDescription != "None")
+                        {
+                            _options.Add(enumDescription);
+                        }
+                    }
+
+                    break;
+
+                case OptionSelectorType.RelativePlayerSpawnDistance:
 
 					foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
 					{

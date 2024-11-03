@@ -22,7 +22,8 @@ namespace Levels.UtilityLevels
 		#region Components
 
 		private Timer _inputTimer;
-		private OptionSelector _relativePlayerSpawnDistanceOptionSelector;
+		private OptionSelector _biomeTypeSelector;
+		private OptionSelector _relativePlayerSpawnDistanceSelector;
 		private NumberSpinner _numberSpinner;
 		private OptionSelector _levelSizeSelector;
 		private Button _returnButton;
@@ -48,13 +49,14 @@ namespace Levels.UtilityLevels
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
 			_inputTimer = FindChild("InputTimer") as Timer;
-			_relativePlayerSpawnDistanceOptionSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
+			_biomeTypeSelector = GetNode<OptionSelector>("BiomeTypeOptionSelector");
+			_relativePlayerSpawnDistanceSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
 			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");
 			_levelSizeSelector = GetNode<OptionSelector>("LevelSizeOptionSelector");
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
-			_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+			_biomeTypeSelector.GetOptionButton().GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -114,7 +116,13 @@ namespace Levels.UtilityLevels
 		{
 			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
-				if (_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().HasFocus())
+				if (_biomeTypeSelector.GetOptionButton().HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
+					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
 				{
 					_rootSceneSwapper.PlayButtonMoveSound();
 
@@ -165,7 +173,13 @@ namespace Levels.UtilityLevels
 				{
 					_rootSceneSwapper.PlayButtonMoveSound();
 
-					_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
+				}
+				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
+				{
+					_rootSceneSwapper.PlayButtonMoveSound();
+
+					_biomeTypeSelector.GetOptionButton().GrabFocus();
 				}
 
 				_inputTimer.Start();
@@ -174,7 +188,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-			_relativePlayerSpawnDistanceOptionSelector.GetOptionButton().GrabFocus();
+			_biomeTypeSelector.GetOptionButton().GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
@@ -193,11 +207,21 @@ namespace Levels.UtilityLevels
 
 		private void SaveOutGameRules()
 		{
+			foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
+			{
+				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+
+				if (enumDescription != "None" && enumDescription == _biomeTypeSelector.GetOptionButton().Text)
+				{
+					CurrentGameRules.BiomeType = (BiomeType)enumValue;
+				}
+			}
+
 			foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
 			{
 				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-				if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceOptionSelector.GetOptionButton().Text)
+				if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceSelector.GetOptionButton().Text)
 				{
 					CurrentGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
 				}
