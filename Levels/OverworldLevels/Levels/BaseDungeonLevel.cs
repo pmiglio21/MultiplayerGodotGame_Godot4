@@ -24,9 +24,10 @@ public partial class BaseDungeonLevel : Node
 
     #region TileMap Level Generation
 
-    private Dictionary<int,Vector2I> _possibleFloorSpaces = new Dictionary<int,Vector2I>();
-	
-	private RandomNumberGenerator _rng = new RandomNumberGenerator();
+    private Dictionary<int,Vector2I> _possibleFloorPositionsByIndex = new Dictionary<int,Vector2I>();
+    private Dictionary<Vector2I, int> _possibleIndicesByFloorPositions = new Dictionary<Vector2I, int>();
+
+    private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
 	private List<TileMapSpace> _existingFloorGridSpaces = new List<TileMapSpace>();
 
@@ -121,9 +122,10 @@ public partial class BaseDungeonLevel : Node
         {
 			for (int y = 0; y < _maxNumberOfTiles; y++)
             {
-                _possibleFloorSpaces.Add(overallCounter, new Vector2I(x, y));
+                _possibleFloorPositionsByIndex.Add(overallCounter, new Vector2I(x, y));
+                _possibleIndicesByFloorPositions.Add(new Vector2I(x, y), overallCounter);
 
-				overallCounter++;
+                overallCounter++;
             }
         }
     }
@@ -172,7 +174,7 @@ public partial class BaseDungeonLevel : Node
 		}
 
 		//TODO: Get this to work concurrently
-		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _possibleFloorSpaces.Count))
+		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
 		{
 			CreatePathsBetweenPoints();
 		}
@@ -190,10 +192,10 @@ public partial class BaseDungeonLevel : Node
 			SpawnPlayersNormal();
 		}
 
-        #endregion
+		#endregion
 
-        //DrawOverviewAndWalls();
-    }
+		//DrawOverviewAndWalls();
+	}
 
     #region Procedural Path Generation
 
@@ -202,18 +204,18 @@ public partial class BaseDungeonLevel : Node
     private void GenerateSingleSpawnPoint(int playerNumber = 0)
     {
         //Get a random space in possible floor spaces to pick as spawn point
-        var floorTileIndex = _rng.RandiRange(0, _possibleFloorSpaces.Count - 1);
+        var floorTileIndex = _rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1);
 
         //Create Spawn Point
         var newSpawnPoint_TileMapSpace = new TileMapSpace();
 
-        if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == _possibleFloorSpaces[floorTileIndex]))
+        if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == _possibleFloorPositionsByIndex[floorTileIndex]))
         {
-            newSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == _possibleFloorSpaces[floorTileIndex]);
+            newSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == _possibleFloorPositionsByIndex[floorTileIndex]);
         }
         else
         {
-            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorSpaces[floorTileIndex]);
+            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorPositionsByIndex[floorTileIndex]);
 
             _existingFloorGridSpaces.Add(newSpawnPoint_TileMapSpace);
         }
@@ -230,7 +232,7 @@ public partial class BaseDungeonLevel : Node
 		DrawOnTileMap(newSpawnPoint_TileMapSpace.TileMapPosition);
 
         //Clear out area near spawn point
-        var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Values.Where(
+        var floorSpacesAdjacentToSpawnPoint = _possibleFloorPositionsByIndex.Values.Where(
             floorSpace => (floorSpace != newSpawnPoint_TileMapSpace.TileMapPosition &&
                           ((Vector2)newSpawnPoint_TileMapSpace.TileMapPosition).DistanceTo(floorSpace) <= Math.Sqrt(2))).ToList();
 
@@ -335,7 +337,7 @@ public partial class BaseDungeonLevel : Node
 				//Set walkingFloorSpace to somewhere adjacent to spawn
 				//Instead of using any, just check that new x and y are within the max dimension range
 				if (IsBlockInsideBorders(newPositionToCheck) &&
-					_possibleFloorSpaces.Values.Any(x => x == newPositionToCheck))
+                    _possibleFloorPositionsByIndex.Values.Any(x => x == newPositionToCheck))
 				{
                     var nextWalk_TileMapSpace = new TileMapSpace();
 
@@ -444,7 +446,7 @@ public partial class BaseDungeonLevel : Node
 
 		TileMapSpace walkingFloorSpace = startingPoint;
 
-		var targetPoint = _possibleFloorSpaces[_rng.RandiRange(0, _possibleFloorSpaces.Count - 1)];
+		var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
 		//For some reason, trig circle is flipped across its y axis... whatever...
 		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
@@ -490,7 +492,7 @@ public partial class BaseDungeonLevel : Node
 
             //Set walkingFloorSpace to somewhere adjacent to spawn
             if (IsBlockInsideBorders(newPositionToCheck) &&
-                    _possibleFloorSpaces.Values.Any(x => x == newPositionToCheck))
+                    _possibleFloorPositionsByIndex.Values.Any(x => x == newPositionToCheck))
             {
                 var nextWalk_TileMapSpace = new TileMapSpace();
 
@@ -558,7 +560,7 @@ public partial class BaseDungeonLevel : Node
 			TileMapPosition = positionOfTileMapSpace,
 			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace),
 			ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
-		};
+        };
 
 		return newTileMapSpace;
 	}
@@ -567,6 +569,8 @@ public partial class BaseDungeonLevel : Node
 	{
 		foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
 		{
+			List<Vector2I> allAdjacentFloorSpaces = GetAllAdjacentFloorSpaces(tileMapSpace.TileMapPosition);
+
 			if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
 			{
 				var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
@@ -626,7 +630,16 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	private bool IsBlockInsideBorders(Vector2I vector)
+    private List<Vector2I> GetAllAdjacentFloorSpaces(Vector2I centralFloorSpacePosition)
+	{
+        List<Vector2I> adjacentFloorSpaces = new List<Vector2I>();
+
+
+
+		return adjacentFloorSpaces;
+    }
+
+    private bool IsBlockInsideBorders(Vector2I vector)
 	{
 		return vector.X != 0 && vector.Y != 0 && vector.X != _maxNumberOfTiles - 1 && vector.Y != _maxNumberOfTiles - 1;
 	}
