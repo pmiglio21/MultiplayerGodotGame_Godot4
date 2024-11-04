@@ -336,8 +336,7 @@ public partial class BaseDungeonLevel : Node
 
 				//Set walkingFloorSpace to somewhere adjacent to spawn
 				//Instead of using any, just check that new x and y are within the max dimension range
-				if (IsBlockInsideBorders(newPositionToCheck) &&
-                    _possibleFloorPositionsByIndex.Values.Any(x => x == newPositionToCheck))
+				if (IsBlockInsideBorders(newPositionToCheck) &&_possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
 				{
                     var nextWalk_TileMapSpace = new TileMapSpace();
 
@@ -491,8 +490,7 @@ public partial class BaseDungeonLevel : Node
 			var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
             //Set walkingFloorSpace to somewhere adjacent to spawn
-            if (IsBlockInsideBorders(newPositionToCheck) &&
-                    _possibleFloorPositionsByIndex.Values.Any(x => x == newPositionToCheck))
+            if (IsBlockInsideBorders(newPositionToCheck) &&_possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
             {
                 var nextWalk_TileMapSpace = new TileMapSpace();
 
