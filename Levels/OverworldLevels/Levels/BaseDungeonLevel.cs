@@ -145,7 +145,7 @@ public partial class BaseDungeonLevel : Node
 			{
 				GenerateMultipleSpawnPoints();
 
-				//CreatePathsBetweenSpawnPoints();
+				CreatePathsBetweenSpawnPoints();
 			}
 			else
 			{
@@ -185,7 +185,7 @@ public partial class BaseDungeonLevel : Node
 
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
-			SpawnPlayersClose();
+			SpawnPlayersSuperClose();
 		}
 		else
 		{
@@ -214,7 +214,7 @@ public partial class BaseDungeonLevel : Node
         }
         else
         {
-            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorSpaces[floorTileIndex].X, _possibleFloorSpaces[floorTileIndex].Y);
+            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorSpaces[floorTileIndex]);
 
             _existingFloorGridSpaces.Add(newSpawnPoint_TileMapSpace);
         }
@@ -245,7 +245,7 @@ public partial class BaseDungeonLevel : Node
             }
             else
             {
-                nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint.X, floorSpaceAdjacentToSpawnPoint.Y);
+                nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint);
 
                 _existingFloorGridSpaces.Add(nearSpawnPoint_TileMapSpace);
             }
@@ -268,28 +268,6 @@ public partial class BaseDungeonLevel : Node
 			GenerateSingleSpawnPoint(spawnPointGeneratedCount);
 		}
 	}
-
-	private void DrawOnTileMap(Vector2I positionOfTile)
-	{
-		var atlasId = -1;
-        var xAtlasCoord = -1;
-        var yAtlasCoord = -1;
-
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
-        {
-			atlasId = TileMappingMagicNumbers.TileMapCastleFloorAtlasId;
-            xAtlasCoord = _rng.RandiRange(0, 3);
-            yAtlasCoord = _rng.RandiRange(0, 0);
-        }
-        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
-        {
-
-        }
-
-        _tileMap.SetCell(0, positionOfTile, atlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
-    }
-
-	
 
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
@@ -358,27 +336,40 @@ public partial class BaseDungeonLevel : Node
 				//Set walkingFloorSpace to somewhere adjacent to spawn
 				//Instead of using any, just check that new x and y are within the max dimension range
 				if (IsBlockInsideBorders(newPositionToCheck) &&
-					_existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
+					_possibleFloorSpaces.Any(x => x == newPositionToCheck))
 				{
-					var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => _tileMap.LocalToMap(x.InteriorBlock.GlobalPosition) == newPositionToCheck);
+                    var nextWalk_TileMapSpace = new TileMapSpace();
 
-					if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingSpawnPoint)
+                    if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == newPositionToCheck))
+                    {
+                        nextWalk_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
+                    }
+                    else
+                    {
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+
+                        _existingFloorGridSpaces.Add(nextWalk_TileMapSpace);
+                    }
+
+					if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingSpawnPoint)
 					{
-						if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
+						if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
 						{
-							floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-							floorGridSpaceWithMatchingPosition.IsCleared = true;
+                            nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+                            nextWalk_TileMapSpace.IsCleared = true;
 						}
 
-						var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
+						var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
 
-						walkingFloorSpace = floorGridSpaceWithMatchingPosition;
+						walkingFloorSpace = nextWalk_TileMapSpace;
 						walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
 
 						var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
 						rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
 
-						if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                        DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
 							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
 						{
 							break;
@@ -391,9 +382,62 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	#endregion
+    private void SpawnPlayersSuperClose()
+    {
+        List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
 
-	private void CreatePathsBetweenPoints()
+        int playerCount = 0;
+
+        foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
+        {
+            if (playerCount == 0)
+            {
+                character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
+
+                AddChild(character);
+            }
+            else
+            {
+                float changeInX = _rng.RandfRange(-30, 30);
+                float changeInY = _rng.RandfRange(-30, 30);
+
+                character.GlobalPosition = new Vector2(_parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.X + changeInX, _parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.Y + changeInY);
+
+                AddChild(character);
+            }
+
+            GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
+
+            playerCount++;
+        }
+
+        GD.Print("---------------------------------------");
+    }
+
+    private void SpawnPlayersNormal()
+    {
+        List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+
+        int playerCount = 0;
+
+        foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
+        {
+            GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
+
+            character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
+
+            AddChild(character);
+
+            playerCount++;
+        }
+
+        GD.Print("---------------------------------------");
+    }
+
+
+    #endregion
+
+    private void CreatePathsBetweenPoints()
 	{
 		var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
 
@@ -481,7 +525,7 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	private TileMapSpace CreateDefaultTileMapSpace(int x, int y)
+	private TileMapSpace CreateDefaultTileMapSpace(Vector2I positionOfTileMapSpace)
 	{
 		//Generate InteriorWallBlock at that position
 		var tempBlock = _interiorBlockScene.Instantiate();
@@ -493,7 +537,7 @@ public partial class BaseDungeonLevel : Node
 		var testText = tempTestText as Node2D;
 		AddChild(testText);
 
-		var positionInLevel = interiorBlock.ToGlobal(_tileMap.MapToLocal(new Vector2I(x, y)));
+		var positionInLevel = interiorBlock.ToGlobal(_tileMap.MapToLocal(positionOfTileMapSpace));
 		interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 		testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
@@ -501,8 +545,8 @@ public partial class BaseDungeonLevel : Node
 		{
 			InteriorBlock = interiorBlock,
 			TestText = testText,
-			TileMapPosition = new Vector2I(x, y),
-			ActualGlobalPosition = _tileMap.MapToLocal(new Vector2I(x, y)),
+			TileMapPosition = positionOfTileMapSpace,
+			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace),
 			ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
 		};
 
@@ -577,11 +621,31 @@ public partial class BaseDungeonLevel : Node
 		return vector.X != 0 && vector.Y != 0 && vector.X != _maxNumberOfTiles - 1 && vector.Y != _maxNumberOfTiles - 1;
 	}
 
-	#endregion
+    private void DrawOnTileMap(Vector2I positionOfTile)
+    {
+        var atlasId = -1;
+        var xAtlasCoord = -1;
+        var yAtlasCoord = -1;
 
-	#region Key Object Generation
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        {
+            atlasId = TileMappingMagicNumbers.TileMapCastleFloorAtlasId;
+            xAtlasCoord = _rng.RandiRange(0, 3);
+            yAtlasCoord = _rng.RandiRange(0, 0);
+        }
+        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        {
 
-	private void GenerateKeyMapItems()
+        }
+
+        _tileMap.SetCell(0, positionOfTile, atlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
+    }
+
+    #endregion
+
+    #region Key Object Generation
+
+    private void GenerateKeyMapItems()
 	{
 		GeneratePortal();
 
@@ -612,62 +676,6 @@ public partial class BaseDungeonLevel : Node
 
 			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
 		}
-	}
-
-	private void SpawnPlayersClose()
-	{
-		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
-
-		int playerCount = 0;
-
-		foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
-		{
-			if (playerCount == 0)
-			{
-				character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
-
-				AddChild(character);
-			}
-			else
-			{
-				float changeInX = _rng.RandfRange(-30, 30);
-				float changeInY = _rng.RandfRange(-30, 30);
-
-				character.GlobalPosition = new Vector2(_parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.X + changeInX, _parentDungeonLevelSwapper.ActivePlayers[0].GlobalPosition.Y + changeInY);
-
-				AddChild(character);
-			}
-
-			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
-
-			playerCount++;
-		}
-
-		GD.Print("---------------------------------------");
-
-		//PlayerCharacterPickerManager.ActivePickers.Clear();
-	}
-
-	private void SpawnPlayersNormal()
-	{
-		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
-
-		int playerCount = 0;
-
-		foreach (BaseCharacter character in _parentDungeonLevelSwapper.ActivePlayers)
-		{
-			GD.Print($"P: {character.PlayerNumber}, D: {character.DeviceIdentifier}, C: {character.CharacterClassName}");
-
-			character.GlobalPosition = spawnPoints[playerCount].InteriorBlock.GlobalPosition;
-
-			AddChild(character);
-
-			playerCount++;
-		}
-
-		GD.Print("---------------------------------------");
-
-		//PlayerCharacterPickerManager.ActivePickers.Clear();
 	}
 
 	#endregion
