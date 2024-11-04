@@ -24,7 +24,7 @@ public partial class BaseDungeonLevel : Node
 
     #region TileMap Level Generation
 
-    private List<Vector2I> _possibleFloorSpaces = new List<Vector2I>();
+    private Dictionary<int,Vector2I> _possibleFloorSpaces = new Dictionary<int,Vector2I>();
 	
 	private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -115,11 +115,15 @@ public partial class BaseDungeonLevel : Node
 			_maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
 		}
 
+		int overallCounter = 0;
+
 		for (int x = 0; x < _maxNumberOfTiles; x++)
         {
 			for (int y = 0; y < _maxNumberOfTiles; y++)
             {
-                _possibleFloorSpaces.Add(new Vector2I(x, y));
+                _possibleFloorSpaces.Add(overallCounter, new Vector2I(x, y));
+
+				overallCounter++;
             }
         }
     }
@@ -186,16 +190,16 @@ public partial class BaseDungeonLevel : Node
 			SpawnPlayersNormal();
 		}
 
-		#endregion
+        #endregion
 
-		//PaintInteriorWalls();
-	}
+        //DrawOverviewAndWalls();
+    }
 
-	#region Procedural Path Generation
+    #region Procedural Path Generation
 
-	#region Spawn Point Generation
+    #region Spawn Point Generation
 
-	private void GenerateSingleSpawnPoint(int playerNumber = 0)
+    private void GenerateSingleSpawnPoint(int playerNumber = 0)
     {
         //Get a random space in possible floor spaces to pick as spawn point
         var floorTileIndex = _rng.RandiRange(0, _possibleFloorSpaces.Count - 1);
@@ -226,7 +230,7 @@ public partial class BaseDungeonLevel : Node
 		DrawOnTileMap(newSpawnPoint_TileMapSpace.TileMapPosition);
 
         //Clear out area near spawn point
-        var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Where(
+        var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Values.Where(
             floorSpace => (floorSpace != newSpawnPoint_TileMapSpace.TileMapPosition &&
                           ((Vector2)newSpawnPoint_TileMapSpace.TileMapPosition).DistanceTo(floorSpace) <= Math.Sqrt(2))).ToList();
 
@@ -331,7 +335,7 @@ public partial class BaseDungeonLevel : Node
 				//Set walkingFloorSpace to somewhere adjacent to spawn
 				//Instead of using any, just check that new x and y are within the max dimension range
 				if (IsBlockInsideBorders(newPositionToCheck) &&
-					_possibleFloorSpaces.Any(x => x == newPositionToCheck))
+					_possibleFloorSpaces.Values.Any(x => x == newPositionToCheck))
 				{
                     var nextWalk_TileMapSpace = new TileMapSpace();
 
@@ -486,7 +490,7 @@ public partial class BaseDungeonLevel : Node
 
             //Set walkingFloorSpace to somewhere adjacent to spawn
             if (IsBlockInsideBorders(newPositionToCheck) &&
-                    _possibleFloorSpaces.Any(x => x == newPositionToCheck))
+                    _possibleFloorSpaces.Values.Any(x => x == newPositionToCheck))
             {
                 var nextWalk_TileMapSpace = new TileMapSpace();
 
@@ -559,7 +563,7 @@ public partial class BaseDungeonLevel : Node
 		return newTileMapSpace;
 	}
 
-	private void PaintInteriorWalls()
+	private void DrawOverviewAndWalls()
 	{
 		foreach (TileMapSpace tileMapSpace in _existingFloorGridSpaces)
 		{
