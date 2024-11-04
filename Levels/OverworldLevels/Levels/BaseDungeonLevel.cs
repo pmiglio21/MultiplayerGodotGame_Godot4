@@ -65,6 +65,8 @@ public partial class BaseDungeonLevel : Node
 
 	public override void _Ready()
 	{
+		#region Initialize Properties
+
 		_rng.Randomize();
 
         RootSceneSwapper rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
@@ -77,18 +79,9 @@ public partial class BaseDungeonLevel : Node
 
 		_enemyRespawnTimer = this.GetNode<Timer>("EnemyRespawnTimer");
 
-		
+		#endregion
 
 		SetPossibleFloorTiles();
-
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
-        {
-            
-        }
-        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
-		{
-
-		}
 
 		RunProceduralPathGeneration();
 
@@ -153,35 +146,36 @@ public partial class BaseDungeonLevel : Node
 			}
 		}
 
-		//float percentageOfFloorToCover = 0;
+		float percentageOfFloorToCover = 0;
 
-		//switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
-		//{
-		//	case 1:
-		//		percentageOfFloorToCover = .125f;
-		//		break;
-		//	case 2:
-		//		percentageOfFloorToCover = .25f;
-		//		break;
-		//	case 3:
-		//		percentageOfFloorToCover = .333f;
-		//		break;
-		//	case 4:
-		//		percentageOfFloorToCover = .4f;
-		//		break;
-		//	default:
-		//		percentageOfFloorToCover = .25f;
-		//		break;
-		//}
+		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
+		{
+			case 1:
+				percentageOfFloorToCover = .125f;
+				break;
+			case 2:
+				percentageOfFloorToCover = .25f;
+				break;
+			case 3:
+				percentageOfFloorToCover = .333f;
+				break;
+			case 4:
+				percentageOfFloorToCover = .4f;
+				break;
+			default:
+				percentageOfFloorToCover = .25f;
+				break;
+		}
 
-		////TODO: Get this to work concurrently
-		//while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _existingFloorGridSpaces.Count))
-		//{
-		//	CreatePathsBetweenPoints();
-		//}
+		//TODO: Get this to work concurrently
+		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _possibleFloorSpaces.Count))
+		{
+			CreatePathsBetweenPoints();
+		}
 
-		//#region Spawn Key Objects
-		//GenerateKeyMapItems();
+		#region Spawn Key Objects
+
+		GenerateKeyMapItems();
 
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
@@ -191,16 +185,17 @@ public partial class BaseDungeonLevel : Node
 		{
 			SpawnPlayersNormal();
 		}
-		//#endregion
+
+		#endregion
 
 		//PaintInteriorWalls();
 	}
 
-    #region Procedural Path Generation
+	#region Procedural Path Generation
 
-    #region Spawn Point Generation
+	#region Spawn Point Generation
 
-    private void GenerateSingleSpawnPoint(int playerNumber = 0)
+	private void GenerateSingleSpawnPoint(int playerNumber = 0)
     {
         //Get a random space in possible floor spaces to pick as spawn point
         var floorTileIndex = _rng.RandiRange(0, _possibleFloorSpaces.Count - 1);
@@ -445,12 +440,10 @@ public partial class BaseDungeonLevel : Node
 
 		TileMapSpace walkingFloorSpace = startingPoint;
 
-		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => !x.InteriorBlock.IsQueuedForDeletion()).ToList();
-
-		var targetPoint = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
+		var targetPoint = _possibleFloorSpaces[_rng.RandiRange(0, _possibleFloorSpaces.Count - 1)];
 
 		//For some reason, trig circle is flipped across its y axis... whatever...
-		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetPoint.InteriorBlock.GlobalPosition);
+		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
 
 		var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
 
@@ -491,37 +484,50 @@ public partial class BaseDungeonLevel : Node
 
 			var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
-			//Set walkingFloorSpace to somewhere adjacent to spawn
-			if (IsBlockInsideBorders(newPositionToCheck) && 
-				_existingFloorGridSpaces.Any(x => x.TileMapPosition == _tileMap.LocalToMap(newPositionToCheck)))
-			{
-				var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
+            //Set walkingFloorSpace to somewhere adjacent to spawn
+            if (IsBlockInsideBorders(newPositionToCheck) &&
+                    _possibleFloorSpaces.Any(x => x == newPositionToCheck))
+            {
+                var nextWalk_TileMapSpace = new TileMapSpace();
 
-				if (floorGridSpaceWithMatchingPosition != null && floorGridSpaceWithMatchingPosition != startingPoint)
-				{
-					if (!floorGridSpaceWithMatchingPosition.InteriorBlock.IsQueuedForDeletion())
-					{
-						floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-						floorGridSpaceWithMatchingPosition.IsCleared = true;
-					}
+                if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == newPositionToCheck))
+                {
+                    nextWalk_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
+                }
+                else
+                {
+                    nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
 
-					var numberOfSpawnPointWhoClearedMatchingFloorSpace = floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt;
+                    _existingFloorGridSpaces.Add(nextWalk_TileMapSpace);
+                }
 
-					walkingFloorSpace = floorGridSpaceWithMatchingPosition;
-					walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+                if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingPoint)
+                {
+                    if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+                    {
+                        nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+                        nextWalk_TileMapSpace.IsCleared = true;
+                    }
 
-					var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-					rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+                    var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
 
-					if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-						numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
-					{
-						break;
-					}
-				}
-			}
+                    walkingFloorSpace = nextWalk_TileMapSpace;
+                    walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
 
-			iterationCount++;
+                    var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                    rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+                    DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+                    if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                        numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            iterationCount++;
 		}
 	}
 
