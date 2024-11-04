@@ -228,6 +228,8 @@ public partial class BaseDungeonLevel : Node
         var richTextLabel = newSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
         richTextLabel.Text = playerNumber.ToString();
 
+		DrawOnTileMap(newSpawnPoint_TileMapSpace.TileMapPosition);
+
         //Clear out area near spawn point
         var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Where(
             floorSpace => (floorSpace != newSpawnPoint_TileMapSpace.TileMapPosition &&
@@ -254,6 +256,8 @@ public partial class BaseDungeonLevel : Node
 
             var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
             rtl.Text = playerNumber.ToString();
+
+            DrawOnTileMap(nearSpawnPoint_TileMapSpace.TileMapPosition);
         }
     }
 
@@ -264,6 +268,26 @@ public partial class BaseDungeonLevel : Node
 			GenerateSingleSpawnPoint(spawnPointGeneratedCount);
 		}
 	}
+
+	private void DrawOnTileMap(Vector2I positionOfTile)
+	{
+		var atlasId = -1;
+        var xAtlasCoord = -1;
+        var yAtlasCoord = -1;
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        {
+			atlasId = TileMappingMagicNumbers.TileMapCastleFloorAtlasId;
+            xAtlasCoord = _rng.RandiRange(0, 3);
+            yAtlasCoord = _rng.RandiRange(0, 0);
+        }
+        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        {
+
+        }
+
+        _tileMap.SetCell(0, positionOfTile, atlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
+    }
 
 	
 
