@@ -137,7 +137,7 @@ public partial class BaseDungeonLevel : Node
 	{
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
-			GenerateSingleSpawnPoints();
+			GenerateSingleSpawnPoint();
 		}
 		else
 		{
@@ -145,11 +145,11 @@ public partial class BaseDungeonLevel : Node
 			{
 				GenerateMultipleSpawnPoints();
 
-				CreatePathsBetweenSpawnPoints();
+				//CreatePathsBetweenSpawnPoints();
 			}
 			else
 			{
-				GenerateSingleSpawnPoints();
+				GenerateSingleSpawnPoint();
 			}
 		}
 
@@ -196,51 +196,12 @@ public partial class BaseDungeonLevel : Node
 		//PaintInteriorWalls();
 	}
 
-	#region Procedural Path Generation
+    #region Procedural Path Generation
 
-	#region Spawn Point Generation
+    #region Spawn Point Generation
 
-	private void GenerateMultipleSpawnPoints()
-	{
-		//for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
-		//{
-		//	var floorTileIndex = _rng.RandiRange(0, _floorTileList.Count - 1);
-
-		//	var currentFloorTileGridMapPosition = _floorTileList[floorTileIndex];
-
-		//	if (_existingFloorGridSpaces.Any(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition)))
-		//	{
-		//		var floorGridSpaceWithMatchingPosition = _existingFloorGridSpaces.FirstOrDefault(x => x.InteriorBlock.GlobalPosition == _tileMap.MapToLocal(currentFloorTileGridMapPosition));
-
-		//		floorGridSpaceWithMatchingPosition.IsSpawnPoint = true;
-
-		//		floorGridSpaceWithMatchingPosition.InteriorBlock.QueueFree();
-		//		floorGridSpaceWithMatchingPosition.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-		//		floorGridSpaceWithMatchingPosition.IsCleared = true;
-
-		//		var richTextLabel = floorGridSpaceWithMatchingPosition.TestText.GetNode("RichTextLabel") as RichTextLabel;
-		//		richTextLabel.Text = spawnPointGeneratedCount.ToString();
-
-		//		//Clear out spawn point areas
-		//		foreach (var currentFloorGridSpace in _existingFloorGridSpaces)
-		//		{
-		//			if (IsBlockInsideBorders(currentFloorGridSpace.TileMapPosition)
-		//				&& floorGridSpaceWithMatchingPosition.InteriorBlock.GlobalPosition.DistanceTo(currentFloorGridSpace.InteriorBlock.GlobalPosition) <= TileMappingMagicNumbers.DiagonalDistanceBetweenInteriorBlocks)
-		//			{
-		//				currentFloorGridSpace.InteriorBlock.QueueFree();
-		//				currentFloorGridSpace.NumberOfSpawnPointWhoClearedIt = spawnPointGeneratedCount;
-		//				currentFloorGridSpace.IsCleared = true;
-
-		//				var rtl = currentFloorGridSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-		//				rtl.Text = spawnPointGeneratedCount.ToString();
-		//			}
-		//		}
-		//	}
-		//}
-	}
-
-	private void GenerateSingleSpawnPoints()
-	{
+    private void GenerateSingleSpawnPoint(int playerNumber = 0)
+    {
         //Get a random space in possible floor spaces to pick as spawn point
         var floorTileIndex = _rng.RandiRange(0, _possibleFloorSpaces.Count - 1);
 
@@ -261,11 +222,11 @@ public partial class BaseDungeonLevel : Node
         newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
 
         newSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-        newSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 0;
+        newSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
         newSpawnPoint_TileMapSpace.IsCleared = true;
 
         var richTextLabel = newSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-        richTextLabel.Text = "0";
+        richTextLabel.Text = playerNumber.ToString();
 
         //Clear out area near spawn point
         var floorSpacesAdjacentToSpawnPoint = _possibleFloorSpaces.Where(
@@ -288,13 +249,23 @@ public partial class BaseDungeonLevel : Node
             }
 
             nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-            nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 0;
+            nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
             nearSpawnPoint_TileMapSpace.IsCleared = true;
 
             var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-            rtl.Text = "0";
+            rtl.Text = playerNumber.ToString();
         }
     }
+
+    private void GenerateMultipleSpawnPoints()
+	{
+		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
+		{
+			GenerateSingleSpawnPoint(spawnPointGeneratedCount);
+		}
+	}
+
+	
 
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
