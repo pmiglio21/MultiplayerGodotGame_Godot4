@@ -585,6 +585,9 @@ public partial class BaseDungeonLevel : Node
 	{
 		try
 		{
+			List<TileMapSpace> tempTileMapSpaces = new List<TileMapSpace>();
+
+			//Create all floor-adjacent wall-tile map spaces
             foreach (Vector2I possiblePosition in _possibleTileMapSpacesByFloorPosition.Keys)
             {
                 List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(possiblePosition);
@@ -597,9 +600,12 @@ public partial class BaseDungeonLevel : Node
 
                         newWall_TileMapSpace = CreateDefaultTileMapSpace(adjacentFloorSpacePosition);
 
-                        //_possibleTileMapSpacesByFloorPosition.Add(adjacentFloorSpacePosition, newWall_TileMapSpace);
+						newWall_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 90;
 
+						//Can't add to list of TileMapSpaces-by-FloorPosition because it will alter the enumeration we're looping through
                         _existingFloorGridSpaces.Add(newWall_TileMapSpace);
+
+                        tempTileMapSpaces.Add(newWall_TileMapSpace);
 
 
                         var interiorBlockSprite = newWall_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
@@ -608,125 +614,49 @@ public partial class BaseDungeonLevel : Node
 
                         Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
                         interiorBlockSprite.Texture = newTexture;
+					}
+                }
+			}
+
+			//Add all newly-created tiles to the list of TileMapSpaces-by-FloorPosition
+            foreach (TileMapSpace tileMapSpace in tempTileMapSpaces)
+            {
+                if (!_possibleTileMapSpacesByFloorPosition.ContainsKey(tileMapSpace.TileMapPosition))
+                {
+                    _possibleTileMapSpacesByFloorPosition.Add(tileMapSpace.TileMapPosition, tileMapSpace);
+                }
+            }
+
+            foreach (Vector2I tileMapPosition in _possibleTileMapSpacesByFloorPosition.Keys)
+            {
+				TileMapSpace current_TileMapSpace = _possibleTileMapSpacesByFloorPosition[tileMapPosition];
+
+                List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tileMapPosition);
+
+                //if current index isn't the very top
+                if (current_TileMapSpace.TileMapPosition.Y != 0)
+                {
+                    if (allAdjacentFloorSpacePositions.Any(x => x == new Vector2I(current_TileMapSpace.TileMapPosition.X, current_TileMapSpace.TileMapPosition.Y + 1)))
+                    {
+                        var collisionShape = current_TileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+
+                        collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
+                        collisionShape.Position = new Vector2(0, 8);
                     }
                 }
 
-                //if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
-                //{
-                //	var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+                if (current_TileMapSpace.TileMapPosition.Y != _maxNumberOfTiles - 1)
+                {
+                    if (allAdjacentFloorSpacePositions.Any(x => x == new Vector2I(current_TileMapSpace.TileMapPosition.X, current_TileMapSpace.TileMapPosition.Y - 1)))
+                    {
+                        var interiorBlockSprite = current_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
-                //	var overviewIndex = _rng.RandiRange(0, 3);
+                        var textureIndex = _rng.RandiRange(0, 5);
 
-                //	Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
-                //	interiorBlockSprite.Texture = newTexture;
-
-                //	int northBlockIndex = -1;
-                //	TileMapSpace northBlock = null;
-
-                //	//if current index isn't the very top
-                //	if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                //		_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
-                //	{
-                //		northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
-
-                //		northBlock = _existingFloorGridSpaces[northBlockIndex];
-                //	}
-
-                //	int southBlockIndex = -1;
-                //	TileMapSpace southBlock = null;
-
-                //	//if current index isn't the very bottom
-                //	if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && tileMapSpace.ExistingTileMapSpacesIndex != _existingFloorGridSpaces.Count - 1 &&
-                //		_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
-                //	{
-                //		southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
-
-                //		southBlock = _existingFloorGridSpaces[southBlockIndex];
-                //	}
-
-                //	//Block opens to at least the north
-                //	if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                //	{
-                //		var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                //		collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                //		collisionShape.Position = new Vector2(0, 8);
-                //	}
-
-                //	//Block opens to at least the south
-                //	if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                //	{
-                //		var textureIndex = _rng.RandiRange(0, 5);
-
-                //		Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
-                //		interiorBlockSprite.Texture = newTexture2;
-                //	}
-
-                //	//if (tileMapSpace.InteriorBlock)
-                //	//{
-
-                //	//}
-                //}
-
-
-
-
-                //if (tileMapSpace.NumberOfSpawnPointWhoClearedIt == -1)
-                //{
-                //	var interiorBlockSprite = tileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
-
-                //	var overviewIndex = _rng.RandiRange(0, 3);
-
-                //	Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
-                //	interiorBlockSprite.Texture = newTexture;
-
-                //	int northBlockIndex = -1;
-                //	TileMapSpace northBlock = null;
-
-                //	//if current index isn't the very top
-                //	if (tileMapSpace.ExistingTileMapSpacesIndex != 0 &&
-                //		_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != 0)
-                //	{
-                //		northBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex - 1;
-
-                //		northBlock = _existingFloorGridSpaces[northBlockIndex];
-                //	}
-
-                //	int southBlockIndex = -1;
-                //	TileMapSpace southBlock = null;
-
-                //	//if current index isn't the very bottom
-                //	if (tileMapSpace.ExistingTileMapSpacesIndex != 0 && tileMapSpace.ExistingTileMapSpacesIndex != _existingFloorGridSpaces.Count - 1 &&
-                //		_maxNumberOfTiles % tileMapSpace.ExistingTileMapSpacesIndex != _maxNumberOfTiles - 1)
-                //	{
-                //		southBlockIndex = tileMapSpace.ExistingTileMapSpacesIndex + 1;
-
-                //		southBlock = _existingFloorGridSpaces[southBlockIndex];
-                //	}
-
-                //	//Block opens to at least the north
-                //	if (northBlock != null && northBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                //	{
-                //		var collisionShape = tileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                //		collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                //		collisionShape.Position = new Vector2(0, 8);
-                //	}
-
-                //	//Block opens to at least the south
-                //	if (southBlock != null && southBlock.NumberOfSpawnPointWhoClearedIt != -1)
-                //	{
-                //		var textureIndex = _rng.RandiRange(0, 5);
-
-                //		Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
-                //		interiorBlockSprite.Texture = newTexture2;
-                //	}
-
-                //	//if (tileMapSpace.InteriorBlock)
-                //	//{
-
-                //	//}
-                //}
+						Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
+                        interiorBlockSprite.Texture = newTexture2;
+					}
+                }
             }
         }
 		catch (Exception ex)
