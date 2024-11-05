@@ -627,29 +627,37 @@ public partial class BaseDungeonLevel : Node
                 }
             }
 
-            foreach (Vector2I tileMapPosition in _possibleTileMapSpacesByFloorPosition.Keys)
+			//Adjust tiles for collisions and draw walls
+			foreach (TileMapSpace tempTileMapSpace in tempTileMapSpaces)
             {
-				TileMapSpace current_TileMapSpace = _possibleTileMapSpacesByFloorPosition[tileMapPosition];
-
-                List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tileMapPosition);
+                List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tempTileMapSpace.TileMapPosition);
 
                 //if current index isn't the very top
-                if (current_TileMapSpace.TileMapPosition.Y != 0)
+                if (tempTileMapSpace.TileMapPosition.Y != 0)
                 {
-                    if (allAdjacentFloorSpacePositions.Any(x => x == new Vector2I(current_TileMapSpace.TileMapPosition.X, current_TileMapSpace.TileMapPosition.Y + 1)))
+                    Vector2I northBlockPosition = new Vector2I(tempTileMapSpace.TileMapPosition.X, tempTileMapSpace.TileMapPosition.Y - 1);
+
+                    if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) ||
+                        (_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) && _possibleTileMapSpacesByFloorPosition[northBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
+                        allAdjacentFloorSpacePositions.Any(x => x == northBlockPosition))
                     {
-                        var collisionShape = current_TileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+                        var collisionShape = tempTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
 
                         collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
                         collisionShape.Position = new Vector2(0, 8);
                     }
                 }
 
-                if (current_TileMapSpace.TileMapPosition.Y != _maxNumberOfTiles - 1)
+				//if the index isn't the very bottom
+                if (tempTileMapSpace.TileMapPosition.Y != _maxNumberOfTiles - 1)
                 {
-                    if (allAdjacentFloorSpacePositions.Any(x => x == new Vector2I(current_TileMapSpace.TileMapPosition.X, current_TileMapSpace.TileMapPosition.Y - 1)))
+                    Vector2I southBlockPosition = new Vector2I(tempTileMapSpace.TileMapPosition.X, tempTileMapSpace.TileMapPosition.Y + 1);
+
+                    if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) ||
+						(_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
+                        allAdjacentFloorSpacePositions.Any(x => x == southBlockPosition))
                     {
-                        var interiorBlockSprite = current_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+                        var interiorBlockSprite = tempTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
                         var textureIndex = _rng.RandiRange(0, 5);
 
@@ -663,8 +671,6 @@ public partial class BaseDungeonLevel : Node
 		{
 
 		}
-
-		
 	}
 
     private List<Vector2I> GetAllAdjacentFloorSpacePositions(Vector2I centralFloorSpacePosition)
