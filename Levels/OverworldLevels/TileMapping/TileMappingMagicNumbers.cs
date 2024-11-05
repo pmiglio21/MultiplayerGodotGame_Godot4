@@ -13,6 +13,6 @@ namespace MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping
         // 32 * SQRT(2) = diagonal distance between interior blocks
         public const double DiagonalDistanceBetweenInteriorBlocks = 45.25483399593904;
 
-        public const int NumberOfIterationsBeforeChangingAngle = 50;
+        public const int NumberOfIterationsBeforeChangingAngle = 500;
     }
 }

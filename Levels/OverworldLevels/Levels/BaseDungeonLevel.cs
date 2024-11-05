@@ -153,35 +153,29 @@ public partial class BaseDungeonLevel : Node
 
 		float percentageOfFloorToCover = 0;
 
-		//switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
-		//{
-		//	case 1:
-		//		percentageOfFloorToCover = .125f;
-		//		break;
-		//	case 2:
-		//		percentageOfFloorToCover = .25f;
-		//		break;
-		//	case 3:
-		//		percentageOfFloorToCover = .333f;
-		//		break;
-		//	case 4:
-		//		percentageOfFloorToCover = .4f;
-		//		break;
-		//	default:
-		//		percentageOfFloorToCover = .25f;
-		//		break;
-		//}
-
-		percentageOfFloorToCover = .1f;
-
-		int numOfTries = 200;
+		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
+		{
+			case 1:
+				percentageOfFloorToCover = .125f;
+				break;
+			case 2:
+				percentageOfFloorToCover = .25f;
+				break;
+			case 3:
+				percentageOfFloorToCover = .333f;
+				break;
+			case 4:
+				percentageOfFloorToCover = .4f;
+				break;
+			default:
+				percentageOfFloorToCover = .25f;
+				break;
+		}
 
         //TODO: Get this to work concurrently
         while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
 		{
-			CreatePathsBetweenPoints(numOfTries);
-
-			numOfTries++;
+			CreatePathsBetweenPoints();
         }
 
 		#region Spawn Key Objects
@@ -208,21 +202,32 @@ public partial class BaseDungeonLevel : Node
 
     private void GenerateSingleSpawnPoint(int playerNumber = 0)
     {
+		Dictionary<int,Vector2I> nonBorderPositions = new Dictionary<int, Vector2I>();
+
+		int counter = 0;
+		foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => position.Value.X != 0 && position.Value.X != _maxNumberOfTiles - 1 &&
+                                                                           position.Value.Y != 0 && position.Value.Y != _maxNumberOfTiles - 1))
+		{
+			nonBorderPositions.Add(counter, indexPositionPair.Value);
+			counter++;
+        }
+
         //Get a random space in possible floor spaces to pick as spawn point
-        var floorTileIndex = _rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1);
+        var floorTileIndex = _rng.RandiRange(0, nonBorderPositions.Count - 1);
 
         //Create Spawn Point
         var newSpawnPoint_TileMapSpace = new TileMapSpace();
 
-        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(_possibleFloorPositionsByIndex[floorTileIndex]))
+		//This line has a "key not present" issue
+        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(nonBorderPositions[floorTileIndex]))
         {
-			newSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[_possibleFloorPositionsByIndex[floorTileIndex]];
+			newSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[nonBorderPositions[floorTileIndex]];
         }
         else
         {
-            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorPositionsByIndex[floorTileIndex]);
+            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(nonBorderPositions[floorTileIndex]);
 
-            _possibleTileMapSpacesByFloorPosition.Add(_possibleFloorPositionsByIndex[floorTileIndex], newSpawnPoint_TileMapSpace);
+            _possibleTileMapSpacesByFloorPosition.Add(nonBorderPositions[floorTileIndex], newSpawnPoint_TileMapSpace);
         }
 
         newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
@@ -245,29 +250,32 @@ public partial class BaseDungeonLevel : Node
 
         foreach (Vector2I floorSpaceAdjacentToSpawnPoint in floorSpacesAdjacentToSpawnPoint)
         {
-            var nearSpawnPoint_TileMapSpace = new TileMapSpace();
+			if (floorSpaceAdjacentToSpawnPoint.X != 0 && floorSpaceAdjacentToSpawnPoint.X != _maxNumberOfTiles - 1 && floorSpaceAdjacentToSpawnPoint.Y != 0 && floorSpaceAdjacentToSpawnPoint.Y != _maxNumberOfTiles - 1)
+			{
+                var nearSpawnPoint_TileMapSpace = new TileMapSpace();
 
-            if (_possibleTileMapSpacesByFloorPosition.ContainsKey(floorSpaceAdjacentToSpawnPoint))
-            {
-                nearSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[floorSpaceAdjacentToSpawnPoint];
+                if (_possibleTileMapSpacesByFloorPosition.ContainsKey(floorSpaceAdjacentToSpawnPoint))
+                {
+                    nearSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[floorSpaceAdjacentToSpawnPoint];
+                }
+                else
+                {
+                    nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint);
+
+                    _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToSpawnPoint, nearSpawnPoint_TileMapSpace);
+                }
+
+                nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
+                nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
+                nearSpawnPoint_TileMapSpace.IsCleared = true;
+
+                _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
+
+                var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                rtl.Text = playerNumber.ToString();
+
+                DrawOnTileMap(nearSpawnPoint_TileMapSpace.TileMapPosition);
             }
-            else
-            {
-                nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint);
-
-                _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToSpawnPoint, nearSpawnPoint_TileMapSpace);
-            }
-
-            nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-            nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
-            nearSpawnPoint_TileMapSpace.IsCleared = true;
-
-            _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
-
-            var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-            rtl.Text = playerNumber.ToString();
-
-            DrawOnTileMap(nearSpawnPoint_TileMapSpace.TileMapPosition);
         }
     }
 
@@ -449,7 +457,7 @@ public partial class BaseDungeonLevel : Node
 
     #endregion
 
-    private void CreatePathsBetweenPoints(int numOfTries)
+    private void CreatePathsBetweenPoints()
 	{
 		Vector2I startPosition = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
@@ -530,31 +538,26 @@ public partial class BaseDungeonLevel : Node
                         var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
 
                         walkingFloorSpace = nextWalk_TileMapSpace;
-                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = numOfTries;
+                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
 
-                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
-                        {
-                            break;
-                        }
-
-                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = numOfTries;
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
 
                         var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
                         rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
 
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
-                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-                        //    numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
-
-                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
-
-                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != numOfTries)
-                        //{
-                        //    break;
-                        //}
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                            numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                        {
+                            break;
+                        }
                     }
                 }
+				else
+				{
+					break;
+				}
 
                 iterationCount++;
             }
