@@ -174,11 +174,15 @@ public partial class BaseDungeonLevel : Node
 
 		percentageOfFloorToCover = .1f;
 
+		int numOfTries = 200;
+
         //TODO: Get this to work concurrently
         while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
 		{
-			CreatePathsBetweenPoints();
-		}
+			CreatePathsBetweenPoints(numOfTries);
+
+			numOfTries++;
+        }
 
 		#region Spawn Key Objects
 
@@ -445,7 +449,7 @@ public partial class BaseDungeonLevel : Node
 
     #endregion
 
-    private void CreatePathsBetweenPoints()
+    private void CreatePathsBetweenPoints(int numOfTries)
 	{
 		Vector2I startPosition = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
@@ -526,9 +530,14 @@ public partial class BaseDungeonLevel : Node
                         var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
 
                         walkingFloorSpace = nextWalk_TileMapSpace;
-                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = numOfTries;
 
-                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
+                        {
+                            break;
+                        }
+
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = numOfTries;
 
                         var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
                         rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
@@ -537,10 +546,13 @@ public partial class BaseDungeonLevel : Node
 
                         //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
                         //    numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
-                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
-                        {
-                            break;
-                        }
+
+                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
+
+                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != numOfTries)
+                        //{
+                        //    break;
+                        //}
                     }
                 }
 
