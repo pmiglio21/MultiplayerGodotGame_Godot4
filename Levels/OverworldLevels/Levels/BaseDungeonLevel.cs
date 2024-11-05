@@ -30,8 +30,6 @@ public partial class BaseDungeonLevel : Node
 
     private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
-	private List<TileMapSpace> _existingFloorGridSpaces = new List<TileMapSpace>();
-
 	private int _maxNumberOfTiles = 0;
 
 	private PackedScene _interiorBlockScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/TileMapping/InteriorWalls/InteriorWallBlock.tscn");
@@ -100,19 +98,19 @@ public partial class BaseDungeonLevel : Node
 	{
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
 		{
-			_maxNumberOfTiles = 20;
+			_maxNumberOfTiles = 50;
 		}
 		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Medium)
 		{
-			_maxNumberOfTiles = 40;
+			_maxNumberOfTiles = 75;
 		}
 		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Large)
 		{
-			_maxNumberOfTiles = 60;
+			_maxNumberOfTiles = 100;
 		}
 		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Varied)
 		{
-			var floorSizeOptions = new List<int>() { 20, 40, 60 };
+			var floorSizeOptions = new List<int>() { 50, 75, 100 };
 
 			_maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
 		}
@@ -155,27 +153,29 @@ public partial class BaseDungeonLevel : Node
 
 		float percentageOfFloorToCover = 0;
 
-		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
-		{
-			case 1:
-				percentageOfFloorToCover = .125f;
-				break;
-			case 2:
-				percentageOfFloorToCover = .25f;
-				break;
-			case 3:
-				percentageOfFloorToCover = .333f;
-				break;
-			case 4:
-				percentageOfFloorToCover = .4f;
-				break;
-			default:
-				percentageOfFloorToCover = .25f;
-				break;
-		}
+		//switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
+		//{
+		//	case 1:
+		//		percentageOfFloorToCover = .125f;
+		//		break;
+		//	case 2:
+		//		percentageOfFloorToCover = .25f;
+		//		break;
+		//	case 3:
+		//		percentageOfFloorToCover = .333f;
+		//		break;
+		//	case 4:
+		//		percentageOfFloorToCover = .4f;
+		//		break;
+		//	default:
+		//		percentageOfFloorToCover = .25f;
+		//		break;
+		//}
 
-		//TODO: Get this to work concurrently
-		while (_existingFloorGridSpaces.Count(x => x.InteriorBlock.IsQueuedForDeletion()) < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
+		percentageOfFloorToCover = .1f;
+
+        //TODO: Get this to work concurrently
+        while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
 		{
 			CreatePathsBetweenPoints();
 		}
@@ -210,17 +210,15 @@ public partial class BaseDungeonLevel : Node
         //Create Spawn Point
         var newSpawnPoint_TileMapSpace = new TileMapSpace();
 
-        if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == _possibleFloorPositionsByIndex[floorTileIndex]))
+        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(_possibleFloorPositionsByIndex[floorTileIndex]))
         {
-            newSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == _possibleFloorPositionsByIndex[floorTileIndex]);
+			newSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[_possibleFloorPositionsByIndex[floorTileIndex]];
         }
         else
         {
             newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(_possibleFloorPositionsByIndex[floorTileIndex]);
 
             _possibleTileMapSpacesByFloorPosition.Add(_possibleFloorPositionsByIndex[floorTileIndex], newSpawnPoint_TileMapSpace);
-
-            _existingFloorGridSpaces.Add(newSpawnPoint_TileMapSpace);
         }
 
         newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
@@ -245,17 +243,15 @@ public partial class BaseDungeonLevel : Node
         {
             var nearSpawnPoint_TileMapSpace = new TileMapSpace();
 
-            if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == floorSpaceAdjacentToSpawnPoint))
+            if (_possibleTileMapSpacesByFloorPosition.ContainsKey(floorSpaceAdjacentToSpawnPoint))
             {
-                nearSpawnPoint_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == floorSpaceAdjacentToSpawnPoint);
+                nearSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[floorSpaceAdjacentToSpawnPoint];
             }
             else
             {
                 nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint);
 
                 _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToSpawnPoint, nearSpawnPoint_TileMapSpace);
-
-                _existingFloorGridSpaces.Add(nearSpawnPoint_TileMapSpace);
             }
 
             nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
@@ -282,7 +278,7 @@ public partial class BaseDungeonLevel : Node
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
 	{
-		List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+		List<TileMapSpace> spawnPoints = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsSpawnPoint).ToList();
 
 		foreach (TileMapSpace startingSpawnPoint in spawnPoints)
 		{
@@ -349,17 +345,15 @@ public partial class BaseDungeonLevel : Node
 				{
                     var nextWalk_TileMapSpace = new TileMapSpace();
 
-                    if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == newPositionToCheck))
+                    if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
                     {
-                        nextWalk_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
+                        nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
                     }
                     else
                     {
                         nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
 
                         _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
-
-                        _existingFloorGridSpaces.Add(nextWalk_TileMapSpace);
                     }
 
 					if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingSpawnPoint)
@@ -398,7 +392,7 @@ public partial class BaseDungeonLevel : Node
 
     private void SpawnPlayersSuperClose()
     {
-        List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+        List<TileMapSpace> spawnPoints = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsSpawnPoint).ToList();
 
         int playerCount = 0;
 
@@ -430,7 +424,7 @@ public partial class BaseDungeonLevel : Node
 
     private void SpawnPlayersNormal()
     {
-        List<TileMapSpace> spawnPoints = _existingFloorGridSpaces.Where(x => x.IsSpawnPoint).ToList();
+        List<TileMapSpace> spawnPoints = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsSpawnPoint).ToList();
 
         int playerCount = 0;
 
@@ -453,104 +447,106 @@ public partial class BaseDungeonLevel : Node
 
     private void CreatePathsBetweenPoints()
 	{
-		var availableStartSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion()).ToList();
+		Vector2I startPosition = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
-		TileMapSpace startingPoint = availableStartSpaces[_rng.RandiRange(0, availableStartSpaces.Count - 1)];
-
-		TileMapSpace walkingFloorSpace = startingPoint;
-
-		var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
-
-		//For some reason, trig circle is flipped across its y axis... whatever...
-		var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
-
-		var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
-
-		var changeInX = 0;
-		var changeInY = 0;
-
-		int iterationCount = 0;
-
-		//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-		while (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
+		if (_possibleTileMapSpacesByFloorPosition.ContainsKey(startPosition))
 		{
-			if (_rng.RandfRange(0, 1) <= .5)
-			{
-				changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+            TileMapSpace startingPoint = _possibleTileMapSpacesByFloorPosition[startPosition];
 
-				if (changeInX == 0)
-				{
-					changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-				}
-				else
-				{
-					changeInY = 0;
-				}
-			}
-			else
-			{
-				changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+            TileMapSpace walkingFloorSpace = startingPoint;
 
-				if (changeInY == 0)
-				{
-					changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-				}
-				else
-				{
-					changeInX = 0;
-				}
-			}
+            var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
-			var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+            //For some reason, trig circle is flipped across its y axis... whatever...
+            var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
 
-            //Set walkingFloorSpace to somewhere adjacent to spawn
-            if (IsBlockInsideBorders(newPositionToCheck) &&_possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
+            var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
+
+            var changeInX = 0;
+            var changeInY = 0;
+
+            int iterationCount = 0;
+
+            //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+            while (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
             {
-                var nextWalk_TileMapSpace = new TileMapSpace();
-
-                if (_existingFloorGridSpaces.Any(x => x.TileMapPosition == newPositionToCheck))
+                if (_rng.RandfRange(0, 1) <= .5)
                 {
-                    nextWalk_TileMapSpace = _existingFloorGridSpaces.FirstOrDefault(x => x.TileMapPosition == newPositionToCheck);
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                    if (changeInX == 0)
+                    {
+                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    }
+                    else
+                    {
+                        changeInY = 0;
+                    }
                 }
                 else
                 {
-                    nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
 
-                    _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
-
-                    _existingFloorGridSpaces.Add(nextWalk_TileMapSpace);
+                    if (changeInY == 0)
+                    {
+                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                    }
+                    else
+                    {
+                        changeInX = 0;
+                    }
                 }
 
-                if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingPoint)
+                var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+
+                //Set walkingFloorSpace to somewhere adjacent to starting point
+                if (IsBlockInsideBorders(newPositionToCheck) && _possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
                 {
-                    if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+                    var nextWalk_TileMapSpace = new TileMapSpace();
+
+                    if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
                     {
-                        nextWalk_TileMapSpace.InteriorBlock.QueueFree();
-                        nextWalk_TileMapSpace.IsCleared = true;
+						nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
+                    }
+                    else
+                    {
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+
+                        _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
                     }
 
-                    var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
-
-                    walkingFloorSpace = nextWalk_TileMapSpace;
-                    walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
-
-					_possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
-
-                    var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-                    rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-
-                    DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
-
-                    if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-                        numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                    if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingPoint)
                     {
-                        break;
+                        if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+                        {
+                            nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+                            nextWalk_TileMapSpace.IsCleared = true;
+                        }
+
+                        var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
+
+                        walkingFloorSpace = nextWalk_TileMapSpace;
+                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
+
+                        var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                        rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+                        DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+                        //if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                        //    numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1)
+                        {
+                            break;
+                        }
                     }
                 }
-            }
 
-            iterationCount++;
-		}
+                iterationCount++;
+            }
+        }
 	}
 
 	private TileMapSpace CreateDefaultTileMapSpace(Vector2I positionOfTileMapSpace)
@@ -574,8 +570,7 @@ public partial class BaseDungeonLevel : Node
 			InteriorBlock = interiorBlock,
 			TestText = testText,
 			TileMapPosition = positionOfTileMapSpace,
-			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace),
-			ExistingTileMapSpacesIndex = _existingFloorGridSpaces.Count
+			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace)
         };
 
 		return newTileMapSpace;
@@ -603,7 +598,6 @@ public partial class BaseDungeonLevel : Node
 						newWall_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 90;
 
 						//Can't add to list of TileMapSpaces-by-FloorPosition because it will alter the enumeration we're looping through
-                        _existingFloorGridSpaces.Add(newWall_TileMapSpace);
 
                         tempTileMapSpaces.Add(newWall_TileMapSpace);
 
@@ -748,7 +742,7 @@ public partial class BaseDungeonLevel : Node
 		var portal = tempPortal as Node2D;
 		AddChild(portal);
 
-		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
 
 		//Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
 		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
@@ -762,7 +756,7 @@ public partial class BaseDungeonLevel : Node
 			var portalSwitch = tempPortalSwitch as Node2D;
 			AddChild(portalSwitch);
 
-			var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+			var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
 
 			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
 		}
@@ -874,7 +868,7 @@ public partial class BaseDungeonLevel : Node
 		var enemy = tempEnemy as BaseEnemy;
 		AddChild(enemy);
 
-		var availableTargetSpaces = _existingFloorGridSpaces.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
+		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
 
 		enemy.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
 
