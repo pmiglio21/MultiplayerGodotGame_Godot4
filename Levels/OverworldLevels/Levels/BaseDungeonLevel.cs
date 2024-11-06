@@ -172,6 +172,8 @@ public partial class BaseDungeonLevel : Node
 				break;
 		}
 
+		percentageOfFloorToCover = .05f;
+
         //TODO: Get this to work concurrently
         while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
 		{
