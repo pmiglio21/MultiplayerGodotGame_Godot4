@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqenaf4b25xve"
-path="res://.godot/imported/FrostFloor6.png-811d5be26a804efbf1866656917fb4fa.ctex"
+uid="uid://dqwb58fciwqc2"
+path="res://.godot/imported/FrostWater03.png-f7119fd663df7bde9d3d00ec9f9e3b4b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Floor/FrostFloor/FrostFloor6.png"
-dest_files=["res://.godot/imported/FrostFloor6.png-811d5be26a804efbf1866656917fb4fa.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Water/FrostWater03.png"
+dest_files=["res://.godot/imported/FrostWater03.png-f7119fd663df7bde9d3d00ec9f9e3b4b.ctex"]
 
 [params]
 

@@ -3,8 +3,15 @@ namespace Levels.OverworldLevels.TileMapping
 {
     public static class TileMappingConstants
     {
+        #region Atlas Ids
+
         public const int TileMapCastleFloorAtlasId = 0;
-        public const int TileMapFrostFloorAtlasId = 10;
+
+        public const int TileMapFrostFloorAtlasId = 40;
+        public const int TileMapFrostFloorPureWaterFrame1AtlasId = 41;
+        public const int TileMapFrostFloorPureWaterFrame2AtlasId = 42;
+
+        #endregion
 
         // 32 * SQRT(2) = diagonal distance between interior blocks
         public const double DiagonalDistanceBetweenInteriorBlocks = 45.25483399593904;
