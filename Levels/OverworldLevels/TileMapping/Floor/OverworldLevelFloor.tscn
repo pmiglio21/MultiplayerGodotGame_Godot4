@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://vl0was4eubql"]
+[gd_scene load_steps=8 format=3 uid="uid://vl0was4eubql"]
 
 [ext_resource type="Texture2D" uid="uid://d0m2gv3yr7mbj" path="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Floor/CastleFloor.png" id="1_15mqs"]
 [ext_resource type="Texture2D" uid="uid://c1cn1dvv8eag8" path="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Floor/FrostFloor/FrostFloor0.png" id="2_2mvlt"]
+[ext_resource type="Texture2D" uid="uid://c31gp01maeomo" path="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Water/FrostWater00.png" id="3_7f062"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aj78m"]
 resource_name = "CastleFloor"
@@ -21,10 +22,19 @@ texture_region_size = Vector2i(32, 32)
 2:0/0 = 0
 3:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fckic"]
+resource_name = "FrostWater1"
+texture = ExtResource("3_7f062")
+texture_region_size = Vector2i(32, 32)
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_s2gsf"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_aj78m")
 sources/40 = SubResource("TileSetAtlasSource_3yw2m")
+sources/41 = SubResource("TileSetAtlasSource_fckic")
 tile_proxies/coords_level = [[15, Vector2i(0, 0)], [17, Vector2i(0, 0)], [16, Vector2i(0, 0)], [17, Vector2i(1, 0)]]
 
 [node name="BaseFloor" type="Node2D"]

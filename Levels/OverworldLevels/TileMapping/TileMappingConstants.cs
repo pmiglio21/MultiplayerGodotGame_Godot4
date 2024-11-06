@@ -8,8 +8,8 @@ namespace Levels.OverworldLevels.TileMapping
         public const int TileMapCastleFloorAtlasId = 0;
 
         public const int TileMapFrostFloorAtlasId = 40;
-        public const int TileMapFrostFloorPureWaterFrame1AtlasId = 41;
-        public const int TileMapFrostFloorPureWaterFrame2AtlasId = 42;
+        public const int TileMapFrostFloorPureWater1AtlasId = 41;
+        public const int TileMapFrostFloorPureWater2AtlasId = 42;
 
         #endregion
 

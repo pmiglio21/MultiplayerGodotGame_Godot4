@@ -196,6 +196,22 @@ public partial class BaseDungeonLevel : Node
 		#endregion
 
 		DrawOverviewAndWalls();
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        {
+            //int counter = 0;
+
+            //while (counter < 10)
+            //{
+                
+            //    counter++;
+            //}
+
+            //CREATE WATER
+
+            //THEN DRAW WATER (with proper tile art depending on adjacent tiles)
+            DrawWater();
+        }
 	}
 
     #region Procedural Path Generation
@@ -459,6 +475,8 @@ public partial class BaseDungeonLevel : Node
 
     #endregion
 
+    #region Creating Paths
+
     private void CreatePathsBetweenPoints()
 	{
 		Vector2I startPosition = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
@@ -593,7 +611,16 @@ public partial class BaseDungeonLevel : Node
 		return newTileMapSpace;
 	}
 
-	private void DrawOverviewAndWalls()
+    private bool IsBlockInsideBorders(Vector2I vector)
+    {
+        return vector.X != 0 && vector.Y != 0 && vector.X != _maxNumberOfTiles - 1 && vector.Y != _maxNumberOfTiles - 1;
+    }
+
+    #endregion
+
+    #region Drawing Tiles & Art
+
+    private void DrawOverviewAndWalls()
 	{
 		try
 		{
@@ -675,6 +702,112 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
+	private void DrawWater()
+	{
+        Vector2I startPosition = _possibleTileMapSpacesByFloorPosition.ElementAt(_rng.RandiRange(0, _possibleTileMapSpacesByFloorPosition.Count - 1)).Key;
+
+        TileMapSpace startingPoint = _possibleTileMapSpacesByFloorPosition[startPosition];
+
+        TileMapSpace walkingFloorSpace = startingPoint;
+
+        _tileMap.SetCell(0, walkingFloorSpace.TileMapPosition, TileMappingConstants.TileMapFrostFloorPureWater1AtlasId, Vector2I.Zero);
+
+        //var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
+
+        ////For some reason, trig circle is flipped across its y axis... whatever...
+        //var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
+
+        //var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
+
+        //var changeInX = 0;
+        //var changeInY = 0;
+
+        //int iterationCount = 0;
+
+        ////Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+        //while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
+        //{
+        //    if (_rng.RandfRange(0, 1) <= .5)
+        //    {
+        //        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+        //        if (changeInX == 0)
+        //        {
+        //            changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+        //        }
+        //        else
+        //        {
+        //            changeInY = 0;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+        //        if (changeInY == 0)
+        //        {
+        //            changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+        //        }
+        //        else
+        //        {
+        //            changeInX = 0;
+        //        }
+        //    }
+
+        //    var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+
+        //    //Set walkingFloorSpace to somewhere adjacent to starting point
+        //    if (IsBlockInsideBorders(newPositionToCheck) && _possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
+        //    {
+        //        var nextWalk_TileMapSpace = new TileMapSpace();
+
+        //        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
+        //        {
+        //            nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
+        //        }
+        //        else
+        //        {
+        //            nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+
+        //            _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
+        //        }
+
+        //        if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingPoint)
+        //        {
+        //            if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+        //            {
+        //                nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+        //                nextWalk_TileMapSpace.IsCleared = true;
+        //            }
+
+        //            var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
+
+        //            walkingFloorSpace = nextWalk_TileMapSpace;
+        //            walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+
+        //            _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
+
+        //            var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+        //            rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+
+        //            DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+        //            if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+        //                numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        break;
+        //    }
+
+        //    iterationCount++;
+        //}
+    }
+
     private List<Vector2I> GetAllAdjacentFloorSpacePositions(Vector2I centralFloorSpacePosition)
 	{
         List<Vector2I> adjacentFloorSpaces = new List<Vector2I>();
@@ -707,11 +840,6 @@ public partial class BaseDungeonLevel : Node
             adjacentFloorSpaces.Add(newPosition);
         }
     }
-
-    private bool IsBlockInsideBorders(Vector2I vector)
-	{
-		return vector.X != 0 && vector.Y != 0 && vector.X != _maxNumberOfTiles - 1 && vector.Y != _maxNumberOfTiles - 1;
-	}
 
     private void DrawOnTileMap(Vector2I positionOfTile)
     {
@@ -778,6 +906,8 @@ public partial class BaseDungeonLevel : Node
 
         return wallTexture;
     }
+
+    #endregion
 
     #endregion
 
