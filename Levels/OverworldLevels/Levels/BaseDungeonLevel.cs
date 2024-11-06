@@ -659,15 +659,12 @@ public partial class BaseDungeonLevel : Node
                 {
                     Vector2I southBlockPosition = new Vector2I(tempTileMapSpace.TileMapPosition.X, tempTileMapSpace.TileMapPosition.Y + 1);
 
-                    if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) ||
-						(_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
+                    if (((_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
                         allAdjacentFloorSpacePositions.Any(x => x == southBlockPosition))
                     {
                         var interiorBlockSprite = tempTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
 						interiorBlockSprite.Texture = GetWallTexture();
-
-                        
 					}
                 }
             }
