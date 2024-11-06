@@ -296,15 +296,15 @@ namespace Root
 
 		private void QuitGame()
 		{
-			//Need this or else game confuses memory while quitting
-			_titleScreenManager?.QueueFree();
-			_playModeScreenManager?.QueueFree();
-			_gameRulesScreenManager?.QueueFree();
-			_settingsScreenManager?.QueueFree();
-			_playerCharacterSelectScreenManager?.QueueFree();
-			_dungeonLevelSwapper?.QueueFree();
+            //Need this or else game confuses memory while quitting
+            _dungeonLevelSwapper?.QueueFree();
+            _playerCharacterSelectScreenManager?.QueueFree();
+            _settingsScreenManager?.QueueFree();
+            _gameRulesScreenManager?.QueueFree();
+            _playModeScreenManager?.QueueFree();
+            _titleScreenManager?.QueueFree();
 
-			GetTree().Quit();
+            GetTree().Quit();
 		}
 
 		#endregion

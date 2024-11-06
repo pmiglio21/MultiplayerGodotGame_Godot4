@@ -3,7 +3,7 @@ using Globals;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
 using Enums.GameRules;
-using MultiplayerGodotGameGodot4.Levels.OverworldLevels.TileMapping;
+using Levels.OverworldLevels.TileMapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -315,7 +315,7 @@ public partial class BaseDungeonLevel : Node
 			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
 			while (true)
 			{
-				if (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
+				if (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
 				{
 					angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
@@ -482,7 +482,7 @@ public partial class BaseDungeonLevel : Node
             int iterationCount = 0;
 
             //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-            while (iterationCount < TileMappingMagicNumbers.NumberOfIterationsBeforeChangingAngle)
+            while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
             {
                 if (_rng.RandfRange(0, 1) <= .5)
                 {
@@ -618,13 +618,8 @@ public partial class BaseDungeonLevel : Node
 
                         tempTileMapSpaces.Add(newWall_TileMapSpace);
 
-
                         var interiorBlockSprite = newWall_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
-
-                        var overviewIndex = _rng.RandiRange(0, 3);
-
-                        Texture2D newTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
-                        interiorBlockSprite.Texture = newTexture;
+						interiorBlockSprite.Texture = GetOverviewTexture();
 					}
                 }
 			}
@@ -670,10 +665,9 @@ public partial class BaseDungeonLevel : Node
                     {
                         var interiorBlockSprite = tempTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
-                        var textureIndex = _rng.RandiRange(0, 5);
+						interiorBlockSprite.Texture = GetWallTexture();
 
-						Texture2D newTexture2 = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{textureIndex}.png") as Texture2D;
-                        interiorBlockSprite.Texture = newTexture2;
+                        
 					}
                 }
             }
@@ -730,16 +724,62 @@ public partial class BaseDungeonLevel : Node
 
         if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
         {
-            atlasId = TileMappingMagicNumbers.TileMapCastleFloorAtlasId;
+            atlasId = TileMappingConstants.TileMapCastleFloorAtlasId;
             xAtlasCoord = _rng.RandiRange(0, 3);
             yAtlasCoord = _rng.RandiRange(0, 0);
         }
         else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
         {
-
+            atlasId = TileMappingConstants.TileMapFrostFloorAtlasId;
+            xAtlasCoord = _rng.RandiRange(0, 3);
+            yAtlasCoord = _rng.RandiRange(0, 0);
         }
 
         _tileMap.SetCell(0, positionOfTile, atlasId, new Vector2I(xAtlasCoord, yAtlasCoord));
+    }
+
+	private Texture2D GetOverviewTexture()
+	{
+		Texture2D overviewTexture = null;
+
+		int overviewIndex = 0;
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+		{
+            overviewIndex = _rng.RandiRange(0, 3);
+
+            overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
+        }
+		else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+		{
+            overviewIndex = _rng.RandiRange(0, 5);
+
+            overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Overview/FrostOverview{overviewIndex}.png") as Texture2D;
+        }
+        
+		return overviewTexture;
+    }
+
+    private Texture2D GetWallTexture()
+    {
+        Texture2D wallTexture = null;
+
+        int wallIndex = 0;
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        {
+            wallIndex = _rng.RandiRange(0, 5);
+
+            wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{wallIndex}.png") as Texture2D;
+        }
+        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        {
+            wallIndex = _rng.RandiRange(0, 2);
+
+            wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Wall/FrostWall{wallIndex}.png") as Texture2D;
+        }
+
+        return wallTexture;
     }
 
     #endregion

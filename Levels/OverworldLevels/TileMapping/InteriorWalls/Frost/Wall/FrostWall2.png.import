@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3fef37yp6o6p"
-path="res://.godot/imported/BackWallTiles_0.png-3f314f0fba37337fe4a5e223b91e8680.ctex"
+uid="uid://bwsxpb8ge4mja"
+path="res://.godot/imported/FrostWall2.png-6ae4102238967605f8a354c838cc3227.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Beta/BackWallTiles_0.png"
-dest_files=["res://.godot/imported/BackWallTiles_0.png-3f314f0fba37337fe4a5e223b91e8680.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Frost/Wall/FrostWall2.png"
+dest_files=["res://.godot/imported/FrostWall2.png-6ae4102238967605f8a354c838cc3227.ctex"]
 
 [params]
 
