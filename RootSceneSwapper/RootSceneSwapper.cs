@@ -7,6 +7,7 @@ using Models;
 using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
 using System.Collections.Generic;
+using System;
 
 namespace Root
 {
@@ -154,11 +155,11 @@ namespace Root
 
 			ChangeSceneToTitleScreen(_dungeonLevelSwapper);
 
-			//if (_dungeonLevelSwapper != null)
-			//{
-			//    _dungeonLevelSwapper.QueueFree();
-			//}
-		}
+            if (_dungeonLevelSwapper != null)
+            {
+                _dungeonLevelSwapper.QueueFree();
+            }
+        }
 
 		public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
 		{
@@ -296,15 +297,27 @@ namespace Root
 
 		private void QuitGame()
 		{
-            //Need this or else game confuses memory while quitting
-            _dungeonLevelSwapper?.QueueFree();
-            _playerCharacterSelectScreenManager?.QueueFree();
-            _settingsScreenManager?.QueueFree();
-            _gameRulesScreenManager?.QueueFree();
-            _playModeScreenManager?.QueueFree();
-            _titleScreenManager?.QueueFree();
+			try
+			{
+                //Need this or else game confuses memory while quitting
+                if (IsInstanceValid(_dungeonLevelSwapper) && _dungeonLevelSwapper != null)
+                {
+                    _dungeonLevelSwapper.QueueFree();
+                }
 
-            GetTree().Quit();
+                _playerCharacterSelectScreenManager?.QueueFree();
+                _settingsScreenManager?.QueueFree();
+                _gameRulesScreenManager?.QueueFree();
+                _playModeScreenManager?.QueueFree();
+                _titleScreenManager?.QueueFree();
+
+                GetTree().Quit();
+            }
+			catch (Exception ex)
+			{
+
+			}
+			
 		}
 
 		#endregion
@@ -319,7 +332,7 @@ namespace Root
 
 			_uiAudioStreamPlayer.Stream = audioStream;
 
-			_uiAudioStreamPlayer.Play();
+			//_uiAudioStreamPlayer.Play();
 		}
 
 		#endregion

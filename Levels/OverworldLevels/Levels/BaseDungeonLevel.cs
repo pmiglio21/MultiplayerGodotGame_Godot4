@@ -199,18 +199,25 @@ public partial class BaseDungeonLevel : Node
 
         if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
         {
-            int counter = 0;
+            List<TileMapSpace> possibleWaterSpaces = new List<TileMapSpace>();
 
-            while (counter < 10)
+            foreach (TileMapSpace tileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
             {
-                DrawWater();
-                counter++;
+                if (!tileMapSpace.IsSpawnPoint && tileMapSpace.TileMapSpaceType == TileMapSpaceType.Floor)
+                {
+                    var adjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tileMapSpace.TileMapPosition);
+
+                    //if all adjacent floor positions are also floor-type
+                    if (adjacentFloorSpacePositions.All(x => _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor
+                                                        || _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water))
+                    {
+                        if (_rng.RandiRange(1, 100) <= 30)
+                        {
+                            DrawWater(tileMapSpace);
+                        }
+                    }
+                }
             }
-
-            //CREATE WATER
-
-            //THEN DRAW WATER (with proper tile art depending on adjacent tiles)
-            //DrawWater();
         }
 	}
 
@@ -331,7 +338,7 @@ public partial class BaseDungeonLevel : Node
 			//Do this until the walkingFloorSpace is no longer on the starting spawnPoint
 			while (true)
 			{
-				if (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
+				if (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
 				{
 					angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
@@ -500,7 +507,7 @@ public partial class BaseDungeonLevel : Node
             int iterationCount = 0;
 
             //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-            while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
+            while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
             {
                 if (_rng.RandfRange(0, 1) <= .5)
                 {
@@ -605,7 +612,8 @@ public partial class BaseDungeonLevel : Node
 			InteriorBlock = interiorBlock,
 			TestText = testText,
 			TileMapPosition = positionOfTileMapSpace,
-			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace)
+			ActualGlobalPosition = _tileMap.MapToLocal(positionOfTileMapSpace),
+            TileMapSpaceType = tileMapSpaceType
         };
 
 		return newTileMapSpace;
@@ -703,110 +711,71 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	private void DrawWater()
+	private void DrawWater(TileMapSpace startingTileMapSpace)
 	{
-        Vector2I startPosition = _possibleTileMapSpacesByFloorPosition.ElementAt(_rng.RandiRange(0, _possibleTileMapSpacesByFloorPosition.Count - 1)).Key;
+        _tileMap.SetCell(0, startingTileMapSpace.TileMapPosition, TileMappingConstants.TileMapFrostFloorPureWater1AtlasId, Vector2I.Zero);
+        startingTileMapSpace.TileMapSpaceType = TileMapSpaceType.Water;
 
-        TileMapSpace startingPoint = _possibleTileMapSpacesByFloorPosition[startPosition];
+        TileMapSpace walkingFloorSpace = startingTileMapSpace;
 
-        TileMapSpace walkingFloorSpace = startingPoint;
+        var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
 
-        _tileMap.SetCell(0, walkingFloorSpace.TileMapPosition, TileMappingConstants.TileMapFrostFloorPureWater1AtlasId, Vector2I.Zero);
+        //For some reason, trig circle is flipped across its y axis... whatever...
+        var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
 
-        //var targetPoint = _possibleFloorPositionsByIndex[_rng.RandiRange(0, _possibleFloorPositionsByIndex.Count - 1)];
+        var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
 
-        ////For some reason, trig circle is flipped across its y axis... whatever...
-        //var angleFromWalkingFloorSpaceToTargetPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(_tileMap.LocalToMap(targetPoint));
+        var changeInX = 0;
+        var changeInY = 0;
 
-        //var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetPoint);
+        int iterationCount = 0;
 
-        //var changeInX = 0;
-        //var changeInY = 0;
+        //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+        while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle_WaterCreation)
+        {
+            if (_rng.RandfRange(0, 1) <= .5)
+            {
+                changeInX = SetRandomChangeInDirection(weightedValues.Item1);
 
-        //int iterationCount = 0;
+                if (changeInX == 0)
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                }
+                else
+                {
+                    changeInY = 0;
+                }
+            }
+            else
+            {
+                changeInY = SetRandomChangeInDirection(weightedValues.Item2);
 
-        ////Do this until the walkingFloorSpace is no longer on the starting spawnPoint
-        //while (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle)
-        //{
-        //    if (_rng.RandfRange(0, 1) <= .5)
-        //    {
-        //        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                if (changeInY == 0)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                }
+                else
+                {
+                    changeInX = 0;
+                }
+            }
 
-        //        if (changeInX == 0)
-        //        {
-        //            changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-        //        }
-        //        else
-        //        {
-        //            changeInY = 0;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+            var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
-        //        if (changeInY == 0)
-        //        {
-        //            changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-        //        }
-        //        else
-        //        {
-        //            changeInX = 0;
-        //        }
-        //    }
+            var adjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(newPositionToCheck);
 
-        //    var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+            //if all adjacent floor positions are also floor-type
+            if (adjacentFloorSpacePositions.All(x => _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor
+                                                || _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water))
+            {
+                walkingFloorSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
 
-        //    //Set walkingFloorSpace to somewhere adjacent to starting point
-        //    if (IsBlockInsideBorders(newPositionToCheck) && _possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
-        //    {
-        //        var nextWalk_TileMapSpace = new TileMapSpace();
+                _tileMap.SetCell(0, newPositionToCheck, TileMappingConstants.TileMapFrostFloorPureWater1AtlasId, Vector2I.Zero);
+                walkingFloorSpace.TileMapSpaceType = TileMapSpaceType.Water;
+            }
 
-        //        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
-        //        {
-        //            nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
-        //        }
-        //        else
-        //        {
-        //            nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
-
-        //            _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
-        //        }
-
-        //        if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingPoint)
-        //        {
-        //            if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
-        //            {
-        //                nextWalk_TileMapSpace.InteriorBlock.QueueFree();
-        //                nextWalk_TileMapSpace.IsCleared = true;
-        //            }
-
-        //            var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
-
-        //            walkingFloorSpace = nextWalk_TileMapSpace;
-        //            walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
-
-        //            _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
-
-        //            var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-        //            rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
-
-        //            DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
-
-        //            if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-        //                numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
-        //            {
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        break;
-        //    }
-
-        //    iterationCount++;
-        //}
+            iterationCount++;
+        }
     }
 
     private List<Vector2I> GetAllAdjacentFloorSpacePositions(Vector2I centralFloorSpacePosition)

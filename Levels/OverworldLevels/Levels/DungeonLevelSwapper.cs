@@ -96,6 +96,8 @@ public partial class DungeonLevelSwapper : Node
         _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
         _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
 
+		var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+		currentDungeonLevel.QueueFree();
         currentSplitScreenManager.QueueFree();
 	}
 
