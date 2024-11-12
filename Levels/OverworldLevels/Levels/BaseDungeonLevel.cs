@@ -92,7 +92,7 @@ public partial class BaseDungeonLevel : Node
 		_enemyRespawnTimer.Start();
 	}
 
-	#region Floor Generation
+	#region Possible Floor Generation
 
 	private void SetPossibleFloorTiles()
 	{
@@ -129,9 +129,9 @@ public partial class BaseDungeonLevel : Node
         }
     }
 
-	#endregion
+    #endregion
 
-	private void RunProceduralPathGeneration()
+    private void RunProceduralPathGeneration()
 	{
 		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
 		{
@@ -199,18 +199,18 @@ public partial class BaseDungeonLevel : Node
 
         if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
         {
-            //int counter = 0;
+            int counter = 0;
 
-            //while (counter < 10)
-            //{
-                
-            //    counter++;
-            //}
+            while (counter < 10)
+            {
+                DrawWater();
+                counter++;
+            }
 
             //CREATE WATER
 
             //THEN DRAW WATER (with proper tile art depending on adjacent tiles)
-            DrawWater();
+            //DrawWater();
         }
 	}
 
@@ -243,7 +243,7 @@ public partial class BaseDungeonLevel : Node
         }
         else
         {
-            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(nonBorderPositions[floorTileIndex]);
+            newSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(nonBorderPositions[floorTileIndex], TileMapSpaceType.Floor);
 
             _possibleTileMapSpacesByFloorPosition.Add(nonBorderPositions[floorTileIndex], newSpawnPoint_TileMapSpace);
         }
@@ -278,7 +278,7 @@ public partial class BaseDungeonLevel : Node
                 }
                 else
                 {
-                    nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint);
+                    nearSpawnPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToSpawnPoint, TileMapSpaceType.Floor);
 
                     _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToSpawnPoint, nearSpawnPoint_TileMapSpace);
                 }
@@ -381,7 +381,7 @@ public partial class BaseDungeonLevel : Node
                     }
                     else
                     {
-                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck, TileMapSpaceType.Floor);
 
                         _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
                     }
@@ -542,7 +542,7 @@ public partial class BaseDungeonLevel : Node
                     }
                     else
                     {
-                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck);
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck, TileMapSpaceType.Floor);
 
                         _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
                     }
@@ -584,7 +584,7 @@ public partial class BaseDungeonLevel : Node
         }
 	}
 
-	private TileMapSpace CreateDefaultTileMapSpace(Vector2I positionOfTileMapSpace)
+	private TileMapSpace CreateDefaultTileMapSpace(Vector2I positionOfTileMapSpace, TileMapSpaceType tileMapSpaceType)
 	{
 		//Generate InteriorWallBlock at that position
 		var tempBlock = _interiorBlockScene.Instantiate();
@@ -624,7 +624,7 @@ public partial class BaseDungeonLevel : Node
 	{
 		try
 		{
-			List<TileMapSpace> tempTileMapSpaces = new List<TileMapSpace>();
+			List<TileMapSpace> wallTileMapSpaces = new List<TileMapSpace>();
 
 			//Create all floor-adjacent wall-tile map spaces
             foreach (Vector2I possiblePosition in _possibleTileMapSpacesByFloorPosition.Keys)
@@ -637,13 +637,13 @@ public partial class BaseDungeonLevel : Node
                     {
                         var newWall_TileMapSpace = new TileMapSpace();
 
-                        newWall_TileMapSpace = CreateDefaultTileMapSpace(adjacentFloorSpacePosition);
+                        newWall_TileMapSpace = CreateDefaultTileMapSpace(adjacentFloorSpacePosition, TileMapSpaceType.Overview);
 
 						newWall_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 90;
 
-						//Can't add to list of TileMapSpaces-by-FloorPosition because it will alter the enumeration we're looping through
+                        //Can't add to list of TileMapSpaces-by-FloorPosition because it will alter the enumeration we're looping through
 
-                        tempTileMapSpaces.Add(newWall_TileMapSpace);
+                        wallTileMapSpaces.Add(newWall_TileMapSpace);
 
                         var interiorBlockSprite = newWall_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 						interiorBlockSprite.Texture = GetOverviewTexture();
@@ -652,7 +652,7 @@ public partial class BaseDungeonLevel : Node
 			}
 
 			//Add all newly-created tiles to the list of TileMapSpaces-by-FloorPosition
-            foreach (TileMapSpace tileMapSpace in tempTileMapSpaces)
+            foreach (TileMapSpace tileMapSpace in wallTileMapSpaces)
             {
                 if (!_possibleTileMapSpacesByFloorPosition.ContainsKey(tileMapSpace.TileMapPosition))
                 {
@@ -661,20 +661,20 @@ public partial class BaseDungeonLevel : Node
             }
 
 			//Adjust tiles for collisions and draw walls
-			foreach (TileMapSpace tempTileMapSpace in tempTileMapSpaces)
+			foreach (TileMapSpace wallTileMapSpace in wallTileMapSpaces)
             {
-                List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tempTileMapSpace.TileMapPosition);
+                List<Vector2I> allAdjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(wallTileMapSpace.TileMapPosition);
 
                 //if current index isn't the very top
-                if (tempTileMapSpace.TileMapPosition.Y != 0)
+                if (wallTileMapSpace.TileMapPosition.Y != 0)
                 {
-                    Vector2I northBlockPosition = new Vector2I(tempTileMapSpace.TileMapPosition.X, tempTileMapSpace.TileMapPosition.Y - 1);
+                    Vector2I northBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X, wallTileMapSpace.TileMapPosition.Y - 1);
 
                     if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) ||
                         (_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) && _possibleTileMapSpacesByFloorPosition[northBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
                         allAdjacentFloorSpacePositions.Any(x => x == northBlockPosition))
                     {
-                        var collisionShape = tempTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+                        var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
 
                         collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
                         collisionShape.Position = new Vector2(0, 8);
@@ -682,16 +682,17 @@ public partial class BaseDungeonLevel : Node
                 }
 
 				//if the index isn't the very bottom
-                if (tempTileMapSpace.TileMapPosition.Y != _maxNumberOfTiles - 1)
+                if (wallTileMapSpace.TileMapPosition.Y != _maxNumberOfTiles - 1)
                 {
-                    Vector2I southBlockPosition = new Vector2I(tempTileMapSpace.TileMapPosition.X, tempTileMapSpace.TileMapPosition.Y + 1);
+                    Vector2I southBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X, wallTileMapSpace.TileMapPosition.Y + 1);
 
                     if (((_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
                         allAdjacentFloorSpacePositions.Any(x => x == southBlockPosition))
                     {
-                        var interiorBlockSprite = tempTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
+                        var interiorBlockSprite = wallTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
 						interiorBlockSprite.Texture = GetWallTexture();
+                        wallTileMapSpace.TileMapSpaceType = TileMapSpaceType.Wall;
 					}
                 }
             }

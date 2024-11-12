@@ -1,5 +1,5 @@
+using Enums;
 using Godot;
-using System;
 
 public partial class TileMapSpace 
 {
@@ -16,4 +16,6 @@ public partial class TileMapSpace
     public Vector2 ActualGlobalPosition = Vector2I.Zero; //Needed because can't access InteriorBlock's global position if it is queued for deletion
 
 	public bool IsCleared = false;
+
+	public TileMapSpaceType TileMapSpaceType = TileMapSpaceType.None;
 }
