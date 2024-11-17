@@ -180,36 +180,24 @@ public partial class BaseDungeonLevel : Node
 			CreatePathsBetweenPoints();
         }
 
-		#region Spawn Key Objects
-
-		GenerateKeyMapItems();
-
-		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
-		{
-			SpawnPlayersSuperClose();
-		}
-		else
-		{
-			SpawnPlayersNormal();
-		}
-
-		#endregion
-
 		DrawOverviewAndWalls();
 
+        //Add water
         if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
         {
             List<TileMapSpace> possibleWaterSpaces = new List<TileMapSpace>();
 
             foreach (TileMapSpace tileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
             {
-                if (!tileMapSpace.IsSpawnPoint && tileMapSpace.TileMapSpaceType == TileMapSpaceType.Floor)
+                if ((!tileMapSpace.IsSpawnPoint && !tileMapSpace.IsAdjacentToSpawnPoint) && tileMapSpace.TileMapSpaceType == TileMapSpaceType.Floor)
                 {
                     var adjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tileMapSpace.TileMapPosition);
 
                     //if all adjacent floor positions are also floor-type
-                    if (adjacentFloorSpacePositions.All(x => _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor
-                                                        || _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water))
+                    if (adjacentFloorSpacePositions.All(x => 
+                                                        (!_possibleTileMapSpacesByFloorPosition[x].IsSpawnPoint && !_possibleTileMapSpacesByFloorPosition[x].IsAdjacentToSpawnPoint) &&
+                                                         (_possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor ||
+                                                          _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water)))
                     {
                         if (_rng.RandiRange(1, 100) <= 30)
                         {
@@ -219,7 +207,40 @@ public partial class BaseDungeonLevel : Node
                 }
             }
         }
-	}
+        
+        //Remove one-block water
+        foreach (TileMapSpace tileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
+        {
+            if (tileMapSpace.TileMapSpaceType == TileMapSpaceType.Water)
+            {
+                var adjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(tileMapSpace.TileMapPosition);
+
+                //if all adjacent map positions are water-type
+                if (adjacentFloorSpacePositions.All(x => _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor))
+                {
+                    tileMapSpace.TileMapSpaceType = TileMapSpaceType.Floor;
+                    DrawOnTileMap(tileMapSpace.TileMapPosition);
+                }
+            }
+        }
+
+        #region Spawn Key Objects
+
+        if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+        {
+            SpawnPlayersSuperClose();
+        }
+        else
+        {
+            SpawnPlayersNormal();
+        }
+
+        GenerateKeyMapObjects();
+
+        #endregion
+
+
+    }
 
     #region Procedural Path Generation
 
@@ -259,7 +280,6 @@ public partial class BaseDungeonLevel : Node
 
         newSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
         newSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
-        newSpawnPoint_TileMapSpace.IsCleared = true;
 
         _possibleTileMapSpacesByFloorPosition[newSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
 
@@ -268,7 +288,7 @@ public partial class BaseDungeonLevel : Node
 
 		DrawOnTileMap(newSpawnPoint_TileMapSpace.TileMapPosition);
 
-        //Clear out area near spawn point
+        //Clear out area near spawn point                     //TODO: Fix this to use GetAllAdjacent()...
         var floorSpacesAdjacentToSpawnPoint = _possibleFloorPositionsByIndex.Values.Where(
             floorSpace => (floorSpace != newSpawnPoint_TileMapSpace.TileMapPosition &&
                           ((Vector2)newSpawnPoint_TileMapSpace.TileMapPosition).DistanceTo(floorSpace) <= Math.Sqrt(2))).ToList();
@@ -290,9 +310,9 @@ public partial class BaseDungeonLevel : Node
                     _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToSpawnPoint, nearSpawnPoint_TileMapSpace);
                 }
 
+                nearSpawnPoint_TileMapSpace.IsAdjacentToSpawnPoint = true;
                 nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
                 nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
-                nearSpawnPoint_TileMapSpace.IsCleared = true;
 
                 _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
 
@@ -398,7 +418,6 @@ public partial class BaseDungeonLevel : Node
 						if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
 						{
                             nextWalk_TileMapSpace.InteriorBlock.QueueFree();
-                            nextWalk_TileMapSpace.IsCleared = true;
 						}
 
 						var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
@@ -559,7 +578,6 @@ public partial class BaseDungeonLevel : Node
                         if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
                         {
                             nextWalk_TileMapSpace.InteriorBlock.QueueFree();
-                            nextWalk_TileMapSpace.IsCleared = true;
                         }
 
                         var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
@@ -765,8 +783,9 @@ public partial class BaseDungeonLevel : Node
             var adjacentFloorSpacePositions = GetAllAdjacentFloorSpacePositions(newPositionToCheck);
 
             //if all adjacent floor positions are also floor-type
-            if (adjacentFloorSpacePositions.All(x => _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor
-                                                || _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water))
+            if (adjacentFloorSpacePositions.All(x => !_possibleTileMapSpacesByFloorPosition[x].IsSpawnPoint && !_possibleTileMapSpacesByFloorPosition[x].IsAdjacentToSpawnPoint &&
+                                                (_possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Floor
+                                                || _possibleTileMapSpacesByFloorPosition[x].TileMapSpaceType == TileMapSpaceType.Water)))
             {
                 walkingFloorSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
 
@@ -883,12 +902,12 @@ public partial class BaseDungeonLevel : Node
 
     #region Key Object Generation
 
-    private void GenerateKeyMapItems()
+    private void GenerateKeyMapObjects()
 	{
 		GeneratePortal();
 
-		//GenerateSwitches();
-	}
+        GenerateSwitches();
+    }
 
 	private void GeneratePortal() 
 	{
@@ -896,10 +915,10 @@ public partial class BaseDungeonLevel : Node
 		var portal = tempPortal as Node2D;
 		AddChild(portal);
 
-		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
 
 		//Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
-		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
+		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
 	}
 
 	private void GenerateSwitches() 
@@ -910,9 +929,9 @@ public partial class BaseDungeonLevel : Node
 			var portalSwitch = tempPortalSwitch as Node2D;
 			AddChild(portalSwitch);
 
-			var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.InteriorBlock.IsQueuedForDeletion() && !x.IsSpawnPoint).ToList();
+			var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
 
-			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].InteriorBlock.GlobalPosition;
+			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
 		}
 	}
 
@@ -1022,7 +1041,7 @@ public partial class BaseDungeonLevel : Node
 		var enemy = tempEnemy as BaseEnemy;
 		AddChild(enemy);
 
-		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsCleared && !x.IsSpawnPoint).ToList();
+		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSpawnPoint).ToList();
 
 		enemy.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
 
