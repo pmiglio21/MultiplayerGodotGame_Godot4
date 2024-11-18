@@ -295,7 +295,15 @@ namespace Root
 			_rootGuiControl.RemoveChild(currentUiScene);
 		}
 
-		private void QuitGame()
+        public override void _Notification(int notificationCode)
+        {
+            if (notificationCode == NotificationWMCloseRequest)
+			{
+				QuitGame();
+            }
+        }
+
+        private void QuitGame()
 		{
 			try
 			{
