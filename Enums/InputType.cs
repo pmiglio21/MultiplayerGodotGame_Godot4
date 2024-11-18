@@ -13,12 +13,17 @@ namespace Enums
         EastButton,
         SouthButton,
         WestButton,
-        NorthButton, 
+        NorthButton,
 
         //Middle buttons
+        SelectButton,
         StartButton,
 
         //Shoulder buttons
+        LeftShoulder,
+        LeftTrigger,
+        RightShoulder,
+        RightTrigger,
 
         //D-Pad buttons
         DPadEast, 

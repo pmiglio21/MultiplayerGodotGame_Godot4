@@ -33,12 +33,14 @@ public partial class PlayerCharacterSelectScreenManager : Control
 
 	public override void _Process(double delta)
 	{
+        if (UniversalInputHelper.IsActionJustPressed(InputType.SelectButton))
+        {
+            EmitSignal(SignalName.GoToGameRulesScreen);
+        }
 	}
 
 	private void OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen()
 	{
-        
-
         EmitSignal(SignalName.GoToGameRulesScreen);
 	}
 

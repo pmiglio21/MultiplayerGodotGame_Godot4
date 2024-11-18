@@ -51,7 +51,7 @@ offset_top = -42.0
 offset_right = -68.0
 offset_bottom = 8.0
 focus_mode = 1
-LabelText = "Relative Spawn Distance"
+LabelText = "Spawn Proximity"
 OptionSelectorType = 2
 
 [node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
@@ -87,19 +87,19 @@ MinNumber = 1
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 6.0
-offset_top = 166.0
-offset_right = 206.0
-offset_bottom = 197.0
+offset_left = -8.0
+offset_top = 234.0
+offset_right = 192.0
+offset_bottom = 265.0
 focus_mode = 1
 text = "Return"
 
 [node name="ContinueButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 6.0
-offset_top = 201.0
-offset_right = 206.0
-offset_bottom = 232.0
+offset_left = -8.0
+offset_top = 269.0
+offset_right = 192.0
+offset_bottom = 300.0
 focus_mode = 1
 text = "Continue"
 
@@ -120,3 +120,43 @@ popup/item_1/text = "Cave"
 popup/item_1/checkable = 1
 popup/item_1/checked = true
 popup/item_1/id = 1
+
+[node name="LoadRulesetButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = -111.0
+offset_top = -204.0
+offset_right = 65.0
+offset_bottom = -134.0
+text = "Load Ruleset"
+
+[node name="SaveRulesetButton" type="Button" parent="."]
+offset_left = 109.0
+offset_top = -204.0
+offset_right = 285.0
+offset_bottom = -134.0
+text = "Save Ruleset"
+
+[node name="FriendlyFireToggle" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_top = -118.0
+offset_right = 428.0
+offset_bottom = -56.0
+text = "Friendly Fire"
+alignment = 1
+
+[node name="WinConditionMenuButton" type="MenuButton" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = -42.0
+offset_right = 383.0
+offset_bottom = 37.0
+text = "Win Condition"
+
+[node name="SwitchProximityMenuButton" type="MenuButton" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 29.0
+offset_right = 394.0
+offset_bottom = 85.0
+text = "Switch Proximity"
