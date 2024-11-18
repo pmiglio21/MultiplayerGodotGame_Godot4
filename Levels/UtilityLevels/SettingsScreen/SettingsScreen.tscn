@@ -35,6 +35,26 @@ offset_right = 93.0
 offset_bottom = 42.5
 size_flags_horizontal = 4
 
+[node name="MasterVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+layout_mode = 2
+
+[node name="SoundEffectsVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+layout_mode = 2
+
+[node name="UIVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+layout_mode = 2
+
+[node name="ResolutionOptionsButton" type="OptionButton" parent="ButtonsGrid"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Option 1"
+popup/item_0/id = 0
+popup/item_1/text = "Option 2"
+popup/item_1/id = 1
+
+[node name="FullscreenToggle" type="CheckButton" parent="ButtonsGrid"]
+layout_mode = 2
+
 [node name="ReturnButton" type="Button" parent="ButtonsGrid"]
 layout_mode = 2
 size_flags_horizontal = 0

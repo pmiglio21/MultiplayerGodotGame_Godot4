@@ -16,38 +16,39 @@ grow_vertical = 2
 script = ExtResource("1_y2xbi")
 
 [node name="PlayerCharacterPicker0" parent="." instance=ExtResource("2_hw8w2")]
-offset_left = -495.0
-offset_top = -232.2
-offset_right = -455.0
-offset_bottom = -192.2
+offset_left = -377.0
+offset_top = -98.0
+offset_right = -337.0
+offset_bottom = -58.0
+scale = Vector2(1, 1.04936)
 NumberOfCharactersNecessaryBeforeGivingAccess = 0
 
 [node name="PlayerCharacterPicker1" parent="." instance=ExtResource("2_hw8w2")]
-offset_left = -347.0
-offset_top = -230.2
-offset_right = -307.0
-offset_bottom = -190.2
+offset_left = -158.0
+offset_top = -101.0
+offset_right = -118.0
+offset_bottom = -61.0
 NumberOfCharactersNecessaryBeforeGivingAccess = 1
 
 [node name="PlayerCharacterPicker2" parent="." instance=ExtResource("2_hw8w2")]
-offset_left = -201.0
-offset_top = -229.2
-offset_right = -161.0
-offset_bottom = -189.2
+offset_left = 61.0
+offset_top = -100.0
+offset_right = 101.0
+offset_bottom = -60.0
 NumberOfCharactersNecessaryBeforeGivingAccess = 2
 
 [node name="PlayerCharacterPicker3" parent="." instance=ExtResource("2_hw8w2")]
-offset_left = -55.0
-offset_top = -229.2
-offset_right = -15.0
-offset_bottom = -189.2
+offset_left = 304.0
+offset_top = -103.0
+offset_right = 344.0
+offset_bottom = -63.0
 NumberOfCharactersNecessaryBeforeGivingAccess = 3
 
 [node name="ConfirmSelectionButton" parent="." instance=ExtResource("3_muknc")]
-offset_left = -567.0
-offset_top = -339.0
-offset_right = -527.0
-offset_bottom = -299.0
+offset_left = -268.0
+offset_top = 114.0
+offset_right = 200.0
+offset_bottom = 294.0
 
 [connection signal="FinishSelectionProcessStarted" from="PlayerCharacterPicker0" to="ConfirmSelectionButton" method="OnPlayerCharacterPicker_FinishSelectionProcess"]
 [connection signal="TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper" from="PlayerCharacterPicker0" to="." method="OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToDungeonLevelSwapper"]
