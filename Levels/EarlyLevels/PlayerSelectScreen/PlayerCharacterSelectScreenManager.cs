@@ -8,9 +8,12 @@ using System.Linq;
 
 public partial class PlayerCharacterSelectScreenManager : Control
 {
-	#region Signals
+    #region Signals
 
-	[Signal]
+    [Signal]
+    public delegate void GoToTitleScreenEventHandler();
+
+    [Signal]
     public delegate void GoToGameRulesScreenEventHandler();
 
     [Signal]
@@ -39,7 +42,12 @@ public partial class PlayerCharacterSelectScreenManager : Control
         }
 	}
 
-	private void OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen()
+    private void OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToTitleScreen()
+    {
+        EmitSignal(SignalName.GoToTitleScreen);
+    }
+
+    private void OnPlayerCharacterPicker_TellPlayerCharacterSelectScreenToGoToGameRulesScreen()
 	{
         EmitSignal(SignalName.GoToGameRulesScreen);
 	}

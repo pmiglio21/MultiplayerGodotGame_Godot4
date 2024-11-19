@@ -17,10 +17,13 @@ namespace Levels.EarlyLevels
 
 		#region Signals
 
-		[Signal]
-		public delegate void GoToPlayModeScreenEventHandler();
+		//[Signal]
+		//public delegate void GoToPlayModeScreenEventHandler();
 
 		[Signal]
+        public delegate void GoToPlayerCharacterSelectScreenEventHandler();
+
+        [Signal]
 		public delegate void GoToGameRulesScreenEventHandler();
 
 		[Signal]
@@ -59,7 +62,7 @@ namespace Levels.EarlyLevels
 				{
 					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
-					EmitSignal(SignalName.GoToPlayModeScreen);
+					EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
 				}
 				else if (_gameRulesButton.HasFocus())
 				{

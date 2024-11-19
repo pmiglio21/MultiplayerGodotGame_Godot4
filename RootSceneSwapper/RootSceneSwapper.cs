@@ -8,6 +8,7 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
 using System.Collections.Generic;
 using System;
+using Enums.GameRules;
 
 namespace Root
 {
@@ -50,10 +51,13 @@ namespace Root
 
 			_titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
-			_titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
-			_titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen; 
-			_titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
+            //_titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
+            _titleScreenManager.GoToPlayerCharacterSelectScreen += OnTitleScreenRootGoToPlayerCharacterSelectScreen;
+            _titleScreenManager.GoToGameRulesScreen += OnTitleScreenRootGoToGameRulesScreen;
+            _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
+
+			GetLastSavedGameRules();
 		}
 
 		public DungeonLevelSwapper GetDungeonLevelSwapper()
@@ -75,7 +79,12 @@ namespace Root
 			ChangeSceneToGameRulesScreen(_titleScreenManager);
 		}
 
-		private void OnTitleScreenRootGoToSettingsScreen()
+        private void OnTitleScreenRootGoToPlayerCharacterSelectScreen()
+        {
+            ChangeSceneToPlayerCharacterSelectScreen(_titleScreenManager);
+        }
+
+        private void OnTitleScreenRootGoToSettingsScreen()
 		{
 			ChangeSceneToSettingsScreen();
 		}
@@ -128,16 +137,26 @@ namespace Root
 			ChangeSceneToTitleScreen(_settingsScreenManager);
 		}
 
-		#endregion
+        #endregion
 
-		#region Player Character Select Screen
+        #region Player Character Select Screen
 
-		public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
+        public void OnPlayerCharacterSelectScreenGoToTitleScreen()
+        {
+            this.ActivePlayers.Clear();
+            this.ActivePlayerCharacterPickers.Clear();
+
+            ChangeSceneToTitleScreen(_playerCharacterSelectScreenManager);
+        }
+
+        public void OnPlayerCharacterSelectScreenGoToGameRulesScreen()
 		{
-			this.ActivePlayers.Clear();
-			this.ActivePlayerCharacterPickers.Clear();
+            //this.ActivePlayers.Clear();
+            //this.ActivePlayerCharacterPickers.Clear();
 
-			ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
+            PriorSceneName = ScreenNames.PlayerCharacterSelect;
+
+            ChangeSceneToGameRulesScreen(_playerCharacterSelectScreenManager);
 		}
 
 		public void OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper()
@@ -258,7 +277,8 @@ namespace Root
 			{
 				_playerCharacterSelectScreenManager = GD.Load<PackedScene>(LevelScenePaths.PlayerCharacterSelectScreenPath).Instantiate() as PlayerCharacterSelectScreenManager;
 
-				_playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen; 
+				_playerCharacterSelectScreenManager.GoToTitleScreen += OnPlayerCharacterSelectScreenGoToTitleScreen;
+                _playerCharacterSelectScreenManager.GoToGameRulesScreen += OnPlayerCharacterSelectScreenGoToGameRulesScreen; 
 				_playerCharacterSelectScreenManager.GoToDungeonLevelSwapper += OnPlayerCharacterSelectScreenGoToDungeonLevelSwapper;
 			}
 
@@ -343,6 +363,28 @@ namespace Root
 			//_uiAudioStreamPlayer.Play();
 		}
 
-		#endregion
-	}
+        #endregion
+
+        #region Game Rules
+
+        private void GetLastSavedGameRules()
+		{
+			CurrentGameRules = GetDefaultGameRules();
+        }
+
+		private GameRules GetDefaultGameRules()
+		{
+			GameRules defaultGameRules = new GameRules()
+			{
+				BiomeType = BiomeType.Castle,
+				CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.SuperClose,
+				NumberOfLevels = "1",
+				CurrentLevelSize = LevelSize.Small
+			};
+
+			return defaultGameRules;
+		}
+
+        #endregion
+    }
 }

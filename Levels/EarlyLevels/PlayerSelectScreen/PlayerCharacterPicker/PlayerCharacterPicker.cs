@@ -13,6 +13,9 @@ namespace Scenes.UI.PlayerSelectScene
 		public delegate void FinishSelectionProcessStartedEventHandler();
 
         [Signal]
+        public delegate void TellPlayerCharacterSelectScreenToGoToTitleScreenEventHandler();
+
+        [Signal]
         public delegate void TellPlayerCharacterSelectScreenToGoToGameRulesScreenEventHandler();
 
         [Signal]
@@ -98,7 +101,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 						if (goToTitleLevel && _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count == 0)
 						{
-							EmitSignal(SignalName.TellPlayerCharacterSelectScreenToGoToGameRulesScreen);
+							EmitSignal(SignalName.TellPlayerCharacterSelectScreenToGoToTitleScreen);
                         }
 					}
 				}

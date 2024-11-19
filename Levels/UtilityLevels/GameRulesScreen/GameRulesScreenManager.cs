@@ -203,7 +203,11 @@ namespace Levels.UtilityLevels
 			{
 				EmitSignal(SignalName.GoToPlayModeScreen);
 			}
-		}
+            else if (_rootSceneSwapper.PriorSceneName == ScreenNames.PlayerCharacterSelect)
+            {
+                EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
+            }
+        }
 
 		private void SaveOutGameRules()
 		{
