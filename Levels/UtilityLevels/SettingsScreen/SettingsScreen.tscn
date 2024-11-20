@@ -1,61 +1,123 @@
-[gd_scene load_steps=3 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=4 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
+[ext_resource type="Texture2D" uid="uid://r1wj7m1lteij" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton0.png" id="2_kqksl"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
 
 [node name="SettingsScreen" type="Control" groups=["SettingsScreen"]]
 layout_mode = 3
-anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.436
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -62.5
-offset_right = 62.5
+offset_left = -81.0
+offset_top = -30.528
+offset_right = 44.0
+offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fd6ci")
 
+[node name="InputTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+autostart = true
+
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
-offset_top = -42.5
-offset_right = 125.0
-offset_bottom = 7.5
+offset_left = 0.5
+offset_top = -150.0
+offset_right = 125.5
+offset_bottom = -100.0
 theme = SubResource("Theme_udowp")
 text = "Settings"
 
-[node name="ButtonsGrid" type="GridContainer" parent="."]
+[node name="MasterVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
-offset_left = 32.0
-offset_top = 11.5
-offset_right = 93.0
-offset_bottom = 42.5
-size_flags_horizontal = 4
+offset_left = -3.0
+offset_top = -94.5
+offset_right = 124.0
+offset_bottom = -78.5
 
-[node name="MasterVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+[node name="MusicVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
+offset_left = -3.0
+offset_top = -74.5
+offset_right = 124.0
+offset_bottom = -58.5
 
-[node name="SoundEffectsVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+[node name="SoundEffectsVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
+offset_left = -3.0
+offset_top = -54.5
+offset_right = 124.0
+offset_bottom = -38.5
 
-[node name="UIVolumeSlider" type="HSlider" parent="ButtonsGrid"]
+[node name="UiVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
+offset_left = -3.0
+offset_top = -34.5
+offset_right = 124.0
+offset_bottom = -18.5
 
-[node name="ResolutionOptionsButton" type="OptionButton" parent="ButtonsGrid"]
+[node name="ResolutionOptionButtonLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -108.0
+offset_top = 152.0
+offset_right = -11.0
+offset_bottom = 177.0
+text = "Resolution"
+
+[node name="ResolutionOptionButtonTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -39.0
+offset_top = 119.0
+offset_right = 161.0
+offset_bottom = 219.0
+texture = ExtResource("2_kqksl")
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="."]
 layout_mode = 2
+offset_left = -2.0
+offset_top = 150.0
+offset_right = 125.0
+offset_bottom = 181.0
+flat = true
 item_count = 2
 popup/item_0/text = "Option 1"
 popup/item_0/id = 0
 popup/item_1/text = "Option 2"
 popup/item_1/id = 1
 
-[node name="FullscreenToggle" type="CheckButton" parent="ButtonsGrid"]
-layout_mode = 2
+[node name="FullscreenToggleLabel" type="RichTextLabel" parent="."]
+offset_left = -108.0
+offset_top = 237.0
+offset_right = -11.0
+offset_bottom = 262.0
+text = "Fullscreen"
 
-[node name="ReturnButton" type="Button" parent="ButtonsGrid"]
+[node name="FullScreenToggleTexture" type="TextureRect" parent="."]
+offset_left = -40.0
+offset_top = 201.0
+offset_right = 160.0
+offset_bottom = 301.0
+texture = ExtResource("2_kqksl")
+
+[node name="FullscreenToggle" type="CheckButton" parent="."]
 layout_mode = 2
+offset_left = 37.0
+offset_top = 233.0
+offset_right = 81.0
+offset_bottom = 257.0
+
+[node name="ReturnButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 31.0
+offset_top = 312.0
+offset_right = 92.0
+offset_bottom = 343.0
 size_flags_horizontal = 0
 text = "Return"

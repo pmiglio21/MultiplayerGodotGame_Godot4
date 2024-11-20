@@ -12,13 +12,20 @@ namespace Levels.UtilityLevels
 
         public bool IsSettingsScreenBeingShown = false;
 
-		private int _inputTimer = 0;
-		private const int _inputTimerMax = 15;
-		private bool _inputChangedRecently = false;
-
 		protected PauseScreenManager pauseScreen;
 
-		private Button _returnButton;
+        #region Components
+
+        private Timer _inputTimer;
+		private HSlider _masterVolumeSlider;
+        private HSlider _musicVolumeSlider;
+        private HSlider _soundEffectsVolumeSlider;
+        private HSlider _uiVolumeSlider;
+		private OptionButton _resolutionOptionButton;
+		private CheckButton _fullscreenToggle;
+        private Button _returnButton;
+
+        #endregion
 
         [Signal]
         public delegate void GoToTitleScreenEventHandler();
@@ -27,6 +34,13 @@ namespace Levels.UtilityLevels
 		{
             _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
+            _inputTimer = FindChild("InputTimer") as Timer;
+            _masterVolumeSlider = FindChild("MasterVolumeSlider") as HSlider;
+            _musicVolumeSlider = FindChild("MasterVolumeSlider") as HSlider;
+            _soundEffectsVolumeSlider = FindChild("SoundEffectsVolumeSlider") as HSlider;
+            _uiVolumeSlider = FindChild("UiVolumeSlider") as HSlider;
+            _resolutionOptionButton = FindChild("ResolutionOptionButton") as OptionButton;
+            _fullscreenToggle = FindChild("FullscreenToggle") as CheckButton;
             _returnButton = FindChild("ReturnButton") as Button;
 
 			GetPauseScreen();
@@ -36,7 +50,7 @@ namespace Levels.UtilityLevels
 				IsSettingsScreenBeingShown = true;
 			}
 
-			_returnButton.GrabFocus();
+			GrabFocusOfTopButton();
 		}
 
 		public override void _Process(double delta)
@@ -60,59 +74,46 @@ namespace Levels.UtilityLevels
 
 		private void GetButtonInput()
 		{
-			//Pause button hit by player
-			if (!_inputChangedRecently && _inputTimer < _inputTimerMax)
+			if (UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-				_inputChangedRecently = true;
-			}
-
-			//Let timer go
-			if (_inputChangedRecently && _inputTimer < _inputTimerMax)
-			{
-				_inputTimer++;
-			}
-			else
-			{
-				_inputChangedRecently = false;
-			}
-
-			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
-			{
-				if (_returnButton.HasFocus())
+				if (_fullscreenToggle.HasFocus())
 				{
-					if (!_inputChangedRecently)
-					{
-                        _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                        ReturnToPriorScene();
-
-						_inputTimer = 0;
-					}
-				}
+					ToggleFullscreen();
+                }
 			}
-
-			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+			else if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-				if (!_inputChangedRecently)
-				{
+                _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+                ReturnToPriorScene();
+            }
+            else if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton))
+            {
+                if (_returnButton.HasFocus())
+                {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
                     ReturnToPriorScene();
-
-					_inputTimer = 0;
-				}
-			}
-		}
+                }
+            }
+        }
 
 		private void GetNavigationInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
-			{
-                //if (_returnButton.HasFocus())
-                //{
-                //  _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                //	_settingsButton.GrabFocus();
-                //}
+            if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
+            {
+                if (_masterVolumeSlider.HasFocus())
+                {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+                    _musicVolumeSlider.GrabFocus();
+                }
+                else if (_musicVolumeSlider.HasFocus())
+                {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+                    _uiVolumeSlider.GrabFocus();
+                }
+
+                _inputTimer.Start();
             }
 		}
 
@@ -128,7 +129,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-			_returnButton.GrabFocus();
+			_masterVolumeSlider.GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
@@ -150,5 +151,27 @@ namespace Levels.UtilityLevels
                 EmitSignal(SignalName.GoToTitleScreen);
 			}
 		}
+
+		private void ToggleFullscreen()
+		{
+            DisplayServer.WindowMode currentWindowMode = DisplayServer.WindowGetMode();
+            DisplayServer.WindowMode previousWindowMode = DisplayServer.WindowGetMode();
+
+            if (currentWindowMode != DisplayServer.WindowMode.Fullscreen)
+            {
+                previousWindowMode = currentWindowMode;
+
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+            }
+            else
+            {
+                if (previousWindowMode == DisplayServer.WindowMode.Fullscreen)
+                {
+                    previousWindowMode = DisplayServer.WindowMode.Windowed;
+                }
+
+                DisplayServer.WindowSetMode(previousWindowMode);
+            }
+        }
 	}
 }
