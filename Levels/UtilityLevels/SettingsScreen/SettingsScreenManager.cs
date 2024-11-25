@@ -17,10 +17,9 @@ namespace Levels.UtilityLevels
         #region Components
 
         private Timer _inputTimer;
-		private HSlider _masterVolumeSlider;
         private HSlider _musicVolumeSlider;
         private HSlider _soundEffectsVolumeSlider;
-        private HSlider _uiVolumeSlider;
+        private HSlider _dungeonSoundsVolumeSlider;
 		private OptionButton _resolutionOptionButton;
 		private CheckButton _fullscreenToggle;
         private Button _returnButton;
@@ -35,10 +34,9 @@ namespace Levels.UtilityLevels
             _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
             _inputTimer = FindChild("InputTimer") as Timer;
-            _masterVolumeSlider = FindChild("MasterVolumeSlider") as HSlider;
-            _musicVolumeSlider = FindChild("MasterVolumeSlider") as HSlider;
+            _musicVolumeSlider = FindChild("MusicVolumeSlider") as HSlider;
             _soundEffectsVolumeSlider = FindChild("SoundEffectsVolumeSlider") as HSlider;
-            _uiVolumeSlider = FindChild("UiVolumeSlider") as HSlider;
+            _dungeonSoundsVolumeSlider = FindChild("DungeonSoundsVolumeSlider") as HSlider;
             _resolutionOptionButton = FindChild("ResolutionOptionButton") as OptionButton;
             _fullscreenToggle = FindChild("FullscreenToggle") as CheckButton;
             _returnButton = FindChild("ReturnButton") as Button;
@@ -102,15 +100,10 @@ namespace Levels.UtilityLevels
 		{
             if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
             {
-                if (_masterVolumeSlider.HasFocus())
+                if (_musicVolumeSlider.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _musicVolumeSlider.GrabFocus();
-                }
-                else if (_musicVolumeSlider.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _uiVolumeSlider.GrabFocus();
+                    _soundEffectsVolumeSlider.GrabFocus();
                 }
 
                 _inputTimer.Start();
@@ -129,7 +122,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-			_masterVolumeSlider.GrabFocus();
+            _musicVolumeSlider.GrabFocus();
 		}
 
 		private void ReturnToPriorScene()

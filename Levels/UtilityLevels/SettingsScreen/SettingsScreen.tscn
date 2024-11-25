@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=5 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
-[ext_resource type="Texture2D" uid="uid://r1wj7m1lteij" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton0.png" id="2_kqksl"]
-
-[sub_resource type="Theme" id="Theme_udowp"]
-default_font_size = 30
+[ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_jjdov"]
+[ext_resource type="Texture2D" uid="uid://irpelo3sr88h" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton6.png" id="3_mheod"]
+[ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="3_wput4"]
 
 [node name="SettingsScreen" type="Control" groups=["SettingsScreen"]]
 layout_mode = 3
@@ -28,63 +27,111 @@ autostart = true
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
-offset_left = 0.5
-offset_top = -150.0
-offset_right = 125.5
-offset_bottom = -100.0
-theme = SubResource("Theme_udowp")
-text = "Settings"
+offset_left = -64.0
+offset_top = -204.0
+offset_right = 256.0
+offset_bottom = -139.0
+theme_override_fonts/normal_font = ExtResource("2_jjdov")
+theme_override_font_sizes/normal_font_size = 80
+text = "SETTINGS"
 
-[node name="MasterVolumeSlider" type="HSlider" parent="."]
-layout_mode = 2
-offset_left = -3.0
-offset_top = -94.5
-offset_right = 124.0
-offset_bottom = -78.5
+[node name="MusicVolumeSliderTexture" type="TextureRect" parent="."]
+offset_left = -158.0
+offset_top = -187.0
+offset_right = 42.0
+offset_bottom = -87.0
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("3_mheod")
+
+[node name="MusicVolumeSliderLabel" type="RichTextLabel" parent="."]
+offset_left = -78.0
+offset_top = -91.0
+offset_right = 65.0
+offset_bottom = -60.0
+theme_override_fonts/normal_font = ExtResource("3_wput4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Music"
 
 [node name="MusicVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
-offset_left = -3.0
-offset_top = -74.5
-offset_right = 124.0
-offset_bottom = -58.5
+offset_left = 84.0
+offset_top = -85.0
+offset_right = 211.0
+offset_bottom = -69.0
+
+[node name="SoundEffectsVolumeSliderTexture" type="TextureRect" parent="."]
+offset_left = -158.0
+offset_top = -95.0
+offset_right = 42.0
+offset_bottom = 5.00002
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("3_mheod")
+
+[node name="SoundEffectsVolumeSliderLabel" type="RichTextLabel" parent="."]
+offset_left = -82.0
+offset_top = -9.99998
+offset_right = 61.0
+offset_bottom = 70.0
+theme_override_fonts/normal_font = ExtResource("3_wput4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Sound Effects"
 
 [node name="SoundEffectsVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
-offset_left = -3.0
-offset_top = -54.5
-offset_right = 124.0
-offset_bottom = -38.5
+offset_left = 81.0
+offset_top = 8.00003
+offset_right = 208.0
+offset_bottom = 24.0
 
-[node name="UiVolumeSlider" type="HSlider" parent="."]
+[node name="DungeonSoundsVolumeSliderTexture" type="TextureRect" parent="."]
+offset_left = -158.0
+offset_top = -3.0
+offset_right = 42.0
+offset_bottom = 97.0
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("3_mheod")
+
+[node name="DungeonSoundsVolumeSliderLabel" type="RichTextLabel" parent="."]
+offset_left = -85.0
+offset_top = 81.0
+offset_right = 58.0
+offset_bottom = 161.0
+theme_override_fonts/normal_font = ExtResource("3_wput4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Dungeon Sounds"
+
+[node name="DungeonSoundsVolumeSlider" type="HSlider" parent="."]
 layout_mode = 2
-offset_left = -3.0
-offset_top = -34.5
-offset_right = 124.0
-offset_bottom = -18.5
-
-[node name="ResolutionOptionButtonLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = -108.0
-offset_top = 152.0
-offset_right = -11.0
-offset_bottom = 177.0
-text = "Resolution"
+offset_left = 81.0
+offset_top = 100.0
+offset_right = 208.0
+offset_bottom = 116.0
 
 [node name="ResolutionOptionButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -39.0
-offset_top = 119.0
-offset_right = 161.0
-offset_bottom = 219.0
-texture = ExtResource("2_kqksl")
+offset_left = -158.0
+offset_top = 89.0
+offset_right = 42.0
+offset_bottom = 189.0
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("3_mheod")
+
+[node name="ResolutionOptionButtonLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -79.0
+offset_top = 187.0
+offset_right = 64.0
+offset_bottom = 218.0
+theme_override_fonts/normal_font = ExtResource("3_wput4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Resolution"
 
 [node name="ResolutionOptionButton" type="OptionButton" parent="."]
 layout_mode = 2
-offset_left = -2.0
-offset_top = 150.0
-offset_right = 125.0
-offset_bottom = 181.0
+offset_left = 73.0
+offset_top = 185.0
+offset_right = 200.0
+offset_bottom = 216.0
 flat = true
 item_count = 2
 popup/item_0/text = "Option 1"
@@ -92,32 +139,36 @@ popup/item_0/id = 0
 popup/item_1/text = "Option 2"
 popup/item_1/id = 1
 
-[node name="FullscreenToggleLabel" type="RichTextLabel" parent="."]
-offset_left = -108.0
-offset_top = 237.0
-offset_right = -11.0
-offset_bottom = 262.0
-text = "Fullscreen"
+[node name="FullscreenToggleTexture" type="TextureRect" parent="."]
+offset_left = -158.0
+offset_top = 179.0
+offset_right = 42.0
+offset_bottom = 279.0
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("3_mheod")
 
-[node name="FullScreenToggleTexture" type="TextureRect" parent="."]
-offset_left = -40.0
-offset_top = 201.0
-offset_right = 160.0
-offset_bottom = 301.0
-texture = ExtResource("2_kqksl")
+[node name="FullscreenToggleLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -79.0
+offset_top = 277.0
+offset_right = 63.0
+offset_bottom = 314.0
+theme_override_fonts/normal_font = ExtResource("3_wput4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Fullscreen"
 
 [node name="FullscreenToggle" type="CheckButton" parent="."]
 layout_mode = 2
-offset_left = 37.0
-offset_top = 233.0
-offset_right = 81.0
-offset_bottom = 257.0
+offset_left = 115.0
+offset_top = 279.0
+offset_right = 159.0
+offset_bottom = 303.0
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 31.0
-offset_top = 312.0
-offset_right = 92.0
-offset_bottom = 343.0
+offset_left = 34.0
+offset_top = 342.0
+offset_right = 95.0
+offset_bottom = 373.0
 size_flags_horizontal = 0
 text = "Return"

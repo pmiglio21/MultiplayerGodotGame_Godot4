@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=6 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
+[ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_pyw1h"]
 [ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="2_qmecr"]
 [ext_resource type="PackedScene" uid="uid://cvvcipol0i6h4" path="res://Levels/UtilityLevels/UserInterfaceComponents/NumberSpinner/NumberSpinner.tscn" id="3_2icas"]
 
@@ -28,12 +29,14 @@ autostart = true
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = 2.0
-offset_top = -254.0
-offset_right = 202.0
+offset_left = -95.0
+offset_top = -267.0
+offset_right = 325.0
 offset_bottom = -204.0
 theme = SubResource("Theme_udowp")
-text = "Game Rules"
+theme_override_fonts/normal_font = ExtResource("2_pyw1h")
+theme_override_font_sizes/normal_font_size = 80
+text = "GAME RULES"
 
 [node name="BiomeTypeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 offset_left = -268.0
@@ -130,6 +133,7 @@ offset_bottom = -134.0
 text = "Load Ruleset"
 
 [node name="SaveRulesetButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 109.0
 offset_top = -204.0
 offset_right = 285.0

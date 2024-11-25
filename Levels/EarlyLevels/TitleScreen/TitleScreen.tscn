@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cf8ld0gid5wam"]
+[gd_scene load_steps=4 format=3 uid="uid://cf8ld0gid5wam"]
 
 [ext_resource type="Script" path="res://Levels/EarlyLevels/TitleScreen/TitleScreenManager.cs" id="1_thxbk"]
+[ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="2_5baj2"]
 
 [sub_resource type="Theme" id="Theme_ijh7m"]
 default_font_size = 30
@@ -34,30 +35,46 @@ size_flags_horizontal = 4
 theme = SubResource("Theme_ijh7m")
 text = "DUNGEONFALL"
 
-[node name="ButtonsGrid" type="GridContainer" parent="."]
+[node name="PlayButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 42.5
-offset_top = -57.0
-offset_right = 142.5
-offset_bottom = 114.0
-size_flags_horizontal = 4
-
-[node name="PlayButton" type="Button" parent="ButtonsGrid"]
-layout_mode = 2
+offset_left = 25.5
+offset_top = -38.0
+offset_right = 166.5
+offset_bottom = -2.0
 focus_mode = 1
+theme_override_fonts/font = ExtResource("2_5baj2")
+theme_override_font_sizes/font_size = 40
 text = "Play"
 
-[node name="GameRulesButton" type="Button" parent="ButtonsGrid"]
+[node name="GameRulesButton" type="Button" parent="."]
 layout_mode = 2
+offset_left = 25.5
+offset_top = 27.0
+offset_right = 166.5
+offset_bottom = 63.0
 focus_mode = 1
+theme_override_fonts/font = ExtResource("2_5baj2")
+theme_override_font_sizes/font_size = 40
 text = "Game Rules"
 
-[node name="SettingsButton" type="Button" parent="ButtonsGrid"]
+[node name="SettingsButton" type="Button" parent="."]
 layout_mode = 2
+offset_left = 27.5
+offset_top = 88.0
+offset_right = 168.5
+offset_bottom = 124.0
 focus_mode = 1
+theme_override_fonts/font = ExtResource("2_5baj2")
+theme_override_font_sizes/font_size = 40
 text = "Settings"
 
-[node name="QuitGameButton" type="Button" parent="ButtonsGrid"]
+[node name="QuitGameButton" type="Button" parent="."]
 layout_mode = 2
+offset_left = 25.5
+offset_top = 145.0
+offset_right = 166.5
+offset_bottom = 181.0
 focus_mode = 1
+theme_override_fonts/font = ExtResource("2_5baj2")
+theme_override_font_sizes/font_size = 40
 text = "Quit"
