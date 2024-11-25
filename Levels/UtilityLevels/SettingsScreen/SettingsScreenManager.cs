@@ -20,8 +20,8 @@ namespace Levels.UtilityLevels
 
         private Timer _inputTimer;
         private SliderButton _musicVolumeSliderButton;
-        private HSlider _soundEffectsVolumeSlider;
-        private HSlider _dungeonSoundsVolumeSlider;
+        private SliderButton _soundEffectsVolumeSliderButton;
+        private SliderButton _dungeonSoundsVolumeSliderButton;
 		private OptionButton _resolutionOptionButton;
 		private CheckButton _fullscreenToggle;
         private Button _returnButton;
@@ -39,8 +39,8 @@ namespace Levels.UtilityLevels
 
                 _inputTimer = FindChild("InputTimer") as Timer;
                 _musicVolumeSliderButton = FindChild("MusicVolumeSliderButton") as SliderButton;
-                _soundEffectsVolumeSlider = FindChild("SoundEffectsVolumeSlider") as HSlider;
-                _dungeonSoundsVolumeSlider = FindChild("DungeonSoundsVolumeSlider") as HSlider;
+                _soundEffectsVolumeSliderButton = FindChild("SoundEffectsVolumeSliderButton") as SliderButton;
+                _dungeonSoundsVolumeSliderButton = FindChild("DungeonSoundsVolumeSliderButton") as SliderButton;
                 _resolutionOptionButton = FindChild("ResolutionOptionButton") as OptionButton;
                 _fullscreenToggle = FindChild("FullscreenToggle") as CheckButton;
                 _returnButton = FindChild("ReturnButton") as Button;
@@ -112,7 +112,7 @@ namespace Levels.UtilityLevels
                 if (_musicVolumeSliderButton.GetHSlider().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _soundEffectsVolumeSlider.GrabFocus();
+                    _soundEffectsVolumeSliderButton.GrabFocus();
                 }
 
                 _inputTimer.Start();
