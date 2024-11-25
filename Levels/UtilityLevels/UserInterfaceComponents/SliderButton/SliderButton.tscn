@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw5444uqbf0as"]
+
+[ext_resource type="Texture2D" uid="uid://nxnjfpsdhshc" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton09.png" id="1_1ydgn"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.cs" id="1_so6wq"]
+[ext_resource type="Texture2D" uid="uid://p28i2a8ukekg" path="res://Levels/EarlyLevels/GuiArt/SliderGrabber.png" id="2_udlk4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gqi7j"]
+
+[node name="SliderButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_so6wq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 100.0
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("1_1ydgn")
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 79.0
+offset_right = 556.0
+offset_bottom = 207.0
+scale = Vector2(0.5, 0.5)
+theme_override_icons/grabber = ExtResource("2_udlk4")
+theme_override_icons/grabber_highlight = ExtResource("2_udlk4")
+theme_override_icons/grabber_disabled = ExtResource("2_udlk4")
+theme_override_styles/slider = SubResource("StyleBoxEmpty_gqi7j")
+step = 2.0

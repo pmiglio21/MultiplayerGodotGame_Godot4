@@ -1,7 +1,9 @@
 using Enums;
 using Globals;
 using Godot;
+using Levels.UtilityLevels.UserInterfaceComponents;
 using Root;
+using System;
 using System.Linq;
 
 namespace Levels.UtilityLevels
@@ -17,7 +19,7 @@ namespace Levels.UtilityLevels
         #region Components
 
         private Timer _inputTimer;
-        private HSlider _musicVolumeSlider;
+        private SliderButton _musicVolumeSliderButton;
         private HSlider _soundEffectsVolumeSlider;
         private HSlider _dungeonSoundsVolumeSlider;
 		private OptionButton _resolutionOptionButton;
@@ -31,24 +33,31 @@ namespace Levels.UtilityLevels
 
         public override void _Ready()
 		{
-            _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
-
-            _inputTimer = FindChild("InputTimer") as Timer;
-            _musicVolumeSlider = FindChild("MusicVolumeSlider") as HSlider;
-            _soundEffectsVolumeSlider = FindChild("SoundEffectsVolumeSlider") as HSlider;
-            _dungeonSoundsVolumeSlider = FindChild("DungeonSoundsVolumeSlider") as HSlider;
-            _resolutionOptionButton = FindChild("ResolutionOptionButton") as OptionButton;
-            _fullscreenToggle = FindChild("FullscreenToggle") as CheckButton;
-            _returnButton = FindChild("ReturnButton") as Button;
-
-			GetPauseScreen();
-
-			if (pauseScreen == null)
+			try
 			{
-				IsSettingsScreenBeingShown = true;
-			}
+                _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
-			GrabFocusOfTopButton();
+                _inputTimer = FindChild("InputTimer") as Timer;
+                _musicVolumeSliderButton = FindChild("MusicVolumeSliderButton") as SliderButton;
+                _soundEffectsVolumeSlider = FindChild("SoundEffectsVolumeSlider") as HSlider;
+                _dungeonSoundsVolumeSlider = FindChild("DungeonSoundsVolumeSlider") as HSlider;
+                _resolutionOptionButton = FindChild("ResolutionOptionButton") as OptionButton;
+                _fullscreenToggle = FindChild("FullscreenToggle") as CheckButton;
+                _returnButton = FindChild("ReturnButton") as Button;
+
+                GetPauseScreen();
+
+                if (pauseScreen == null)
+                {
+                    IsSettingsScreenBeingShown = true;
+                }
+
+                GrabFocusOfTopButton();
+            }
+            catch (Exception ex)
+            {
+
+            }
 		}
 
 		public override void _Process(double delta)
@@ -100,7 +109,7 @@ namespace Levels.UtilityLevels
 		{
             if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
             {
-                if (_musicVolumeSlider.HasFocus())
+                if (_musicVolumeSliderButton.GetHSlider().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     _soundEffectsVolumeSlider.GrabFocus();
@@ -122,7 +131,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-            _musicVolumeSlider.GrabFocus();
+            _musicVolumeSliderButton.GetHSlider().GrabFocus();
 		}
 
 		private void ReturnToPriorScene()

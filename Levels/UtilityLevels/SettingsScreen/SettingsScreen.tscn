@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=7 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_jjdov"]
+[ext_resource type="PackedScene" uid="uid://dw5444uqbf0as" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.tscn" id="3_kvpsb"]
 [ext_resource type="Texture2D" uid="uid://irpelo3sr88h" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton6.png" id="3_mheod"]
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="3_wput4"]
+[ext_resource type="Texture2D" uid="uid://nxnjfpsdhshc" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton09.png" id="3_xs34e"]
 
 [node name="SettingsScreen" type="Control" groups=["SettingsScreen"]]
 layout_mode = 3
@@ -35,15 +37,15 @@ theme_override_fonts/normal_font = ExtResource("2_jjdov")
 theme_override_font_sizes/normal_font_size = 80
 text = "SETTINGS"
 
-[node name="MusicVolumeSliderTexture" type="TextureRect" parent="."]
-offset_left = -158.0
+[node name="MusicVolumeSliderButton" parent="." instance=ExtResource("3_kvpsb")]
+layout_mode = 1
+offset_left = -157.0
 offset_top = -187.0
-offset_right = 42.0
-offset_bottom = -87.0
-scale = Vector2(2.25, 2.25)
-texture = ExtResource("3_mheod")
+offset_right = -157.0
+offset_bottom = -187.0
 
 [node name="MusicVolumeSliderLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = -78.0
 offset_top = -91.0
 offset_right = 65.0
@@ -52,22 +54,17 @@ theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
 text = "Music"
 
-[node name="MusicVolumeSlider" type="HSlider" parent="."]
-layout_mode = 2
-offset_left = 84.0
-offset_top = -85.0
-offset_right = 211.0
-offset_bottom = -69.0
-
 [node name="SoundEffectsVolumeSliderTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = -158.0
 offset_top = -95.0
 offset_right = 42.0
 offset_bottom = 5.00002
 scale = Vector2(2.25, 2.25)
-texture = ExtResource("3_mheod")
+texture = ExtResource("3_xs34e")
 
 [node name="SoundEffectsVolumeSliderLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = -82.0
 offset_top = -9.99998
 offset_right = 61.0
@@ -84,14 +81,16 @@ offset_right = 208.0
 offset_bottom = 24.0
 
 [node name="DungeonSoundsVolumeSliderTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = -158.0
 offset_top = -3.0
 offset_right = 42.0
 offset_bottom = 97.0
 scale = Vector2(2.25, 2.25)
-texture = ExtResource("3_mheod")
+texture = ExtResource("3_xs34e")
 
 [node name="DungeonSoundsVolumeSliderLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = -85.0
 offset_top = 81.0
 offset_right = 58.0
@@ -140,6 +139,7 @@ popup/item_1/text = "Option 2"
 popup/item_1/id = 1
 
 [node name="FullscreenToggleTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = -158.0
 offset_top = 179.0
 offset_right = 42.0
