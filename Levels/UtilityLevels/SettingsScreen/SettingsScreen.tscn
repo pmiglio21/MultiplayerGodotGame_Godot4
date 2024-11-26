@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=7 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_jjdov"]
 [ext_resource type="PackedScene" uid="uid://dw5444uqbf0as" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.tscn" id="3_kvpsb"]
 [ext_resource type="Texture2D" uid="uid://irpelo3sr88h" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton6.png" id="3_mheod"]
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="3_wput4"]
+[ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_kr6t1"]
 
 [node name="SettingsScreen" type="Control" groups=["SettingsScreen"]]
 layout_mode = 3
@@ -28,136 +29,166 @@ autostart = true
 [node name="TopText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(125, 50)
 layout_mode = 2
-offset_left = -64.0
-offset_top = -204.0
-offset_right = 256.0
-offset_bottom = -139.0
+offset_left = -78.0
+offset_top = -228.0
+offset_right = 242.0
+offset_bottom = -163.0
 theme_override_fonts/normal_font = ExtResource("2_jjdov")
 theme_override_font_sizes/normal_font_size = 80
 text = "SETTINGS"
 
 [node name="MusicVolumeSliderButton" parent="." instance=ExtResource("3_kvpsb")]
 layout_mode = 1
-offset_left = -157.0
-offset_top = -187.0
-offset_right = -157.0
-offset_bottom = -187.0
+offset_left = -171.0
+offset_top = -211.0
+offset_right = -171.0
+offset_bottom = -211.0
 
 [node name="MusicVolumeSliderLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -78.0
-offset_top = -91.0
-offset_right = 65.0
-offset_bottom = -60.0
+offset_left = -92.0
+offset_top = -115.0
+offset_right = 51.0
+offset_bottom = -84.0
 theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
 text = "Music"
 
 [node name="SoundEffectsVolumeSliderButton" parent="." instance=ExtResource("3_kvpsb")]
 layout_mode = 1
-offset_left = -157.0
-offset_top = -96.0
-offset_right = -157.0
-offset_bottom = 16.0
+offset_left = -171.0
+offset_top = -120.0
+offset_right = -171.0
+offset_bottom = -7.99998
 
 [node name="SoundEffectsVolumeSliderLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -82.0
-offset_top = -9.99998
-offset_right = 61.0
-offset_bottom = 70.0
+offset_left = -96.0
+offset_top = -34.0
+offset_right = 47.0
+offset_bottom = 46.0
 theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
-text = "Sound Effects"
+text = "Menu Sounds"
 
 [node name="DungeonSoundsVolumeSliderButton" parent="." instance=ExtResource("3_kvpsb")]
 layout_mode = 1
-offset_left = -159.0
-offset_top = -0.999985
-offset_right = -159.0
-offset_bottom = -0.999985
+offset_left = -173.0
+offset_top = -25.0
+offset_right = -173.0
+offset_bottom = -25.0
 
 [node name="DungeonSoundsVolumeSliderLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -85.0
-offset_top = 81.0
-offset_right = 58.0
-offset_bottom = 161.0
+offset_left = -99.0
+offset_top = 57.0
+offset_right = 44.0
+offset_bottom = 137.0
 theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
 text = "Dungeon Sounds"
 
-[node name="ResolutionOptionButtonTexture" type="TextureRect" parent="."]
+[node name="ResolutionTextboxTexture" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -158.0
-offset_top = 89.0
-offset_right = 42.0
-offset_bottom = 189.0
+offset_left = -172.0
+offset_top = 65.0
+offset_right = 28.0
+offset_bottom = 165.0
 scale = Vector2(2.25, 2.25)
 texture = ExtResource("3_mheod")
 
-[node name="ResolutionOptionButtonLabel" type="RichTextLabel" parent="."]
+[node name="ResolutionTextboxLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -79.0
-offset_top = 187.0
-offset_right = 64.0
-offset_bottom = 218.0
+offset_left = -93.0
+offset_top = 163.0
+offset_right = 50.0
+offset_bottom = 194.0
 theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
 text = "Resolution"
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="."]
-layout_mode = 2
-offset_left = 73.0
-offset_top = 185.0
-offset_right = 200.0
-offset_bottom = 216.0
-flat = true
-item_count = 2
-popup/item_0/text = "Option 1"
-popup/item_0/id = 0
-popup/item_1/text = "Option 2"
-popup/item_1/id = 1
-
-[node name="FullscreenToggleTexture" type="TextureRect" parent="."]
+[node name="ResolutionButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = -158.0
-offset_top = 179.0
-offset_right = 42.0
-offset_bottom = 279.0
+offset_left = 62.0
+offset_top = 154.0
+offset_right = 204.0
+offset_bottom = 199.0
+focus_mode = 1
+theme_override_fonts/font = ExtResource("3_wput4")
+theme_override_font_sizes/font_size = 40
+flat = true
+
+[node name="FullscreenTextboxTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -172.0
+offset_top = 155.0
+offset_right = 28.0
+offset_bottom = 255.0
 scale = Vector2(2.25, 2.25)
 texture = ExtResource("3_mheod")
 
-[node name="FullscreenToggleLabel" type="RichTextLabel" parent="."]
+[node name="FullscreenTextboxLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -79.0
-offset_top = 277.0
-offset_right = 63.0
-offset_bottom = 314.0
+offset_left = -93.0
+offset_top = 253.0
+offset_right = 49.0
+offset_bottom = 290.0
 theme_override_fonts/normal_font = ExtResource("3_wput4")
 theme_override_font_sizes/normal_font_size = 40
 text = "Fullscreen"
 
-[node name="FullscreenToggle" type="CheckButton" parent="."]
-layout_mode = 2
-offset_left = 115.0
-offset_top = 279.0
-offset_right = 159.0
-offset_bottom = 303.0
+[node name="FullscreenButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 238.0
+offset_right = 185.0
+offset_bottom = 301.0
+focus_mode = 1
+theme_override_fonts/font = ExtResource("3_wput4")
+theme_override_font_sizes/font_size = 80
+text = "OFF"
+flat = true
 
-[node name="SaveSettingsButton" type="Button" parent="."]
-offset_left = -83.0
-offset_top = 350.0
-offset_right = -22.0
-offset_bottom = 381.0
+[node name="ApplyButtonTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -151.0
+offset_top = 250.0
+offset_right = -23.0
+offset_bottom = 314.0
+scale = Vector2(3, 3)
+texture = ExtResource("6_kr6t1")
+
+[node name="ApplyButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = -73.0
+offset_top = 329.0
+offset_right = 15.0
+offset_bottom = 365.0
 size_flags_horizontal = 0
-text = "Return"
+focus_mode = 1
+theme_override_fonts/font = ExtResource("3_wput4")
+theme_override_font_sizes/font_size = 40
+text = "APPLY"
+flat = true
+
+[node name="ReturnButtonTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 250.0
+offset_right = 133.0
+offset_bottom = 314.0
+scale = Vector2(3, 3)
+texture = ExtResource("6_kr6t1")
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 67.0
-offset_top = 352.0
-offset_right = 128.0
-offset_bottom = 383.0
+offset_left = 79.0
+offset_top = 330.0
+offset_right = 181.0
+offset_bottom = 366.0
 size_flags_horizontal = 0
-text = "Return"
+focus_mode = 1
+theme_override_fonts/font = ExtResource("3_wput4")
+theme_override_font_sizes/font_size = 40
+text = "RETURN"
+flat = true

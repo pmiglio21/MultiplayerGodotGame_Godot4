@@ -352,7 +352,7 @@ namespace Root
 
 		#endregion
 
-		#region UI Sound Players
+		#region Audio Players
 
 		public void PlayUiSoundEffect(string soundPath)
 		{
@@ -362,6 +362,11 @@ namespace Root
 
 			//_uiAudioStreamPlayer.Play();
 		}
+
+        public void ChangeMenuSoundsVolume(float volume)
+        {
+            _uiAudioStreamPlayer.VolumeDb = _uiAudioStreamPlayer.VolumeDb * volume;
+        }
 
         #endregion
 
