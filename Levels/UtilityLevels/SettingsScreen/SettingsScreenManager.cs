@@ -72,12 +72,18 @@ namespace Levels.UtilityLevels
             _inputTimer = FindChild("InputTimer") as Timer;
             _musicVolumeSliderButton = FindChild("MusicVolumeSliderButton") as SliderButton;
             _soundEffectsVolumeSliderButton = FindChild("SoundEffectsVolumeSliderButton") as SliderButton;
+            _soundEffectsVolumeSliderButton.GetHSlider().ValueChanged += ((double newValue) => OnChanged_SoundEffectsVolumeSliderButton(_soundEffectsVolumeSliderButton.GetHSlider().Value));
+
             _dungeonSoundsVolumeSliderButton = FindChild("DungeonSoundsVolumeSliderButton") as SliderButton;
             _resolutionButton = FindChild("ResolutionButton") as Button;
             _resolutionButton.Text = $"{_originalSettings.Resolution.X} x {_originalSettings.Resolution.Y}";
             _fullscreenButton = FindChild("FullscreenButton") as Button;
             _applyButton = FindChild("ApplyButton") as Button;
             _returnButton = FindChild("ReturnButton") as Button;
+
+            _musicVolumeSliderButton.GetHSlider().Value = _originalSettings.MusicVolume;
+            _soundEffectsVolumeSliderButton.GetHSlider().Value = _originalSettings.SoundEffectsVolume;
+            _dungeonSoundsVolumeSliderButton.GetHSlider().Value = _originalSettings.DungeonSoundsVolume;
 
             GetPauseScreen();
 
@@ -288,13 +294,6 @@ namespace Levels.UtilityLevels
                 //_rootSceneSwapper.
             }
 
-            if (_soundEffectsVolumeSliderButton.GetHSlider().Value != _originalSettings.SoundEffectsVolume)
-            {
-                _changedSettings.SoundEffectsVolume = (float)_soundEffectsVolumeSliderButton.GetHSlider().Value;
-
-                _rootSceneSwapper.ChangeMenuSoundsVolume(_changedSettings.SoundEffectsVolume);
-            }
-
             if (_dungeonSoundsVolumeSliderButton.GetHSlider().Value != _originalSettings.DungeonSoundsVolume)
             {
                 _changedSettings.DungeonSoundsVolume = (float)_dungeonSoundsVolumeSliderButton.GetHSlider().Value;
@@ -308,6 +307,13 @@ namespace Levels.UtilityLevels
             {
                 ResizeScreenToResolution();
             }
+        }
+
+        private void OnChanged_SoundEffectsVolumeSliderButton(double newValue)
+        {
+            _changedSettings.SoundEffectsVolume = (float)newValue;
+
+            _rootSceneSwapper.ChangeMenuSoundsVolume(_changedSettings.SoundEffectsVolume);
         }
 
         private void ToggleFullscreen()

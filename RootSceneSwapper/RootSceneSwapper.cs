@@ -360,12 +360,12 @@ namespace Root
 
 			_uiAudioStreamPlayer.Stream = audioStream;
 
-			//_uiAudioStreamPlayer.Play();
+			_uiAudioStreamPlayer.Play();
 		}
 
         public void ChangeMenuSoundsVolume(float volume)
         {
-            _uiAudioStreamPlayer.VolumeDb = _uiAudioStreamPlayer.VolumeDb * volume;
+            _uiAudioStreamPlayer.VolumeDb = 10 * volume;
         }
 
         #endregion
