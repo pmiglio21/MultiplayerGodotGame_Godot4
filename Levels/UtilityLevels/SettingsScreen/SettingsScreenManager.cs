@@ -37,6 +37,8 @@ namespace Levels.UtilityLevels
             new Vector2I(1280,960)
         };
 
+        private bool _isNavigatingLeft = true;
+
         #region Pause Screen Stuff
 
         public bool IsSettingsScreenBeingShown = false;
@@ -193,14 +195,27 @@ namespace Levels.UtilityLevels
                 else if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _applyButton.GrabFocus();
+
+                    if (_isNavigatingLeft)
+                    {
+                        _applyButton.GrabFocus();
+                    }
+                    else
+                    {
+                        _returnButton.GrabFocus();
+                    }
                 }
 
                 _inputTimer.Start();
             }
             else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
             {
-                if (_applyButton.HasFocus())
+                if (_returnButton.HasFocus())
+                {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+                    _fullscreenButton.GrabFocus();
+                }
+                else if (_applyButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     _fullscreenButton.GrabFocus();
@@ -227,6 +242,24 @@ namespace Levels.UtilityLevels
                 }
 
                 _inputTimer.Start();
+            }
+            else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
+            {
+                if (_applyButton.HasFocus())
+                {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+                    _returnButton.GrabFocus();
+                    _isNavigatingLeft = false;
+                }
+            }
+            else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
+            {
+                if (_returnButton.HasFocus())
+                {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+                    _applyButton.GrabFocus();
+                    _isNavigatingLeft = true;
+                }
             }
         }
 
@@ -269,10 +302,7 @@ namespace Levels.UtilityLevels
                 //_rootSceneSwapper.
             }
 
-            if (_fullscreenButton.Text != _originalSettings.FullscreenState)
-            {
-                ToggleFullscreen();
-            }
+            ToggleFullscreen();
 
             if (_fullscreenButton.Text != "ON")
             {
@@ -282,9 +312,6 @@ namespace Levels.UtilityLevels
 
         private void ToggleFullscreen()
         {
-            DisplayServer.WindowMode currentWindowMode = DisplayServer.WindowGetMode();
-            DisplayServer.WindowMode previousWindowMode = DisplayServer.WindowGetMode();
-
             if (_fullscreenButton.Text == "ON")
             {
                 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
@@ -292,6 +319,7 @@ namespace Levels.UtilityLevels
             else
             {
                 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+                ResizeScreenToResolution();
             }
         }
 
@@ -302,10 +330,10 @@ namespace Levels.UtilityLevels
 
         private void ReturnToPriorScene()
         {
-            IsSettingsScreenBeingShown = false;
-
             if (pauseScreen != null)
             {
+                IsSettingsScreenBeingShown = false;
+
                 pauseScreen.IsPauseScreenChildBeingShown = false;
 
                 pauseScreen.ShowAllChildren();
