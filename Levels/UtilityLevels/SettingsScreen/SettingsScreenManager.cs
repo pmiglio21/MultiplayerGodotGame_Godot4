@@ -67,6 +67,8 @@ namespace Levels.UtilityLevels
 		{
             _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
+            LoadOriginalSettings();
+
             _changedSettings.Resolution = _originalSettings.Resolution;
 
             _inputTimer = FindChild("InputTimer") as Timer;
@@ -284,6 +286,35 @@ namespace Levels.UtilityLevels
             _musicVolumeSliderButton.GetHSlider().GrabFocus();
 		}
 
+        //DO THIS IN ROOTSCENESWAPPER AS SOON AS YOU OPEN GAME
+        private void LoadOriginalSettings()
+        {
+            var settingsData = new Godot.Collections.Dictionary();
+            var config = new ConfigFile();
+
+            // Load data from a file.
+            Error error = config.Load("user://settings.cfg");
+
+            // If the file didn't load, ignore it.
+            if (error != Error.Ok)
+            {
+                return;
+            }
+            else
+            {
+                // Iterate over all sections.
+                foreach (string section in config.GetSections())
+                {
+                    // Fetch the data for each section.
+                    _originalSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
+                    _originalSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
+                    _originalSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
+                    _originalSettings.Resolution = (Vector2I)config.GetValue(section, "resolution");
+                    _originalSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
+                }
+            }
+        }
+
 
         private void ApplyChanges()
         {
@@ -307,6 +338,30 @@ namespace Levels.UtilityLevels
             {
                 ResizeScreenToResolution();
             }
+
+            SaveSettingsToConfigFile();
+        }
+
+        private void SaveSettingsToConfigFile()
+        {
+            // Create new ConfigFile object.
+            var config = new ConfigFile();
+
+            // Store some values.
+            config.SetValue("Settings", "music_volume", _changedSettings.MusicVolume);
+            config.SetValue("Settings", "menu_sounds_volume", _changedSettings.SoundEffectsVolume);
+            config.SetValue("Settings", "dungeon_sounds_volume", _changedSettings.DungeonSoundsVolume);
+            config.SetValue("Settings", "resolution", _changedSettings.Resolution);
+            config.SetValue("Settings", "fullscreen_state", _changedSettings.FullscreenState);
+
+            // Save it to a file (overwrite if already exists).
+            var error = config.Save("user://settings.cfg");
+
+            // If the file didn't load, ignore it.
+            if (error != Error.Ok)
+            {
+                return;
+            }
         }
 
         private void OnChanged_SoundEffectsVolumeSliderButton(double newValue)
@@ -327,6 +382,8 @@ namespace Levels.UtilityLevels
                 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
                 ResizeScreenToResolution();
             }
+
+            _changedSettings.FullscreenState = _fullscreenButton.Text;
         }
 
         private void ResizeScreenToResolution()
