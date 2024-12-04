@@ -18,8 +18,9 @@ namespace Root
 
 		public ScreenNames PriorSceneName;
 		public GameRules CurrentGameRules = new GameRules();
+        public Settings CurrentSettings = new Settings();
 
-		public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
+        public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 		public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
 
 		#endregion
@@ -58,7 +59,8 @@ namespace Root
 			_titleScreenManager.QuitGame += QuitGame;
 
 			GetLastSavedGameRules();
-		}
+            LoadOriginalSettings();
+        }
 
 		public DungeonLevelSwapper GetDungeonLevelSwapper()
 		{
@@ -389,6 +391,47 @@ namespace Root
 
 			return defaultGameRules;
 		}
+
+        #endregion
+
+        #region Settings
+
+        private void LoadOriginalSettings()
+        {
+            var settingsData = new Godot.Collections.Dictionary();
+            var config = new ConfigFile();
+
+            // Load data from a file.
+            Error error = config.Load("user://settings.cfg");
+
+            // If the file didn't load, ignore it.
+            if (error != Error.Ok)
+            {
+                return;
+            }
+            else
+            {
+                // Iterate over all sections.
+                foreach (string section in config.GetSections())
+                {
+                    // Fetch the data for each section.
+                    CurrentSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
+                    CurrentSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
+                    CurrentSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
+                    CurrentSettings.Resolution = (Vector2I)config.GetValue(section, "resolution");
+                    CurrentSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
+                }
+            }
+
+			if (CurrentSettings.FullscreenState != "ON")
+			{
+                DisplayServer.WindowSetSize(new Vector2I(CurrentSettings.Resolution.X, CurrentSettings.Resolution.Y));
+            }
+			else
+			{
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+            }
+        }
 
         #endregion
     }

@@ -14,7 +14,6 @@ namespace Levels.UtilityLevels
 	{
         private RootSceneSwapper _rootSceneSwapper;
 
-        private Settings _originalSettings = new Settings();
         private Settings _changedSettings = new Settings();
 
         private List<Vector2I> _resolutionOptions = new List<Vector2I>()
@@ -38,6 +37,8 @@ namespace Levels.UtilityLevels
         };
 
         private bool _isNavigatingLeft = true;
+
+        private bool _wasApplyClicked = false;
 
         #region Pause Screen Stuff
 
@@ -67,9 +68,7 @@ namespace Levels.UtilityLevels
 		{
             _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
-            LoadOriginalSettings();
-
-            _changedSettings.Resolution = _originalSettings.Resolution;
+            _changedSettings.Resolution = _rootSceneSwapper.CurrentSettings.Resolution;
 
             _inputTimer = FindChild("InputTimer") as Timer;
             _musicVolumeSliderButton = FindChild("MusicVolumeSliderButton") as SliderButton;
@@ -78,14 +77,14 @@ namespace Levels.UtilityLevels
 
             _dungeonSoundsVolumeSliderButton = FindChild("DungeonSoundsVolumeSliderButton") as SliderButton;
             _resolutionButton = FindChild("ResolutionButton") as Button;
-            _resolutionButton.Text = $"{_originalSettings.Resolution.X} x {_originalSettings.Resolution.Y}";
+            _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
             _fullscreenButton = FindChild("FullscreenButton") as Button;
             _applyButton = FindChild("ApplyButton") as Button;
             _returnButton = FindChild("ReturnButton") as Button;
 
-            _musicVolumeSliderButton.GetHSlider().Value = _originalSettings.MusicVolume;
-            _soundEffectsVolumeSliderButton.GetHSlider().Value = _originalSettings.SoundEffectsVolume;
-            _dungeonSoundsVolumeSliderButton.GetHSlider().Value = _originalSettings.DungeonSoundsVolume;
+            _musicVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.MusicVolume;
+            _soundEffectsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.SoundEffectsVolume;
+            _dungeonSoundsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume;
 
             GetPauseScreen();
 
@@ -286,46 +285,16 @@ namespace Levels.UtilityLevels
             _musicVolumeSliderButton.GetHSlider().GrabFocus();
 		}
 
-        //DO THIS IN ROOTSCENESWAPPER AS SOON AS YOU OPEN GAME
-        private void LoadOriginalSettings()
-        {
-            var settingsData = new Godot.Collections.Dictionary();
-            var config = new ConfigFile();
-
-            // Load data from a file.
-            Error error = config.Load("user://settings.cfg");
-
-            // If the file didn't load, ignore it.
-            if (error != Error.Ok)
-            {
-                return;
-            }
-            else
-            {
-                // Iterate over all sections.
-                foreach (string section in config.GetSections())
-                {
-                    // Fetch the data for each section.
-                    _originalSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
-                    _originalSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
-                    _originalSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
-                    _originalSettings.Resolution = (Vector2I)config.GetValue(section, "resolution");
-                    _originalSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
-                }
-            }
-        }
-
-
         private void ApplyChanges()
         {
-            if (_musicVolumeSliderButton.GetHSlider().Value != _originalSettings.MusicVolume)
+            if (_musicVolumeSliderButton.GetHSlider().Value != _rootSceneSwapper.CurrentSettings.MusicVolume)
             {
                 _changedSettings.MusicVolume = (float)_musicVolumeSliderButton.GetHSlider().Value;
 
                 //_rootSceneSwapper.
             }
 
-            if (_dungeonSoundsVolumeSliderButton.GetHSlider().Value != _originalSettings.DungeonSoundsVolume)
+            if (_dungeonSoundsVolumeSliderButton.GetHSlider().Value != _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume)
             {
                 _changedSettings.DungeonSoundsVolume = (float)_dungeonSoundsVolumeSliderButton.GetHSlider().Value;
 
@@ -340,6 +309,10 @@ namespace Levels.UtilityLevels
             }
 
             SaveSettingsToConfigFile();
+
+            _rootSceneSwapper.CurrentSettings = _changedSettings;
+
+            _wasApplyClicked = true;
         }
 
         private void SaveSettingsToConfigFile()
@@ -393,6 +366,19 @@ namespace Levels.UtilityLevels
 
         private void ReturnToPriorScene()
         {
+            if (!_wasApplyClicked)
+            {
+                _musicVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.MusicVolume;
+                _soundEffectsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.SoundEffectsVolume;
+                _dungeonSoundsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume;
+
+                _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+
+                _fullscreenButton.Text = _rootSceneSwapper.CurrentSettings.FullscreenState;
+            }
+
+            _wasApplyClicked = false;
+
             if (pauseScreen != null)
             {
                 IsSettingsScreenBeingShown = false;
