@@ -345,9 +345,8 @@ namespace Root
             }
 			catch (Exception ex)
 			{
-
-			}
-			
+				GD.PushError(ex.Message);
+            }
 		}
 
 		#endregion
@@ -402,6 +401,7 @@ namespace Root
             var config = new ConfigFile();
 
             // Load data from a file.
+            // Found in C:\Users\pmigl\AppData\Roaming\Godot\app_userdata\Multiplayer Godot Game Godot 4
             Error error = config.Load("user://settings.cfg");
 
             // If the file didn't load, ignore it.

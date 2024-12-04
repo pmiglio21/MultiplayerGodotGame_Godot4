@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dw5444uqbf0as"]
 
-[ext_resource type="Texture2D" uid="uid://nxnjfpsdhshc" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton09.png" id="1_1ydgn"]
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.cs" id="1_so6wq"]
+[ext_resource type="Texture2D" uid="uid://c2cd7apebax20" path="res://Levels/EarlyLevels/GuiArt/SliderButton/SliderButton0.png" id="2_03ybq"]
 [ext_resource type="Texture2D" uid="uid://5gg1mthhgm55" path="res://Levels/EarlyLevels/GuiArt/SliderGrabber/SliderGrabber0.png" id="3_l1kvl"]
 [ext_resource type="Texture2D" uid="uid://2g7v8cx63djg" path="res://Levels/EarlyLevels/GuiArt/SliderGrabber/SliderGrabber1.png" id="4_8lmcp"]
 
@@ -21,7 +21,7 @@ layout_mode = 0
 offset_right = 200.0
 offset_bottom = 100.0
 scale = Vector2(2.25, 2.25)
-texture = ExtResource("1_1ydgn")
+texture = ExtResource("2_03ybq")
 
 [node name="HSlider" type="HSlider" parent="."]
 layout_mode = 0

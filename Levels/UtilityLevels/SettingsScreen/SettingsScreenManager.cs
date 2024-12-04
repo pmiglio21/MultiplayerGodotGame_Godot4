@@ -18,6 +18,7 @@ namespace Levels.UtilityLevels
 
         private List<Vector2I> _resolutionOptions = new List<Vector2I>()
         {
+            new Vector2I(1152,648),
             new Vector2I(1280,720),
             new Vector2I(1128,634),
             new Vector2I(1024,768),
@@ -79,6 +80,7 @@ namespace Levels.UtilityLevels
             _resolutionButton = FindChild("ResolutionButton") as Button;
             _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
             _fullscreenButton = FindChild("FullscreenButton") as Button;
+            _fullscreenButton.Text = _rootSceneSwapper.CurrentSettings.FullscreenState;
             _applyButton = FindChild("ApplyButton") as Button;
             _returnButton = FindChild("ReturnButton") as Button;
 
@@ -278,6 +280,13 @@ namespace Levels.UtilityLevels
 			{
 				pauseScreen = pauseScreens.First() as PauseScreenManager;
 			}
+
+            if (pauseScreen != null)
+            {
+                var settingsBackground = FindChild("SettingsBackground") as TextureRect;
+
+                settingsBackground.Hide();
+            }
 		}
 
 		public void GrabFocusOfTopButton()

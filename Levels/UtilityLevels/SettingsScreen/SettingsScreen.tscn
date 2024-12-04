@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=9 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_jjdov"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_t28pw"]
 [ext_resource type="PackedScene" uid="uid://dw5444uqbf0as" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.tscn" id="3_kvpsb"]
 [ext_resource type="Texture2D" uid="uid://irpelo3sr88h" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton6.png" id="3_mheod"]
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="3_wput4"]
 [ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_kr6t1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0sdjr"]
 
 [node name="SettingsScreen" type="Control" groups=["SettingsScreen"]]
 layout_mode = 3
@@ -20,6 +23,14 @@ offset_bottom = -72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fd6ci")
+
+[node name="SettingsBackground" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -3180.0
+offset_top = -2441.0
+offset_right = 3615.0
+offset_bottom = 2071.0
+texture = ExtResource("2_t28pw")
 
 [node name="InputTimer" type="Timer" parent="."]
 wait_time = 0.15
@@ -114,8 +125,11 @@ offset_top = 154.0
 offset_right = 204.0
 offset_bottom = 199.0
 focus_mode = 1
+theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
+theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("3_wput4")
 theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 flat = true
 
 [node name="FullscreenTextboxTexture" type="TextureRect" parent="."]
@@ -144,8 +158,11 @@ offset_top = 238.0
 offset_right = 185.0
 offset_bottom = 301.0
 focus_mode = 1
+theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
+theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("3_wput4")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "OFF"
 flat = true
 
@@ -166,8 +183,11 @@ offset_right = 15.0
 offset_bottom = 365.0
 size_flags_horizontal = 0
 focus_mode = 1
+theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
+theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("3_wput4")
 theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "APPLY"
 flat = true
 
@@ -188,7 +208,10 @@ offset_right = 181.0
 offset_bottom = 366.0
 size_flags_horizontal = 0
 focus_mode = 1
+theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
+theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("3_wput4")
 theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "RETURN"
 flat = true
