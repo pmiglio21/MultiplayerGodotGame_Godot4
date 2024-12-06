@@ -194,7 +194,15 @@ namespace Levels.UtilityLevels
                 else if (_dungeonSoundsVolumeSliderButton.GetHSlider().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _resolutionButton.GrabFocus();
+
+                    if (_fullscreenButton.Text == "ON")
+                    {
+                        _fullscreenButton.GrabFocus();
+                    }
+                    else
+                    {
+                        _resolutionButton.GrabFocus();
+                    }
                 }
                 else if (_resolutionButton.HasFocus())
                 {
@@ -232,7 +240,15 @@ namespace Levels.UtilityLevels
                 else if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _resolutionButton.GrabFocus();
+                    
+                    if (_fullscreenButton.Text == "ON")
+                    {
+                        _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
+                    }
+                    else
+                    {
+                        _resolutionButton.GrabFocus();
+                    }
                 }
                 else if (_resolutionButton.HasFocus())
                 {
