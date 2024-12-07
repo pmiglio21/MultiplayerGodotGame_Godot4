@@ -13,8 +13,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             _hSlider = FindChild("HSlider") as HSlider;
             _textureRect = FindChild("TextureRect") as TextureRect;
 
-            var tex = new Texture2D();
-
             _hSlider.FocusEntered += PlayOnFocusAnimation;
             _hSlider.FocusExited += PlayLoseFocusAnimation;
         }

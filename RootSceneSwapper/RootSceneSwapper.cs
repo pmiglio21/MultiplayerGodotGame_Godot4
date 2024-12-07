@@ -355,18 +355,32 @@ namespace Root
 
 		#region Audio Players
 
+		private bool _isUiAudioStreamPlayerMuted = false;
+
 		public void PlayUiSoundEffect(string soundPath)
 		{
 			AudioStream audioStream = ResourceLoader.Load(soundPath) as AudioStream;
 
-			_uiAudioStreamPlayer.Stream = audioStream;
+			if (!_isUiAudioStreamPlayerMuted)
+			{
+                _uiAudioStreamPlayer.Stream = audioStream;
 
-			_uiAudioStreamPlayer.Play();
+                _uiAudioStreamPlayer.Play();
+            }
 		}
 
         public void ChangeMenuSoundsVolume(float volume)
         {
-            _uiAudioStreamPlayer.VolumeDb = 10 * volume;
+            if (volume == 0)
+            {
+				_isUiAudioStreamPlayerMuted = true;
+            }
+			else
+			{
+				_isUiAudioStreamPlayerMuted = false;
+
+                _uiAudioStreamPlayer.VolumeDb = 20 * volume;
+            }
         }
 
         #endregion

@@ -55,7 +55,9 @@ namespace Levels.UtilityLevels
         private SliderButton _musicVolumeSliderButton;
         private SliderButton _soundEffectsVolumeSliderButton;
         private SliderButton _dungeonSoundsVolumeSliderButton;
+        private OptionSelector _resolutionOptionSelector;
         private Button _resolutionButton;
+        private OptionSelector _fullscreenOptionSelector;
         private Button _fullscreenButton;
         private Button _applyButton;
         private Button _returnButton;
@@ -72,15 +74,26 @@ namespace Levels.UtilityLevels
             _changedSettings.Resolution = _rootSceneSwapper.CurrentSettings.Resolution;
 
             _inputTimer = FindChild("InputTimer") as Timer;
+
             _musicVolumeSliderButton = FindChild("MusicVolumeSliderButton") as SliderButton;
+
             _soundEffectsVolumeSliderButton = FindChild("SoundEffectsVolumeSliderButton") as SliderButton;
             _soundEffectsVolumeSliderButton.GetHSlider().ValueChanged += ((double newValue) => OnChanged_SoundEffectsVolumeSliderButton(_soundEffectsVolumeSliderButton.GetHSlider().Value));
 
             _dungeonSoundsVolumeSliderButton = FindChild("DungeonSoundsVolumeSliderButton") as SliderButton;
+
+            _resolutionOptionSelector = FindChild("ResolutionOptionSelector") as OptionSelector;
             _resolutionButton = FindChild("ResolutionButton") as Button;
             _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+            _resolutionButton.FocusEntered += _resolutionOptionSelector.PlayOnFocusAnimation;
+            _resolutionButton.FocusExited += _resolutionOptionSelector.PlayLoseFocusAnimation;
+
+            _fullscreenOptionSelector = FindChild("FullscreenOptionSelector") as OptionSelector;
             _fullscreenButton = FindChild("FullscreenButton") as Button;
             _fullscreenButton.Text = _rootSceneSwapper.CurrentSettings.FullscreenState;
+            _fullscreenButton.FocusEntered += _fullscreenOptionSelector.PlayOnFocusAnimation;
+            _fullscreenButton.FocusExited += _fullscreenOptionSelector.PlayLoseFocusAnimation;
+
             _applyButton = FindChild("ApplyButton") as Button;
             _returnButton = FindChild("ReturnButton") as Button;
 
@@ -123,6 +136,10 @@ namespace Levels.UtilityLevels
 			{
                 if (_resolutionButton.HasFocus())
                 {
+                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+                    _resolutionOptionSelector.PlayClickedOnRightArrow();
+
                     var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
                     var nextIndexOfResolutionOptions = 0;
 
@@ -137,6 +154,9 @@ namespace Levels.UtilityLevels
                 else if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+                    _fullscreenOptionSelector.PlayClickedOnRightArrow();
+                    _fullscreenOptionSelector.PlayClickedOnLeftArrow();
 
                     if (_fullscreenButton.Text == "OFF")
                     {

@@ -24,118 +24,147 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		#region Components
 		private Label _optionLabel;
 		private Button _optionButton;
-		#endregion
 
-		private List<string> _options = new List<string>();
+		private TextureRect _textureRect;
+		private AnimationPlayer _leftArrowAnimationPlayer;
+        private AnimationPlayer _rightArrowAnimationPlayer;
+        #endregion
+
+        private List<string> _options = new List<string>();
 
 		public override void _Ready()
 		{
-			_optionLabel = GetNode<Label>("OptionLabel");
-			_optionLabel.Text = LabelText;
+            _textureRect = FindChild("TextureRect") as TextureRect;
+            _leftArrowAnimationPlayer = FindChild("LeftArrowAnimationPlayer") as AnimationPlayer;
+            _rightArrowAnimationPlayer = FindChild("RightArrowAnimationPlayer") as AnimationPlayer;
 
-			_optionButton = GetNode<Button>("OptionButton");
+            
+            //_optionLabel = GetNode<Label>("OptionLabel");
+            //_optionLabel.Text = LabelText;
 
-			SetupOptionsList();
+            //_optionButton = GetNode<Button>("OptionButton");
 
-			_optionButton.Text = _options[0];
-		}
+            //SetupOptionsList();
+
+            //_optionButton.Text = _options[0];
+        }
 
 		public override void _Process(double delta)
 		{
-			if (_options.Count > 1 && _optionButton.HasFocus())
-			{
-				if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
-				{
-					int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
+			//if (_options.Count > 1 && _optionButton.HasFocus())
+			//{
+			//	if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
+			//	{
+			//		int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
 
-					if (indexOfCurrentOptionButtonText == _options.Count - 1)
-					{
-						_optionButton.Text = _options[0];
-					}
-					else
-					{
-						_optionButton.Text = _options[indexOfCurrentOptionButtonText + 1];
-					}
-				}
-				else if (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
-				{
-					int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
+			//		if (indexOfCurrentOptionButtonText == _options.Count - 1)
+			//		{
+			//			_optionButton.Text = _options[0];
+			//		}
+			//		else
+			//		{
+			//			_optionButton.Text = _options[indexOfCurrentOptionButtonText + 1];
+			//		}
+			//	}
+			//	else if (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
+			//	{
+			//		int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
 
-					if (indexOfCurrentOptionButtonText == 0)
-					{
-						_optionButton.Text = _options[_options.Count - 1];
-					}
-					else
-					{
-						_optionButton.Text = _options[indexOfCurrentOptionButtonText - 1];
-					}
-				}
-			}
+			//		if (indexOfCurrentOptionButtonText == 0)
+			//		{
+			//			_optionButton.Text = _options[_options.Count - 1];
+			//		}
+			//		else
+			//		{
+			//			_optionButton.Text = _options[indexOfCurrentOptionButtonText - 1];
+			//		}
+			//	}
+			//}
 		}
 
 		private void SetupOptionsList()
 		{
-			switch (OptionSelectorType)
-			{
-				case OptionSelectorType.None:
+			//switch (OptionSelectorType)
+			//{
+			//	case OptionSelectorType.None:
 
-					_options = new List<string>();
+			//		_options = new List<string>();
 					
-					break;
+			//		break;
 
-                case OptionSelectorType.BiomeType:
+   //             case OptionSelectorType.BiomeType:
 
-                    foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
-                    {
-                        var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+   //                 foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
+   //                 {
+   //                     var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-                        if (enumDescription != "None")
-                        {
-                            _options.Add(enumDescription);
-                        }
-                    }
+   //                     if (enumDescription != "None")
+   //                     {
+   //                         _options.Add(enumDescription);
+   //                     }
+   //                 }
 
-                    break;
+   //                 break;
 
-                case OptionSelectorType.RelativePlayerSpawnDistance:
+   //             case OptionSelectorType.RelativePlayerSpawnDistance:
 
-					foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
-					{
-						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+			//		foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
+			//		{
+			//			var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-						if (enumDescription != "None")
-						{
-							_options.Add(enumDescription);
-						}
-					}
+			//			if (enumDescription != "None")
+			//			{
+			//				_options.Add(enumDescription);
+			//			}
+			//		}
 
-					break;
+			//		break;
 
-				case OptionSelectorType.LevelSize:
+			//	case OptionSelectorType.LevelSize:
 
-					foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
-					{
-						var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+			//		foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
+			//		{
+			//			var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-						if (enumDescription != "None")
-						{
-							_options.Add(enumDescription);
-						}
-					}
+			//			if (enumDescription != "None")
+			//			{
+			//				_options.Add(enumDescription);
+			//			}
+			//		}
 
-					break;
+			//		break;
 
-				default:
+			//	default:
 
-					_options = new List<string>();
+			//		_options = new List<string>();
 
-					break;
-			}
+			//		break;
+			//}
 		}
 
 		public Button GetOptionButton()
 		{
 			return _optionButton;
 		}
-	}
+
+        public void PlayOnFocusAnimation()
+        {
+            _textureRect.Texture = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton1.png") as Texture2D;
+        }
+
+        public void PlayLoseFocusAnimation()
+        {
+            _textureRect.Texture = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png") as Texture2D;
+        }
+
+        public void PlayClickedOnLeftArrow()
+		{
+			_leftArrowAnimationPlayer.Play("Clicked");
+        }
+
+        public void PlayClickedOnRightArrow()
+        {
+			_rightArrowAnimationPlayer.Play("Clicked");
+		}
+}
 }
