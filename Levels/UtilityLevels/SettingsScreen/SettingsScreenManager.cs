@@ -201,17 +201,17 @@ namespace Levels.UtilityLevels
 		{
             if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveSouth))
             {
-                if (_musicVolumeSliderButton.GetHSlider().HasFocus())
+                if (_musicVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _soundEffectsVolumeSliderButton.GetHSlider().GrabFocus();
+                    _soundEffectsVolumeSliderButton.GetFocusHolder().GrabFocus();
                 }
-                else if (_soundEffectsVolumeSliderButton.GetHSlider().HasFocus())
+                else if (_soundEffectsVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
+                    _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
                 }
-                else if (_dungeonSoundsVolumeSliderButton.GetHSlider().HasFocus())
+                else if (_dungeonSoundsVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
@@ -263,7 +263,7 @@ namespace Levels.UtilityLevels
                     
                     if (_fullscreenButton.Text == "ON")
                     {
-                        _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
+                        _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
                     }
                     else
                     {
@@ -273,17 +273,17 @@ namespace Levels.UtilityLevels
                 else if (_resolutionButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
+                    _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
                 }
-                else if (_dungeonSoundsVolumeSliderButton.GetHSlider().HasFocus())
+                else if (_dungeonSoundsVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _soundEffectsVolumeSliderButton.GetHSlider().GrabFocus();
+                    _soundEffectsVolumeSliderButton.GetFocusHolder().GrabFocus();
                 }
-                else if (_soundEffectsVolumeSliderButton.GetHSlider().HasFocus())
+                else if (_soundEffectsVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _musicVolumeSliderButton.GetHSlider().GrabFocus();
+                    _musicVolumeSliderButton.GetFocusHolder().GrabFocus();
                 }
 
                 _inputTimer.Start();
@@ -327,7 +327,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-            _musicVolumeSliderButton.GetHSlider().GrabFocus();
+            _musicVolumeSliderButton.GetFocusHolder().GrabFocus();
 		}
 
         private void ApplyChanges()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dw5444uqbf0as"]
+[gd_scene load_steps=7 format=3 uid="uid://dw5444uqbf0as"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.cs" id="1_so6wq"]
 [ext_resource type="Texture2D" uid="uid://c2cd7apebax20" path="res://Levels/EarlyLevels/GuiArt/SliderButton/SliderButton0.png" id="2_03ybq"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://2g7v8cx63djg" path="res://Levels/EarlyLevels/GuiArt/SliderGrabber/SliderGrabber1.png" id="4_8lmcp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gqi7j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5on8h"]
 
 [node name="SliderButton" type="Control"]
 layout_mode = 3
@@ -38,3 +40,13 @@ theme_override_styles/slider = SubResource("StyleBoxEmpty_gqi7j")
 max_value = 1.0
 step = 0.02
 value = 0.5
+
+[node name="FocusHolder" type="Button" parent="."]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 71.0
+offset_right = 391.0
+offset_bottom = 151.0
+focus_mode = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5on8h")
+flat = true

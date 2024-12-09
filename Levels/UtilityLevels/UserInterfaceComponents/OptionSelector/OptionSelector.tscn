@@ -55,6 +55,7 @@ offset_bottom = 40.0
 script = ExtResource("1_whrl2")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 200.0
 offset_bottom = 100.0
 scale = Vector2(2.25, 2.25)
@@ -69,6 +70,7 @@ offset_bottom = 133.0
 texture = ExtResource("4_ubmvd")
 
 [node name="RightArrowTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 220.0
 offset_top = 93.0
 offset_right = 260.0

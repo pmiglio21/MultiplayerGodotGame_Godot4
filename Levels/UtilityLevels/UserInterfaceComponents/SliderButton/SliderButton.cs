@@ -5,16 +5,23 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 {
     public partial class SliderButton : Control
     {
+        private Button _focusHolder;
         private HSlider _hSlider;
         private TextureRect _textureRect;
 
         public override void _Ready()
         {
+            _focusHolder = FindChild("FocusHolder") as Button;
             _hSlider = FindChild("HSlider") as HSlider;
             _textureRect = FindChild("TextureRect") as TextureRect;
 
-            _hSlider.FocusEntered += PlayOnFocusAnimation;
-            _hSlider.FocusExited += PlayLoseFocusAnimation;
+            _focusHolder.FocusEntered += PlayOnFocusAnimation;
+            _focusHolder.FocusExited += PlayLoseFocusAnimation;
+
+            //_hSlider.FocusEntered += PlayOnFocusAnimation;
+            //_hSlider.FocusExited += PlayLoseFocusAnimation;
+
+            _focusHolder.GrabFocus();
         }
 
         public override void _Process(double delta)
@@ -34,6 +41,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public HSlider GetHSlider()
         {
             return _hSlider;
+        }
+
+        public Button GetFocusHolder()
+        {
+            return _focusHolder;
         }
     }
 }
