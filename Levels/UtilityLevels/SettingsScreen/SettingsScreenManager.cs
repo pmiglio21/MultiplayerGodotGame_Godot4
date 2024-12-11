@@ -37,10 +37,6 @@ namespace Levels.UtilityLevels
             new Vector2I(1280,960)
         };
 
-        private bool _isNavigatingLeft = true;
-
-        private bool _wasApplyClicked = false;
-
         #region Pause Screen Stuff
 
         public bool IsSettingsScreenBeingShown = false;
@@ -59,7 +55,6 @@ namespace Levels.UtilityLevels
         private Button _resolutionButton;
         private OptionSelector _fullscreenOptionSelector;
         private Button _fullscreenButton;
-        private Button _applyButton;
         private Button _returnButton;
 
         #endregion
@@ -94,7 +89,6 @@ namespace Levels.UtilityLevels
             _fullscreenButton.FocusEntered += _fullscreenOptionSelector.PlayOnFocusAnimation;
             _fullscreenButton.FocusExited += _fullscreenOptionSelector.PlayLoseFocusAnimation;
 
-            _applyButton = FindChild("ApplyButton") as Button;
             _returnButton = FindChild("ReturnButton") as Button;
 
             _musicVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.MusicVolume;
@@ -134,7 +128,19 @@ namespace Levels.UtilityLevels
 		{
 			if (UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
 			{
-                if (_resolutionButton.HasFocus())
+                if (_musicVolumeSliderButton.GetFocusHolder().HasFocus())
+                {
+                    _musicVolumeSliderButton.GetHSlider().GrabFocus();
+                }
+                else if (_soundEffectsVolumeSliderButton.GetFocusHolder().HasFocus())
+                {
+                    _soundEffectsVolumeSliderButton.GetHSlider().GrabFocus();
+                }
+                else if (_dungeonSoundsVolumeSliderButton.GetFocusHolder().HasFocus())
+                {
+                    _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
+                }
+                else if (_resolutionButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
@@ -150,6 +156,8 @@ namespace Levels.UtilityLevels
 
                     _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
                     _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
+
+                    //ResizeScreenToResolution();
                 }
                 else if (_fullscreenButton.HasFocus())
                 {
@@ -166,12 +174,8 @@ namespace Levels.UtilityLevels
                     {
                         _fullscreenButton.Text = "OFF";
                     }
-                }
-                else if (_applyButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
-                    ApplyChanges();
+                    ToggleFullscreen();
                 }
                 else if (_returnButton.HasFocus())
                 {
@@ -182,9 +186,24 @@ namespace Levels.UtilityLevels
             }
 			else if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-                _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+                if (_musicVolumeSliderButton.GetHSlider().HasFocus())
+                {
+                    _musicVolumeSliderButton.GetFocusHolder().GrabFocus();
+                }
+                else if (_soundEffectsVolumeSliderButton.GetHSlider().HasFocus())
+                {
+                    _soundEffectsVolumeSliderButton.GetFocusHolder().GrabFocus();
+                }
+                else if (_dungeonSoundsVolumeSliderButton.GetHSlider().HasFocus())
+                {
+                    _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
+                }
 
-                ReturnToPriorScene();
+                //HOLD DOWN BUTTON FOR A PERIOD OF TIME
+
+                //_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+                //ReturnToPriorScene();
             }
             else if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton))
             {
@@ -233,14 +252,7 @@ namespace Levels.UtilityLevels
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
-                    if (_isNavigatingLeft)
-                    {
-                        _applyButton.GrabFocus();
-                    }
-                    else
-                    {
-                        _returnButton.GrabFocus();
-                    }
+                    _returnButton.GrabFocus();
                 }
 
                 _inputTimer.Start();
@@ -248,11 +260,6 @@ namespace Levels.UtilityLevels
             else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveNorth))
             {
                 if (_returnButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _fullscreenButton.GrabFocus();
-                }
-                else if (_applyButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     _fullscreenButton.GrabFocus();
@@ -288,24 +295,6 @@ namespace Levels.UtilityLevels
 
                 _inputTimer.Start();
             }
-            else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
-            {
-                if (_applyButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _returnButton.GrabFocus();
-                    _isNavigatingLeft = false;
-                }
-            }
-            else if (_inputTimer.IsStopped() && UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
-            {
-                if (_returnButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-                    _applyButton.GrabFocus();
-                    _isNavigatingLeft = true;
-                }
-            }
         }
 
 		private void GetPauseScreen()
@@ -329,36 +318,6 @@ namespace Levels.UtilityLevels
 		{
             _musicVolumeSliderButton.GetFocusHolder().GrabFocus();
 		}
-
-        private void ApplyChanges()
-        {
-            if (_musicVolumeSliderButton.GetHSlider().Value != _rootSceneSwapper.CurrentSettings.MusicVolume)
-            {
-                _changedSettings.MusicVolume = (float)_musicVolumeSliderButton.GetHSlider().Value;
-
-                //_rootSceneSwapper.
-            }
-
-            if (_dungeonSoundsVolumeSliderButton.GetHSlider().Value != _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume)
-            {
-                _changedSettings.DungeonSoundsVolume = (float)_dungeonSoundsVolumeSliderButton.GetHSlider().Value;
-
-                //_rootSceneSwapper.
-            }
-
-            ToggleFullscreen();
-
-            if (_fullscreenButton.Text != "ON")
-            {
-                ResizeScreenToResolution();
-            }
-
-            SaveSettingsToConfigFile();
-
-            _rootSceneSwapper.CurrentSettings = _changedSettings;
-
-            _wasApplyClicked = true;
-        }
 
         private void SaveSettingsToConfigFile()
         {
@@ -411,18 +370,7 @@ namespace Levels.UtilityLevels
 
         private void ReturnToPriorScene()
         {
-            if (!_wasApplyClicked)
-            {
-                _musicVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.MusicVolume;
-                _soundEffectsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.SoundEffectsVolume;
-                _dungeonSoundsVolumeSliderButton.GetHSlider().Value = _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume;
-
-                _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
-
-                _fullscreenButton.Text = _rootSceneSwapper.CurrentSettings.FullscreenState;
-            }
-
-            _wasApplyClicked = false;
+            SaveSettingsToConfigFile();
 
             if (pauseScreen != null)
             {

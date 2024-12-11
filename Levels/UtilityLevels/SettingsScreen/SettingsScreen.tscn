@@ -160,46 +160,21 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "OFF"
 flat = true
 
-[node name="ApplyButtonTexture" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = -151.0
-offset_top = 250.0
-offset_right = -23.0
-offset_bottom = 314.0
-scale = Vector2(3, 3)
-texture = ExtResource("6_kr6t1")
-
-[node name="ApplyButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = -73.0
-offset_top = 329.0
-offset_right = 15.0
-offset_bottom = 365.0
-size_flags_horizontal = 0
-focus_mode = 1
-theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
-theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
-theme_override_fonts/font = ExtResource("3_wput4")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
-text = "APPLY"
-flat = true
-
 [node name="ReturnButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 5.0
-offset_top = 250.0
-offset_right = 133.0
-offset_bottom = 314.0
+offset_left = -72.0
+offset_top = 247.0
+offset_right = 56.0
+offset_bottom = 311.0
 scale = Vector2(3, 3)
 texture = ExtResource("6_kr6t1")
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 2
-offset_left = 79.0
-offset_top = 330.0
-offset_right = 181.0
-offset_bottom = 366.0
+offset_left = 2.0
+offset_top = 327.0
+offset_right = 104.0
+offset_bottom = 363.0
 size_flags_horizontal = 0
 focus_mode = 1
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
