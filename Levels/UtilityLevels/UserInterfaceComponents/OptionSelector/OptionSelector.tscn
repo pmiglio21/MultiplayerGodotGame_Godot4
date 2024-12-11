@@ -60,33 +60,36 @@ layout_mode = 0
 offset_right = 200.0
 offset_bottom = 100.0
 scale = Vector2(2.25, 2.25)
+mouse_filter = 2
 texture = ExtResource("2_rxcm6")
 
-[node name="LeftArrowTexture" type="TextureRect" parent="."]
+[node name="RightArrowTexture" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 345.0
 offset_top = 93.0
 offset_right = 385.0
 offset_bottom = 133.0
+mouse_filter = 0
 texture = ExtResource("4_ubmvd")
 
-[node name="RightArrowTexture" type="TextureRect" parent="."]
+[node name="LeftArrowTexture" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 220.0
 offset_top = 93.0
 offset_right = 260.0
 offset_bottom = 133.0
+mouse_filter = 0
 texture = ExtResource("4_ubmvd")
 flip_h = true
 
 [node name="RightArrowAnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../LeftArrowTexture")
+root_node = NodePath("../RightArrowTexture")
 libraries = {
 "": SubResource("AnimationLibrary_6a86f")
 }
 
 [node name="LeftArrowAnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../RightArrowTexture")
+root_node = NodePath("../LeftArrowTexture")
 libraries = {
 "": SubResource("AnimationLibrary_467q1")
 }

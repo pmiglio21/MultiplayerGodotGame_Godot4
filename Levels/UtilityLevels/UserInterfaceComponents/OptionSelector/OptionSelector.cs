@@ -1,33 +1,24 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Enums;
-using Enums.GameRules;
-using Globals;
 using Godot;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents
 {
 	public partial class OptionSelector : Control
 	{
-		#region Exported Properties
-		[Export]
-		public string LabelText = string.Empty;
-
-		[Export]
-		public OptionSelectorType OptionSelectorType = OptionSelectorType.None;
-		#endregion
-
 		#region Components
 		private Label _optionLabel;
 		private Button _optionButton;
 
 		private TextureRect _textureRect;
-		private AnimationPlayer _leftArrowAnimationPlayer;
+
+		private TextureRect _leftArrowTexture;
+		private bool _isLeftArrowTextureEntered;
+        private TextureRect _rightArrowTexture;
+        private bool _isRightArrowTextureEntered;
+
+        private AnimationPlayer _leftArrowAnimationPlayer;
         private AnimationPlayer _rightArrowAnimationPlayer;
+
         #endregion
 
         private List<string> _options = new List<string>();
@@ -35,112 +26,32 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		public override void _Ready()
 		{
             _textureRect = FindChild("TextureRect") as TextureRect;
+			_leftArrowTexture = FindChild("LeftArrowTexture") as TextureRect;
+            _rightArrowTexture = FindChild("RightArrowTexture") as TextureRect;
+
+			_leftArrowTexture.MouseEntered += () => _isLeftArrowTextureEntered = true;
+            _rightArrowTexture.MouseEntered += () => _isRightArrowTextureEntered = true;
+
+            _leftArrowTexture.MouseExited += () => _isLeftArrowTextureEntered = false;
+            _rightArrowTexture.MouseExited += () => _isRightArrowTextureEntered = false;
+
             _leftArrowAnimationPlayer = FindChild("LeftArrowAnimationPlayer") as AnimationPlayer;
             _rightArrowAnimationPlayer = FindChild("RightArrowAnimationPlayer") as AnimationPlayer;
-
-            
-            //_optionLabel = GetNode<Label>("OptionLabel");
-            //_optionLabel.Text = LabelText;
-
-            //_optionButton = GetNode<Button>("OptionButton");
-
-            //SetupOptionsList();
-
-            //_optionButton.Text = _options[0];
         }
 
 		public override void _Process(double delta)
 		{
-			//if (_options.Count > 1 && _optionButton.HasFocus())
-			//{
-			//	if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
-			//	{
-			//		int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
-
-			//		if (indexOfCurrentOptionButtonText == _options.Count - 1)
-			//		{
-			//			_optionButton.Text = _options[0];
-			//		}
-			//		else
-			//		{
-			//			_optionButton.Text = _options[indexOfCurrentOptionButtonText + 1];
-			//		}
-			//	}
-			//	else if (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest))
-			//	{
-			//		int indexOfCurrentOptionButtonText = _options.IndexOf(_optionButton.Text);
-
-			//		if (indexOfCurrentOptionButtonText == 0)
-			//		{
-			//			_optionButton.Text = _options[_options.Count - 1];
-			//		}
-			//		else
-			//		{
-			//			_optionButton.Text = _options[indexOfCurrentOptionButtonText - 1];
-			//		}
-			//	}
-			//}
-		}
-
-		private void SetupOptionsList()
-		{
-			//switch (OptionSelectorType)
-			//{
-			//	case OptionSelectorType.None:
-
-			//		_options = new List<string>();
-					
-			//		break;
-
-   //             case OptionSelectorType.BiomeType:
-
-   //                 foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
-   //                 {
-   //                     var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-   //                     if (enumDescription != "None")
-   //                     {
-   //                         _options.Add(enumDescription);
-   //                     }
-   //                 }
-
-   //                 break;
-
-   //             case OptionSelectorType.RelativePlayerSpawnDistance:
-
-			//		foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
-			//		{
-			//			var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-			//			if (enumDescription != "None")
-			//			{
-			//				_options.Add(enumDescription);
-			//			}
-			//		}
-
-			//		break;
-
-			//	case OptionSelectorType.LevelSize:
-
-			//		foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
-			//		{
-			//			var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-			//			if (enumDescription != "None")
-			//			{
-			//				_options.Add(enumDescription);
-			//			}
-			//		}
-
-			//		break;
-
-			//	default:
-
-			//		_options = new List<string>();
-
-			//		break;
-			//}
-		}
+            if (_isLeftArrowTextureEntered && Input.IsActionJustPressed("LeftMouseClick"))
+            {
+                //Send signal back to SettingsScreenManager to go left and play sound
+                PlayClickedOnLeftArrow();
+            }
+            else if (_isRightArrowTextureEntered && Input.IsActionJustPressed("LeftMouseClick"))
+            {
+                //Send signal back to SettingsScreenManager to go right and play sound
+                PlayClickedOnRightArrow();
+            }
+        }
 
 		public Button GetOptionButton()
 		{
