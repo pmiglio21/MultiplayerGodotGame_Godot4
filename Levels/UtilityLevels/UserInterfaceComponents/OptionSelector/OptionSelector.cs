@@ -5,6 +5,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 {
 	public partial class OptionSelector : Control
 	{
+        [Export]
+        public bool IsOnlyTwoOptions = false;
+
 		#region Components
 		private Label _optionLabel;
 		private Button _optionButton;
@@ -21,9 +24,16 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
         #endregion
 
-        private List<string> _options = new List<string>();
+        [Signal]
+        public delegate void LeftArrowClickedEventHandler();
 
-		public override void _Ready()
+        [Signal]
+        public delegate void RightArrowClickedEventHandler();
+
+        [Signal]
+        public delegate void EitherArrowClickedEventHandler();
+
+        public override void _Ready()
 		{
             _textureRect = FindChild("TextureRect") as TextureRect;
 			_leftArrowTexture = FindChild("LeftArrowTexture") as TextureRect;
@@ -43,13 +53,37 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		{
             if (_isLeftArrowTextureEntered && Input.IsActionJustPressed("LeftMouseClick"))
             {
-                //Send signal back to SettingsScreenManager to go left and play sound
-                PlayClickedOnLeftArrow();
+                if (IsOnlyTwoOptions)
+                {
+                    EmitSignal(SignalName.EitherArrowClicked);
+
+                    PlayClickedOnLeftArrow();
+                    PlayClickedOnRightArrow();
+                }
+                else
+                {
+                    EmitSignal(SignalName.LeftArrowClicked);
+
+                    PlayClickedOnLeftArrow();
+                }
             }
             else if (_isRightArrowTextureEntered && Input.IsActionJustPressed("LeftMouseClick"))
             {
-                //Send signal back to SettingsScreenManager to go right and play sound
-                PlayClickedOnRightArrow();
+                if (IsOnlyTwoOptions)
+                {
+                    //Send signal back to SettingsScreenManager to go right and play sound
+                    EmitSignal(SignalName.EitherArrowClicked);
+
+                    PlayClickedOnLeftArrow();
+                    PlayClickedOnRightArrow();
+                }
+                else
+                {
+                    //Send signal back to SettingsScreenManager to go right and play sound
+                    EmitSignal(SignalName.RightArrowClicked);
+
+                    PlayClickedOnRightArrow();
+                }
             }
         }
 

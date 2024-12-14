@@ -135,6 +135,7 @@ offset_left = -172.0
 offset_top = 149.0
 offset_right = -132.0
 offset_bottom = 189.0
+IsOnlyTwoOptions = true
 
 [node name="FullscreenTextboxLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -187,3 +188,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "RETURN"
 flat = true
+
+[connection signal="LeftArrowClicked" from="ResolutionOptionSelector" to="." method="OnResolutionOptionSelector_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="ResolutionOptionSelector" to="." method="OnResolutionOptionSelector_RightArrowClicked"]
+[connection signal="EitherArrowClicked" from="FullscreenOptionSelector" to="." method="OnFullscreenOptionSelector_EitherArrowClicked"]
+[connection signal="pressed" from="ReturnButton" to="." method="OnReturnButtonPressed"]
