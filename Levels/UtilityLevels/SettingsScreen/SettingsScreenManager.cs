@@ -446,6 +446,8 @@ namespace Levels.UtilityLevels
             _rootSceneSwapper.CurrentSettings.SoundEffectsVolume = (float)newValue;
 
             _rootSceneSwapper.ChangeMenuSoundsVolume(_rootSceneSwapper.CurrentSettings.SoundEffectsVolume);
+
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiVolumeSliderTickSoundPath);
         }
 
         private void ToggleFullscreen()

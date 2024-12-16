@@ -20,8 +20,6 @@ offset_left = -81.0
 offset_top = -30.528
 offset_right = 44.0
 offset_bottom = -72.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_fd6ci")
 
 [node name="SettingsBackground" type="TextureRect" parent="."]
