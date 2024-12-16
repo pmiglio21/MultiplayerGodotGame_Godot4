@@ -17,6 +17,12 @@ namespace Globals
                     Input.IsActionJustPressed($"{inputType}_Keyboard"));
         }
 
+        public static bool IsActionJustPressed_GamePadOnly(InputType inputType)
+        {
+            return (Input.IsActionJustPressed($"{inputType}_0") || Input.IsActionJustPressed($"{inputType}_1") ||
+                    Input.IsActionJustPressed($"{inputType}_2") || Input.IsActionJustPressed($"{inputType}_3"));
+        }
+
         public static bool IsActionPressed(InputType inputType)
         {
             return (Input.IsActionPressed($"{inputType}_0") || Input.IsActionPressed($"{inputType}_1") ||
@@ -28,6 +34,13 @@ namespace Globals
         {
             return (Input.IsActionPressed($"{inputType}_0") || Input.IsActionPressed($"{inputType}_1") ||
                     Input.IsActionPressed($"{inputType}_2") || Input.IsActionPressed($"{inputType}_3"));
+        }
+
+        public static bool IsActionJustReleased(InputType inputType)
+        {
+            return (Input.IsActionJustReleased($"{inputType}_0") || Input.IsActionJustReleased($"{inputType}_1") ||
+                    Input.IsActionJustReleased($"{inputType}_2") || Input.IsActionJustReleased($"{inputType}_3") ||
+                    Input.IsActionJustReleased($"{inputType}_Keyboard"));
         }
 
         public static List<string> GetPlayersWhoJustPressedButton(InputType inputType)

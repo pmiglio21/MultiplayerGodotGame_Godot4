@@ -32,6 +32,9 @@ offset_right = 3615.0
 offset_bottom = 2071.0
 texture = ExtResource("2_t28pw")
 
+[node name="ReturnToPriorScreenTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="InputTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
@@ -105,7 +108,7 @@ offset_top = 62.0
 offset_right = -131.0
 offset_bottom = 102.0
 
-[node name="ResolutionTextboxLabel" type="RichTextLabel" parent="."]
+[node name="ResolutionTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = -93.0
 offset_top = 163.0
@@ -137,7 +140,7 @@ offset_right = -132.0
 offset_bottom = 189.0
 IsOnlyTwoOptions = true
 
-[node name="FullscreenTextboxLabel" type="RichTextLabel" parent="."]
+[node name="FullscreenTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = -92.0
 offset_top = 248.0
