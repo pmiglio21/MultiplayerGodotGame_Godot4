@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=3 uid="uid://c1u1f3s3hulsc"]
+
+[ext_resource type="Texture2D" uid="uid://bh1edj1blnxyl" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png" id="1_b8273"]
+[ext_resource type="Texture2D" uid="uid://drhvwg61v5llu" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorArrows/OptionSelectorArrows1.png" id="2_3pgcq"]
+[ext_resource type="Texture2D" uid="uid://dqbul3vjhmeua" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorArrows/OptionSelectorArrows0.png" id="3_ybbf3"]
+[ext_resource type="Texture2D" uid="uid://cniiphpogfhau" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle0.png" id="4_1s4ci"]
+[ext_resource type="Texture2D" uid="uid://d1bg8h081rx08" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle1.png" id="4_g8jbg"]
+
+[sub_resource type="Animation" id="Animation_ijpeg"]
+resource_name = "Clicked"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_ybbf3"), ExtResource("2_3pgcq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6a86f"]
+_data = {
+"Clicked": SubResource("Animation_ijpeg")
+}
+
+[sub_resource type="Animation" id="Animation_nslon"]
+resource_name = "Clicked"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_ybbf3"), ExtResource("2_3pgcq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_467q1"]
+_data = {
+"Clicked": SubResource("Animation_nslon")
+}
+
+[sub_resource type="Animation" id="Animation_kx642"]
+resource_name = "Clicked"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SelectButton:icon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_1s4ci"), ExtResource("4_g8jbg")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t77g4"]
+_data = {
+"Clicked": SubResource("Animation_kx642")
+}
+
+[node name="OptionSelectorMultiSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 200.0
+offset_bottom = 100.0
+scale = Vector2(2.25, 2.25)
+mouse_filter = 2
+texture = ExtResource("1_b8273")
+
+[node name="RightArrowTexture" type="TextureRect" parent="."]
+offset_left = 345.0
+offset_top = 93.0
+offset_right = 385.0
+offset_bottom = 133.0
+mouse_filter = 0
+texture = ExtResource("2_3pgcq")
+
+[node name="LeftArrowTexture" type="TextureRect" parent="."]
+offset_left = 246.0
+offset_top = 93.0
+offset_right = 286.0
+offset_bottom = 133.0
+mouse_filter = 0
+texture = ExtResource("2_3pgcq")
+flip_h = true
+
+[node name="RightArrowAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../RightArrowTexture")
+libraries = {
+"": SubResource("AnimationLibrary_6a86f")
+}
+
+[node name="LeftArrowAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../LeftArrowTexture")
+libraries = {
+"": SubResource("AnimationLibrary_467q1")
+}
+
+[node name="SelectButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 94.0
+offset_right = 258.0
+offset_bottom = 134.0
+icon = ExtResource("4_g8jbg")
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t77g4")
+}

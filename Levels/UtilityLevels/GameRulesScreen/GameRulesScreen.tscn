@@ -43,8 +43,6 @@ offset_left = -268.0
 offset_top = -118.0
 offset_right = -150.0
 offset_bottom = -62.0
-LabelText = "Biome"
-OptionSelectorType = 1
 
 [node name="RelativePlayerSpawnDistanceOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
@@ -54,8 +52,6 @@ offset_top = -42.0
 offset_right = -68.0
 offset_bottom = 8.0
 focus_mode = 1
-LabelText = "Spawn Proximity"
-OptionSelectorType = 2
 
 [node name="LevelSizeOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 custom_minimum_size = Vector2(200, 50)
@@ -65,8 +61,6 @@ offset_top = 29.0
 offset_right = -67.0
 offset_bottom = 79.0
 focus_mode = 1
-LabelText = "Level Size"
-OptionSelectorType = 3
 
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)

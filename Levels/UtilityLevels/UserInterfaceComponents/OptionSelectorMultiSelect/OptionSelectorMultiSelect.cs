@@ -3,19 +3,19 @@ using Godot;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents
 {
-	public partial class OptionSelector : Control
-	{
+    public partial class OptionSelectorMultiSelect : Control
+    {
         [Export]
         public bool IsOnlyTwoOptions = false;
 
-		#region Components
-		private Label _optionLabel;
-		private Button _optionButton;
+        #region Components
+        private Label _optionLabel;
+        private Button _optionButton;
 
-		private TextureRect _textureRect;
+        private TextureRect _textureRect;
 
-		private TextureRect _leftArrowTexture;
-		private bool _isLeftArrowTextureEntered;
+        private TextureRect _leftArrowTexture;
+        private bool _isLeftArrowTextureEntered;
         private TextureRect _rightArrowTexture;
         private bool _isRightArrowTextureEntered;
 
@@ -34,12 +34,12 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public delegate void EitherArrowClickedEventHandler();
 
         public override void _Ready()
-		{
+        {
             _textureRect = FindChild("TextureRect") as TextureRect;
-			_leftArrowTexture = FindChild("LeftArrowTexture") as TextureRect;
+            _leftArrowTexture = FindChild("LeftArrowTexture") as TextureRect;
             _rightArrowTexture = FindChild("RightArrowTexture") as TextureRect;
 
-			_leftArrowTexture.MouseEntered += () => _isLeftArrowTextureEntered = true;
+            _leftArrowTexture.MouseEntered += () => _isLeftArrowTextureEntered = true;
             _rightArrowTexture.MouseEntered += () => _isRightArrowTextureEntered = true;
 
             _leftArrowTexture.MouseExited += () => _isLeftArrowTextureEntered = false;
@@ -49,8 +49,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             _rightArrowAnimationPlayer = FindChild("RightArrowAnimationPlayer") as AnimationPlayer;
         }
 
-		public override void _Process(double delta)
-		{
+        public override void _Process(double delta)
+        {
             if (_isLeftArrowTextureEntered && Input.IsActionJustPressed("LeftMouseClick"))
             {
                 if (IsOnlyTwoOptions)
@@ -87,10 +87,10 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             }
         }
 
-		public Button GetOptionButton()
-		{
-			return _optionButton;
-		}
+        public Button GetOptionButton()
+        {
+            return _optionButton;
+        }
 
         public void PlayOnFocusAnimation()
         {
@@ -103,13 +103,13 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         }
 
         public void PlayClickedOnLeftArrow()
-		{
-			_leftArrowAnimationPlayer.Play("Clicked");
+        {
+            _leftArrowAnimationPlayer.Play("Clicked");
         }
 
         public void PlayClickedOnRightArrow()
         {
-			_rightArrowAnimationPlayer.Play("Clicked");
-		}
+            _rightArrowAnimationPlayer.Play("Clicked");
+        }
     }
 }
