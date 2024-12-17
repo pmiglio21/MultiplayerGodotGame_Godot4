@@ -50,7 +50,9 @@ namespace Root
 			_rootGuiControl = FindChild("GUI") as Control;
 			_uiAudioStreamPlayer = FindChild("UiSoundEffectsAudioStreamPlayer") as AudioStreamPlayer;
 
-			_titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
+			//GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
+
+            _titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
             //_titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
             _titleScreenManager.GoToPlayerCharacterSelectScreen += OnTitleScreenRootGoToPlayerCharacterSelectScreen;
@@ -180,6 +182,8 @@ namespace Root
             {
                 _dungeonLevelSwapper.QueueFree();
             }
+
+            //GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
         }
 
 		public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
@@ -187,7 +191,9 @@ namespace Root
 			_playerCharacterSelectScreenManager = null;
 
 			ChangeSceneToGameOverScreen(_dungeonLevelSwapper);
-		}
+
+            //GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
+        }
 
 		#endregion
 
@@ -291,8 +297,10 @@ namespace Root
 
 		private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
 		{
-			//Doesn't need to be checked for null, just reset every time
-			_dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
+            //GetTree().Root.SizeChanged -= AdjustUiOnWindowSizeChanged;
+
+            //Doesn't need to be checked for null, just reset every time
+            _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
 			_dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
 			_dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
@@ -324,6 +332,23 @@ namespace Root
 				QuitGame();
             }
         }
+
+		//Move this to each screen manager. Can't have it here because we don't want split screen manager to shrink even more
+		//private void AdjustUiOnWindowSizeChanged()
+		//{
+		//	if (GetTree().Root.GetWindow().Size.X * GetTree().Root.GetWindow().Size.Y > 1000000)
+		//	{
+		//		_rootGuiControl.Scale = new Vector2(2, 2);
+  //          }
+  //          else if (GetTree().Root.GetWindow().Size.X * GetTree().Root.GetWindow().Size.Y < 500000)
+  //          {
+  //              _rootGuiControl.Scale = new Vector2(.5f, .5f);
+  //          }
+  //          else
+  //          {
+  //              _rootGuiControl.Scale = new Vector2(1, 1);
+  //          }
+  //      }
 
         private void QuitGame()
 		{

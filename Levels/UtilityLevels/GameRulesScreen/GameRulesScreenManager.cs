@@ -56,7 +56,7 @@ namespace Levels.UtilityLevels
 			_returnButton = GetNode<Button>("ReturnButton");
 			_continueButton = GetNode<Button>("ContinueButton");
 
-			_biomeTypeSelector.GetOptionButton().GrabFocus();
+			//_biomeTypeSelector.GetOptionButton().GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -188,12 +188,12 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-			_biomeTypeSelector.GetOptionButton().GrabFocus();
+			//_biomeTypeSelector.GetOptionButton().GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
 		{
-			SaveOutGameRules();
+			//SaveOutGameRules();
 
 			if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
 			{

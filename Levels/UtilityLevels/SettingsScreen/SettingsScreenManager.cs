@@ -3,6 +3,7 @@ using Globals;
 using Godot;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using Models;
+using Newtonsoft.Json;
 using Root;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,6 @@ namespace Levels.UtilityLevels
         private RootSceneSwapper _rootSceneSwapper;
 
         private Color _defaultResolutionTextColor;
-
-        private Timer _returnToPriorScreenTimer;
 
         private List<Vector2I> _resolutionOptions = new List<Vector2I>()
         {
@@ -45,6 +44,8 @@ namespace Levels.UtilityLevels
 
 		protected PauseScreenManager pauseScreen;
 
+        private Settings _changedSettings = new Settings();
+
         #endregion
 
         #region Components
@@ -68,9 +69,6 @@ namespace Levels.UtilityLevels
         public override void _Ready()
 		{
             _rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
-
-            _returnToPriorScreenTimer = FindChild("ReturnToPriorScreenTimer") as Timer;
-            _returnToPriorScreenTimer.Timeout += ReturnToPriorSceneTimeout;
 
             _inputTimer = FindChild("InputTimer") as Timer;
 
@@ -108,6 +106,15 @@ namespace Levels.UtilityLevels
             {
                 IsSettingsScreenBeingShown = true;
             }
+
+            _changedSettings = new Settings()
+            {
+                MusicVolume = _rootSceneSwapper.CurrentSettings.MusicVolume,
+                SoundEffectsVolume = _rootSceneSwapper.CurrentSettings.SoundEffectsVolume,
+                DungeonSoundsVolume = _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume,
+                Resolution = _rootSceneSwapper.CurrentSettings.Resolution,
+                FullscreenState = _rootSceneSwapper.CurrentSettings.FullscreenState
+            };
 
             GrabFocusOfTopButton();
         }
@@ -165,7 +172,7 @@ namespace Levels.UtilityLevels
 
                     _resolutionOptionSelector.PlayClickedOnRightArrow();
 
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
                     var nextIndexOfResolutionOptions = 0;
 
                     if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
@@ -173,8 +180,8 @@ namespace Levels.UtilityLevels
                         nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
                     }
 
-                    _rootSceneSwapper.CurrentSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
+                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
                 }
                 else if (_fullscreenButton.HasFocus())
                 {
@@ -195,6 +202,8 @@ namespace Levels.UtilityLevels
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
+
+                    _changedSettings.FullscreenState = _fullscreenButton.Text;
                 }
                 else if (_returnButton.HasFocus())
                 {
@@ -205,8 +214,6 @@ namespace Levels.UtilityLevels
             }
             else if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
             {
-                _returnToPriorScreenTimer.Start();
-
                 if (_musicVolumeSliderButton.GetHSlider().HasFocus())
                 {
                     _musicVolumeSliderButton.GetFocusHolder().GrabFocus();
@@ -218,6 +225,10 @@ namespace Levels.UtilityLevels
                 else if (_dungeonSoundsVolumeSliderButton.GetHSlider().HasFocus())
                 {
                     _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
+                }
+                else
+                {
+                    ReturnToPriorScene();
                 }
             }
             else if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton))
@@ -237,7 +248,7 @@ namespace Levels.UtilityLevels
 
                     _resolutionOptionSelector.PlayClickedOnRightArrow();
 
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
                     var nextIndexOfResolutionOptions = _resolutionOptions.Count - 1;
 
                     if (indexOfCurrentResolution != 0)
@@ -245,8 +256,8 @@ namespace Levels.UtilityLevels
                         nextIndexOfResolutionOptions = indexOfCurrentResolution - 1;
                     }
 
-                    _rootSceneSwapper.CurrentSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
+                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
                 }
                 else if (_fullscreenButton.HasFocus())
                 {
@@ -267,6 +278,8 @@ namespace Levels.UtilityLevels
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
+
+                    _changedSettings.FullscreenState = _fullscreenButton.Text;
                 }
             }
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest) || UniversalInputHelper.IsActionJustPressed_GamePadOnly(InputType.DPadWest)))
@@ -277,7 +290,7 @@ namespace Levels.UtilityLevels
 
                     _resolutionOptionSelector.PlayClickedOnLeftArrow();
 
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
                     var nextIndexOfResolutionOptions = 0;
 
                     if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
@@ -285,8 +298,8 @@ namespace Levels.UtilityLevels
                         nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
                     }
 
-                    _rootSceneSwapper.CurrentSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
+                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
                 }
                 else if (_fullscreenButton.HasFocus())
                 {
@@ -307,12 +320,9 @@ namespace Levels.UtilityLevels
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
-                }
-            }
 
-            if (UniversalInputHelper.IsActionJustReleased(InputType.EastButton))
-            {
-                _returnToPriorScreenTimer.Stop();
+                    _changedSettings.FullscreenState = _fullscreenButton.Text;
+                }
             }
         }
 
@@ -443,9 +453,9 @@ namespace Levels.UtilityLevels
 
         private void OnChanged_SoundEffectsVolumeSliderButton(double newValue)
         {
-            _rootSceneSwapper.CurrentSettings.SoundEffectsVolume = (float)newValue;
+            _changedSettings.SoundEffectsVolume = (float)newValue;
 
-            _rootSceneSwapper.ChangeMenuSoundsVolume(_rootSceneSwapper.CurrentSettings.SoundEffectsVolume);
+            _rootSceneSwapper.ChangeMenuSoundsVolume(_changedSettings.SoundEffectsVolume);
 
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiVolumeSliderTickSoundPath);
         }
@@ -477,11 +487,23 @@ namespace Levels.UtilityLevels
 
         private void ReturnToPriorScene()
         {
-            SaveSettingsToConfigFile();
+            if (JsonConvert.SerializeObject(_rootSceneSwapper.CurrentSettings) != JsonConvert.SerializeObject(_changedSettings))
+            {
+                _rootSceneSwapper.CurrentSettings = new Settings()
+                { 
+                    MusicVolume = _changedSettings.MusicVolume,
+                    SoundEffectsVolume = _changedSettings.SoundEffectsVolume,
+                    DungeonSoundsVolume = _changedSettings.DungeonSoundsVolume,
+                    Resolution = _changedSettings.Resolution,
+                    FullscreenState = _changedSettings.FullscreenState
+                };
 
-            ResizeScreenToResolution();
+                SaveSettingsToConfigFile();
 
-            ToggleFullscreen();
+                ResizeScreenToResolution();
+
+                ToggleFullscreen();
+            }
 
             if (pauseScreen != null)
             {
@@ -511,7 +533,7 @@ namespace Levels.UtilityLevels
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
-            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
             var nextIndexOfResolutionOptions = _resolutionOptions.Count - 1;
 
             if (indexOfCurrentResolution != 0)
@@ -519,15 +541,15 @@ namespace Levels.UtilityLevels
                 nextIndexOfResolutionOptions = indexOfCurrentResolution - 1;
             }
 
-            _rootSceneSwapper.CurrentSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-            _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+            _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
+            _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
         }
 
         public void OnResolutionOptionSelector_RightArrowClicked()
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
-            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
             var nextIndexOfResolutionOptions = 0;
 
             if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
@@ -535,8 +557,8 @@ namespace Levels.UtilityLevels
                 nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
             }
 
-            _rootSceneSwapper.CurrentSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-            _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
+            _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
+            _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
         }
 
         public void OnFullscreenOptionSelector_EitherArrowClicked()
