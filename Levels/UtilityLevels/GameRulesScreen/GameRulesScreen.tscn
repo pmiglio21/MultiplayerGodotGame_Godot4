@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_pyw1h"]
-[ext_resource type="PackedScene" uid="uid://cvvcipol0i6h4" path="res://Levels/UtilityLevels/UserInterfaceComponents/NumberSpinner/NumberSpinner.tscn" id="3_2icas"]
+[ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="2_qmecr"]
 [ext_resource type="PackedScene" uid="uid://c1u1f3s3hulsc" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.tscn" id="3_xf5wo"]
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="4_nmvb2"]
 [ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_6xomu"]
@@ -132,102 +132,127 @@ flat = true
 
 [node name="BiomeTypeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = -280.0
-offset_top = -111.0
-offset_right = -280.0
-offset_bottom = -111.0
+offset_left = -207.0
+offset_top = -105.0
+offset_right = -207.0
+offset_bottom = -105.0
 
 [node name="BiomeTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -313.0
-offset_top = -137.0
-offset_right = -192.0
-offset_bottom = -96.0
+offset_left = -261.0
+offset_top = -131.0
+offset_right = -140.0
+offset_bottom = -90.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Biomes"
 
 [node name="SpawnProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = -282.0
-offset_top = -21.0
-offset_right = -282.0
-offset_bottom = -21.0
+offset_left = -209.0
+offset_top = -15.0
+offset_right = -209.0
+offset_bottom = -15.0
 
 [node name="SpawnProximityTextLabel" type="RichTextLabel" parent="."]
-offset_left = -334.0
-offset_top = -58.0
-offset_right = -186.0
-offset_bottom = 13.0
+offset_left = -261.0
+offset_top = -52.0
+offset_right = -113.0
+offset_bottom = 19.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Spawn Proximity"
 
 [node name="LevelSizeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = -282.0
-offset_top = 69.0
-offset_right = -282.0
-offset_bottom = 69.0
+offset_left = -209.0
+offset_top = 75.0
+offset_right = -209.0
+offset_bottom = 75.0
 
 [node name="LevelSizeTextLabel" type="RichTextLabel" parent="."]
-offset_left = -334.0
-offset_top = 50.0
-offset_right = -186.0
-offset_bottom = 121.0
+offset_left = -261.0
+offset_top = 56.0
+offset_right = -113.0
+offset_bottom = 127.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Level Size"
 
-[node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
-visible = false
+[node name="LevelNumberOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+layout_mode = 1
+offset_left = -447.0
+offset_top = 48.0
+offset_right = -19.0
+offset_bottom = 231.0
+
+[node name="LevelNumberText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -414.0
-offset_top = 109.0
-offset_right = -214.0
-offset_bottom = 159.0
+offset_left = -267.0
+offset_top = 134.0
+offset_right = -67.0
+offset_bottom = 203.0
 focus_mode = 1
-text = "Number of Levels"
+theme_override_fonts/normal_font = ExtResource("4_nmvb2")
+theme_override_font_sizes/normal_font_size = 40
+text = "Level 
+Number"
 
-[node name="NumberSpinner" parent="." instance=ExtResource("3_2icas")]
-visible = false
+[node name="FriendlyFireOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+layout_mode = 1
+offset_left = -95.0
+offset_top = -224.0
+offset_right = 333.0
+offset_bottom = -41.0
+
+[node name="FriendlyFireText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-offset_left = -268.0
-offset_top = 100.0
-offset_right = -68.0
-offset_bottom = 150.0
+offset_left = 85.0
+offset_top = -138.0
+offset_right = 285.0
+offset_bottom = -69.0
 focus_mode = 1
-MinNumber = 1
+theme_override_fonts/normal_font = ExtResource("4_nmvb2")
+theme_override_font_sizes/normal_font_size = 40
+text = "Friendly
+Fire"
 
-[node name="FriendlyFireToggle" type="CheckButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 238.0
-offset_top = -118.0
-offset_right = 428.0
-offset_bottom = -56.0
-text = "Friendly Fire"
-alignment = 1
+[node name="WinConditionOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+layout_mode = 1
+offset_left = -95.0
+offset_top = -131.0
+offset_right = 333.0
+offset_bottom = 52.0
 
-[node name="WinConditionMenuButton" type="MenuButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 256.0
-offset_top = -42.0
-offset_right = 383.0
-offset_bottom = 37.0
-text = "Win Condition"
+[node name="WinConditionText" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(200, 50)
+offset_left = 85.0
+offset_top = -45.0
+offset_right = 285.0
+offset_bottom = 24.0
+focus_mode = 1
+theme_override_fonts/normal_font = ExtResource("4_nmvb2")
+theme_override_font_sizes/normal_font_size = 40
+text = "Win 
+Condition"
 
-[node name="SwitchProximityMenuButton" type="MenuButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 256.0
-offset_top = 29.0
-offset_right = 394.0
-offset_bottom = 85.0
-text = "Switch Proximity"
+[node name="SwitchProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
+layout_mode = 1
+offset_left = 143.0
+offset_top = 75.0
+offset_right = 143.0
+offset_bottom = 75.0
+
+[node name="SwitchProximityTextLabel" type="RichTextLabel" parent="."]
+offset_left = 85.0
+offset_top = 38.0
+offset_right = 206.0
+offset_bottom = 116.0
+theme_override_fonts/normal_font = ExtResource("4_nmvb2")
+theme_override_font_sizes/normal_font_size = 40
+text = "Switch 
+Proximity"
 
 [node name="ReturnButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
