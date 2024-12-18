@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://c1u1f3s3hulsc"]
+[gd_scene load_steps=13 format=3 uid="uid://c1u1f3s3hulsc"]
 
 [ext_resource type="Texture2D" uid="uid://bh1edj1blnxyl" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png" id="1_b8273"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.cs" id="1_ijbf4"]
 [ext_resource type="Texture2D" uid="uid://drhvwg61v5llu" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorArrows/OptionSelectorArrows1.png" id="2_3pgcq"]
 [ext_resource type="Texture2D" uid="uid://dqbul3vjhmeua" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorArrows/OptionSelectorArrows0.png" id="3_ybbf3"]
 [ext_resource type="Texture2D" uid="uid://cniiphpogfhau" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle0.png" id="4_1s4ci"]
@@ -71,32 +72,37 @@ _data = {
 
 [node name="OptionSelectorMultiSelect" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ijbf4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 200.0
-offset_bottom = 100.0
+offset_left = -238.0
+offset_top = -120.0
+offset_right = -38.0
+offset_bottom = -20.0
 scale = Vector2(2.25, 2.25)
 mouse_filter = 2
 texture = ExtResource("1_b8273")
 
 [node name="RightArrowTexture" type="TextureRect" parent="."]
-offset_left = 345.0
-offset_top = 93.0
-offset_right = 385.0
-offset_bottom = 133.0
+offset_left = 107.0
+offset_top = -27.0
+offset_right = 147.0
+offset_bottom = 13.0
 mouse_filter = 0
 texture = ExtResource("2_3pgcq")
 
 [node name="LeftArrowTexture" type="TextureRect" parent="."]
-offset_left = 246.0
-offset_top = 93.0
-offset_right = 286.0
-offset_bottom = 133.0
+offset_left = 8.0
+offset_top = -27.0
+offset_right = 48.0
+offset_bottom = 13.0
 mouse_filter = 0
 texture = ExtResource("2_3pgcq")
 flip_h = true
@@ -115,10 +121,10 @@ libraries = {
 
 [node name="SelectButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 218.0
-offset_top = 94.0
-offset_right = 258.0
-offset_bottom = 134.0
+offset_left = -20.0
+offset_top = -26.0
+offset_right = 20.0
+offset_bottom = 14.0
 icon = ExtResource("4_g8jbg")
 flat = true
 

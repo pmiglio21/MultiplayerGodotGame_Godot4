@@ -101,9 +101,10 @@ theme_override_font_sizes/normal_font_size = 40
 text = "Dungeon Sounds"
 
 [node name="ResolutionOptionSelector" parent="." instance=ExtResource("7_hvf56")]
-offset_left = -171.0
+layout_mode = 1
+offset_left = -234.5
 offset_top = 62.0
-offset_right = -131.0
+offset_right = -194.5
 offset_bottom = 102.0
 
 [node name="ResolutionTextLabel" type="RichTextLabel" parent="."]
@@ -132,9 +133,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 flat = true
 
 [node name="FullscreenOptionSelector" parent="." instance=ExtResource("7_hvf56")]
-offset_left = -172.0
+layout_mode = 1
+offset_left = -234.5
 offset_top = 149.0
-offset_right = -132.0
+offset_right = -194.5
 offset_bottom = 189.0
 IsOnlyTwoOptions = true
 
