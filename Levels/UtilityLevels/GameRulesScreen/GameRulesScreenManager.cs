@@ -22,12 +22,19 @@ namespace Levels.UtilityLevels
 		#region Components
 
 		private Timer _inputTimer;
-		private OptionSelector _biomeTypeSelector;
-		private OptionSelector _relativePlayerSpawnDistanceSelector;
-		private NumberSpinner _numberSpinner;
-		private OptionSelector _levelSizeSelector;
+
+		private TextEdit _rulesetNameEdit;
+        private Button _addButton;
+        private Button _loadButton;
+        private Button _saveButton;
+        private Button _deleteButton;
+
+        private OptionSelectorMultiSelect _biomeTypeMultiSelector;
+		private OptionSelectorMultiSelect _spawnProximityMultiSelector;
+        private OptionSelectorMultiSelect _switchProximityMultiSelector;
+        private OptionSelector _levelNumberOptionSelector;
+		private OptionSelectorMultiSelect _levelSizeMultiSelector;
 		private Button _returnButton;
-		private Button _continueButton;
 
 		#endregion
 
@@ -49,27 +56,24 @@ namespace Levels.UtilityLevels
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
 			_inputTimer = FindChild("InputTimer") as Timer;
-			_biomeTypeSelector = GetNode<OptionSelector>("BiomeTypeOptionSelector");
-			_relativePlayerSpawnDistanceSelector = GetNode<OptionSelector>("RelativePlayerSpawnDistanceOptionSelector");
-			_numberSpinner = GetNode<NumberSpinner>("NumberSpinner");
-			_levelSizeSelector = GetNode<OptionSelector>("LevelSizeOptionSelector");
-			_returnButton = GetNode<Button>("ReturnButton");
-			_continueButton = GetNode<Button>("ContinueButton");
 
-			//_biomeTypeSelector.GetOptionButton().GrabFocus();
+			_rulesetNameEdit = GetNode<TextEdit>("RulesetNameEdit");
+            _addButton = GetNode<Button>("AddRulesetButton");
+            _loadButton = GetNode<Button>("LoadRulesetButton");
+            _saveButton = GetNode<Button>("SaveRulesetButton");
+            _deleteButton = GetNode<Button>("DeleteRulesetButton");
+
+            _biomeTypeMultiSelector = GetNode<OptionSelectorMultiSelect>("BiomeTypeOptionSelectorMultiSelect");
+            _switchProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SpawnProximityOptionSelectorMultiSelect");
+            _levelNumberOptionSelector = GetNode<OptionSelector>("LevelNumberOptionSelector");
+            _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
+			_returnButton = GetNode<Button>("ReturnButton");
+
+			_rulesetNameEdit.GrabFocus();
 		}
 
 		public override void _Process(double delta)
 		{
-			if (_rootSceneSwapper.PriorSceneName == ScreenNames.PlayMode)
-			{
-				_continueButton.Show();
-			}
-			else
-			{
-				_continueButton.Hide();
-			}
-
 			GetButtonPressInput();
 
 			GetNavigationInput();
@@ -85,110 +89,94 @@ namespace Levels.UtilityLevels
 
 					ReturnToPriorScene();
 				}
-				else if (_continueButton.HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-
-					SaveOutGameRules();
-
-					EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
-				}
-				else
-				{
-					if (_continueButton.Visible)
-					{
-						_continueButton.GrabFocus();
-					}
-					else if (_returnButton.Visible)
-					{
-						_returnButton.GrabFocus();
-					}
-				}
 			}
 
 			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
 			{
-				ReturnToPriorScene();
+				if (!_rulesetNameEdit.HasFocus())
+				{
+                    ReturnToPriorScene();
+                }
 			}
 		}
 
 		private void GetNavigationInput()
 		{
-			if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
-			{
-				if (_biomeTypeSelector.GetOptionButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
+			//{
+			//	if (_biomeTypeMultiSelector.HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
+			//	}
+			//	else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_levelSizeSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_levelSizeSelector.GetOptionButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_levelSizeSelector.GetOptionButton().GrabFocus();
+			//	}
+			//	else if (_levelSizeSelector.GetOptionButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_numberSpinner.GetNumberSpinnerButton().GrabFocus();
-				}
-				else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_numberSpinner.GetNumberSpinnerButton().GrabFocus();
+			//	}
+			//	else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_returnButton.GrabFocus();
-				}
-				else if (_returnButton.HasFocus() && _continueButton.Visible)
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_returnButton.GrabFocus();
+			//	}
+			//	else if (_returnButton.HasFocus() && _continueButton.Visible)
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_continueButton.GrabFocus();
-				}
+			//		_continueButton.GrabFocus();
+			//	}
 
-				_inputTimer.Start();
-			}
-			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
-			{
-				if (_continueButton.HasFocus() && _continueButton.Visible)
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//	_inputTimer.Start();
+			//}
+			//else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
+			//{
+			//	if (_continueButton.HasFocus() && _continueButton.Visible)
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_returnButton.GrabFocus();
-				}
-				else if (_returnButton.HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_returnButton.GrabFocus();
+			//	}
+			//	else if (_returnButton.HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_numberSpinner.GetNumberSpinnerButton().GrabFocus();
-				}
-				else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_numberSpinner.GetNumberSpinnerButton().GrabFocus();
+			//	}
+			//	else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_levelSizeSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_levelSizeSelector.GetOptionButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_levelSizeSelector.GetOptionButton().GrabFocus();
+			//	}
+			//	else if (_levelSizeSelector.GetOptionButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
-				}
-				else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
-				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			//		_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
+			//	}
+			//	else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
+			//	{
+			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-					_biomeTypeSelector.GetOptionButton().GrabFocus();
-				}
+   //                 _biomeTypeMultiSelector.GetOptionButton().GrabFocus();
+			//	}
 
-				_inputTimer.Start();
-			}
+			//	_inputTimer.Start();
+			//}
 		}
 
 		public void GrabFocusOfTopButton()
 		{
-			//_biomeTypeSelector.GetOptionButton().GrabFocus();
+			_rulesetNameEdit.GrabFocus();
 		}
 
 		private void ReturnToPriorScene()
@@ -211,37 +199,37 @@ namespace Levels.UtilityLevels
 
 		private void SaveOutGameRules()
 		{
-			foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
-			{
-				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+			//foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
+			//{
+			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-				if (enumDescription != "None" && enumDescription == _biomeTypeSelector.GetOptionButton().Text)
-				{
-					CurrentGameRules.BiomeType = (BiomeType)enumValue;
-				}
-			}
+			//	if (enumDescription != "None" && enumDescription == _biomeTypeSelector.GetOptionButton().Text)
+			//	{
+			//		CurrentGameRules.BiomeType = (BiomeType)enumValue;
+			//	}
+			//}
 
-			foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
-			{
-				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+			//foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
+			//{
+			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-				if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceSelector.GetOptionButton().Text)
-				{
-					CurrentGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
-				}
-			}
+			//	if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceSelector.GetOptionButton().Text)
+			//	{
+			//		CurrentGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
+			//	}
+			//}
 
-			CurrentGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
+			//CurrentGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
 
-			foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
-			{
-				var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
+			//foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
+			//{
+			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
 
-				if (enumDescription != "None" && enumDescription == _levelSizeSelector.GetOptionButton().Text)
-				{
-					CurrentGameRules.CurrentLevelSize = (LevelSize)enumValue;
-				}
-			}
+			//	if (enumDescription != "None" && enumDescription == _levelSizeSelector.GetOptionButton().Text)
+			//	{
+			//		CurrentGameRules.CurrentLevelSize = (LevelSize)enumValue;
+			//	}
+			//}
 
 			_rootSceneSwapper.CurrentGameRules = CurrentGameRules;
 		}

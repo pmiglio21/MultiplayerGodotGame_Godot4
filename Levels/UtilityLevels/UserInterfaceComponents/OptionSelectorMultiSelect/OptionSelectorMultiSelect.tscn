@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1u1f3s3hulsc"]
+[gd_scene load_steps=14 format=3 uid="uid://c1u1f3s3hulsc"]
 
 [ext_resource type="Texture2D" uid="uid://bh1edj1blnxyl" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png" id="1_b8273"]
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.cs" id="1_ijbf4"]
@@ -48,6 +48,8 @@ tracks/0/keys = {
 _data = {
 "Clicked": SubResource("Animation_nslon")
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hw6ri"]
 
 [sub_resource type="Animation" id="Animation_kx642"]
 resource_name = "Clicked"
@@ -125,6 +127,7 @@ offset_left = -20.0
 offset_top = -26.0
 offset_right = 20.0
 offset_bottom = 14.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hw6ri")
 icon = ExtResource("4_g8jbg")
 flat = true
 
