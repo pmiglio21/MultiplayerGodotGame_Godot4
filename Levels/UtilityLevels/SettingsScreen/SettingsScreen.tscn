@@ -30,9 +30,6 @@ offset_right = 3615.0
 offset_bottom = 2071.0
 texture = ExtResource("2_t28pw")
 
-[node name="ReturnToPriorScreenTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="InputTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true

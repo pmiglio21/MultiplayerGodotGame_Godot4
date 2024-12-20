@@ -2,7 +2,7 @@
 
 namespace Enums.GameRules
 {
-    public enum RelativePlayerSpawnDistanceType
+    public enum SwitchProximityType
     {
         None,
         [Description("Super Close")]

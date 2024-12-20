@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=10 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_b8ot8"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_pyw1h"]
 [ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="2_qmecr"]
 [ext_resource type="PackedScene" uid="uid://c1u1f3s3hulsc" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.tscn" id="3_xf5wo"]
@@ -24,6 +25,14 @@ offset_right = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gwqco")
+
+[node name="GameRulesBackground" type="TextureRect" parent="."]
+visible = false
+offset_left = -3180.0
+offset_top = -2441.0
+offset_right = 3615.0
+offset_bottom = 2071.0
+texture = ExtResource("2_b8ot8")
 
 [node name="InputTimer" type="Timer" parent="."]
 wait_time = 0.15
@@ -149,35 +158,35 @@ flat = true
 
 [node name="LevelSizeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = -334.0
-offset_top = -103.0
-offset_right = -334.0
-offset_bottom = -103.0
+offset_left = -330.0
+offset_top = -86.0
+offset_right = -330.0
+offset_bottom = -86.0
 
 [node name="LevelSizeTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -386.0
-offset_top = -122.0
-offset_right = -238.0
-offset_bottom = -51.0
+offset_left = -382.0
+offset_top = -105.0
+offset_right = -234.0
+offset_bottom = -34.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Level Size"
 
 [node name="LevelNumberOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
-offset_left = -572.0
-offset_top = -130.0
-offset_right = -144.0
-offset_bottom = 53.0
+offset_left = -568.0
+offset_top = -113.0
+offset_right = -140.0
+offset_bottom = 70.0
 
 [node name="LevelNumberText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-offset_left = -392.0
-offset_top = -44.0
-offset_right = -192.0
-offset_bottom = 25.0
+offset_left = -388.0
+offset_top = -27.0
+offset_right = -188.0
+offset_bottom = 42.0
 focus_mode = 1
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
@@ -186,51 +195,51 @@ Number"
 
 [node name="BiomeTypeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = -332.0
-offset_top = 79.0
-offset_right = -332.0
-offset_bottom = 79.0
+offset_left = -328.0
+offset_top = 96.0
+offset_right = -328.0
+offset_bottom = 96.0
 
 [node name="BiomeTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -386.0
-offset_top = 53.0
-offset_right = -265.0
-offset_bottom = 94.0
+offset_left = -382.0
+offset_top = 70.0
+offset_right = -261.0
+offset_bottom = 111.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Biomes"
 
 [node name="SpawnProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = 4.0
-offset_top = -101.0
-offset_right = 4.0
-offset_bottom = -101.0
+offset_left = 8.0
+offset_top = -84.0
+offset_right = 8.0
+offset_bottom = -84.0
 
 [node name="SpawnProximityTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -48.0
-offset_top = -138.0
-offset_right = 100.0
-offset_bottom = -67.0
+offset_left = -44.0
+offset_top = -121.0
+offset_right = 104.0
+offset_bottom = -50.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Spawn Proximity"
 
 [node name="SwitchProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
-offset_left = 3.0
-offset_top = -8.0
-offset_right = 3.0
-offset_bottom = -8.0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = 7.0
+offset_bottom = 9.0
 
 [node name="SwitchProximityTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -55.0
-offset_top = -45.0
-offset_right = 66.0
-offset_bottom = 33.0
+offset_left = -51.0
+offset_top = -28.0
+offset_right = 70.0
+offset_bottom = 50.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Switch 
@@ -238,19 +247,19 @@ Proximity"
 
 [node name="MiniBossOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
-offset_left = -234.0
-offset_top = -41.0
-offset_right = 194.0
-offset_bottom = 142.0
+offset_left = -230.0
+offset_top = -24.0
+offset_right = 198.0
+offset_bottom = 159.0
 IsOnlyTwoOptions = true
 
 [node name="MiniBossText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
-offset_left = -54.0
-offset_top = 45.0
-offset_right = 146.0
-offset_bottom = 114.0
+offset_left = -50.0
+offset_top = 62.0
+offset_right = 150.0
+offset_bottom = 131.0
 focus_mode = 1
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
@@ -259,19 +268,19 @@ Spawn"
 
 [node name="BossOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
-offset_left = -234.0
-offset_top = 45.0
-offset_right = 194.0
-offset_bottom = 228.0
+offset_left = -230.0
+offset_top = 62.0
+offset_right = 198.0
+offset_bottom = 245.0
 IsOnlyTwoOptions = true
 
 [node name="BossText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
-offset_left = -54.0
-offset_top = 131.0
-offset_right = 146.0
-offset_bottom = 200.0
+offset_left = -50.0
+offset_top = 148.0
+offset_right = 150.0
+offset_bottom = 217.0
 focus_mode = 1
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
@@ -280,18 +289,18 @@ Spawn"
 
 [node name="WinConditionOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
-offset_left = 111.0
-offset_top = -221.0
-offset_right = 539.0
-offset_bottom = -38.0
+offset_left = 115.0
+offset_top = -204.0
+offset_right = 543.0
+offset_bottom = -21.0
 
 [node name="WinConditionText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
-offset_left = 291.0
-offset_top = -135.0
-offset_right = 491.0
-offset_bottom = -66.0
+offset_left = 295.0
+offset_top = -118.0
+offset_right = 495.0
+offset_bottom = -49.0
 focus_mode = 1
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
@@ -300,19 +309,19 @@ Condition"
 
 [node name="FriendlyFireOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
-offset_left = 111.0
-offset_top = -127.0
-offset_right = 539.0
-offset_bottom = 56.0
+offset_left = 115.0
+offset_top = -110.0
+offset_right = 543.0
+offset_bottom = 73.0
 IsOnlyTwoOptions = true
 
 [node name="FriendlyFireText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
-offset_left = 291.0
-offset_top = -41.0
-offset_right = 491.0
-offset_bottom = 28.0
+offset_left = 295.0
+offset_top = -24.0
+offset_right = 495.0
+offset_bottom = 45.0
 focus_mode = 1
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40

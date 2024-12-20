@@ -421,11 +421,20 @@ namespace Root
 		{
 			GameRules defaultGameRules = new GameRules()
 			{
-				BiomeType = BiomeType.Castle,
-				CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.SuperClose,
+                BiomeTypes = new List<BiomeType>()
+                {
+                    BiomeType.Castle
+                },
+                SpawnProximityTypes = new List<SpawnProximityType>()
+				{
+					SpawnProximityType.SuperClose
+                },
 				NumberOfLevels = "1",
-				CurrentLevelSize = LevelSize.Small
-			};
+                LevelSizes = new List<LevelSize>()
+                {
+                    LevelSize.Small
+                }
+            };
 
 			return defaultGameRules;
 		}

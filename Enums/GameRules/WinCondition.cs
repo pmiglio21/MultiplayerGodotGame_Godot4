@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Enums.GameRules
 {
-    public enum OptionSelectorType
+    public enum WinCondition
     {
         None,
-        BiomeType,
-        RelativePlayerSpawnDistance,
-        LevelSize
+        Survival, //Last one standing
+        Completion //Reach a certain level and complete the dungeon
     }
 }

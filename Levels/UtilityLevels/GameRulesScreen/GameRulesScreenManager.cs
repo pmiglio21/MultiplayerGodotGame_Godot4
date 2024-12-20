@@ -69,7 +69,7 @@ namespace Levels.UtilityLevels
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
 			_returnButton = GetNode<Button>("ReturnButton");
 
-			_rulesetNameEdit.GrabFocus();
+			//_rulesetNameEdit.GrabFocus();
 		}
 
 		public override void _Process(double delta)

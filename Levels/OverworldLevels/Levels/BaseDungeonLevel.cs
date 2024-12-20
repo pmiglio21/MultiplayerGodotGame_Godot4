@@ -61,9 +61,17 @@ public partial class BaseDungeonLevel : Node
 
 	private Timer _enemyRespawnTimer;
 
-	#endregion
+    #endregion
 
-	public override void _Ready()
+    #region Selected Game Rules
+
+    public SpawnProximityType SelectedSpawnProximityType;
+    public LevelSize SelectedLevelSize;
+    public BiomeType SelectedBiomeType;
+
+    #endregion
+
+    public override void _Ready()
 	{
 		#region Initialize Properties
 
@@ -79,9 +87,22 @@ public partial class BaseDungeonLevel : Node
 
 		_enemyRespawnTimer = this.GetNode<Timer>("EnemyRespawnTimer");
 
-		#endregion
+        #endregion
 
-		SetPossibleFloorTiles();
+        #region Selected GameRules
+
+        int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
+        SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes[spawnProximityTypeIndex];
+
+        int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
+        SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes[levelSizeIndex];
+
+        int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
+        SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes[biomeTypeIndex];
+
+        #endregion
+
+        SetPossibleFloorTiles();
 
 		RunProceduralPathGeneration();
 
@@ -96,19 +117,19 @@ public partial class BaseDungeonLevel : Node
 
 	private void SetPossibleFloorTiles()
 	{
-		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Small)
+        if (SelectedLevelSize == LevelSize.Small)
 		{
 			_maxNumberOfTiles = 50;
 		}
-		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Medium)
+		else if (SelectedLevelSize == LevelSize.Medium)
 		{
 			_maxNumberOfTiles = 75;
 		}
-		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Large)
+		else if (SelectedLevelSize == LevelSize.Large)
 		{
 			_maxNumberOfTiles = 100;
 		}
-		else if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentLevelSize == LevelSize.Varied)
+		else if (SelectedLevelSize == LevelSize.Varied)
 		{
 			var floorSizeOptions = new List<int>() { 50, 75, 100 };
 
@@ -133,7 +154,7 @@ public partial class BaseDungeonLevel : Node
 
     private void RunProceduralPathGeneration()
 	{
-		if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+        if (SelectedSpawnProximityType == SpawnProximityType.SuperClose)
 		{
 			GenerateSingleSpawnPoint();
 		}
@@ -183,7 +204,7 @@ public partial class BaseDungeonLevel : Node
 		DrawOverviewAndWalls();
 
         //Add water
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        if (SelectedBiomeType == BiomeType.Frost)
         {
             List<TileMapSpace> possibleWaterSpaces = new List<TileMapSpace>();
 
@@ -226,7 +247,7 @@ public partial class BaseDungeonLevel : Node
 
         #region Spawn Key Objects
 
-        if (_parentDungeonLevelSwapper.CurrentGameRules.CurrentRelativePlayerSpawnDistanceType == RelativePlayerSpawnDistanceType.SuperClose)
+        if (SelectedSpawnProximityType == SpawnProximityType.SuperClose)
         {
             SpawnPlayersSuperClose();
         }
@@ -238,8 +259,6 @@ public partial class BaseDungeonLevel : Node
         GenerateKeyMapObjects();
 
         #endregion
-
-
     }
 
     #region Procedural Path Generation
@@ -836,13 +855,13 @@ public partial class BaseDungeonLevel : Node
         var xAtlasCoord = -1;
         var yAtlasCoord = -1;
 
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == BiomeType.Castle)
         {
             atlasId = TileMappingConstants.TileMapCastleFloorAtlasId;
             xAtlasCoord = _rng.RandiRange(0, 3);
             yAtlasCoord = _rng.RandiRange(0, 0);
         }
-        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        else if (SelectedBiomeType == BiomeType.Frost)
         {
             atlasId = TileMappingConstants.TileMapFrostFloorAtlasId;
             xAtlasCoord = _rng.RandiRange(0, 3);
@@ -858,13 +877,13 @@ public partial class BaseDungeonLevel : Node
 
 		int overviewIndex = 0;
 
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == BiomeType.Castle)
 		{
             overviewIndex = _rng.RandiRange(0, 3);
 
             overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
         }
-		else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+		else if (SelectedBiomeType == BiomeType.Frost)
 		{
             overviewIndex = _rng.RandiRange(0, 5);
 
@@ -880,13 +899,13 @@ public partial class BaseDungeonLevel : Node
 
         int wallIndex = 0;
 
-        if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == BiomeType.Castle)
         {
             wallIndex = _rng.RandiRange(0, 5);
 
             wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{wallIndex}.png") as Texture2D;
         }
-        else if (_parentDungeonLevelSwapper.CurrentGameRules.BiomeType == BiomeType.Frost)
+        else if (SelectedBiomeType == BiomeType.Frost)
         {
             wallIndex = _rng.RandiRange(0, 2);
 

@@ -1,15 +1,26 @@
 ﻿using Enums.GameRules;
+using System.Collections.Generic;
 
 namespace Models
 {
     public class GameRules
     {
-        public BiomeType BiomeType = BiomeType.None;
-
-        public RelativePlayerSpawnDistanceType CurrentRelativePlayerSpawnDistanceType = RelativePlayerSpawnDistanceType.None;
+        public List<LevelSize> LevelSizes = new List<LevelSize>();
 
         public string NumberOfLevels = string.Empty;
 
-        public LevelSize CurrentLevelSize = LevelSize.None;
+        public List<BiomeType> BiomeTypes = new List<BiomeType>();
+
+        public List<SpawnProximityType> SpawnProximityTypes = new List<SpawnProximityType>();
+
+        public List<SwitchProximityType> SwitchProximityTypes = new List<SwitchProximityType>();
+
+        public bool CanMinibossSpawn = false;
+
+        public bool CanBossSpawn = false;
+
+        public WinCondition WinCondition = WinCondition.None;
+
+        public bool IsFriendlyFireOn = false;
     }
 }
