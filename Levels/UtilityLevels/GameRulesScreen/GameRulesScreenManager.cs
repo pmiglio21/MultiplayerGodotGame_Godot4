@@ -8,6 +8,7 @@ using Models;
 using Root;
 using Scenes.UI.PlayerSelectScene;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -19,21 +20,45 @@ namespace Levels.UtilityLevels
 
 		public GameRules CurrentGameRules = new GameRules();
 
-		#region Components
+		#region Options
 
-		private Timer _inputTimer;
+		private List<string> _levelSizeOptions = new List<string>()
+        {
+           "Small",
+           "Medium",
+           "Large"
+        };
 
-		private TextEdit _rulesetNameEdit;
+        private List<string> _biomeOptions = new List<string>()
+        {
+           "Castle",
+		   "Cave",
+		   "Swamp",
+		   "Frost"
+        };
+
+        #endregion
+
+        #region Components
+
+        private Timer _inputTimer;
+
+		private TextEditBox _rulesetNameEdit;
         private Button _addButton;
         private Button _loadButton;
         private Button _saveButton;
         private Button _deleteButton;
 
+        private OptionSelectorMultiSelect _levelSizeMultiSelector;
+        private Button _levelSizeButton;
+
+        private OptionSelector _numberOfLevelsOptionSelector;
+        private Button _numberOfLevelsButton;
+
         private OptionSelectorMultiSelect _biomeTypeMultiSelector;
 		private OptionSelectorMultiSelect _spawnProximityMultiSelector;
         private OptionSelectorMultiSelect _switchProximityMultiSelector;
-        private OptionSelector _levelNumberOptionSelector;
-		private OptionSelectorMultiSelect _levelSizeMultiSelector;
+		
 		private Button _returnButton;
 
 		#endregion
@@ -55,22 +80,28 @@ namespace Levels.UtilityLevels
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
-			_inputTimer = FindChild("InputTimer") as Timer;
+            _inputTimer = FindChild("InputTimer") as Timer;
 
-			_rulesetNameEdit = GetNode<TextEdit>("RulesetNameEdit");
+			_rulesetNameEdit = GetNode<TextEditBox>("RulesetNameEditBox");
             _addButton = GetNode<Button>("AddRulesetButton");
             _loadButton = GetNode<Button>("LoadRulesetButton");
             _saveButton = GetNode<Button>("SaveRulesetButton");
             _deleteButton = GetNode<Button>("DeleteRulesetButton");
 
+
+            _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
+            _levelSizeButton = GetNode<Button>("LevelSizeButton");
+
+            _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
+            _numberOfLevelsButton = GetNode<Button>("NumberOfLevelsButton");
+
             _biomeTypeMultiSelector = GetNode<OptionSelectorMultiSelect>("BiomeTypeOptionSelectorMultiSelect");
             _switchProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SpawnProximityOptionSelectorMultiSelect");
-            _levelNumberOptionSelector = GetNode<OptionSelector>("LevelNumberOptionSelector");
-            _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
+            
 			_returnButton = GetNode<Button>("ReturnButton");
 
-			//_rulesetNameEdit.GrabFocus();
-		}
+            GrabFocusOfTopButton();
+        }
 
 		public override void _Process(double delta)
 		{
@@ -102,82 +133,104 @@ namespace Levels.UtilityLevels
 
 		private void GetNavigationInput()
 		{
-			//if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
-			//{
-			//	if (_biomeTypeMultiSelector.HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+			if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab))
+			{
+                //Row 1 - Ruleset Edit Row
+                if (_rulesetNameEdit.HasFocus())
+                {
+                    _addButton.GrabFocus();
+                }
+                else if (_addButton.HasFocus())
+                {
+                    _loadButton.GrabFocus();
+                }
+                else if (_loadButton.HasFocus())
+                {
+                    _saveButton.GrabFocus();
+                }
+                else if (_saveButton.HasFocus())
+                {
+                    _deleteButton.GrabFocus();
+                }
 
-			//		_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
-			//	}
-			//	else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                _inputTimer.Start();
+            }
+			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
+			{
+				//Row 1 - Ruleset Edit Row
+				if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+				{
+					_levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
 
-			//		_levelSizeSelector.GetOptionButton().GrabFocus();
-			//	}
-			//	else if (_levelSizeSelector.GetOptionButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                //Row 2
 
-			//		_numberSpinner.GetNumberSpinnerButton().GrabFocus();
-			//	}
-			//	else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                else if (_levelSizeMultiSelector.HasFocus())
+                {
+                    _numberOfLevelsOptionSelector.GrabFocus();
+                }
 
-			//		_returnButton.GrabFocus();
-			//	}
-			//	else if (_returnButton.HasFocus() && _continueButton.Visible)
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                //Row 3
 
-			//		_continueButton.GrabFocus();
-			//	}
+                else if (_numberOfLevelsOptionSelector.HasFocus())
+                {
+                    _biomeTypeMultiSelector.GrabFocus();
+                }
 
-			//	_inputTimer.Start();
-			//}
-			//else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
-			//{
-			//	if (_continueButton.HasFocus() && _continueButton.Visible)
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                //Row 4
 
-			//		_returnButton.GrabFocus();
-			//	}
-			//	else if (_returnButton.HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-			//		_numberSpinner.GetNumberSpinnerButton().GrabFocus();
-			//	}
-			//	else if (_numberSpinner.GetNumberSpinnerButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                //Row 5
 
-			//		_levelSizeSelector.GetOptionButton().GrabFocus();
-			//	}
-			//	else if (_levelSizeSelector.GetOptionButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
 
-			//		_relativePlayerSpawnDistanceSelector.GetOptionButton().GrabFocus();
-			//	}
-			//	else if (_relativePlayerSpawnDistanceSelector.GetOptionButton().HasFocus())
-			//	{
-			//		_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiMoveSoundPath);
+                //Row 6
 
-   //                 _biomeTypeMultiSelector.GetOptionButton().GrabFocus();
-			//	}
 
-			//	_inputTimer.Start();
-			//}
-		}
+
+                _inputTimer.Start();
+			}
+            else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveEast) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadEast)))
+            {
+				//Row 1
+
+				if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+				{
+
+				}
+				else if (_addButton.HasFocus())
+				{
+					_loadButton.GrabFocus();
+				}
+                else if (_loadButton.HasFocus())
+                {
+                    _saveButton.GrabFocus();
+                }
+                else if (_saveButton.HasFocus())
+                {
+                    _deleteButton.GrabFocus();
+                }
+
+                _inputTimer.Start();
+            }
+            else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
+			{
+
+
+				_inputTimer.Start();
+			}
+            else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveWest) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadWest)))
+            {
+           
+
+                _inputTimer.Start();
+            }
+        }
 
 		public void GrabFocusOfTopButton()
 		{
-			_rulesetNameEdit.GrabFocus();
-		}
+            _addButton.GrabFocus();
+            //_rulesetNameEdit.GetFocusHolder().GrabFocus();
+        }
 
 		private void ReturnToPriorScene()
 		{

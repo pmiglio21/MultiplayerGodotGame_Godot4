@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://b54hyxbxwixql"]
+
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/TextEdit/TextEditBox.cs" id="1_l1n4s"]
+[ext_resource type="Texture2D" uid="uid://b4tx7uhrm82oc" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton11.png" id="1_x2bwt"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_1322n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tmguc"]
+
+[node name="TextEditBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+script = ExtResource("1_l1n4s")
+
+[node name="FocusHolder" type="Button" parent="."]
+offset_left = 107.0
+offset_top = 89.0
+offset_right = 176.0
+offset_bottom = 130.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 130.0
+offset_bottom = 100.0
+scale = Vector2(2.25, 2.25)
+mouse_filter = 2
+texture = ExtResource("1_x2bwt")
+
+[node name="BlackBar" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 85.0
+offset_right = 229.0
+offset_bottom = 138.0
+texture = ExtResource("2_1322n")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 89.0
+offset_right = 229.0
+offset_bottom = 133.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tmguc")

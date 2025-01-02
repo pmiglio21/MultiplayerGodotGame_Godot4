@@ -9,8 +9,7 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public bool IsOnlyTwoOptions = false;
 
         #region Components
-        private Label _optionLabel;
-        private Button _optionButton;
+        private Button _focusHolder;
 
         private TextureRect _textureRect;
 
@@ -35,6 +34,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
         public override void _Ready()
         {
+            _focusHolder = FindChild("FocusHolder") as Button;
+
             _textureRect = FindChild("TextureRect") as TextureRect;
             _leftArrowTexture = FindChild("LeftArrowTexture") as TextureRect;
             _rightArrowTexture = FindChild("RightArrowTexture") as TextureRect;
@@ -87,9 +88,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             }
         }
 
-        public Button GetOptionButton()
+        public Button GetFocusHolder()
         {
-            return _optionButton;
+            return _focusHolder;
         }
 
         public void PlayOnFocusAnimation()

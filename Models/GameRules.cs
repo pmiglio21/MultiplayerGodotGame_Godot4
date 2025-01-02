@@ -19,8 +19,6 @@ namespace Models
 
         public bool CanBossSpawn = false;
 
-        public WinCondition WinCondition = WinCondition.None;
-
         public bool IsFriendlyFireOn = false;
     }
 }

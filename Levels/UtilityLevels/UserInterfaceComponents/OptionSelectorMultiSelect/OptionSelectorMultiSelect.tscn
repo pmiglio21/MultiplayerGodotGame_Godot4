@@ -83,7 +83,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ijbf4")
 
+[node name="FocusHolder" type="Button" parent="."]
+offset_left = 40.0
+offset_top = -29.0
+offset_right = 109.0
+offset_bottom = 12.0
+
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = -238.0
 offset_top = -120.0
 offset_right = -38.0
@@ -93,6 +100,7 @@ mouse_filter = 2
 texture = ExtResource("1_b8273")
 
 [node name="RightArrowTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 107.0
 offset_top = -27.0
 offset_right = 147.0
@@ -101,6 +109,7 @@ mouse_filter = 0
 texture = ExtResource("2_3pgcq")
 
 [node name="LeftArrowTexture" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 8.0
 offset_top = -27.0
 offset_right = 48.0

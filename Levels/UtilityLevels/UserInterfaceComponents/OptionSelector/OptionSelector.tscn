@@ -63,6 +63,13 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_whrl2")
 
+[node name="FocusHolder" type="Button" parent="."]
+layout_mode = 0
+offset_left = 278.0
+offset_top = 94.0
+offset_right = 347.0
+offset_bottom = 135.0
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 200.0

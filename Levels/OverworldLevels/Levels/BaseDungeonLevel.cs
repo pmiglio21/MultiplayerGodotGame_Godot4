@@ -129,12 +129,6 @@ public partial class BaseDungeonLevel : Node
 		{
 			_maxNumberOfTiles = 100;
 		}
-		else if (SelectedLevelSize == LevelSize.Varied)
-		{
-			var floorSizeOptions = new List<int>() { 50, 75, 100 };
-
-			_maxNumberOfTiles = floorSizeOptions[_rng.RandiRange(0, floorSizeOptions.Count - 1)];
-		}
 
 		int overallCounter = 0;
 
