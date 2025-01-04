@@ -45,13 +45,13 @@ public partial class DungeonLevelSwapper : Node
 
 	public override void _Process(double delta)
 	{
-		if (CurrentGameRules.NumberOfLevels != GlobalConstants.Infinity && _levelCounter < int.Parse(CurrentGameRules.NumberOfLevels))
+		if (_levelCounter < CurrentGameRules.NumberOfLevels)
 		{
 			if (ActivePlayers.All(x => x.IsWaitingForNextLevel))
 			{
 				_levelCounter++;
 
-				if (_levelCounter != int.Parse(CurrentGameRules.NumberOfLevels))
+				if (_levelCounter != CurrentGameRules.NumberOfLevels)
 				{
 					ResetSplitScreenManager();
 				}
@@ -61,13 +61,13 @@ public partial class DungeonLevelSwapper : Node
 				}
 			}
 		}
-		else if (CurrentGameRules.NumberOfLevels == GlobalConstants.Infinity)
-		{
-			if (ActivePlayers.All(x => x.IsWaitingForNextLevel))
-			{
-				ResetSplitScreenManager();
-			}
-		}
+		//else if (CurrentGameRules.NumberOfLevels == GlobalConstants.Infinity)
+		//{
+		//	if (ActivePlayers.All(x => x.IsWaitingForNextLevel))
+		//	{
+		//		ResetSplitScreenManager();
+		//	}
+		//}
 	}
 
 	private void ResetSplitScreenManager()

@@ -60,7 +60,7 @@ namespace Root
             _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
 
-			GetLastSavedGameRules();
+			//GetLastSavedGameRules();
             LoadOriginalSettings();
         }
 
@@ -414,30 +414,8 @@ namespace Root
 
         private void GetLastSavedGameRules()
 		{
-			CurrentGameRules = GetDefaultGameRules();
+
         }
-
-		private GameRules GetDefaultGameRules()
-		{
-			GameRules defaultGameRules = new GameRules()
-			{
-                BiomeTypes = new List<BiomeType>()
-                {
-                    BiomeType.Castle
-                },
-                SpawnProximityTypes = new List<SpawnProximityType>()
-				{
-					SpawnProximityType.SuperClose
-                },
-				NumberOfLevels = "1",
-                LevelSizes = new List<LevelSize>()
-                {
-                    LevelSize.Small
-                }
-            };
-
-			return defaultGameRules;
-		}
 
         #endregion
 

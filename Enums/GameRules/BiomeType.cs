@@ -7,7 +7,6 @@ namespace Enums.GameRules
         Castle,
         Cave,
         Swamp,
-        Frost,
-        Varied
+        Frost
     }
 }

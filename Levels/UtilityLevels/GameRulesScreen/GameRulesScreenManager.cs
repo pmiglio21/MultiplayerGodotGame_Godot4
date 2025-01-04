@@ -37,6 +37,28 @@ namespace Levels.UtilityLevels
 		   "Frost"
         };
 
+        private List<string> _spawnProximityOptions = new List<string>()
+        {
+           "Super Close",
+           "Close",
+           "Normal",
+           "Far"
+        };
+
+        private List<string> _switchProximityOptions = new List<string>()
+        {
+           "Super Close",
+           "Close",
+           "Normal",
+           "Far"
+        };
+
+        private List<string> _offOnOptions = new List<string>()
+        {
+           "OFF",
+           "ON"
+        };
+
         #endregion
 
         #region Components
@@ -55,9 +77,21 @@ namespace Levels.UtilityLevels
         private OptionSelector _numberOfLevelsOptionSelector;
         private Button _numberOfLevelsButton;
 
-        private OptionSelectorMultiSelect _biomeTypeMultiSelector;
-		private OptionSelectorMultiSelect _spawnProximityMultiSelector;
+        private OptionSelector _endlessLevelsOptionSelector;
+        private Button _endlessLevelsButton;
+
+        private OptionSelectorMultiSelect _biomeMultiSelector;
+        private Button _biomeButton;
+
+        private OptionSelectorMultiSelect _spawnProximityMultiSelector;
+        private Button _spawnProximityButton;
+
         private OptionSelectorMultiSelect _switchProximityMultiSelector;
+        private Button _switchProximityButton;
+
+        private Button _miniBossButton;
+        private Button _bossButton;
+        private Button _friendlyFireButton;
 		
 		private Button _returnButton;
 
@@ -88,17 +122,29 @@ namespace Levels.UtilityLevels
             _saveButton = GetNode<Button>("SaveRulesetButton");
             _deleteButton = GetNode<Button>("DeleteRulesetButton");
 
-
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
             _levelSizeButton = GetNode<Button>("LevelSizeButton");
 
             _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
             _numberOfLevelsButton = GetNode<Button>("NumberOfLevelsButton");
 
-            _biomeTypeMultiSelector = GetNode<OptionSelectorMultiSelect>("BiomeTypeOptionSelectorMultiSelect");
-            _switchProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SpawnProximityOptionSelectorMultiSelect");
-            
-			_returnButton = GetNode<Button>("ReturnButton");
+            _endlessLevelsButton = GetNode<Button>("EndlessLevelsButton");
+
+            _biomeMultiSelector = GetNode<OptionSelectorMultiSelect>("BiomeOptionSelectorMultiSelect");
+            _biomeButton = GetNode<Button>("BiomeButton");
+
+            _spawnProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SpawnProximityOptionSelectorMultiSelect");
+            _spawnProximityButton = GetNode<Button>("SpawnProximityButton");
+
+            _switchProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SwitchProximityOptionSelectorMultiSelect");
+            _switchProximityButton = GetNode<Button>("SwitchProximityButton");
+
+            _miniBossButton = GetNode<Button>("MiniBossButton");
+            _bossButton = GetNode<Button>("BossButton");
+            _friendlyFireButton = GetNode<Button>("FriendlyFireButton");
+
+
+            _returnButton = GetNode<Button>("ReturnButton");
 
             GrabFocusOfTopButton();
         }
@@ -174,7 +220,7 @@ namespace Levels.UtilityLevels
 
                 else if (_numberOfLevelsOptionSelector.HasFocus())
                 {
-                    _biomeTypeMultiSelector.GrabFocus();
+                    _biomeMultiSelector.GrabFocus();
                 }
 
                 //Row 4
@@ -286,5 +332,232 @@ namespace Levels.UtilityLevels
 
 			_rootSceneSwapper.CurrentGameRules = CurrentGameRules;
 		}
-	}
+
+        #region Signal Receptions
+
+        public void OnLevelSizeOptionSelectorMultiSelect_LeftArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentLevelSize = _levelSizeOptions.IndexOf(_levelSizeButton.Text);
+            var nextIndexOfLevelSizeOptions = _levelSizeOptions.Count - 1;
+
+            if (indexOfCurrentLevelSize != 0)
+            {
+                nextIndexOfLevelSizeOptions = indexOfCurrentLevelSize - 1;
+            }
+
+            _levelSizeButton.Text = $"{_levelSizeOptions[nextIndexOfLevelSizeOptions]}";
+        }
+
+        public void OnLevelSizeOptionSelectorMultiSelect_RightArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentLevelSize = _levelSizeOptions.IndexOf(_levelSizeButton.Text);
+            var nextIndexOfLevelSizeOptions = 0;
+
+            if (indexOfCurrentLevelSize != _levelSizeOptions.Count - 1)
+            {
+                nextIndexOfLevelSizeOptions = indexOfCurrentLevelSize + 1;
+            }
+
+            _levelSizeButton.Text = $"{_levelSizeOptions[nextIndexOfLevelSizeOptions]}";
+        }
+
+        private void OnNumberOfLevelsOptionSelector_LeftArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            int numberOfLevels = int.Parse(_numberOfLevelsButton.Text);
+
+            if (numberOfLevels != 1)
+            {
+                _numberOfLevelsButton.Text = (numberOfLevels - 1).ToString();
+            }
+            else
+            {
+                _numberOfLevelsButton.Text = "100";
+            }
+        }
+
+        private void OnNumberOfLevelsOptionSelector_RightArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            int numberOfLevels = int.Parse(_numberOfLevelsButton.Text);
+
+            if (numberOfLevels != 100)
+            {
+                _numberOfLevelsButton.Text = (numberOfLevels + 1).ToString();
+            }
+            else
+            {
+                _numberOfLevelsButton.Text = "1";
+            }
+        }
+
+        private void OnEndlessLevelsOptionSelector_EitherArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (_endlessLevelsButton.Text == _offOnOptions[0])
+            {
+                _endlessLevelsButton.Text = _offOnOptions[1];
+
+                _endlessLevelsButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
+            }
+            else
+            {
+                _endlessLevelsButton.Text = _offOnOptions[0];
+            }
+        }
+
+        private void OnBiomeOptionSelectorMultiSelect_LeftArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentBiome = _biomeOptions.IndexOf(_biomeButton.Text);
+            var nextIndexOfBiomeOptions = _biomeOptions.Count - 1;
+
+            if (indexOfCurrentBiome != 0)
+            {
+                nextIndexOfBiomeOptions = indexOfCurrentBiome - 1;
+            }
+
+            _biomeButton.Text = $"{_biomeOptions[nextIndexOfBiomeOptions]}";
+        }
+
+        private void OnBiomeOptionSelectorMultiSelect_RightArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentBiome = _biomeOptions.IndexOf(_biomeButton.Text);
+            var nextIndexOfBiomeOptions = 0;
+
+            if (indexOfCurrentBiome != _biomeOptions.Count - 1)
+            {
+                nextIndexOfBiomeOptions = indexOfCurrentBiome + 1;
+            }
+
+            _biomeButton.Text = $"{_biomeOptions[nextIndexOfBiomeOptions]}";
+        }
+
+        private void OnSpawnProximityOptionSelectorMultiSelect_LeftArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentSpawnProximity = _spawnProximityOptions.IndexOf(_spawnProximityButton.Text);
+            var nextIndexOfSpawnProximityOptions = _spawnProximityOptions.Count - 1;
+
+            if (indexOfCurrentSpawnProximity != 0)
+            {
+                nextIndexOfSpawnProximityOptions = indexOfCurrentSpawnProximity - 1;
+            }
+
+            _spawnProximityButton.Text = $"{_spawnProximityOptions[nextIndexOfSpawnProximityOptions]}";
+        }
+
+        private void OnSpawnProximityOptionSelectorMultiSelect_RightArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentSpawnProximity = _spawnProximityOptions.IndexOf(_spawnProximityButton.Text);
+            var nextIndexOfSpawnProximityOptions = 0;
+
+            if (indexOfCurrentSpawnProximity != _spawnProximityOptions.Count - 1)
+            {
+                nextIndexOfSpawnProximityOptions = indexOfCurrentSpawnProximity + 1;
+            }
+
+            _spawnProximityButton.Text = $"{_spawnProximityOptions[nextIndexOfSpawnProximityOptions]}";
+        }
+
+        private void OnSwitchProximityOptionSelectorMultiSelect_LeftArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentSwitchProximity = _switchProximityOptions.IndexOf(_switchProximityButton.Text);
+            var nextIndexOfSwitchProximityOptions = _switchProximityOptions.Count - 1;
+
+            if (indexOfCurrentSwitchProximity != 0)
+            {
+                nextIndexOfSwitchProximityOptions = indexOfCurrentSwitchProximity - 1;
+            }
+
+            _switchProximityButton.Text = $"{_switchProximityOptions[nextIndexOfSwitchProximityOptions]}";
+        }
+
+        private void OnSwitchProximityOptionSelectorMultiSelect_RightArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            var indexOfCurrentSwitchProximity = _switchProximityOptions.IndexOf(_switchProximityButton.Text);
+            var nextIndexOfSwitchProximityOptions = 0;
+
+            if (indexOfCurrentSwitchProximity != _switchProximityOptions.Count - 1)
+            {
+                nextIndexOfSwitchProximityOptions = indexOfCurrentSwitchProximity + 1;
+            }
+
+            _switchProximityButton.Text = $"{_switchProximityOptions[nextIndexOfSwitchProximityOptions]}";
+        }
+
+        public void OnMiniBossOptionSelector_EitherArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (_miniBossButton.Text == _offOnOptions[0])
+            {
+                _miniBossButton.Text = _offOnOptions[1];
+
+                _miniBossButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
+            }
+            else
+            {
+                _miniBossButton.Text = _offOnOptions[0];
+            }
+        }
+
+        public void OnBossOptionSelector_EitherArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (_bossButton.Text == _offOnOptions[0])
+            {
+                _bossButton.Text = _offOnOptions[1];
+
+                _bossButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
+            }
+            else
+            {
+                _bossButton.Text = _offOnOptions[0];
+            }
+        }
+
+        public void OnFriendlyFireOptionSelector_EitherArrowClicked()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (_friendlyFireButton.Text == _offOnOptions[0])
+            {
+                _friendlyFireButton.Text = _offOnOptions[1];
+
+                _friendlyFireButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
+            }
+            else
+            {
+                _friendlyFireButton.Text = _offOnOptions[0];
+            }
+        }
+
+        public void OnReturnButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            ReturnToPriorScene();
+        }
+
+        #endregion
+    }
 }

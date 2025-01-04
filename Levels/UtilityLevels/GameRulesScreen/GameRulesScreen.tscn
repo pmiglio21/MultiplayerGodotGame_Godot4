@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=16 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_b8ot8"]
@@ -15,6 +15,12 @@ default_font_size = 30
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_akoqo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4c8k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ligt2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n12aq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acyg0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0wrjw"]
 
@@ -206,8 +212,10 @@ offset_top = -27.0
 offset_right = -188.0
 offset_bottom = 42.0
 focus_mode = 1
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ligt2")
 text = "Number of
 Levels"
 
@@ -224,22 +232,59 @@ theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("4_nmvb2")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_q4c8k")
-text = "0"
+text = "1"
 flat = true
 
-[node name="BiomeTypeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
+[node name="EndlessLevelsOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+layout_mode = 1
+offset_left = -566.0
+offset_top = -21.0
+offset_right = -138.0
+offset_bottom = 162.0
+IsOnlyTwoOptions = true
+
+[node name="EndlessLevelsText" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(200, 50)
+offset_left = -386.0
+offset_top = 65.0
+offset_right = -186.0
+offset_bottom = 134.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("4_nmvb2")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n12aq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_acyg0")
+text = "Friendly
+Fire"
+
+[node name="EndlessLevelsButton" type="Button" parent="."]
+offset_left = -214.0
+offset_top = 65.0
+offset_right = -111.0
+offset_bottom = 128.0
+focus_mode = 1
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
+theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
+theme_override_fonts/font = ExtResource("4_nmvb2")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0wrjw")
+text = "OFF"
+flat = true
+
+[node name="BiomeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
 offset_left = -328.0
-offset_top = 96.0
+offset_top = 185.0
 offset_right = -328.0
-offset_bottom = 96.0
+offset_bottom = 185.0
 
 [node name="BiomeTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = -382.0
-offset_top = 70.0
+offset_top = 159.0
 offset_right = -261.0
-offset_bottom = 111.0
+offset_bottom = 200.0
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Biomes"
@@ -247,9 +292,9 @@ text = "Biomes"
 [node name="BiomeButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = -199.0
-offset_top = 59.0
+offset_top = 148.0
 offset_right = -96.0
-offset_bottom = 122.0
+offset_bottom = 211.0
 focus_mode = 1
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
@@ -342,9 +387,11 @@ offset_left = -50.0
 offset_top = 62.0
 offset_right = 150.0
 offset_bottom = 131.0
-focus_mode = 1
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n12aq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_acyg0")
 text = "Minibosses
 Allowed"
 
@@ -379,9 +426,11 @@ offset_left = -50.0
 offset_top = 148.0
 offset_right = 150.0
 offset_bottom = 217.0
-focus_mode = 1
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n12aq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_acyg0")
 text = "Bosses
 Allowed"
 
@@ -416,9 +465,11 @@ offset_left = 294.0
 offset_top = -118.0
 offset_right = 494.0
 offset_bottom = -49.0
-focus_mode = 1
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n12aq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_acyg0")
 text = "Friendly
 Fire"
 
@@ -445,6 +496,7 @@ offset_top = 174.0
 offset_right = 94.0
 offset_bottom = 245.0
 scale = Vector2(3, 3)
+mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="ReturnButton" type="Button" parent="."]
@@ -461,3 +513,19 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "RETURN"
 flat = true
+
+[connection signal="LeftArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_RightArrowClicked"]
+[connection signal="LeftArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_RightArrowClicked"]
+[connection signal="EitherArrowClicked" from="EndlessLevelsOptionSelector" to="." method="OnEndlessLevelsOptionSelector_EitherArrowClicked"]
+[connection signal="LeftArrowClicked" from="BiomeOptionSelectorMultiSelect" to="." method="OnBiomeOptionSelectorMultiSelect_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="BiomeOptionSelectorMultiSelect" to="." method="OnBiomeOptionSelectorMultiSelect_RightArrowClicked"]
+[connection signal="LeftArrowClicked" from="SpawnProximityOptionSelectorMultiSelect" to="." method="OnSpawnProximityOptionSelectorMultiSelect_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="SpawnProximityOptionSelectorMultiSelect" to="." method="OnSpawnProximityOptionSelectorMultiSelect_RightArrowClicked"]
+[connection signal="LeftArrowClicked" from="SwitchProximityOptionSelectorMultiSelect" to="." method="OnSwitchProximityOptionSelectorMultiSelect_LeftArrowClicked"]
+[connection signal="RightArrowClicked" from="SwitchProximityOptionSelectorMultiSelect" to="." method="OnSwitchProximityOptionSelectorMultiSelect_RightArrowClicked"]
+[connection signal="EitherArrowClicked" from="MiniBossOptionSelector" to="." method="OnMiniBossOptionSelector_EitherArrowClicked"]
+[connection signal="EitherArrowClicked" from="BossOptionSelector" to="." method="OnBossOptionSelector_EitherArrowClicked"]
+[connection signal="EitherArrowClicked" from="FriendlyFireOptionSelector" to="." method="OnFriendlyFireOptionSelector_EitherArrowClicked"]
+[connection signal="pressed" from="ReturnButton" to="." method="OnReturnButtonPressed"]

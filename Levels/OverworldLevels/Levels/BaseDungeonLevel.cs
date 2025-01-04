@@ -91,14 +91,15 @@ public partial class BaseDungeonLevel : Node
 
         #region Selected GameRules
 
-        int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
-        SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes[spawnProximityTypeIndex];
+        //TODO: Fix this by looking at the number of ENABLED types of each list of enums
+        //int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
+        //SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes[spawnProximityTypeIndex];
 
-        int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
-        SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes[levelSizeIndex];
+        //int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
+        //SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes[levelSizeIndex];
 
-        int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
-        SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes[biomeTypeIndex];
+        //int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
+        //SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes[biomeTypeIndex];
 
         #endregion
 
