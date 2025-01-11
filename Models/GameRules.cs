@@ -5,13 +5,6 @@ namespace Models
 {
     public class GameRules
     {
-        //public Dictionary<LevelSize, bool> LevelSizes = new Dictionary<LevelSize, bool>()
-        //{
-        //    { LevelSize.Small, false },
-        //    { LevelSize.Medium, false },
-        //    { LevelSize.Large, false },
-        //};
-
         public Dictionary<string, bool> LevelSizes = new Dictionary<string, bool>()
         {
             { "Small", false },
@@ -21,36 +14,36 @@ namespace Models
 
         public int NumberOfLevels = 1;
 
-        public string IsInfiniteLevelsOn = "OFF";
+        public bool IsInfiniteLevelsOn = false;
 
-        public Dictionary<BiomeType, bool> BiomeTypes = new Dictionary<BiomeType, bool>()
+        public Dictionary<string, bool> BiomeTypes = new Dictionary<string, bool>()
         {
-            { BiomeType.Castle, false },
-            { BiomeType.Cave, false },
-            { BiomeType.Swamp, false },
-            { BiomeType.Frost, false },
+            { "Castle", false },
+            { "Cave", false },
+            { "Swamp", false },
+            { "Frost", false },
         };
 
-        public Dictionary<SpawnProximityType, bool> SpawnProximityTypes = new Dictionary<SpawnProximityType, bool>()
+        public Dictionary<string, bool> SpawnProximityTypes = new Dictionary<string, bool>()
         {
-            { SpawnProximityType.SuperClose, false },
-            { SpawnProximityType.Close, false },
-            { SpawnProximityType.Normal, false },
-            { SpawnProximityType.Far, false },
+            { "Super Close", false },
+            { "Close", false },
+            { "Normal", false },
+            { "Far", false },
         };
 
-        public Dictionary<SwitchProximityType, bool> SwitchProximityTypes = new Dictionary<SwitchProximityType, bool>()
+        public Dictionary<string, bool> SwitchProximityTypes = new Dictionary<string, bool>()
         {
-            { SwitchProximityType.SuperClose, false },
-            { SwitchProximityType.Close, false },
-            { SwitchProximityType.Normal, false },
-            { SwitchProximityType.Far, false },
+            { "Super Close", false },
+            { "Close", false },
+            { "Normal", false },
+            { "Far", false },
         };
 
-        public string CanMinibossSpawn = "OFF";
+        public bool CanMinibossSpawn = false;
 
-        public string CanBossSpawn = "OFF";
+        public bool CanBossSpawn = false;
 
-        public string IsFriendlyFireOn = "OFF";
+        public bool IsFriendlyFireOn = false;
     }
 }

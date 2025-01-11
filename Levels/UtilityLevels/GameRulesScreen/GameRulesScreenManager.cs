@@ -1,16 +1,10 @@
 using Enums;
-using Enums.GameRules;
 using Globals;
 using Godot;
-using Levels.OverworldLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using Models;
 using Root;
-using Scenes.UI.PlayerSelectScene;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Levels.UtilityLevels
 {
@@ -22,14 +16,14 @@ namespace Levels.UtilityLevels
 
 		#region Options
 
-		private List<string> _levelSizeOptions = new List<string>()
+		private readonly List<string> _levelSizeOptions = new List<string>()
         {
            "Small",
            "Medium",
            "Large"
         };
 
-        private List<string> _biomeOptions = new List<string>()
+        private readonly List<string> _biomeOptions = new List<string>()
         {
            "Castle",
 		   "Cave",
@@ -37,7 +31,7 @@ namespace Levels.UtilityLevels
 		   "Frost"
         };
 
-        private List<string> _spawnProximityOptions = new List<string>()
+        private readonly List<string> _spawnProximityOptions = new List<string>()
         {
            "Super Close",
            "Close",
@@ -45,7 +39,7 @@ namespace Levels.UtilityLevels
            "Far"
         };
 
-        private List<string> _switchProximityOptions = new List<string>()
+        private readonly List<string> _switchProximityOptions = new List<string>()
         {
            "Super Close",
            "Close",
@@ -53,7 +47,7 @@ namespace Levels.UtilityLevels
            "Far"
         };
 
-        private List<string> _offOnOptions = new List<string>()
+        private readonly List<string> _offOnOptions = new List<string>()
         {
            "OFF",
            "ON"
@@ -123,7 +117,6 @@ namespace Levels.UtilityLevels
             _deleteButton = GetNode<Button>("DeleteRulesetButton");
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
-            //_levelSizeMultiSelector.GetOptionSelectButton().Pressed += OnLevelSizeOptionSelectPressed;
             _levelSizeButton = GetNode<Button>("LevelSizeButton");
 
             _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
@@ -390,6 +383,25 @@ namespace Levels.UtilityLevels
             }
         }
 
+        public void OnLevelSizeOptionSelect_OptionButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
+            {
+                CurrentGameRules.LevelSizes[_levelSizeButton.Text] = !CurrentGameRules.LevelSizes[_levelSizeButton.Text];
+
+                if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
+                {
+                    _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
+        }
+
         private void OnNumberOfLevelsOptionSelector_LeftArrowClicked()
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
@@ -451,6 +463,18 @@ namespace Levels.UtilityLevels
             }
 
             _biomeButton.Text = $"{_biomeOptions[nextIndexOfBiomeOptions]}";
+
+            if (CurrentGameRules.BiomeTypes.ContainsKey(_biomeButton.Text))
+            {
+                if (CurrentGameRules.BiomeTypes[_biomeButton.Text])
+                {
+                    _biomeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _biomeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnBiomeOptionSelectorMultiSelect_RightArrowClicked()
@@ -466,6 +490,37 @@ namespace Levels.UtilityLevels
             }
 
             _biomeButton.Text = $"{_biomeOptions[nextIndexOfBiomeOptions]}";
+
+            if (CurrentGameRules.BiomeTypes.ContainsKey(_biomeButton.Text))
+            {
+                if (CurrentGameRules.BiomeTypes[_biomeButton.Text])
+                {
+                    _biomeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _biomeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
+        }
+
+        public void OnBiomeOptionSelect_OptionButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (CurrentGameRules.BiomeTypes.ContainsKey(_biomeButton.Text))
+            {
+                CurrentGameRules.BiomeTypes[_biomeButton.Text] = !CurrentGameRules.BiomeTypes[_biomeButton.Text];
+
+                if (CurrentGameRules.BiomeTypes[_biomeButton.Text])
+                {
+                    _biomeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _biomeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnSpawnProximityOptionSelectorMultiSelect_LeftArrowClicked()
@@ -481,6 +536,18 @@ namespace Levels.UtilityLevels
             }
 
             _spawnProximityButton.Text = $"{_spawnProximityOptions[nextIndexOfSpawnProximityOptions]}";
+
+            if (CurrentGameRules.SpawnProximityTypes.ContainsKey(_spawnProximityButton.Text))
+            {
+                if (CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text])
+                {
+                    _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _spawnProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnSpawnProximityOptionSelectorMultiSelect_RightArrowClicked()
@@ -496,6 +563,37 @@ namespace Levels.UtilityLevels
             }
 
             _spawnProximityButton.Text = $"{_spawnProximityOptions[nextIndexOfSpawnProximityOptions]}";
+
+            if (CurrentGameRules.SpawnProximityTypes.ContainsKey(_spawnProximityButton.Text))
+            {
+                if (CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text])
+                {
+                    _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _spawnProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
+        }
+
+        public void OnSpawnProximityOptionSelect_OptionButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (CurrentGameRules.SpawnProximityTypes.ContainsKey(_spawnProximityButton.Text))
+            {
+                CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text] = !CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text];
+
+                if (CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text])
+                {
+                    _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _spawnProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnSwitchProximityOptionSelectorMultiSelect_LeftArrowClicked()
@@ -511,6 +609,18 @@ namespace Levels.UtilityLevels
             }
 
             _switchProximityButton.Text = $"{_switchProximityOptions[nextIndexOfSwitchProximityOptions]}";
+
+            if (CurrentGameRules.SwitchProximityTypes.ContainsKey(_switchProximityButton.Text))
+            {
+                if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
+                {
+                    _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _switchProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnSwitchProximityOptionSelectorMultiSelect_RightArrowClicked()
@@ -526,6 +636,37 @@ namespace Levels.UtilityLevels
             }
 
             _switchProximityButton.Text = $"{_switchProximityOptions[nextIndexOfSwitchProximityOptions]}";
+
+            if (CurrentGameRules.SwitchProximityTypes.ContainsKey(_switchProximityButton.Text))
+            {
+                if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
+                {
+                    _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _switchProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
+        }
+
+        public void OnSwitchProximityOptionSelect_OptionButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (CurrentGameRules.SwitchProximityTypes.ContainsKey(_switchProximityButton.Text))
+            {
+                CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text] = !CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text];
+
+                if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
+                {
+                    _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _switchProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         public void OnMiniBossOptionSelector_EitherArrowClicked()
@@ -584,24 +725,5 @@ namespace Levels.UtilityLevels
         }
 
         #endregion
-
-        public void OnLevelSizeOptionSelect_OptionButtonPressed()
-        {
-            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-            if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
-            {
-                CurrentGameRules.LevelSizes[_levelSizeButton.Text] = !CurrentGameRules.LevelSizes[_levelSizeButton.Text];
-
-                if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
-                {
-                    _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
-                }
-                else
-                {
-                    _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
-                }
-            }
-        }
     }
 }
