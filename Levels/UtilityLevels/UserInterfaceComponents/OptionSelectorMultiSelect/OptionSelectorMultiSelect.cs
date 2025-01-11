@@ -129,20 +129,19 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
         public void PlayActivatedOnOptionSelect()
         {
-            _optionSelectAnimationPlayer.Play("Activated");
+            _optionSelectButton.Icon = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle0.png") as Texture2D;
+            //_optionSelectAnimationPlayer.Play("Activated");
         }
 
         public void PlayDeactivatedOnOptionSelect()
         {
-            _optionSelectAnimationPlayer.Play("Deactivated");
+            _optionSelectButton.Icon = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle1.png") as Texture2D;
+            //_optionSelectAnimationPlayer.Play("Deactivated");
         }
 
         private void ToggleOptionButton()
         {
             EmitSignal(SignalName.OptionButtonPressed);
-
-            //play animation depending on value??
-            PlayActivatedOnOptionSelect();
         }
     }
 }

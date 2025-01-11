@@ -58,6 +58,7 @@ offset_left = -48.0
 offset_top = -314.0
 offset_right = 372.0
 offset_bottom = -251.0
+mouse_filter = 2
 theme = SubResource("Theme_udowp")
 theme_override_fonts/normal_font = ExtResource("2_pyw1h")
 theme_override_font_sizes/normal_font_size = 80
@@ -177,6 +178,7 @@ offset_left = -382.0
 offset_top = -105.0
 offset_right = -234.0
 offset_bottom = -34.0
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Level Size"
@@ -245,6 +247,7 @@ IsOnlyTwoOptions = true
 
 [node name="EndlessLevelsText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
+layout_mode = 0
 offset_left = -386.0
 offset_top = 65.0
 offset_right = -186.0
@@ -258,6 +261,7 @@ text = "Friendly
 Fire"
 
 [node name="EndlessLevelsButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = -214.0
 offset_top = 65.0
 offset_right = -111.0
@@ -285,6 +289,7 @@ offset_left = -382.0
 offset_top = 159.0
 offset_right = -261.0
 offset_bottom = 200.0
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Biomes"
@@ -318,6 +323,7 @@ offset_left = -44.0
 offset_top = -121.0
 offset_right = 104.0
 offset_bottom = -50.0
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Spawn Proximity"
@@ -351,6 +357,7 @@ offset_left = -51.0
 offset_top = -28.0
 offset_right = 70.0
 offset_bottom = 50.0
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("4_nmvb2")
 theme_override_font_sizes/normal_font_size = 40
 text = "Switch 
@@ -515,6 +522,7 @@ text = "RETURN"
 flat = true
 
 [connection signal="LeftArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_LeftArrowClicked"]
+[connection signal="OptionButtonPressed" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelect_OptionButtonPressed"]
 [connection signal="RightArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_RightArrowClicked"]
 [connection signal="LeftArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_LeftArrowClicked"]
 [connection signal="RightArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_RightArrowClicked"]

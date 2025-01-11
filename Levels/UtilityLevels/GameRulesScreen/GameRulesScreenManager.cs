@@ -108,9 +108,9 @@ namespace Levels.UtilityLevels
 		[Signal]
 		public delegate void GoToPlayerCharacterSelectScreenEventHandler();
 
-		#endregion
+        #endregion
 
-		public override void _Ready()
+        public override void _Ready()
 		{
 			_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 
@@ -349,6 +349,18 @@ namespace Levels.UtilityLevels
             }
 
             _levelSizeButton.Text = $"{_levelSizeOptions[nextIndexOfLevelSizeOptions]}";
+
+            if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
+            {
+                if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
+                {
+                    _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         public void OnLevelSizeOptionSelectorMultiSelect_RightArrowClicked()
@@ -364,6 +376,18 @@ namespace Levels.UtilityLevels
             }
 
             _levelSizeButton.Text = $"{_levelSizeOptions[nextIndexOfLevelSizeOptions]}";
+
+            if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
+            {
+                if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
+                {
+                    _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
 
         private void OnNumberOfLevelsOptionSelector_LeftArrowClicked()
@@ -568,9 +592,16 @@ namespace Levels.UtilityLevels
             if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
             {
                 CurrentGameRules.LevelSizes[_levelSizeButton.Text] = !CurrentGameRules.LevelSizes[_levelSizeButton.Text];
-            }
 
-            //EmitSignal back to change OptionSelector button
+                if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
+                {
+                    _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                }
+                else
+                {
+                    _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                }
+            }
         }
     }
 }

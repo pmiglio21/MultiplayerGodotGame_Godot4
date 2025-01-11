@@ -17,6 +17,7 @@ focus_mode = 1
 script = ExtResource("1_l1n4s")
 
 [node name="FocusHolder" type="Button" parent="."]
+layout_mode = 0
 offset_left = 107.0
 offset_top = 89.0
 offset_right = 176.0
