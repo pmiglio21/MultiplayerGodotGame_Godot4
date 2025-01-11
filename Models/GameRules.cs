@@ -5,11 +5,18 @@ namespace Models
 {
     public class GameRules
     {
-        public Dictionary<LevelSize, bool> LevelSizes = new Dictionary<LevelSize, bool>()
+        //public Dictionary<LevelSize, bool> LevelSizes = new Dictionary<LevelSize, bool>()
+        //{
+        //    { LevelSize.Small, false },
+        //    { LevelSize.Medium, false },
+        //    { LevelSize.Large, false },
+        //};
+
+        public Dictionary<string, bool> LevelSizes = new Dictionary<string, bool>()
         {
-            { LevelSize.Small, false },
-            { LevelSize.Medium, false },
-            { LevelSize.Large, false },
+            { "Small", false },
+            { "Medium", false },
+            { "Large", false },
         };
 
         public int NumberOfLevels = 1;

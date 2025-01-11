@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1u1f3s3hulsc"]
+[gd_scene load_steps=15 format=3 uid="uid://c1u1f3s3hulsc"]
 
 [ext_resource type="Texture2D" uid="uid://bh1edj1blnxyl" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png" id="1_b8273"]
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.cs" id="1_ijbf4"]
@@ -52,24 +52,41 @@ _data = {
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hw6ri"]
 
 [sub_resource type="Animation" id="Animation_kx642"]
-resource_name = "Clicked"
+resource_name = "Activated"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SelectButton:icon")
+tracks/0/path = NodePath("OptionSelectButton:icon")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("4_1s4ci"), ExtResource("4_g8jbg")]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("4_1s4ci")]
+}
+
+[sub_resource type="Animation" id="Animation_lghrc"]
+resource_name = "Deactivated"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OptionSelectButton:icon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [ExtResource("4_g8jbg")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t77g4"]
 _data = {
-"Clicked": SubResource("Animation_kx642")
+"Activated": SubResource("Animation_kx642"),
+"Deactivated": SubResource("Animation_lghrc")
 }
 
 [node name="OptionSelectorMultiSelect" type="Control"]
@@ -84,6 +101,7 @@ grow_vertical = 2
 script = ExtResource("1_ijbf4")
 
 [node name="FocusHolder" type="Button" parent="."]
+layout_mode = 0
 offset_left = 40.0
 offset_top = -29.0
 offset_right = 109.0
@@ -130,7 +148,7 @@ libraries = {
 "": SubResource("AnimationLibrary_467q1")
 }
 
-[node name="SelectButton" type="Button" parent="."]
+[node name="OptionSelectButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = -20.0
 offset_top = -26.0
@@ -140,7 +158,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_hw6ri")
 icon = ExtResource("4_g8jbg")
 flat = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="OptionSelectAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_t77g4")
 }

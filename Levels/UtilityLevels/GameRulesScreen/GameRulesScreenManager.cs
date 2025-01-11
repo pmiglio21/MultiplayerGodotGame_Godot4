@@ -123,6 +123,7 @@ namespace Levels.UtilityLevels
             _deleteButton = GetNode<Button>("DeleteRulesetButton");
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
+            //_levelSizeMultiSelector.GetOptionSelectButton().Pressed += OnLevelSizeOptionSelectPressed;
             _levelSizeButton = GetNode<Button>("LevelSizeButton");
 
             _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
@@ -559,5 +560,17 @@ namespace Levels.UtilityLevels
         }
 
         #endregion
+
+        public void OnLevelSizeOptionSelect_OptionButtonPressed()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
+
+            if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
+            {
+                CurrentGameRules.LevelSizes[_levelSizeButton.Text] = !CurrentGameRules.LevelSizes[_levelSizeButton.Text];
+            }
+
+            //EmitSignal back to change OptionSelector button
+        }
     }
 }

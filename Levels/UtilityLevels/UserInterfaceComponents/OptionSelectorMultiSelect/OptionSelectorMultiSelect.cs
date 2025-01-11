@@ -17,9 +17,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         private bool _isLeftArrowTextureEntered;
         private TextureRect _rightArrowTexture;
         private bool _isRightArrowTextureEntered;
+        private Button _optionSelectButton;
 
         private AnimationPlayer _leftArrowAnimationPlayer;
         private AnimationPlayer _rightArrowAnimationPlayer;
+        private AnimationPlayer _optionSelectAnimationPlayer;
 
         #endregion
 
@@ -31,6 +33,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
         [Signal]
         public delegate void EitherArrowClickedEventHandler();
+
+        [Signal]
+        public delegate void OptionButtonPressedEventHandler();
 
         public override void _Ready()
         {
@@ -46,8 +51,12 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             _leftArrowTexture.MouseExited += () => _isLeftArrowTextureEntered = false;
             _rightArrowTexture.MouseExited += () => _isRightArrowTextureEntered = false;
 
+            _optionSelectButton = FindChild("OptionSelectButton") as Button;
+            _optionSelectButton.Pressed += ToggleOptionButton;
+
             _leftArrowAnimationPlayer = FindChild("LeftArrowAnimationPlayer") as AnimationPlayer;
             _rightArrowAnimationPlayer = FindChild("RightArrowAnimationPlayer") as AnimationPlayer;
+            _optionSelectAnimationPlayer = FindChild("OptionSelectAnimationPlayer") as AnimationPlayer;
         }
 
         public override void _Process(double delta)
@@ -93,6 +102,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             return _focusHolder;
         }
 
+        public Button GetOptionSelectButton()
+        {
+            return _optionSelectButton;
+        }
+
         public void PlayOnFocusAnimation()
         {
             _textureRect.Texture = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton1.png") as Texture2D;
@@ -111,6 +125,24 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public void PlayClickedOnRightArrow()
         {
             _rightArrowAnimationPlayer.Play("Clicked");
+        }
+
+        public void PlayActivatedOnOptionSelect()
+        {
+            _optionSelectAnimationPlayer.Play("Activated");
+        }
+
+        public void PlayDeactivatedOnOptionSelect()
+        {
+            _optionSelectAnimationPlayer.Play("Deactivated");
+        }
+
+        private void ToggleOptionButton()
+        {
+            EmitSignal(SignalName.OptionButtonPressed);
+
+            //play animation depending on value??
+            PlayActivatedOnOptionSelect();
         }
     }
 }
