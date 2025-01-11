@@ -448,6 +448,8 @@ namespace Levels.UtilityLevels
             {
                 _endlessLevelsButton.Text = _offOnOptions[0];
             }
+
+            CurrentGameRules.IsEndlessLevelsOn = _endlessLevelsButton.Text == _offOnOptions[1];
         }
 
         private void OnBiomeOptionSelectorMultiSelect_LeftArrowClicked()
@@ -683,6 +685,8 @@ namespace Levels.UtilityLevels
             {
                 _miniBossButton.Text = _offOnOptions[0];
             }
+
+            CurrentGameRules.CanMinibossSpawn = _miniBossButton.Text == _offOnOptions[1];
         }
 
         public void OnBossOptionSelector_EitherArrowClicked()
@@ -699,6 +703,8 @@ namespace Levels.UtilityLevels
             {
                 _bossButton.Text = _offOnOptions[0];
             }
+
+            CurrentGameRules.CanBossSpawn = _bossButton.Text == _offOnOptions[1];
         }
 
         public void OnFriendlyFireOptionSelector_EitherArrowClicked()
@@ -715,6 +721,8 @@ namespace Levels.UtilityLevels
             {
                 _friendlyFireButton.Text = _offOnOptions[0];
             }
+
+            CurrentGameRules.IsFriendlyFireOn = _friendlyFireButton.Text == _offOnOptions[1];
         }
 
         public void OnReturnButtonPressed()

@@ -14,7 +14,7 @@ namespace Models
 
         public int NumberOfLevels = 1;
 
-        public bool IsInfiniteLevelsOn = false;
+        public bool IsEndlessLevelsOn = false;
 
         public Dictionary<string, bool> BiomeTypes = new Dictionary<string, bool>()
         {
