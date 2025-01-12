@@ -69,6 +69,7 @@ offset_left = 278.0
 offset_top = 94.0
 offset_right = 347.0
 offset_bottom = 135.0
+focus_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

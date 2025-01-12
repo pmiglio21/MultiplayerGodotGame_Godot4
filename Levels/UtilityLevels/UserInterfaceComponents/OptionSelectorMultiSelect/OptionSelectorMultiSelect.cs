@@ -130,13 +130,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public void PlayActivatedOnOptionSelect()
         {
             _optionSelectButton.Icon = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle0.png") as Texture2D;
-            //_optionSelectAnimationPlayer.Play("Activated");
         }
 
         public void PlayDeactivatedOnOptionSelect()
         {
             _optionSelectButton.Icon = ResourceLoader.Load("res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle1.png") as Texture2D;
-            //_optionSelectAnimationPlayer.Play("Deactivated");
         }
 
         private void ToggleOptionButton()
