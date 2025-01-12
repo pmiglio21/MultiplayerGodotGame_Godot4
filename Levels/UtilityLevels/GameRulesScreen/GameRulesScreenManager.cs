@@ -83,8 +83,13 @@ namespace Levels.UtilityLevels
         private OptionSelectorMultiSelect _switchProximityMultiSelector;
         private Button _switchProximityButton;
 
+        private OptionSelector _miniBossOptionSelector;
         private Button _miniBossButton;
+
+        private OptionSelector _bossOptionSelector;
         private Button _bossButton;
+
+        private OptionSelector _friendlyFireOptionSelector;
         private Button _friendlyFireButton;
 		
 		private Button _returnButton;
@@ -120,26 +125,49 @@ namespace Levels.UtilityLevels
             _deleteButton = GetNode<Button>("DeleteRulesetButton");
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
+            _levelSizeMultiSelector.GetFocusHolder().FocusEntered += _levelSizeMultiSelector.PlayOnFocusAnimation;
+            _levelSizeMultiSelector.GetFocusHolder().FocusExited += _levelSizeMultiSelector.PlayLoseFocusAnimation;
             _levelSizeButton = GetNode<Button>("LevelSizeButton");
 
             _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
+            _numberOfLevelsOptionSelector.GetFocusHolder().FocusEntered += _numberOfLevelsOptionSelector.PlayOnFocusAnimation;
+            _numberOfLevelsOptionSelector.GetFocusHolder().FocusExited += _numberOfLevelsOptionSelector.PlayLoseFocusAnimation;
             _numberOfLevelsButton = GetNode<Button>("NumberOfLevelsButton");
 
+            _endlessLevelsOptionSelector = GetNode<OptionSelector>("EndlessLevelsOptionSelector");
+            _endlessLevelsOptionSelector.GetFocusHolder().FocusEntered += _endlessLevelsOptionSelector.PlayOnFocusAnimation;
+            _endlessLevelsOptionSelector.GetFocusHolder().FocusExited += _endlessLevelsOptionSelector.PlayLoseFocusAnimation;
             _endlessLevelsButton = GetNode<Button>("EndlessLevelsButton");
 
             _biomeMultiSelector = GetNode<OptionSelectorMultiSelect>("BiomeOptionSelectorMultiSelect");
+            _biomeMultiSelector.GetFocusHolder().FocusEntered += _biomeMultiSelector.PlayOnFocusAnimation;
+            _biomeMultiSelector.GetFocusHolder().FocusExited += _biomeMultiSelector.PlayLoseFocusAnimation;
             _biomeButton = GetNode<Button>("BiomeButton");
 
             _spawnProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SpawnProximityOptionSelectorMultiSelect");
+            _spawnProximityMultiSelector.GetFocusHolder().FocusEntered += _spawnProximityMultiSelector.PlayOnFocusAnimation;
+            _spawnProximityMultiSelector.GetFocusHolder().FocusExited += _spawnProximityMultiSelector.PlayLoseFocusAnimation;
             _spawnProximityButton = GetNode<Button>("SpawnProximityButton");
 
             _switchProximityMultiSelector = GetNode<OptionSelectorMultiSelect>("SwitchProximityOptionSelectorMultiSelect");
+            _switchProximityMultiSelector.GetFocusHolder().FocusEntered += _switchProximityMultiSelector.PlayOnFocusAnimation;
+            _switchProximityMultiSelector.GetFocusHolder().FocusExited += _switchProximityMultiSelector.PlayLoseFocusAnimation;
             _switchProximityButton = GetNode<Button>("SwitchProximityButton");
 
+            _miniBossOptionSelector = GetNode<OptionSelector>("MiniBossOptionSelector");
+            _miniBossOptionSelector.GetFocusHolder().FocusEntered += _miniBossOptionSelector.PlayOnFocusAnimation;
+            _miniBossOptionSelector.GetFocusHolder().FocusExited += _miniBossOptionSelector.PlayLoseFocusAnimation;
             _miniBossButton = GetNode<Button>("MiniBossButton");
-            _bossButton = GetNode<Button>("BossButton");
-            _friendlyFireButton = GetNode<Button>("FriendlyFireButton");
 
+            _bossOptionSelector = GetNode<OptionSelector>("BossOptionSelector");
+            _bossOptionSelector.GetFocusHolder().FocusEntered += _bossOptionSelector.PlayOnFocusAnimation;
+            _bossOptionSelector.GetFocusHolder().FocusExited += _bossOptionSelector.PlayLoseFocusAnimation;
+            _bossButton = GetNode<Button>("BossButton");
+
+            _friendlyFireOptionSelector = GetNode<OptionSelector>("FriendlyFireOptionSelector");
+            _friendlyFireOptionSelector.GetFocusHolder().FocusEntered += _friendlyFireOptionSelector.PlayOnFocusAnimation;
+            _friendlyFireOptionSelector.GetFocusHolder().FocusExited += _friendlyFireOptionSelector.PlayLoseFocusAnimation;
+            _friendlyFireButton = GetNode<Button>("FriendlyFireButton");
 
             _returnButton = GetNode<Button>("ReturnButton");
 
