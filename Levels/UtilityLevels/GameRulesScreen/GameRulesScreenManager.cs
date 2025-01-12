@@ -269,7 +269,9 @@ namespace Levels.UtilityLevels
 		public void GrabFocusOfTopButton()
 		{
             //_addButton.GrabFocus();
-            _rulesetNameEdit.GetFocusHolder().GrabFocus();
+            //_rulesetNameEdit.GetFocusHolder().GrabFocus();
+
+            _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
         }
 
 		private void ReturnToPriorScene()

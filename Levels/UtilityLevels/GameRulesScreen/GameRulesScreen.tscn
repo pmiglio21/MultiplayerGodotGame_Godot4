@@ -82,9 +82,9 @@ texture = ExtResource("6_6xomu")
 
 [node name="AddRulesetButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = -116.0
+offset_left = -76.0
 offset_top = -224.0
-offset_right = 84.0001
+offset_right = 40.0
 offset_bottom = -188.0
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
@@ -105,9 +105,9 @@ texture = ExtResource("6_6xomu")
 
 [node name="LoadRulesetButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 44.0
+offset_left = 79.0
 offset_top = -224.0
-offset_right = 244.0
+offset_right = 203.0
 offset_bottom = -188.0
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
@@ -128,9 +128,9 @@ texture = ExtResource("6_6xomu")
 
 [node name="SaveRulesetButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 199.0
+offset_left = 254.0
 offset_top = -224.0
-offset_right = 399.0
+offset_right = 348.0
 offset_bottom = -188.0
 focus_mode = 1
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
@@ -152,9 +152,9 @@ texture = ExtResource("6_6xomu")
 
 [node name="DeleteRulesetButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 354.0
+offset_left = 402.0
 offset_top = -224.0
-offset_right = 554.0
+offset_right = 506.0
 offset_bottom = -188.0
 focus_mode = 1
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
