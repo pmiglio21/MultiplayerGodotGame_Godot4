@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c1u1f3s3hulsc"]
+[gd_scene load_steps=16 format=3 uid="uid://c1u1f3s3hulsc"]
 
 [ext_resource type="Texture2D" uid="uid://bh1edj1blnxyl" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorButton/OptionSelectorButton0.png" id="1_b8273"]
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelectorMultiSelect/OptionSelectorMultiSelect.cs" id="1_ijbf4"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dqbul3vjhmeua" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorArrows/OptionSelectorArrows0.png" id="3_ybbf3"]
 [ext_resource type="Texture2D" uid="uid://cniiphpogfhau" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle0.png" id="4_1s4ci"]
 [ext_resource type="Texture2D" uid="uid://d1bg8h081rx08" path="res://Levels/EarlyLevels/GuiArt/OptionSelectorToggle/OptionSelectorToggle1.png" id="4_g8jbg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_33ihs"]
 
 [sub_resource type="Animation" id="Animation_ijpeg"]
 resource_name = "Clicked"
@@ -102,11 +104,13 @@ script = ExtResource("1_ijbf4")
 
 [node name="FocusHolder" type="Button" parent="."]
 layout_mode = 0
-offset_left = 40.0
-offset_top = -29.0
-offset_right = 109.0
-offset_bottom = 12.0
+offset_left = -180.0
+offset_top = -52.0
+offset_right = 152.0
+offset_bottom = 39.0
 focus_mode = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_33ihs")
+flat = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

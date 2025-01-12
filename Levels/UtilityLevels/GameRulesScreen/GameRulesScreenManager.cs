@@ -111,6 +111,9 @@ namespace Levels.UtilityLevels
             _inputTimer = FindChild("InputTimer") as Timer;
 
 			_rulesetNameEdit = GetNode<TextEditBox>("RulesetNameEditBox");
+            _rulesetNameEdit.GetFocusHolder().FocusEntered += _rulesetNameEdit.PlayOnFocusAnimation;
+            _rulesetNameEdit.GetFocusHolder().FocusExited += _rulesetNameEdit.PlayLoseFocusAnimation;
+
             _addButton = GetNode<Button>("AddRulesetButton");
             _loadButton = GetNode<Button>("LoadRulesetButton");
             _saveButton = GetNode<Button>("SaveRulesetButton");
@@ -269,9 +272,9 @@ namespace Levels.UtilityLevels
 		public void GrabFocusOfTopButton()
 		{
             //_addButton.GrabFocus();
-            //_rulesetNameEdit.GetFocusHolder().GrabFocus();
+            _rulesetNameEdit.GetFocusHolder().GrabFocus();
 
-            _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+            //_levelSizeMultiSelector.GetFocusHolder().GrabFocus();
         }
 
 		private void ReturnToPriorScene()

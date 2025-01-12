@@ -78,6 +78,7 @@ offset_top = -314.0
 offset_right = -14.0
 offset_bottom = -243.0
 scale = Vector2(3, 3)
+mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="AddRulesetButton" type="Button" parent="."]
@@ -101,6 +102,7 @@ offset_top = -314.0
 offset_right = 146.0
 offset_bottom = -243.0
 scale = Vector2(3, 3)
+mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="LoadRulesetButton" type="Button" parent="."]
@@ -124,6 +126,7 @@ offset_top = -314.0
 offset_right = 301.0
 offset_bottom = -243.0
 scale = Vector2(3, 3)
+mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="SaveRulesetButton" type="Button" parent="."]
@@ -148,6 +151,7 @@ offset_top = -314.0
 offset_right = 456.0
 offset_bottom = -243.0
 scale = Vector2(3, 3)
+mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="DeleteRulesetButton" type="Button" parent="."]

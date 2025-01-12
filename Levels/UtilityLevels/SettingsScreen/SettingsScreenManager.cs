@@ -86,7 +86,7 @@ namespace Levels.UtilityLevels
             _resolutionButton = FindChild("ResolutionButton") as Button;
             _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
             _resolutionButton.FocusEntered += _resolutionOptionSelector.PlayOnFocusAnimation;
-            _resolutionButton.FocusExited += ResolutionFocusExited;
+            _resolutionButton.FocusExited += _resolutionOptionSelector.PlayLoseFocusAnimation;
 
             _fullscreenOptionSelector = FindChild("FullscreenOptionSelector") as OptionSelector;
             _fullscreenButton = FindChild("FullscreenButton") as Button;
@@ -587,10 +587,5 @@ namespace Levels.UtilityLevels
         }
 
         #endregion
-
-        private void ResolutionFocusExited()
-        {
-            _resolutionOptionSelector.PlayLoseFocusAnimation();
-        }
     }
 }
