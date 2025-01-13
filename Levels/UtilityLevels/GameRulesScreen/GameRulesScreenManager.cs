@@ -60,10 +60,10 @@ namespace Levels.UtilityLevels
         private Timer _inputTimer;
 
 		private TextEditBox _rulesetNameEdit;
-        private Button _addButton;
-        private Button _loadButton;
-        private Button _saveButton;
-        private Button _deleteButton;
+        private GenericButton _addButton;
+        private GenericButton _loadButton;
+        private GenericButton _saveButton;
+        private GenericButton _deleteButton;
 
         private OptionSelectorMultiSelect _levelSizeMultiSelector;
         private Button _levelSizeButton;
@@ -92,7 +92,7 @@ namespace Levels.UtilityLevels
         private OptionSelector _friendlyFireOptionSelector;
         private Button _friendlyFireButton;
 		
-		private Button _returnButton;
+		private GenericButton _returnButton;
 
 		#endregion
 
@@ -119,10 +119,21 @@ namespace Levels.UtilityLevels
             _rulesetNameEdit.GetFocusHolder().FocusEntered += _rulesetNameEdit.PlayOnFocusAnimation;
             _rulesetNameEdit.GetFocusHolder().FocusExited += _rulesetNameEdit.PlayLoseFocusAnimation;
 
-            _addButton = GetNode<Button>("AddRulesetButton");
-            _loadButton = GetNode<Button>("LoadRulesetButton");
-            _saveButton = GetNode<Button>("SaveRulesetButton");
-            _deleteButton = GetNode<Button>("DeleteRulesetButton");
+            _addButton = GetNode<GenericButton>("AddRulesetButton");
+            _addButton.FocusEntered += _addButton.PlayOnFocusAnimation;
+            _addButton.FocusExited += _addButton.PlayLoseFocusAnimation;
+
+            _loadButton = GetNode<GenericButton>("LoadRulesetButton");
+            _loadButton.FocusEntered += _loadButton.PlayOnFocusAnimation;
+            _loadButton.FocusExited += _loadButton.PlayLoseFocusAnimation;
+
+            _saveButton = GetNode<GenericButton>("SaveRulesetButton");
+            _saveButton.FocusEntered += _saveButton.PlayOnFocusAnimation;
+            _saveButton.FocusExited += _saveButton.PlayLoseFocusAnimation;
+
+            _deleteButton = GetNode<GenericButton>("DeleteRulesetButton");
+            _deleteButton.FocusEntered += _deleteButton.PlayOnFocusAnimation;
+            _deleteButton.FocusExited += _deleteButton.PlayLoseFocusAnimation;
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
             _levelSizeMultiSelector.GetFocusHolder().FocusEntered += _levelSizeMultiSelector.PlayOnFocusAnimation;
@@ -169,7 +180,7 @@ namespace Levels.UtilityLevels
             _friendlyFireOptionSelector.GetFocusHolder().FocusExited += _friendlyFireOptionSelector.PlayLoseFocusAnimation;
             _friendlyFireButton = GetNode<Button>("FriendlyFireButton");
 
-            _returnButton = GetNode<Button>("ReturnButton");
+            _returnButton = GetNode<GenericButton>("ReturnButton");
 
             GrabFocusOfTopButton();
         }

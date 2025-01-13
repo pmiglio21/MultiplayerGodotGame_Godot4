@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=17 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_b8ot8"]
@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="4_nmvb2"]
 [ext_resource type="PackedScene" uid="uid://b54hyxbxwixql" path="res://Levels/UtilityLevels/UserInterfaceComponents/TextEdit/TextEditBox.tscn" id="4_t17qu"]
 [ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_6xomu"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/GenericButton/GenericButton.cs" id="9_y2p7k"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
 default_font_size = 30
@@ -81,12 +82,13 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
-[node name="AddRulesetButton" type="Button" parent="."]
+[node name="AddRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 0
 offset_left = -88.0
 offset_top = -244.0
 offset_right = 53.0
 offset_bottom = -171.0
+focus_mode = 1
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("4_nmvb2")
@@ -94,6 +96,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "ADD"
 flat = true
+script = ExtResource("9_y2p7k")
+GenericButtonTexture = NodePath("../AddRulesetButtonTexture")
 
 [node name="LoadRulesetButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
@@ -105,12 +109,13 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
-[node name="LoadRulesetButton" type="Button" parent="."]
+[node name="LoadRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 0
 offset_left = 72.0
 offset_top = -244.0
 offset_right = 213.0
 offset_bottom = -171.0
+focus_mode = 1
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("4_nmvb2")
@@ -118,6 +123,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "LOAD"
 flat = true
+script = ExtResource("9_y2p7k")
+GenericButtonTexture = NodePath("../LoadRulesetButtonTexture")
 
 [node name="SaveRulesetButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
@@ -129,7 +136,7 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
-[node name="SaveRulesetButton" type="Button" parent="."]
+[node name="SaveRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 0
 offset_left = 227.0
 offset_top = -244.0
@@ -143,6 +150,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "SAVE"
 flat = true
+script = ExtResource("9_y2p7k")
+GenericButtonTexture = NodePath("../SaveRulesetButtonTexture")
 
 [node name="DeleteRulesetButtonTexture" type="TextureRect" parent="."]
 layout_mode = 0
@@ -154,7 +163,7 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
-[node name="DeleteRulesetButton" type="Button" parent="."]
+[node name="DeleteRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 0
 offset_left = 382.0
 offset_top = -244.0
@@ -168,6 +177,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "DELETE"
 flat = true
+script = ExtResource("9_y2p7k")
+GenericButtonTexture = NodePath("../DeleteRulesetButtonTexture")
 
 [node name="LevelSizeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
 layout_mode = 1
@@ -510,7 +521,7 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
-[node name="ReturnButton" type="Button" parent="."]
+[node name="ReturnButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 2
 offset_left = 18.0
 offset_top = 245.0
@@ -524,6 +535,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_akoqo")
 text = "RETURN"
 flat = true
+script = ExtResource("9_y2p7k")
+GenericButtonTexture = NodePath("../ReturnButtonTexture")
 
 [connection signal="LeftArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_LeftArrowClicked"]
 [connection signal="OptionButtonPressed" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelect_OptionButtonPressed"]
