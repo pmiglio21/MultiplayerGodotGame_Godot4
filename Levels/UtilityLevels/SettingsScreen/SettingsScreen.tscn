@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://jx5of1yg28rn"]
+[gd_scene load_steps=10 format=3 uid="uid://jx5of1yg28rn"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SettingsScreen/SettingsScreenManager.cs" id="1_fd6ci"]
 [ext_resource type="FontFile" uid="uid://dmlgh3hijyld6" path="res://Levels/EarlyLevels/Fonts/ScreenTitles/Wacky Pixels.ttf" id="2_jjdov"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="3_wput4"]
 [ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_kr6t1"]
 [ext_resource type="PackedScene" uid="uid://bf4dyoagbc04o" path="res://Levels/UtilityLevels/UserInterfaceComponents/OptionSelector/OptionSelector.tscn" id="7_hvf56"]
+[ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/GenericButton/GenericButton.cs" id="8_hxec6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0sdjr"]
 
@@ -173,7 +174,7 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("6_kr6t1")
 
-[node name="ReturnButton" type="Button" parent="."]
+[node name="ReturnButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
 layout_mode = 2
 offset_left = 2.0
 offset_top = 327.0
@@ -188,6 +189,8 @@ theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0sdjr")
 text = "RETURN"
 flat = true
+script = ExtResource("8_hxec6")
+GenericButtonTexture = NodePath("../ReturnButtonTexture")
 
 [connection signal="LeftArrowClicked" from="ResolutionOptionSelector" to="." method="OnResolutionOptionSelector_LeftArrowClicked"]
 [connection signal="RightArrowClicked" from="ResolutionOptionSelector" to="." method="OnResolutionOptionSelector_RightArrowClicked"]

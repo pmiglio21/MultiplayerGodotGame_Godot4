@@ -120,20 +120,12 @@ namespace Levels.UtilityLevels
             _rulesetNameEdit.GetFocusHolder().FocusExited += _rulesetNameEdit.PlayLoseFocusAnimation;
 
             _addButton = GetNode<GenericButton>("AddRulesetButton");
-            _addButton.FocusEntered += _addButton.PlayOnFocusAnimation;
-            _addButton.FocusExited += _addButton.PlayLoseFocusAnimation;
 
             _loadButton = GetNode<GenericButton>("LoadRulesetButton");
-            _loadButton.FocusEntered += _loadButton.PlayOnFocusAnimation;
-            _loadButton.FocusExited += _loadButton.PlayLoseFocusAnimation;
 
             _saveButton = GetNode<GenericButton>("SaveRulesetButton");
-            _saveButton.FocusEntered += _saveButton.PlayOnFocusAnimation;
-            _saveButton.FocusExited += _saveButton.PlayLoseFocusAnimation;
 
             _deleteButton = GetNode<GenericButton>("DeleteRulesetButton");
-            _deleteButton.FocusEntered += _deleteButton.PlayOnFocusAnimation;
-            _deleteButton.FocusExited += _deleteButton.PlayLoseFocusAnimation;
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
             _levelSizeMultiSelector.GetFocusHolder().FocusEntered += _levelSizeMultiSelector.PlayOnFocusAnimation;
@@ -215,10 +207,10 @@ namespace Levels.UtilityLevels
 
 		private void GetNavigationInput()
 		{
-			if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab))
+            if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && !Input.IsKeyPressed(Key.Shift))
 			{
-                //Row 1 - Ruleset Edit Row
-                if (_rulesetNameEdit.HasFocus())
+                //Row 1
+                if (_rulesetNameEdit.GetFocusHolder().HasFocus())
                 {
                     _addButton.GrabFocus();
                 }
@@ -234,10 +226,130 @@ namespace Levels.UtilityLevels
                 {
                     _deleteButton.GrabFocus();
                 }
+                else if (_deleteButton.HasFocus())
+                {
+                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 2
+                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 3
+                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 4
+                else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _miniBossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _biomeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 5
+                else if (_biomeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _bossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_bossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _returnButton.GrabFocus();
+                }
 
                 _inputTimer.Start();
             }
-			else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
+            else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && Input.IsKeyPressed(Key.Shift))
+            {
+                //Row 1
+                if (_deleteButton.HasFocus())
+                {
+                    _saveButton.GrabFocus();
+                }
+                else if (_saveButton.HasFocus())
+                {
+                    _loadButton.GrabFocus();
+                }
+                else if (_loadButton.HasFocus())
+                {
+                    _addButton.GrabFocus();
+                }
+                else if (_addButton.HasFocus())
+                {
+                    _rulesetNameEdit.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 2
+                else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _deleteButton.GrabFocus();
+                }
+
+                //Row 3
+                else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 4
+                else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 5
+                else if (_bossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _biomeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_biomeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _miniBossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 6
+                else if (_returnButton.HasFocus())
+                {
+                    _bossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                _inputTimer.Start();
+            }
+            else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveSouth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadSouth)))
 			{
 				//Row 1 - Ruleset Edit Row
 				if (_rulesetNameEdit.GetFocusHolder().HasFocus())
@@ -273,14 +385,15 @@ namespace Levels.UtilityLevels
 			}
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveEast) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadEast)))
             {
+                //Row 1
                 if (_rulesetNameEdit.GetFocusHolder().HasFocus())
-				{
-
-				}
-				else if (_addButton.HasFocus())
-				{
-					_loadButton.GrabFocus();
-				}
+                {
+                    _addButton.GrabFocus();
+                }
+                else if (_addButton.HasFocus())
+                {
+                    _loadButton.GrabFocus();
+                }
                 else if (_loadButton.HasFocus())
                 {
                     _saveButton.GrabFocus();
@@ -288,6 +401,34 @@ namespace Levels.UtilityLevels
                 else if (_saveButton.HasFocus())
                 {
                     _deleteButton.GrabFocus();
+                }
+
+                //Row 2
+                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 3
+                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 4
+                else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _miniBossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 5
+                else if (_biomeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _bossOptionSelector.GetFocusHolder().GrabFocus();
                 }
 
                 _inputTimer.Start();
@@ -319,7 +460,51 @@ namespace Levels.UtilityLevels
 			}
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveWest) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadWest)))
             {
-           
+                //Row 1
+                if (_deleteButton.HasFocus())
+                {
+                    _saveButton.GrabFocus();
+                }
+                else if (_saveButton.HasFocus())
+                {
+                    _loadButton.GrabFocus();
+                }
+                else if (_loadButton.HasFocus())
+                {
+                    _addButton.GrabFocus();
+                }
+                else if (_addButton.HasFocus())
+                {
+                    _rulesetNameEdit.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 2
+                else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 3
+                else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 4
+                else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 5
+                else if (_bossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _biomeMultiSelector.GetFocusHolder().GrabFocus();
+                }
 
                 _inputTimer.Start();
             }
