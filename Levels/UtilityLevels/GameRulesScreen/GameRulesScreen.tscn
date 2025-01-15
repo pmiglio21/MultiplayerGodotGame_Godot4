@@ -53,6 +53,7 @@ one_shot = true
 autostart = true
 
 [node name="TopText" type="RichTextLabel" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 offset_left = -48.0
@@ -73,6 +74,7 @@ offset_right = -358.0
 offset_bottom = -319.0
 
 [node name="AddRulesetButtonTexture" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -142.0
 offset_top = -314.0
@@ -83,6 +85,7 @@ mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="AddRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
+visible = false
 layout_mode = 0
 offset_left = -88.0
 offset_top = -244.0
@@ -100,6 +103,7 @@ script = ExtResource("9_y2p7k")
 GenericButtonTexture = NodePath("../AddRulesetButtonTexture")
 
 [node name="LoadRulesetButtonTexture" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 18.0
 offset_top = -314.0
@@ -110,6 +114,7 @@ mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="LoadRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
+visible = false
 layout_mode = 0
 offset_left = 72.0
 offset_top = -244.0
@@ -127,6 +132,7 @@ script = ExtResource("9_y2p7k")
 GenericButtonTexture = NodePath("../LoadRulesetButtonTexture")
 
 [node name="SaveRulesetButtonTexture" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 173.0
 offset_top = -314.0
@@ -137,6 +143,7 @@ mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="SaveRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
+visible = false
 layout_mode = 0
 offset_left = 227.0
 offset_top = -244.0
@@ -154,6 +161,7 @@ script = ExtResource("9_y2p7k")
 GenericButtonTexture = NodePath("../SaveRulesetButtonTexture")
 
 [node name="DeleteRulesetButtonTexture" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 328.0
 offset_top = -314.0
@@ -164,6 +172,7 @@ mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="DeleteRulesetButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
+visible = false
 layout_mode = 0
 offset_left = 382.0
 offset_top = -244.0
@@ -253,6 +262,7 @@ text = "1"
 flat = true
 
 [node name="EndlessLevelsOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+visible = false
 layout_mode = 1
 offset_left = -566.0
 offset_top = -21.0
@@ -261,6 +271,7 @@ offset_bottom = 162.0
 IsOnlyTwoOptions = true
 
 [node name="EndlessLevelsText" type="RichTextLabel" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
 offset_left = -386.0
@@ -276,6 +287,7 @@ text = "Endless
 Levels"
 
 [node name="EndlessLevelsButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -214.0
 offset_top = 65.0
@@ -292,6 +304,7 @@ text = "OFF"
 flat = true
 
 [node name="BiomeOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
+visible = false
 layout_mode = 1
 offset_left = -328.0
 offset_top = 185.0
@@ -299,6 +312,7 @@ offset_right = -328.0
 offset_bottom = 185.0
 
 [node name="BiomeTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -382.0
 offset_top = 159.0
@@ -310,6 +324,7 @@ theme_override_font_sizes/normal_font_size = 40
 text = "Biomes"
 
 [node name="BiomeButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -199.0
 offset_top = 148.0
@@ -326,6 +341,7 @@ text = "Castle"
 flat = true
 
 [node name="SpawnProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
+visible = false
 layout_mode = 1
 offset_left = 8.0
 offset_top = -84.0
@@ -333,6 +349,7 @@ offset_right = 8.0
 offset_bottom = -84.0
 
 [node name="SpawnProximityTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -44.0
 offset_top = -121.0
@@ -344,6 +361,7 @@ theme_override_font_sizes/normal_font_size = 40
 text = "Spawn Proximity"
 
 [node name="SpawnProximityButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 136.0
 offset_top = -121.0
@@ -360,6 +378,7 @@ text = "Super Close"
 flat = true
 
 [node name="SwitchProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
+visible = false
 layout_mode = 1
 offset_left = 7.0
 offset_top = 9.0
@@ -367,6 +386,7 @@ offset_right = 7.0
 offset_bottom = 9.0
 
 [node name="SwitchProximityTextLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -51.0
 offset_top = -28.0
@@ -379,6 +399,7 @@ text = "Switch
 Proximity"
 
 [node name="SwitchProximityButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 136.0
 offset_top = -28.0
@@ -395,6 +416,7 @@ text = "Super Close"
 flat = true
 
 [node name="MiniBossOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+visible = false
 layout_mode = 1
 offset_left = -230.0
 offset_top = -24.0
@@ -403,6 +425,7 @@ offset_bottom = 159.0
 IsOnlyTwoOptions = true
 
 [node name="MiniBossText" type="RichTextLabel" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
 offset_left = -50.0
@@ -418,6 +441,7 @@ text = "Minibosses
 Allowed"
 
 [node name="MiniBossButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 127.0
 offset_top = 62.0
@@ -434,6 +458,7 @@ text = "OFF"
 flat = true
 
 [node name="BossOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+visible = false
 layout_mode = 1
 offset_left = -230.0
 offset_top = 62.0
@@ -442,6 +467,7 @@ offset_bottom = 245.0
 IsOnlyTwoOptions = true
 
 [node name="BossText" type="RichTextLabel" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
 offset_left = -50.0
@@ -457,6 +483,7 @@ text = "Bosses
 Allowed"
 
 [node name="BossButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 128.0
 offset_top = 148.0
@@ -473,6 +500,7 @@ text = "OFF"
 flat = true
 
 [node name="FriendlyFireOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+visible = false
 layout_mode = 1
 offset_left = 114.0
 offset_top = -204.0
@@ -481,6 +509,7 @@ offset_bottom = -21.0
 IsOnlyTwoOptions = true
 
 [node name="FriendlyFireText" type="RichTextLabel" parent="."]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 0
 offset_left = 294.0
@@ -496,6 +525,7 @@ text = "Friendly
 Fire"
 
 [node name="FriendlyFireButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 466.0
 offset_top = -118.0
@@ -512,6 +542,7 @@ text = "OFF"
 flat = true
 
 [node name="ReturnButtonTexture" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -34.0
 offset_top = 174.0
@@ -522,6 +553,7 @@ mouse_filter = 2
 texture = ExtResource("6_6xomu")
 
 [node name="ReturnButton" type="Button" parent="." node_paths=PackedStringArray("GenericButtonTexture")]
+visible = false
 layout_mode = 2
 offset_left = 18.0
 offset_top = 245.0

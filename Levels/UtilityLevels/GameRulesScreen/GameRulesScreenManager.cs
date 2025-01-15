@@ -247,17 +247,17 @@ namespace Levels.UtilityLevels
 
                 //Row 2
 
-                else if (_levelSizeMultiSelector.HasFocus())
+                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GrabFocus();
+                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
                 }
 
                 //Row 3
 
-                else if (_numberOfLevelsOptionSelector.HasFocus())
-                {
-                    _biomeMultiSelector.GrabFocus();
-                }
+                //else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                //{
+                //    _biomeMultiSelector.GetFocusHolder().GrabFocus();
+                //}
 
                 //Row 4
 
@@ -273,9 +273,7 @@ namespace Levels.UtilityLevels
 			}
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveEast) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadEast)))
             {
-				//Row 1
-
-				if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+                if (_rulesetNameEdit.GetFocusHolder().HasFocus())
 				{
 
 				}
@@ -296,9 +294,28 @@ namespace Levels.UtilityLevels
             }
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
 			{
+                //Row 6
 
+                //Row 5
 
-				_inputTimer.Start();
+                //Row 4
+
+                //Row 3
+
+                if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 2 - Ruleset Edit Row
+                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _rulesetNameEdit.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 1
+
+                _inputTimer.Start();
 			}
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveWest) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadWest)))
             {
@@ -310,10 +327,7 @@ namespace Levels.UtilityLevels
 
 		public void GrabFocusOfTopButton()
 		{
-            //_addButton.GrabFocus();
             _rulesetNameEdit.GetFocusHolder().GrabFocus();
-
-            //_levelSizeMultiSelector.GetFocusHolder().GrabFocus();
         }
 
 		private void ReturnToPriorScene()
