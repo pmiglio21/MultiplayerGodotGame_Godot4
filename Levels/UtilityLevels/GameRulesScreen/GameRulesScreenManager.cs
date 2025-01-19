@@ -207,6 +207,7 @@ namespace Levels.UtilityLevels
 
 		private void GetNavigationInput()
 		{
+            //Go forward
             if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && !Input.IsKeyPressed(Key.Shift))
 			{
                 //Row 1
@@ -277,6 +278,7 @@ namespace Levels.UtilityLevels
 
                 _inputTimer.Start();
             }
+            //Go backward
             else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && Input.IsKeyPressed(Key.Shift))
             {
                 //Row 1
@@ -356,29 +358,66 @@ namespace Levels.UtilityLevels
 				{
 					_levelSizeMultiSelector.GetFocusHolder().GrabFocus();
                 }
+                else if (_addButton.HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_loadButton.HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_saveButton.HasFocus())
+                {
+                    _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_deleteButton.HasFocus())
+                {
+                    _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
+                }
 
                 //Row 2
-
                 else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
                 {
                     _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
                 }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _returnButton.GrabFocus();
+                }
 
                 //Row 3
-
-                //else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
-                //{
-                //    _biomeMultiSelector.GetFocusHolder().GrabFocus();
-                //}
+                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _miniBossOptionSelector.GetFocusHolder().GrabFocus();
+                }
 
                 //Row 4
-
+                else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _biomeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _bossOptionSelector.GetFocusHolder().GrabFocus();
+                }
 
                 //Row 5
-
-
-                //Row 6
-
+                else if (_biomeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _returnButton.GrabFocus();
+                }
+                else if (_bossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _returnButton.GrabFocus();
+                }
 
 
                 _inputTimer.Start();
@@ -435,26 +474,55 @@ namespace Levels.UtilityLevels
             }
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionPressed(InputType.MoveNorth) || UniversalInputHelper.IsActionPressed_GamePadOnly(InputType.DPadNorth)))
 			{
-                //Row 6
-
-                //Row 5
-
-                //Row 4
-
-                //Row 3
-
-                if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
-                {
-                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
-                }
-
-                //Row 2 - Ruleset Edit Row
-                else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
+                //Row 2
+                if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
                 {
                     _rulesetNameEdit.GetFocusHolder().GrabFocus();
                 }
+                else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _addButton.GrabFocus();
+                }
+                else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _saveButton.GrabFocus();
+                }
 
-                //Row 1
+                //Row 3
+                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _spawnProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 4
+                else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 5
+                else if (_biomeMultiSelector.GetFocusHolder().HasFocus())
+                {
+                    _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                }
+                else if (_bossOptionSelector.GetFocusHolder().HasFocus())
+                {
+                    _miniBossOptionSelector.GetFocusHolder().GrabFocus();
+                }
+
+                //Row 6
+                else if (_returnButton.HasFocus())
+                {
+                    _bossOptionSelector.GetFocusHolder().GrabFocus();
+                }
 
                 _inputTimer.Start();
 			}
