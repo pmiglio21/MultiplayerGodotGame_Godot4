@@ -3,16 +3,21 @@ using Globals;
 using Godot;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using Models;
+using Newtonsoft.Json;
 using Root;
+using System;
 using System.Collections.Generic;
 
 namespace Levels.UtilityLevels
 {
 	public partial class GameRulesScreenManager : Control
 	{
-		private RootSceneSwapper _rootSceneSwapper;
+        private RootSceneSwapper _rootSceneSwapper;
 
-		public GameRules CurrentGameRules = new GameRules();
+        private string _rulesetFolderPath = "user://rulesets.txt";   //user: is at %APPDATA%\Godot\app_userdata\[project_name]
+        private List<GameRules> _availableRulesets = new List<GameRules>(); 
+
+        public GameRules CurrentGameRules = new GameRules();
 
 		#region Options
 
@@ -174,6 +179,8 @@ namespace Levels.UtilityLevels
 
             _returnButton = GetNode<GenericButton>("ReturnButton");
 
+            GetAvailableRuleSets();
+
             GrabFocusOfTopButton();
         }
 
@@ -193,7 +200,7 @@ namespace Levels.UtilityLevels
                 //Row 1
                 if (_rulesetNameEdit.GetFocusHolder().HasFocus())
                 {
-                    //Grab textEdit
+                    _rulesetNameEdit.GetTextEditBox().GrabFocus();
                 }
 
                 //Row 2
@@ -245,188 +252,65 @@ namespace Levels.UtilityLevels
                 #region Press Button while focused on XxxxButton
 
                 //Row 1
-                else if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+                if (_addButton.HasFocus())
                 {
-                    _addButton.GrabFocus();
-                }
-                else if (_addButton.HasFocus())
-                {
-                    _loadButton.GrabFocus();
+                    AddRuleSet();
                 }
                 else if (_loadButton.HasFocus())
                 {
-                    _saveButton.GrabFocus();
+                    LoadRuleSet();
                 }
                 else if (_saveButton.HasFocus())
                 {
-                    _deleteButton.GrabFocus();
+                    SaveRuleSet();
                 }
                 else if (_deleteButton.HasFocus())
                 {
-                    _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
+                    DeleteRuleSet();
                 }
 
                 //Row 2
                 else if (_levelSizeButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (CurrentGameRules.LevelSizes.ContainsKey(_levelSizeButton.Text))
-                    {
-                        CurrentGameRules.LevelSizes[_levelSizeButton.Text] = !CurrentGameRules.LevelSizes[_levelSizeButton.Text];
-
-                        if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
-                        {
-                            _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
-                        }
-                        else
-                        {
-                            _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
-                        }
-                    }
+                    OnLevelSizeOptionSelect_OptionButtonPressed();
                 }
                 else if (_spawnProximityButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (CurrentGameRules.SpawnProximityTypes.ContainsKey(_spawnProximityButton.Text))
-                    {
-                        CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text] = !CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text];
-
-                        if (CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text])
-                        {
-                            _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
-                        }
-                        else
-                        {
-                            _spawnProximityMultiSelector.PlayDeactivatedOnOptionSelect();
-                        }
-                    }
+                    OnSpawnProximityOptionSelect_OptionButtonPressed();
                 }
                 else if (_friendlyFireButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (_friendlyFireButton.Text == _offOnOptions[0])
-                    {
-                        _friendlyFireButton.Text = _offOnOptions[1];
-
-                        _friendlyFireButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
-                    }
-                    else
-                    {
-                        _friendlyFireButton.Text = _offOnOptions[0];
-                    }
-
-                    CurrentGameRules.IsFriendlyFireOn = _friendlyFireButton.Text == _offOnOptions[1];
+                    OnFriendlyFireOptionSelector_EitherArrowClicked();
                 }
 
                 //Row 3
                 else if (_numberOfLevelsButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    int numberOfLevels = int.Parse(_numberOfLevelsButton.Text);
-
-                    if (numberOfLevels != 100)
-                    {
-                        _numberOfLevelsButton.Text = (numberOfLevels + 1).ToString();
-                    }
-                    else
-                    {
-                        _numberOfLevelsButton.Text = "1";
-                    }
+                    OnNumberOfLevelsOptionSelector_RightArrowClicked();
                 }
                 else if (_switchProximityButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (CurrentGameRules.SwitchProximityTypes.ContainsKey(_switchProximityButton.Text))
-                    {
-                        CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text] = !CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text];
-
-                        if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
-                        {
-                            _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
-                        }
-                        else
-                        {
-                            _switchProximityMultiSelector.PlayDeactivatedOnOptionSelect();
-                        }
-                    }
+                    OnSwitchProximityOptionSelect_OptionButtonPressed();
                 }
 
                 //Row 4
                 else if (_endlessLevelsButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (_endlessLevelsButton.Text == _offOnOptions[0])
-                    {
-                        _endlessLevelsButton.Text = _offOnOptions[1];
-
-                        _endlessLevelsButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
-                    }
-                    else
-                    {
-                        _endlessLevelsButton.Text = _offOnOptions[0];
-                    }
-
-                    CurrentGameRules.IsEndlessLevelsOn = _endlessLevelsButton.Text == _offOnOptions[1];
+                    OnEndlessLevelsOptionSelector_EitherArrowClicked();
                 }
                 else if (_miniBossButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (_miniBossButton.Text == _offOnOptions[0])
-                    {
-                        _miniBossButton.Text = _offOnOptions[1];
-
-                        _miniBossButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
-                    }
-                    else
-                    {
-                        _miniBossButton.Text = _offOnOptions[0];
-                    }
-
-                    CurrentGameRules.CanMinibossSpawn = _miniBossButton.Text == _offOnOptions[1];
+                    OnMiniBossOptionSelector_EitherArrowClicked();
                 }
 
                 //Row 5
                 else if (_biomeButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (CurrentGameRules.BiomeTypes.ContainsKey(_biomeButton.Text))
-                    {
-                        CurrentGameRules.BiomeTypes[_biomeButton.Text] = !CurrentGameRules.BiomeTypes[_biomeButton.Text];
-
-                        if (CurrentGameRules.BiomeTypes[_biomeButton.Text])
-                        {
-                            _biomeMultiSelector.PlayActivatedOnOptionSelect();
-                        }
-                        else
-                        {
-                            _biomeMultiSelector.PlayDeactivatedOnOptionSelect();
-                        }
-                    }
+                    OnBiomeOptionSelect_OptionButtonPressed();
                 }
                 else if (_bossButton.HasFocus())
                 {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    if (_bossButton.Text == _offOnOptions[0])
-                    {
-                        _bossButton.Text = _offOnOptions[1];
-
-                        _bossButton.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
-                    }
-                    else
-                    {
-                        _bossButton.Text = _offOnOptions[0];
-                    }
-
-                    CurrentGameRules.CanBossSpawn = _bossButton.Text == _offOnOptions[1];
+                    OnBossOptionSelector_EitherArrowClicked();
                 }
                 else if (_returnButton.HasFocus())
 				{
@@ -441,14 +325,8 @@ namespace Levels.UtilityLevels
 			{
                 #region Press Button while focused on XxxxButton
 
-                    //Row 1
-                if (_rulesetNameEdit.GetFocusHolder().HasFocus())
-                {
-                    //_addButton.GrabFocus();
-                }
-
                 //Row 2
-                else if (_levelSizeButton.HasFocus())
+                if (_levelSizeButton.HasFocus())
                 {
                     _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
                 }
@@ -493,7 +371,7 @@ namespace Levels.UtilityLevels
 
                 #endregion
 
-                else if (!_rulesetNameEdit.HasFocus())
+                else if (!_rulesetNameEdit.GetTextEditBox().HasFocus())
 				{
                     ReturnToPriorScene();
                 }
@@ -765,7 +643,7 @@ namespace Levels.UtilityLevels
                     _bossOptionSelector.GetFocusHolder().GrabFocus();
                 }
 
-
+                #region Navigating Options
 
                 //Row 2
                 else if (_levelSizeButton.HasFocus())
@@ -811,6 +689,7 @@ namespace Levels.UtilityLevels
                     OnBossOptionSelector_EitherArrowClicked();
                 }
 
+                #endregion
 
                 _inputTimer.Start();
             }
@@ -916,9 +795,7 @@ namespace Levels.UtilityLevels
                     _biomeMultiSelector.GetFocusHolder().GrabFocus();
                 }
 
-
-
-
+                #region Navigating Options
 
                 //Row 2
                 if (_levelSizeButton.HasFocus())
@@ -963,6 +840,8 @@ namespace Levels.UtilityLevels
                 {
                     OnBossOptionSelector_EitherArrowClicked();
                 }
+
+                #endregion
 
                 _inputTimer.Start();
             }
@@ -1027,6 +906,86 @@ namespace Levels.UtilityLevels
 
 			_rootSceneSwapper.CurrentGameRules = CurrentGameRules;
 		}
+
+        #region Ruleset Modification
+
+        private void GetAvailableRuleSets()
+        {
+            try
+            {
+                using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Read);
+
+                Json json = new Json();
+
+                var currentLine = rulesetFile.GetLine();
+
+                var a = 0;
+                //foreach ()
+                //{
+
+                //}
+
+                //string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+
+                //rulesetFile.StoreLine(serializedRuleset);
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
+        }
+
+        private void AddRuleSet()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
+                {
+                    using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write);
+
+                    string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+
+                    rulesetFile.StoreLine(serializedRuleset);
+
+                    GetAvailableRuleSets();
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
+        }
+
+        private void LoadRuleSet()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
+                {
+                    //using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write);
+
+                    //string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+
+                    //rulesetFile.StoreLine(serializedRuleset);
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
+        }
+
+        private void SaveRuleSet()
+        {
+
+        }
+
+        private void DeleteRuleSet()
+        {
+
+        }
+
+        #endregion
 
         #region Signal Receptions
 

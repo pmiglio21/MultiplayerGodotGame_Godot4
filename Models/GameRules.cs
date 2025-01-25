@@ -5,6 +5,8 @@ namespace Models
 {
     public class GameRules
     {
+        public string RulesetName = string.Empty;
+
         public Dictionary<string, bool> LevelSizes = new Dictionary<string, bool>()
         {
             { "Small", false },

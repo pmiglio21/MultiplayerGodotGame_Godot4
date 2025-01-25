@@ -739,8 +739,8 @@ public partial class BaseDungeonLevel : Node
         }
 		catch (Exception ex)
 		{
-
-		}
+            GD.PushError(ex.Message);
+        }
 	}
 
 	private void DrawWater(TileMapSpace startingTileMapSpace)
