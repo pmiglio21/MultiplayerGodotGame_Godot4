@@ -69,21 +69,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CSharpInstanceBridge.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs",
-              "ToolTip": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs [Read Only]",
-              "ViewState": "AQIAAAYAAAAAAAAAAAArwB0AAAACAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-25T02:43:58.448Z",
-              "EditorCaption": " [Read Only]"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 7,
@@ -108,6 +95,32 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAADMAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-04T17:58:19.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameRulesScreenManager.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
+              "RelativeDocumentMoniker": "Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
+              "RelativeToolTip": "Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
+              "ViewState": "AQIAAMEDAAAAAAAAAAAIwNYDAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T18:29:15.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CSharpInstanceBridge.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs",
+              "ToolTip": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\29571cb66ed879ccf4bb16dd52639aa9b7b064f68a3d12ae03788b3f8b3efc39\\CSharpInstanceBridge.cs [Read Only]",
+              "ViewState": "AQIAAAYAAAAAAAAAAAArwB0AAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T02:43:58.448Z",
+              "EditorCaption": " [Read Only]"
             },
             {
               "$type": "Document",
@@ -145,19 +158,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAALIBAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-09T18:46:44.637Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GameRulesScreenManager.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
-              "RelativeDocumentMoniker": "Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
-              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
-              "RelativeToolTip": "Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
-              "ViewState": "AQIAAIcDAAAAAAAAAAAiwJcDAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T18:29:15.045Z",
               "EditorCaption": ""
             },
             {

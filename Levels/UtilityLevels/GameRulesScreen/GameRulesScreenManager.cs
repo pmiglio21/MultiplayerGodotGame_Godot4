@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Root;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Levels.UtilityLevels
 {
@@ -913,21 +914,24 @@ namespace Levels.UtilityLevels
         {
             try
             {
-                using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Read);
+                if (FileAccess.FileExists(_rulesetFolderPath))
+                {
+                    _availableRulesets.Clear();
 
-                Json json = new Json();
+                    using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Read))
+                    {
+                        var currentLine = rulesetFile.GetLine();
 
-                var currentLine = rulesetFile.GetLine();
+                        while (!string.IsNullOrWhiteSpace(currentLine))
+                        {
+                            GameRules deserializedRuleset = JsonConvert.DeserializeObject<GameRules>(currentLine);
 
-                var a = 0;
-                //foreach ()
-                //{
+                            _availableRulesets.Add(deserializedRuleset);
 
-                //}
-
-                //string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
-
-                //rulesetFile.StoreLine(serializedRuleset);
+                            currentLine = rulesetFile.GetLine();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -941,11 +945,18 @@ namespace Levels.UtilityLevels
             {
                 if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
                 {
-                    using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write);
+                    using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.ReadWrite))
+                    {
+                        CurrentGameRules.RulesetName = _rulesetNameEdit.GetTextEditBox().Text;
 
-                    string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+                        string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
 
-                    rulesetFile.StoreLine(serializedRuleset);
+                        //Forces the file writer to write at the end of the file instead of the beginning.
+                        //Necessary to call or else the file's first line will be overwritten by StoreLine.
+                        rulesetFile.SeekEnd();
+
+                        rulesetFile.StoreLine(serializedRuleset);
+                    }
 
                     GetAvailableRuleSets();
                 }
@@ -962,11 +973,20 @@ namespace Levels.UtilityLevels
             {
                 if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
                 {
-                    //using var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write);
+                    CurrentGameRules = _availableRulesets.FirstOrDefault(x => x.RulesetName == _rulesetNameEdit.GetTextEditBox().Text);
 
-                    //string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+                    var isCurrentLevelSizeOptionSelected = CurrentGameRules.LevelSizes.FirstOrDefault(x => x.Key == _levelSizeButton.Text).Value;
 
-                    //rulesetFile.StoreLine(serializedRuleset);
+                    if (isCurrentLevelSizeOptionSelected)
+                    {
+                        _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                    }
+                    else
+                    {
+                        _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                    }
+                    
+
                 }
             }
             catch (Exception ex)
