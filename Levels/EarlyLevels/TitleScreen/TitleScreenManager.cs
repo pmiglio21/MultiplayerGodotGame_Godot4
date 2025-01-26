@@ -40,11 +40,15 @@ namespace Levels.EarlyLevels
 			
 			_inputTimer = FindChild("InputTimer") as Timer;
 			_playButton = FindChild("PlayButton") as Button;
-			_gameRulesButton = FindChild("GameRulesButton") as Button;
-			_settingsButton = FindChild("SettingsButton") as Button;
-			_quitGameButton = FindChild("QuitGameButton") as Button;
+			_playButton.Pressed += OnGoToPlayerCharacterSelectScreen;
+            _gameRulesButton = FindChild("GameRulesButton") as Button;
+            _gameRulesButton.Pressed += OnGoToGameRulesScreen;
+            _settingsButton = FindChild("SettingsButton") as Button;
+            _settingsButton.Pressed += OnGoToSettingsScreen;
+            _quitGameButton = FindChild("QuitGameButton") as Button;
+            _quitGameButton.Pressed += OnQuitGame;
 
-			_playButton.GrabFocus();
+            _playButton.GrabFocus();
 		}
 
 		public override void _Process(double delta)
@@ -60,29 +64,19 @@ namespace Levels.EarlyLevels
 			{
 				if (_playButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-
-					EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
-				}
+					OnGoToPlayerCharacterSelectScreen();
+                }
 				else if (_gameRulesButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-
-					_rootSceneSwapper.PriorSceneName = ScreenNames.Title;
-
-					EmitSignal(SignalName.GoToGameRulesScreen);
-				}
+					OnGoToGameRulesScreen();
+                }
 				else if (_settingsButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-
-					EmitSignal(SignalName.GoToSettingsScreen);
+					OnGoToSettingsScreen();
 				}
 				else if (_quitGameButton.HasFocus())
 				{
-					_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
-
-					EmitSignal(SignalName.QuitGame);
+                    OnQuitGame();
 				}
 			}
 		}
@@ -141,5 +135,37 @@ namespace Levels.EarlyLevels
 		{
 			_playButton.GrabFocus();
 		}
-	}
+
+		private void OnGoToPlayerCharacterSelectScreen()
+		{
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+
+            EmitSignal(SignalName.GoToPlayerCharacterSelectScreen);
+        }
+
+        private void OnGoToGameRulesScreen()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+
+            _rootSceneSwapper.PriorSceneName = ScreenNames.Title;
+
+            EmitSignal(SignalName.GoToGameRulesScreen);
+        }
+
+
+        private void OnGoToSettingsScreen()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+
+            EmitSignal(SignalName.GoToSettingsScreen);
+        }
+
+
+        private void OnQuitGame()
+        {
+            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
+
+            EmitSignal(SignalName.QuitGame);
+        }
+    }
 }
