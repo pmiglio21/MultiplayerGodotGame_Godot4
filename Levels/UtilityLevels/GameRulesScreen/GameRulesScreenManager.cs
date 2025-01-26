@@ -126,12 +126,16 @@ namespace Levels.UtilityLevels
             _rulesetNameEdit.GetFocusHolder().FocusExited += _rulesetNameEdit.PlayLoseFocusAnimation;
 
             _addButton = GetNode<GenericButton>("AddRulesetButton");
+            _addButton.Pressed += AddRuleSet;
 
             _loadButton = GetNode<GenericButton>("LoadRulesetButton");
+            _loadButton.Pressed += LoadRuleSet;
 
             _saveButton = GetNode<GenericButton>("SaveRulesetButton");
+            _saveButton.Pressed += SaveRuleSet;
 
             _deleteButton = GetNode<GenericButton>("DeleteRulesetButton");
+            _deleteButton.Pressed += DeleteRuleSet;
 
             _levelSizeMultiSelector = GetNode<OptionSelectorMultiSelect>("LevelSizeOptionSelectorMultiSelect");
             _levelSizeMultiSelector.GetFocusHolder().FocusEntered += _levelSizeMultiSelector.PlayOnFocusAnimation;
@@ -381,11 +385,32 @@ namespace Levels.UtilityLevels
 
 		private void GetNavigationInput()
 		{
+            
+            if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Enter))
+            {
+                //Enter into text edit
+                if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+                {
+                    _rulesetNameEdit.GetTextEditBox().GrabFocus();
+                }
+            }
+            else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Escape))
+            {
+                //Exit text edit
+                if (_rulesetNameEdit.GetTextEditBox().HasFocus())
+                {
+                    _rulesetNameEdit.GetFocusHolder().GrabFocus();
+                }
+            }
             //Go forward
-            if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && !Input.IsKeyPressed(Key.Shift))
+            else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && !Input.IsKeyPressed(Key.Shift))
 			{
                 //Row 1
                 if (_rulesetNameEdit.GetFocusHolder().HasFocus())
+                {
+                    _addButton.GrabFocus();
+                }
+                if (_rulesetNameEdit.GetTextEditBox().HasFocus())
                 {
                     _addButton.GrabFocus();
                 }
@@ -973,20 +998,103 @@ namespace Levels.UtilityLevels
             {
                 if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
                 {
-                    CurrentGameRules = _availableRulesets.FirstOrDefault(x => x.RulesetName == _rulesetNameEdit.GetTextEditBox().Text);
+                    GameRules matchingRuleset = _availableRulesets.FirstOrDefault(x => x.RulesetName == _rulesetNameEdit.GetTextEditBox().Text);
 
-                    var isCurrentLevelSizeOptionSelected = CurrentGameRules.LevelSizes.FirstOrDefault(x => x.Key == _levelSizeButton.Text).Value;
-
-                    if (isCurrentLevelSizeOptionSelected)
+                    if (matchingRuleset != null)
                     {
-                        _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
-                    }
-                    else
-                    {
-                        _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
-                    }
-                    
+                        // Row 2
+                        var isCurrentLevelSizeOptionSelected = matchingRuleset.LevelSizes.FirstOrDefault(x => x.Key == _levelSizeButton.Text).Value;
 
+                        if (isCurrentLevelSizeOptionSelected)
+                        {
+                            _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+                        }
+                        else
+                        {
+                            _levelSizeMultiSelector.PlayDeactivatedOnOptionSelect();
+                        }
+
+                        //Have to set Dictionaries this way instead of CurrentGameRules.LevelSizes = matchingRuleset.LevelSizes,
+                        //because the second way would be setting by reference instead of by value.
+                        CurrentGameRules.LevelSizes = new Dictionary<string, bool>();
+
+                        foreach (KeyValuePair<string, bool> levelSizePair in matchingRuleset.LevelSizes)
+                        {
+                            CurrentGameRules.LevelSizes.Add(levelSizePair.Key, levelSizePair.Value);
+                        }
+
+                        var isCurrentSpawnProximityOptionSelected = matchingRuleset.SpawnProximityTypes.FirstOrDefault(x => x.Key == _spawnProximityButton.Text).Value;
+
+                        if (isCurrentSpawnProximityOptionSelected)
+                        {
+                            _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
+                        }
+                        else
+                        {
+                            _spawnProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                        }
+
+                        CurrentGameRules.SpawnProximityTypes = new Dictionary<string, bool>();
+
+                        foreach (KeyValuePair<string, bool> spawnProximityPair in matchingRuleset.SpawnProximityTypes)
+                        {
+                            CurrentGameRules.SpawnProximityTypes.Add(spawnProximityPair.Key, spawnProximityPair.Value);
+                        }
+
+                        _friendlyFireButton.Text = matchingRuleset.IsFriendlyFireOn ? _offOnOptions[1] : _offOnOptions[0];
+
+                        CurrentGameRules.IsFriendlyFireOn = matchingRuleset.IsFriendlyFireOn;
+
+
+                        //Row 3
+                        _numberOfLevelsButton.Text = matchingRuleset.NumberOfLevels.ToString();
+
+                        var isCurrentSwitchProximityOptionSelected = matchingRuleset.SwitchProximityTypes.FirstOrDefault(x => x.Key == _switchProximityButton.Text).Value;
+
+                        if (isCurrentSwitchProximityOptionSelected)
+                        {
+                            _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
+                        }
+                        else
+                        {
+                            _switchProximityMultiSelector.PlayDeactivatedOnOptionSelect();
+                        }
+
+                        CurrentGameRules.SwitchProximityTypes = new Dictionary<string, bool>();
+
+                        foreach (KeyValuePair<string, bool> switchProximityPair in matchingRuleset.SwitchProximityTypes)
+                        {
+                            CurrentGameRules.SwitchProximityTypes.Add(switchProximityPair.Key, switchProximityPair.Value);
+                        }
+
+
+                        //Row 4
+                        _endlessLevelsButton.Text = matchingRuleset.IsEndlessLevelsOn ? _offOnOptions[1] : _offOnOptions[0];
+
+                        _miniBossButton.Text = matchingRuleset.CanMinibossSpawn ? _offOnOptions[1] : _offOnOptions[0];
+
+
+                        //Row 5
+                        var isCurrentBiomeOptionSelected = matchingRuleset.BiomeTypes.FirstOrDefault(x => x.Key == _biomeButton.Text).Value;
+
+                        if (isCurrentBiomeOptionSelected)
+                        {
+                            _biomeMultiSelector.PlayActivatedOnOptionSelect();
+                        }
+                        else
+                        {
+                            _biomeMultiSelector.PlayDeactivatedOnOptionSelect();
+                        }
+
+                        CurrentGameRules.BiomeTypes = new Dictionary<string, bool>();
+
+                        foreach (KeyValuePair<string, bool> biomeTypePair in matchingRuleset.BiomeTypes)
+                        {
+                            CurrentGameRules.BiomeTypes.Add(biomeTypePair.Key, biomeTypePair.Value);
+                        }
+
+                        _bossButton.Text = matchingRuleset.CanBossSpawn ? _offOnOptions[1] : _offOnOptions[0];
+                    }
                 }
             }
             catch (Exception ex)
@@ -997,12 +1105,76 @@ namespace Levels.UtilityLevels
 
         private void SaveRuleSet()
         {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
+                {
+                    GameRules matchingRuleset = _availableRulesets.FirstOrDefault(x => x.RulesetName == _rulesetNameEdit.GetTextEditBox().Text);
 
+                    if (matchingRuleset != null)
+                    {
+                        matchingRuleset = CurrentGameRules;
+
+                        //Rewrite all available rulesets, with the matching ruleset now updated
+                        using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write))    //Using Write to truncate table, instead of ReadWrite
+                        {
+                            foreach (GameRules ruleset in _availableRulesets)
+                            {
+                                string serializedRuleset = JsonConvert.SerializeObject(ruleset);
+
+                                //Forces the file writer to write at the end of the file instead of the beginning.
+                                //Necessary to call or else the file's first line will be overwritten by StoreLine.
+                                rulesetFile.SeekEnd();
+
+                                rulesetFile.StoreLine(serializedRuleset);
+                            }
+                        }
+
+                        GetAvailableRuleSets();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
         }
 
         private void DeleteRuleSet()
         {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
+                {
+                    GameRules matchingRuleset = _availableRulesets.FirstOrDefault(x => x.RulesetName == _rulesetNameEdit.GetTextEditBox().Text);
 
+                    if (matchingRuleset != null)
+                    {
+                        _availableRulesets.Remove(matchingRuleset);
+
+                        //Rewrite all available rulesets, with the matching ruleset now removed
+                        using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write))   //Using Write to truncate table, instead of ReadWrite
+                        {
+                            foreach (GameRules ruleset in _availableRulesets)
+                            {
+                                string serializedRuleset = JsonConvert.SerializeObject(ruleset);
+
+                                //Forces the file writer to write at the end of the file instead of the beginning.
+                                //Necessary to call or else the file's first line will be overwritten by StoreLine.
+                                rulesetFile.SeekEnd();
+
+                                rulesetFile.StoreLine(serializedRuleset);
+                            }
+                        }
+
+                        GetAvailableRuleSets();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
         }
 
         #endregion

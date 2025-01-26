@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b54hyxbxwixql"]
+[gd_scene load_steps=7 format=3 uid="uid://b54hyxbxwixql"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/TextEdit/TextEditBox.cs" id="1_l1n4s"]
 [ext_resource type="Texture2D" uid="uid://b4tx7uhrm82oc" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton11.png" id="1_x2bwt"]
@@ -7,6 +7,8 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yquo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tmguc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2yilj"]
 
 [node name="TextEditBox" type="Control"]
 layout_mode = 3
@@ -51,4 +53,5 @@ offset_right = 229.0
 offset_bottom = 125.0
 focus_mode = 1
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tmguc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2yilj")
 placeholder_text = "RULESET NAME"
