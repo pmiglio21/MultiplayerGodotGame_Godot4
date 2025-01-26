@@ -1,4 +1,6 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class TextEditBox : Control
 {
@@ -11,6 +13,8 @@ public partial class TextEditBox : Control
         _textureRect = FindChild("TextureRect") as TextureRect;
         _focusHolder = GetNode<Button>("FocusHolder");
         _rulesetNameTextEdit = GetNode<TextEdit>("TextEdit");
+
+        _rulesetNameTextEdit.TextChanged += FilterUnallowedCharactersFromText;
     }
 
 	public override void _Process(double delta)
@@ -26,6 +30,25 @@ public partial class TextEditBox : Control
 	{
 		return _rulesetNameTextEdit;
 	}
+
+    private void FilterUnallowedCharactersFromText()
+    {
+        List<string> unallowedCharacters = new List<string>()
+        {
+             "\n",
+             "\t"
+        };
+
+        foreach(string character in unallowedCharacters)
+        {
+            if (_rulesetNameTextEdit.Text.EndsWith(character))
+            {
+                _rulesetNameTextEdit.Text = _rulesetNameTextEdit.Text.Replace(character, string.Empty);
+
+                break;
+            }
+        }
+    }
 
     public void PlayOnFocusAnimation()
     {
