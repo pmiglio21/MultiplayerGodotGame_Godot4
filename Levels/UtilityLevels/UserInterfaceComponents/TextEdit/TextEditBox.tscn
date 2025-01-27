@@ -55,3 +55,5 @@ focus_mode = 1
 theme_override_styles/normal = SubResource("StyleBoxEmpty_tmguc")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2yilj")
 placeholder_text = "RULESET NAME"
+caret_blink = true
+caret_move_on_right_click = false

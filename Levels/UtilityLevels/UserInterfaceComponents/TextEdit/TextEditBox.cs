@@ -15,6 +15,9 @@ public partial class TextEditBox : Control
         _rulesetNameTextEdit = GetNode<TextEdit>("TextEdit");
 
         _rulesetNameTextEdit.TextChanged += FilterUnallowedCharactersFromText;
+
+        _rulesetNameTextEdit.GetHScrollBar().Scale = new Vector2(0, 0);
+        _rulesetNameTextEdit.GetVScrollBar().Scale = new Vector2(0, 0);
     }
 
 	public override void _Process(double delta)

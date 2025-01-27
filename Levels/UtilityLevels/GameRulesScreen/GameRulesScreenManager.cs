@@ -392,7 +392,14 @@ namespace Levels.UtilityLevels
                 if (_rulesetNameEdit.GetFocusHolder().HasFocus())
                 {
                     _rulesetNameEdit.GetTextEditBox().GrabFocus();
+                    _rulesetNameEdit.GetTextEditBox().SetCaretColumn(_rulesetNameEdit.GetTextEditBox().Text.Length);
                 }
+                else if (_rulesetNameEdit.GetTextEditBox().HasFocus())
+                {
+                    _rulesetNameEdit.GetFocusHolder().GrabFocus();
+                }
+
+                _inputTimer.Start();
             }
             else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Escape))
             {
@@ -401,6 +408,8 @@ namespace Levels.UtilityLevels
                 {
                     _rulesetNameEdit.GetFocusHolder().GrabFocus();
                 }
+
+                _inputTimer.Start();
             }
             //Go forward
             else if (_inputTimer.IsStopped() && Input.IsKeyPressed(Key.Tab) && !Input.IsKeyPressed(Key.Shift))
