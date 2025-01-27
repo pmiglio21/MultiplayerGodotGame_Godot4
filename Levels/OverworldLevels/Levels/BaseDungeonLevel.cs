@@ -2,7 +2,6 @@ using Enums;
 using Globals;
 using Godot;
 using MobileEntities.PlayerCharacters.Scripts;
-using Enums.GameRules;
 using Levels.OverworldLevels.TileMapping;
 using System;
 using System.Collections.Generic;
@@ -65,9 +64,9 @@ public partial class BaseDungeonLevel : Node
 
     #region Selected Game Rules
 
-    public SpawnProximityType SelectedSpawnProximityType;
-    public LevelSize SelectedLevelSize;
-    public BiomeType SelectedBiomeType;
+    public string SelectedSpawnProximityType;
+    public string SelectedLevelSize;
+    public string SelectedBiomeType;
 
     #endregion
 
@@ -92,14 +91,14 @@ public partial class BaseDungeonLevel : Node
         #region Selected GameRules
 
         //TODO: Fix this by looking at the number of ENABLED types of each list of enums
-        //int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
-        //SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes[spawnProximityTypeIndex];
+        int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
+        SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.ElementAt(spawnProximityTypeIndex).Key;
 
-        //int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
-        //SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes[levelSizeIndex];
+        int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
+        SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.ElementAt(levelSizeIndex).Key;
 
-        //int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
-        //SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes[biomeTypeIndex];
+        int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
+        SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.ElementAt(biomeTypeIndex).Key;
 
         #endregion
 
@@ -118,15 +117,15 @@ public partial class BaseDungeonLevel : Node
 
 	private void SetPossibleFloorTiles()
 	{
-        if (SelectedLevelSize == LevelSize.Small)
+        if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
 		{
 			_maxNumberOfTiles = 50;
 		}
-		else if (SelectedLevelSize == LevelSize.Medium)
+		else if (SelectedLevelSize == GlobalConstants.LevelSizeMedium)
 		{
 			_maxNumberOfTiles = 75;
 		}
-		else if (SelectedLevelSize == LevelSize.Large)
+		else if (SelectedLevelSize == GlobalConstants.LevelSizeLarge)
 		{
 			_maxNumberOfTiles = 100;
 		}
@@ -149,7 +148,7 @@ public partial class BaseDungeonLevel : Node
 
     private void RunProceduralPathGeneration()
 	{
-        if (SelectedSpawnProximityType == SpawnProximityType.SuperClose)
+        if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
 		{
 			GenerateSingleSpawnPoint();
 		}
@@ -199,7 +198,7 @@ public partial class BaseDungeonLevel : Node
 		DrawOverviewAndWalls();
 
         //Add water
-        if (SelectedBiomeType == BiomeType.Frost)
+        if (SelectedBiomeType == GlobalConstants.BiomeFrost)
         {
             List<TileMapSpace> possibleWaterSpaces = new List<TileMapSpace>();
 
@@ -242,7 +241,7 @@ public partial class BaseDungeonLevel : Node
 
         #region Spawn Key Objects
 
-        if (SelectedSpawnProximityType == SpawnProximityType.SuperClose)
+        if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
         {
             SpawnPlayersSuperClose();
         }
@@ -850,13 +849,13 @@ public partial class BaseDungeonLevel : Node
         var xAtlasCoord = -1;
         var yAtlasCoord = -1;
 
-        if (SelectedBiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
         {
             atlasId = TileMappingConstants.TileMapCastleFloorAtlasId;
             xAtlasCoord = _rng.RandiRange(0, 3);
             yAtlasCoord = _rng.RandiRange(0, 0);
         }
-        else if (SelectedBiomeType == BiomeType.Frost)
+        else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
         {
             atlasId = TileMappingConstants.TileMapFrostFloorAtlasId;
             xAtlasCoord = _rng.RandiRange(0, 3);
@@ -872,13 +871,13 @@ public partial class BaseDungeonLevel : Node
 
 		int overviewIndex = 0;
 
-        if (SelectedBiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
 		{
             overviewIndex = _rng.RandiRange(0, 3);
 
             overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
         }
-		else if (SelectedBiomeType == BiomeType.Frost)
+		else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
 		{
             overviewIndex = _rng.RandiRange(0, 5);
 
@@ -894,13 +893,13 @@ public partial class BaseDungeonLevel : Node
 
         int wallIndex = 0;
 
-        if (SelectedBiomeType == BiomeType.Castle)
+        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
         {
             wallIndex = _rng.RandiRange(0, 5);
 
             wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{wallIndex}.png") as Texture2D;
         }
-        else if (SelectedBiomeType == BiomeType.Frost)
+        else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
         {
             wallIndex = _rng.RandiRange(0, 2);
 

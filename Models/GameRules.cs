@@ -1,5 +1,4 @@
-﻿using Enums.GameRules;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Models
 {
@@ -9,9 +8,9 @@ namespace Models
 
         public Dictionary<string, bool> LevelSizes = new Dictionary<string, bool>()
         {
-            { "Small", false },
-            { "Medium", false },
-            { "Large", false },
+            { "Small", true },
+            { "Medium", true },
+            { "Large", true },
         };
 
         public int NumberOfLevels = 1;
@@ -20,26 +19,26 @@ namespace Models
 
         public Dictionary<string, bool> BiomeTypes = new Dictionary<string, bool>()
         {
-            { "Castle", false },
-            { "Cave", false },
-            { "Swamp", false },
-            { "Frost", false },
+            { "Castle", true },
+            { "Cave", true },
+            { "Swamp", true },
+            { "Frost", true },
         };
 
         public Dictionary<string, bool> SpawnProximityTypes = new Dictionary<string, bool>()
         {
-            { "Super Close", false },
-            { "Close", false },
-            { "Normal", false },
-            { "Far", false },
+            { "Super Close", true },
+            { "Close", true },
+            { "Normal", true },
+            { "Far", true },
         };
 
         public Dictionary<string, bool> SwitchProximityTypes = new Dictionary<string, bool>()
         {
-            { "Super Close", false },
-            { "Close", false },
-            { "Normal", false },
-            { "Far", false },
+            { "Super Close", true },
+            { "Close", true },
+            { "Normal", true },
+            { "Far", true },
         };
 
         public bool CanMinibossSpawn = false;

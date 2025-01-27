@@ -34,16 +34,9 @@ public partial class NumberSpinner : Control
 		{
 			int newNumber;
 
-			if (_numberSpinnerButton.Text == GlobalConstants.Infinity)
-			{
-				newNumber = 0;
-			}
-			else
-			{
-				newNumber = int.Parse(_numberSpinnerButton.Text);
-			}
+            newNumber = int.Parse(_numberSpinnerButton.Text);
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
+            if (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast))
 			{
 				if (newNumber >= MinNumber)
 				{
@@ -52,10 +45,6 @@ public partial class NumberSpinner : Control
 					if (newNumber <= MaxNumber)
 					{
 						_numberSpinnerButton.Text = newNumber.ToString();
-					}
-					else if (newNumber > MaxNumber && UsesInfinity)
-					{
-						_numberSpinnerButton.Text = GlobalConstants.Infinity;
 					}
 				}
 			}
