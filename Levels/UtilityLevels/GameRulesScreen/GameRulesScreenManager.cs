@@ -889,9 +889,9 @@ namespace Levels.UtilityLevels
 
 		private void ReturnToPriorScene()
 		{
-			//SaveOutGameRules();
+            _rootSceneSwapper.CurrentGameRules = CurrentGameRules;
 
-			if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
+            if (_rootSceneSwapper.PriorSceneName == ScreenNames.Title)
 			{
 				EmitSignal(SignalName.GoToTitleScreen);
 			}

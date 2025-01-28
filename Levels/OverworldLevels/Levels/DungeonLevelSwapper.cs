@@ -33,8 +33,10 @@ public partial class DungeonLevelSwapper : Node
 
 	public override void _Ready()
 	{
-        //_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
-        _pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
+		_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
+		CurrentGameRules = _rootSceneSwapper.CurrentGameRules;
+
+		_pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
 
         _latestSplitScreenManager = GetNode<SplitScreenManager>("SplitScreenManager");

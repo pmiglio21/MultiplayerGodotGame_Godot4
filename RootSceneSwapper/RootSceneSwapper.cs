@@ -114,8 +114,6 @@ namespace Root
 
 		public void OnGameRulesScreenGoToTitleScreen()
 		{
-			this.CurrentGameRules = new GameRules();
-
 			ChangeSceneToTitleScreen(_gameRulesScreenManager);
 		}
 

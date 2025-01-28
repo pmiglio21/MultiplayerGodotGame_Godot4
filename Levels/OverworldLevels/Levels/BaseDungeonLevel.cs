@@ -90,15 +90,11 @@ public partial class BaseDungeonLevel : Node
 
         #region Selected GameRules
 
-        //TODO: Fix this by looking at the number of ENABLED types of each list of enums
-        int spawnProximityTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.Count - 1);
-        SelectedSpawnProximityType = _parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes.ElementAt(spawnProximityTypeIndex).Key;
+        SelectedSpawnProximityType = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes);
 
-        int levelSizeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.Count - 1);
-        SelectedLevelSize = _parentDungeonLevelSwapper.CurrentGameRules.LevelSizes.ElementAt(levelSizeIndex).Key;
+        SelectedLevelSize = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.LevelSizes);
 
-        int biomeTypeIndex = _rng.RandiRange(0, _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.Count - 1);
-        SelectedBiomeType = _parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes.ElementAt(biomeTypeIndex).Key;
+        SelectedBiomeType = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes);
 
         #endregion
 
@@ -1062,4 +1058,21 @@ public partial class BaseDungeonLevel : Node
 	}
 
 	#endregion
+
+    private string SetSelectedType(Dictionary<string, bool> totalTypes)
+    {
+        Dictionary<string, bool> availableTypes = new Dictionary<string, bool>();
+
+        foreach (KeyValuePair<string, bool> typePair in totalTypes)
+        {
+            if (typePair.Value)
+            {
+                availableTypes.Add(typePair.Key, typePair.Value);
+            }
+        }
+
+        int typePairIndex = _rng.RandiRange(0, availableTypes.Count - 1);
+
+        return availableTypes.ElementAt(typePairIndex).Key;
+    }
 }
