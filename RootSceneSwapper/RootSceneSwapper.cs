@@ -257,7 +257,8 @@ namespace Root
 
 			_rootGuiControl.RemoveChild(currentUiScene);
 
-			_gameRulesScreenManager.GrabFocusOfTopButton();
+			_gameRulesScreenManager.SetOptionButtonsWhenEnteringGameRulesScreen();
+            _gameRulesScreenManager.GrabFocusOfTopButton();
 		}
 
 		private void ChangeSceneToSettingsScreen()

@@ -1574,5 +1574,38 @@ namespace Levels.UtilityLevels
         }
 
         #endregion
+
+        public void SetOptionButtonsWhenEnteringGameRulesScreen()
+        {
+            if (CurrentGameRules.LevelSizes[_levelSizeButton.Text])
+            {
+                _levelSizeMultiSelector.PlayActivatedOnOptionSelect();
+            }
+
+            if (CurrentGameRules.SpawnProximityTypes[_spawnProximityButton.Text])
+            {
+                _spawnProximityMultiSelector.PlayActivatedOnOptionSelect();
+            }
+
+            _friendlyFireButton.Text = CurrentGameRules.IsFriendlyFireOn ? _offOnOptions[1] : _offOnOptions[0];
+
+            _numberOfLevelsButton.Text = CurrentGameRules.NumberOfLevels.ToString();
+
+            if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
+            {
+                _switchProximityMultiSelector.PlayActivatedOnOptionSelect();
+            }
+
+            _endlessLevelsButton.Text = CurrentGameRules.IsEndlessLevelsOn ? _offOnOptions[1] : _offOnOptions[0];
+
+            _miniBossButton.Text = CurrentGameRules.CanMinibossSpawn ? _offOnOptions[1] : _offOnOptions[0];
+
+            if (CurrentGameRules.BiomeTypes[_biomeButton.Text])
+            {
+                _biomeMultiSelector.PlayActivatedOnOptionSelect();
+            }
+
+            _bossButton.Text = CurrentGameRules.CanBossSpawn ? _offOnOptions[1] : _offOnOptions[0];
+        }
     }
 }
