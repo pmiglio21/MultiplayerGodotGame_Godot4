@@ -905,43 +905,6 @@ namespace Levels.UtilityLevels
             }
         }
 
-		private void SaveOutGameRules()
-		{
-			//foreach (var enumValue in Enum.GetValues(typeof(BiomeType)))
-			//{
-			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-			//	if (enumDescription != "None" && enumDescription == _biomeTypeSelector.GetOptionButton().Text)
-			//	{
-			//		CurrentGameRules.BiomeType = (BiomeType)enumValue;
-			//	}
-			//}
-
-			//foreach (var enumValue in Enum.GetValues(typeof(RelativePlayerSpawnDistanceType)))
-			//{
-			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-			//	if (enumDescription != "None" && enumDescription == _relativePlayerSpawnDistanceSelector.GetOptionButton().Text)
-			//	{
-			//		CurrentGameRules.CurrentRelativePlayerSpawnDistanceType = (RelativePlayerSpawnDistanceType)enumValue;
-			//	}
-			//}
-
-			//CurrentGameRules.NumberOfLevels = _numberSpinner.GetNumberSpinnerButton().Text;
-
-			//foreach (var enumValue in Enum.GetValues(typeof(LevelSize)))
-			//{
-			//	var enumDescription = UniversalEnumHelper.GetEnumDescription(enumValue);
-
-			//	if (enumDescription != "None" && enumDescription == _levelSizeSelector.GetOptionButton().Text)
-			//	{
-			//		CurrentGameRules.CurrentLevelSize = (LevelSize)enumValue;
-			//	}
-			//}
-
-			_rootSceneSwapper.CurrentGameRules = CurrentGameRules;
-		}
-
         #region Ruleset Modification
 
         private void GetAvailableRuleSets()
@@ -1058,6 +1021,8 @@ namespace Levels.UtilityLevels
                         //Row 3
                         _numberOfLevelsButton.Text = matchingRuleset.NumberOfLevels.ToString();
 
+                        CurrentGameRules.NumberOfLevels = matchingRuleset.NumberOfLevels;
+
                         var isCurrentSwitchProximityOptionSelected = matchingRuleset.SwitchProximityTypes.FirstOrDefault(x => x.Key == _switchProximityButton.Text).Value;
 
                         if (isCurrentSwitchProximityOptionSelected)
@@ -1122,6 +1087,8 @@ namespace Levels.UtilityLevels
 
                     if (matchingRuleset != null)
                     {
+                        CurrentGameRules.RulesetName = _rulesetNameEdit.GetTextEditBox().Text;
+
                         matchingRuleset = CurrentGameRules;
 
                         //Rewrite all available rulesets, with the matching ruleset now updated
@@ -1129,7 +1096,16 @@ namespace Levels.UtilityLevels
                         {
                             foreach (GameRules ruleset in _availableRulesets)
                             {
-                                string serializedRuleset = JsonConvert.SerializeObject(ruleset);
+                                string serializedRuleset = string.Empty;
+
+                                if (ruleset.RulesetName == _rulesetNameEdit.GetTextEditBox().Text)
+                                {
+                                    serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
+                                }
+                                else
+                                {
+                                    serializedRuleset = JsonConvert.SerializeObject(ruleset);
+                                }
 
                                 //Forces the file writer to write at the end of the file instead of the beginning.
                                 //Necessary to call or else the file's first line will be overwritten by StoreLine.
@@ -1277,6 +1253,8 @@ namespace Levels.UtilityLevels
             {
                 _numberOfLevelsButton.Text = "100";
             }
+
+            CurrentGameRules.NumberOfLevels = int.Parse(_numberOfLevelsButton.Text);
         }
 
         private void OnNumberOfLevelsOptionSelector_RightArrowClicked()
@@ -1293,6 +1271,8 @@ namespace Levels.UtilityLevels
             {
                 _numberOfLevelsButton.Text = "1";
             }
+
+            CurrentGameRules.NumberOfLevels = int.Parse(_numberOfLevelsButton.Text);
         }
 
         private void OnEndlessLevelsOptionSelector_EitherArrowClicked()
