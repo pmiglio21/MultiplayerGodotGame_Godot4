@@ -15,7 +15,6 @@ namespace Levels.UtilityLevels
 	{
         private RootSceneSwapper _rootSceneSwapper;
 
-        private string _rulesetFolderPath = "user://rulesets.txt";   //user: is at %APPDATA%\Godot\app_userdata\[project_name]
         private List<GameRules> _availableRulesets = new List<GameRules>(); 
 
         public GameRules CurrentGameRules = new GameRules();
@@ -911,11 +910,11 @@ namespace Levels.UtilityLevels
         {
             try
             {
-                if (FileAccess.FileExists(_rulesetFolderPath))
+                if (FileAccess.FileExists(PersistentFilePaths.RulesetsFilePath))
                 {
                     _availableRulesets.Clear();
 
-                    using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Read))
+                    using (var rulesetFile = FileAccess.Open(PersistentFilePaths.RulesetsFilePath, FileAccess.ModeFlags.Read))
                     {
                         var currentLine = rulesetFile.GetLine();
 
@@ -942,7 +941,7 @@ namespace Levels.UtilityLevels
             {
                 if (!string.IsNullOrWhiteSpace(_rulesetNameEdit.GetTextEditBox().Text))
                 {
-                    using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.ReadWrite))
+                    using (var rulesetFile = FileAccess.Open(PersistentFilePaths.RulesetsFilePath, FileAccess.ModeFlags.ReadWrite))
                     {
                         CurrentGameRules.RulesetName = _rulesetNameEdit.GetTextEditBox().Text;
 
@@ -1092,7 +1091,7 @@ namespace Levels.UtilityLevels
                         matchingRuleset = CurrentGameRules;
 
                         //Rewrite all available rulesets, with the matching ruleset now updated
-                        using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write))    //Using Write to truncate table, instead of ReadWrite
+                        using (var rulesetFile = FileAccess.Open(PersistentFilePaths.RulesetsFilePath, FileAccess.ModeFlags.Write))    //Using Write to truncate table, instead of ReadWrite
                         {
                             foreach (GameRules ruleset in _availableRulesets)
                             {
@@ -1138,7 +1137,7 @@ namespace Levels.UtilityLevels
                         _availableRulesets.Remove(matchingRuleset);
 
                         //Rewrite all available rulesets, with the matching ruleset now removed
-                        using (var rulesetFile = FileAccess.Open(_rulesetFolderPath, FileAccess.ModeFlags.Write))   //Using Write to truncate table, instead of ReadWrite
+                        using (var rulesetFile = FileAccess.Open(PersistentFilePaths.RulesetsFilePath, FileAccess.ModeFlags.Write))   //Using Write to truncate table, instead of ReadWrite
                         {
                             foreach (GameRules ruleset in _availableRulesets)
                             {

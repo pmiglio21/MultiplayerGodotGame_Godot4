@@ -442,7 +442,7 @@ namespace Levels.UtilityLevels
             config.SetValue("Settings", "fullscreen_state", _rootSceneSwapper.CurrentSettings.FullscreenState);
 
             // Save it to a file (overwrite if already exists).
-            var error = config.Save("user://settings.cfg");
+            var error = config.Save(PersistentFilePaths.GameSettingsFilePath);
 
             // If the file didn't load, ignore it.
             if (error != Error.Ok)

@@ -8,6 +8,8 @@ using MobileEntities.PlayerCharacters.Scripts;
 using Scenes.UI.PlayerSelectScene;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace Root
 {
@@ -59,7 +61,7 @@ namespace Root
             _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
 
-			//GetLastSavedGameRules();
+			ReadLastOpenedData();
             LoadOriginalSettings();
         }
 
@@ -253,6 +255,8 @@ namespace Root
 				_gameRulesScreenManager.GoToPlayerCharacterSelectScreen += OnGameRulesScreenGoToPlayerCharacterSelectScreen;
 			}
 
+            _gameRulesScreenManager.CurrentGameRules = CurrentGameRules;
+
 			_rootGuiControl.AddChild(_gameRulesScreenManager);
 
 			_rootGuiControl.RemoveChild(currentUiScene);
@@ -352,6 +356,8 @@ namespace Root
 		{
 			try
 			{
+				SaveOutLastOpenedData();
+
                 //Need this or else game confuses memory while quitting
                 if (IsInstanceValid(_dungeonLevelSwapper) && _dungeonLevelSwapper != null)
                 {
@@ -410,9 +416,60 @@ namespace Root
 
         #region Game Rules
 
-        private void GetLastSavedGameRules()
+        private void SaveOutLastOpenedData()
 		{
+            try
+            {
+                //Rewrite all available rulesets, with the matching ruleset now updated
+                using (FileAccess lastOpenedDataFilePath = FileAccess.Open(PersistentFilePaths.LastOpenedDataFilePath, FileAccess.ModeFlags.Write))    //Using Write to truncate table, instead of ReadWrite
+                {
+                    string serializedRuleset = JsonConvert.SerializeObject(CurrentGameRules);
 
+                    //Forces the file writer to write at the end of the file instead of the beginning.
+                    //Necessary to call or else the file's first line will be overwritten by StoreLine.
+                    lastOpenedDataFilePath.SeekEnd();
+
+                    lastOpenedDataFilePath.StoreLine(serializedRuleset);
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
+        }
+
+        private void ReadLastOpenedData()
+        {
+            try
+            {
+                if (FileAccess.FileExists(PersistentFilePaths.RulesetsFilePath))
+                {
+                    using (FileAccess lastOpenedDataFilePath = FileAccess.Open(PersistentFilePaths.LastOpenedDataFilePath, FileAccess.ModeFlags.Read))
+                    {
+						if (lastOpenedDataFilePath != null)
+						{
+                            var currentLine = lastOpenedDataFilePath.GetLine();
+
+                            while (!string.IsNullOrWhiteSpace(currentLine))
+                            {
+                                GameRules deserializedRuleset = JsonConvert.DeserializeObject<GameRules>(currentLine);
+
+                                if (deserializedRuleset != null)
+                                {
+                                    CurrentGameRules = deserializedRuleset;
+                                    CurrentGameRules.RulesetName = string.Empty;
+                                }
+
+                                currentLine = lastOpenedDataFilePath.GetLine();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GD.PushError(ex.Message);
+            }
         }
 
         #endregion
@@ -426,7 +483,7 @@ namespace Root
 
             // Load data from a file.
             // Found in C:\Users\pmigl\AppData\Roaming\Godot\app_userdata\Multiplayer Godot Game Godot 4
-            Error error = config.Load("user://settings.cfg");
+            Error error = config.Load(PersistentFilePaths.GameSettingsFilePath);
 
             // If the file didn't load, ignore it.
             if (error != Error.Ok)
