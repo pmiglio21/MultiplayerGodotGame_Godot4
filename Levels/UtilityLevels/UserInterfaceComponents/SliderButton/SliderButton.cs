@@ -6,15 +6,20 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
     public partial class SliderButton : Control
     {
         [Export]
-        private int MinimumNumber;
+        private bool _showSliderNumbers = false;
         [Export]
-        private int MaximumNumber;
+        private int _minimumNumber;
+        [Export]
+        private int _maximumNumber;
+        [Export]
+        private double SliderStep;
 
         private Button _focusHolder;
         private HSlider _hSlider;
         private TextureRect _textureRect;
-        private RichTextLabel _minimumNumber;
-        private RichTextLabel _maximumNumber;
+        private RichTextLabel _minimumNumberText;
+        private RichTextLabel _currentValueText;
+        private RichTextLabel _maximumNumberText;
 
         public override void _Ready()
         {
@@ -22,17 +27,33 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
             _hSlider = FindChild("HSlider") as HSlider;
             _textureRect = FindChild("TextureRect") as TextureRect;
 
-            _minimumNumber = FindChild("MinimumNumber") as RichTextLabel;
-            _minimumNumber.Text = MinimumNumber.ToString();
+            _minimumNumberText = FindChild("MinimumNumber") as RichTextLabel;
+            _minimumNumberText.Text = _minimumNumber.ToString();
+            _hSlider.MaxValue = _minimumNumber;
 
-            _maximumNumber = FindChild("MaximumNumber") as RichTextLabel;
-            _maximumNumber.Text = MaximumNumber.ToString();
+            _maximumNumberText = FindChild("MaximumNumber") as RichTextLabel;
+            _maximumNumberText.Text = _maximumNumber.ToString();
+            _hSlider.MaxValue = _maximumNumber;
+
+            _currentValueText = FindChild("CurrentValue") as RichTextLabel;
+
+            _hSlider.Step = SliderStep;
+
+            if (_showSliderNumbers)
+            {
+                _minimumNumberText.Show();
+                _maximumNumberText.Show();
+                _currentValueText.Show();
+            }
+            else
+            {
+                _minimumNumberText.Hide();
+                _maximumNumberText.Hide();
+                _currentValueText.Hide();
+            }
 
             _focusHolder.FocusEntered += PlayOnFocusAnimation;
             _focusHolder.FocusExited += PlayLoseFocusAnimation;
-
-            //_hSlider.FocusEntered += PlayOnFocusAnimation;
-            //_hSlider.FocusExited += PlayLoseFocusAnimation;
 
             _focusHolder.GrabFocus();
         }
@@ -54,6 +75,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         public HSlider GetHSlider()
         {
             return _hSlider;
+        }
+
+        public RichTextLabel GetCurrentValue()
+        {
+            return _currentValueText;
         }
 
         public Button GetFocusHolder()

@@ -73,8 +73,7 @@ namespace Levels.UtilityLevels
         private OptionSelectorMultiSelect _levelSizeMultiSelector;
         private Button _levelSizeButton;
 
-        private OptionSelector _numberOfLevelsOptionSelector;
-        private Button _numberOfLevelsButton;
+        private SliderButton _numberOfLevelsSliderButton;
 
         private OptionSelector _endlessLevelsOptionSelector;
         private Button _endlessLevelsButton;
@@ -141,10 +140,8 @@ namespace Levels.UtilityLevels
             _levelSizeMultiSelector.GetFocusHolder().FocusExited += _levelSizeMultiSelector.PlayLoseFocusAnimation;
             _levelSizeButton = GetNode<Button>("LevelSizeButton");
 
-            _numberOfLevelsOptionSelector = GetNode<OptionSelector>("NumberOfLevelsOptionSelector");
-            _numberOfLevelsOptionSelector.GetFocusHolder().FocusEntered += _numberOfLevelsOptionSelector.PlayOnFocusAnimation;
-            _numberOfLevelsOptionSelector.GetFocusHolder().FocusExited += _numberOfLevelsOptionSelector.PlayLoseFocusAnimation;
-            _numberOfLevelsButton = GetNode<Button>("NumberOfLevelsButton");
+            _numberOfLevelsSliderButton = GetNode<SliderButton>("NumberOfLevelsSliderButton");
+            _numberOfLevelsSliderButton.GetHSlider().ValueChanged += ((double newValue) => OnChanged_NumberOfLevelsSliderButton(_numberOfLevelsSliderButton.GetHSlider().Value));
 
             _endlessLevelsOptionSelector = GetNode<OptionSelector>("EndlessLevelsOptionSelector");
             _endlessLevelsOptionSelector.GetFocusHolder().FocusEntered += _endlessLevelsOptionSelector.PlayOnFocusAnimation;
@@ -222,9 +219,9 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsButton.GrabFocus();
+                    _numberOfLevelsSliderButton.GetHSlider().GrabFocus();
                 }
                 else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
                 {
@@ -288,10 +285,10 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsButton.HasFocus())
-                {
-                    OnNumberOfLevelsOptionSelector_RightArrowClicked();
-                }
+                //else if (_numberOfLevelsSliderButton.GetHSlider().HasFocus())
+                //{
+                //    OnNumberOfLevelsOptionSelector_RightArrowClicked();
+                //}
                 else if (_switchProximityButton.HasFocus())
                 {
                     OnSwitchProximityOptionSelect_OptionButtonPressed();
@@ -344,9 +341,9 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsButton.HasFocus())
+                else if (_numberOfLevelsSliderButton.GetHSlider().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
                 else if (_switchProximityButton.HasFocus())
                 {
@@ -450,11 +447,11 @@ namespace Levels.UtilityLevels
                 }
                 else if (_friendlyFireOptionSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
 
                 //Row 3
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
                     _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
                 }
@@ -523,9 +520,9 @@ namespace Levels.UtilityLevels
                 //Row 3
                 else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
                     _friendlyFireOptionSelector.GetFocusHolder().GrabFocus();
                 }
@@ -585,7 +582,7 @@ namespace Levels.UtilityLevels
                 //Row 2
                 else if (_levelSizeMultiSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
                 else if (_spawnProximityMultiSelector.GetFocusHolder().HasFocus())
                 {
@@ -597,7 +594,7 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
                     _endlessLevelsOptionSelector.GetFocusHolder().GrabFocus();
                 }
@@ -660,7 +657,7 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
                     _switchProximityMultiSelector.GetFocusHolder().GrabFocus();
                 }
@@ -694,10 +691,6 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsButton.HasFocus())
-                {
-                    OnNumberOfLevelsOptionSelector_RightArrowClicked();
-                }
                 else if (_switchProximityButton.HasFocus())
                 {
                     OnSwitchProximityOptionSelectorMultiSelect_RightArrowClicked();
@@ -744,7 +737,7 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsOptionSelector.GetFocusHolder().HasFocus())
+                else if (_numberOfLevelsSliderButton.GetFocusHolder().HasFocus())
                 {
                     _levelSizeMultiSelector.GetFocusHolder().GrabFocus();
                 }
@@ -756,7 +749,7 @@ namespace Levels.UtilityLevels
                 //Row 4
                 else if (_endlessLevelsOptionSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
                 else if (_miniBossOptionSelector.GetFocusHolder().HasFocus())
                 {
@@ -814,7 +807,7 @@ namespace Levels.UtilityLevels
                 //Row 3
                 else if (_switchProximityMultiSelector.GetFocusHolder().HasFocus())
                 {
-                    _numberOfLevelsOptionSelector.GetFocusHolder().GrabFocus();
+                    _numberOfLevelsSliderButton.GetFocusHolder().GrabFocus();
                 }
 
                 //Row 4
@@ -846,10 +839,6 @@ namespace Levels.UtilityLevels
                 }
 
                 //Row 3
-                else if (_numberOfLevelsButton.HasFocus())
-                {
-                    OnNumberOfLevelsOptionSelector_LeftArrowClicked();
-                }
                 else if (_switchProximityButton.HasFocus())
                 {
                     OnSwitchProximityOptionSelectorMultiSelect_LeftArrowClicked();
@@ -1018,7 +1007,7 @@ namespace Levels.UtilityLevels
 
 
                         //Row 3
-                        _numberOfLevelsButton.Text = matchingRuleset.NumberOfLevels.ToString();
+                        _numberOfLevelsSliderButton.GetHSlider().Value = matchingRuleset.NumberOfLevels;
 
                         CurrentGameRules.NumberOfLevels = matchingRuleset.NumberOfLevels;
 
@@ -1238,40 +1227,13 @@ namespace Levels.UtilityLevels
             }
         }
 
-        private void OnNumberOfLevelsOptionSelector_LeftArrowClicked()
+        private void OnChanged_NumberOfLevelsSliderButton(double sliderValue)
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
-            int numberOfLevels = int.Parse(_numberOfLevelsButton.Text);
+            CurrentGameRules.NumberOfLevels = (int)sliderValue;
 
-            if (numberOfLevels != 1)
-            {
-                _numberOfLevelsButton.Text = (numberOfLevels - 1).ToString();
-            }
-            else
-            {
-                _numberOfLevelsButton.Text = "100";
-            }
-
-            CurrentGameRules.NumberOfLevels = int.Parse(_numberOfLevelsButton.Text);
-        }
-
-        private void OnNumberOfLevelsOptionSelector_RightArrowClicked()
-        {
-            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-            int numberOfLevels = int.Parse(_numberOfLevelsButton.Text);
-
-            if (numberOfLevels != 100)
-            {
-                _numberOfLevelsButton.Text = (numberOfLevels + 1).ToString();
-            }
-            else
-            {
-                _numberOfLevelsButton.Text = "1";
-            }
-
-            CurrentGameRules.NumberOfLevels = int.Parse(_numberOfLevelsButton.Text);
+            _numberOfLevelsSliderButton.GetCurrentValue().Text = ((int)sliderValue).ToString();
         }
 
         private void OnEndlessLevelsOptionSelector_EitherArrowClicked()
@@ -1588,7 +1550,8 @@ namespace Levels.UtilityLevels
 
             _friendlyFireButton.Text = CurrentGameRules.IsFriendlyFireOn ? _offOnOptions[1] : _offOnOptions[0];
 
-            _numberOfLevelsButton.Text = CurrentGameRules.NumberOfLevels.ToString();
+            _numberOfLevelsSliderButton.GetHSlider().Value = CurrentGameRules.NumberOfLevels;
+            _numberOfLevelsSliderButton.GetCurrentValue().Text = CurrentGameRules.NumberOfLevels.ToString();
 
             if (CurrentGameRules.SwitchProximityTypes[_switchProximityButton.Text])
             {

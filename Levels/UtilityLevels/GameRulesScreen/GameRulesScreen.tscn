@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://8sccfkiegkvw"]
+[gd_scene load_steps=18 format=3 uid="uid://8sccfkiegkvw"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/GameRulesScreen/GameRulesScreenManager.cs" id="1_gwqco"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_b8ot8"]
@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://eyjgyfrrm6hb" path="res://Levels/EarlyLevels/Fonts/ScreenText/Awake.ttf" id="4_nmvb2"]
 [ext_resource type="PackedScene" uid="uid://b54hyxbxwixql" path="res://Levels/UtilityLevels/UserInterfaceComponents/TextEdit/TextEditBox.tscn" id="4_t17qu"]
 [ext_resource type="Texture2D" uid="uid://lnx1cea4w2hp" path="res://Levels/EarlyLevels/GuiArt/GuiButton/GuiButton13.png" id="6_6xomu"]
+[ext_resource type="PackedScene" uid="uid://dw5444uqbf0as" path="res://Levels/UtilityLevels/UserInterfaceComponents/SliderButton/SliderButton.tscn" id="9_8v3qa"]
 [ext_resource type="Script" path="res://Levels/UtilityLevels/UserInterfaceComponents/GenericButton/GenericButton.cs" id="9_y2p7k"]
 
 [sub_resource type="Theme" id="Theme_udowp"]
@@ -214,12 +215,16 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_q4c8k")
 text = "Small"
 flat = true
 
-[node name="NumberOfLevelsOptionSelector" parent="." instance=ExtResource("2_qmecr")]
+[node name="NumberOfLevelsSliderButton" parent="." instance=ExtResource("9_8v3qa")]
 layout_mode = 1
-offset_left = -568.0
+offset_left = -468.0
 offset_top = -113.0
-offset_right = -140.0
-offset_bottom = 70.0
+offset_right = -468.0
+offset_bottom = -113.0
+_showSliderNumbers = true
+_minimumNumber = 1
+_maximumNumber = 100
+SliderStep = 1.0
 
 [node name="NumberOfLevelsText" type="RichTextLabel" parent="."]
 custom_minimum_size = Vector2(200, 50)
@@ -235,22 +240,6 @@ theme_override_font_sizes/normal_font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ligt2")
 text = "Number of
 Levels"
-
-[node name="NumberOfLevelsButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = -216.0
-offset_top = -27.0
-offset_right = -113.0
-offset_bottom = 36.0
-focus_mode = 1
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
-theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
-theme_override_fonts/font = ExtResource("4_nmvb2")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_q4c8k")
-text = "1"
-flat = true
 
 [node name="EndlessLevelsOptionSelector" parent="." instance=ExtResource("2_qmecr")]
 layout_mode = 1
@@ -541,8 +530,6 @@ GenericButtonTexture = NodePath("../ReturnButtonTexture")
 [connection signal="LeftArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_LeftArrowClicked"]
 [connection signal="OptionButtonPressed" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelect_OptionButtonPressed"]
 [connection signal="RightArrowClicked" from="LevelSizeOptionSelectorMultiSelect" to="." method="OnLevelSizeOptionSelectorMultiSelect_RightArrowClicked"]
-[connection signal="LeftArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_LeftArrowClicked"]
-[connection signal="RightArrowClicked" from="NumberOfLevelsOptionSelector" to="." method="OnNumberOfLevelsOptionSelector_RightArrowClicked"]
 [connection signal="EitherArrowClicked" from="EndlessLevelsOptionSelector" to="." method="OnEndlessLevelsOptionSelector_EitherArrowClicked"]
 [connection signal="LeftArrowClicked" from="BiomeOptionSelectorMultiSelect" to="." method="OnBiomeOptionSelectorMultiSelect_LeftArrowClicked"]
 [connection signal="OptionButtonPressed" from="BiomeOptionSelectorMultiSelect" to="." method="OnBiomeOptionSelect_OptionButtonPressed"]
