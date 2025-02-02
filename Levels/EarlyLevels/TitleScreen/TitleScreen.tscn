@@ -55,7 +55,7 @@ offset_bottom = 63.0
 focus_mode = 1
 theme_override_fonts/font = ExtResource("2_5baj2")
 theme_override_font_sizes/font_size = 40
-text = "Game Rules"
+text = "Rulesets"
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 2

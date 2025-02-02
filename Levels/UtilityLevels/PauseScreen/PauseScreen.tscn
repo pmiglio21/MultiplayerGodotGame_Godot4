@@ -56,13 +56,4 @@ focus_mode = 1
 text = "Quit Game"
 
 [node name="SettingsScreen" parent="." instance=ExtResource("2_dkcpk")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = -80.0
-offset_top = -50.0
-offset_right = -19.0
-offset_bottom = -15.0
+layout_mode = 1

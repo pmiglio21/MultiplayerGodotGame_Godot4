@@ -29,6 +29,5 @@ offset_right = 1156.0
 
 [node name="PauseScreen" parent="." instance=ExtResource("3_srn8q")]
 visible = false
-z_index = 5
 layout_mode = 2
 anchors_preset = 0

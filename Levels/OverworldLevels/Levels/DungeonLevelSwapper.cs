@@ -74,33 +74,44 @@ public partial class DungeonLevelSwapper : Node
 
 	private void ResetSplitScreenManager()
 	{
-		var currentSplitScreenManager = GetTree().GetNodesInGroup("SplitScreenManager").FirstOrDefault() as SplitScreenManager;
-
-		var nextSplitScreenManager = GD.Load<PackedScene>(LevelScenePaths.SplitScreenManagerPath).Instantiate();
-
-		//Remove player node from original SplitScreenManager
-		foreach (var player in ActivePlayers)
+		try
 		{
-			player.IsWaitingForNextLevel = false;
+            var currentSplitScreenManager = GetTree().GetNodesInGroup("SplitScreenManager").FirstOrDefault() as SplitScreenManager;
 
-			var parent = player.GetParent();
+            var nextSplitScreenManager = GD.Load<PackedScene>(LevelScenePaths.SplitScreenManagerPath).Instantiate();
 
-			parent.RemoveChild(player);
+            //Remove player node from original SplitScreenManager
+            foreach (var player in ActivePlayers)
+            {
+                player.IsWaitingForNextLevel = false;
+
+                var parent = player.GetParent();
+
+                parent.RemoveChild(player);
+            }
+
+			//Vector2 pauseScreenManagerOriginalGlobalPosition = _pauseScreenManager.GlobalPosition;
+
+			this.AddChild(nextSplitScreenManager);
+
+            //Remove pause screen node from original SplitScreenManager
+            _pauseScreenManager.Reparent(nextSplitScreenManager);
+
+            _latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
+
+            _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+            _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
+
+            var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+            currentDungeonLevel.QueueFree();
+            currentSplitScreenManager.QueueFree();
+
+			//_pauseScreenManager.GlobalPosition = pauseScreenManagerOriginalGlobalPosition;
 		}
-
-        //Remove pause screen node from original SplitScreenManager
-        _pauseScreenManager.Reparent(nextSplitScreenManager);
-
-		this.AddChild(nextSplitScreenManager);
-
-		_latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
-
-        _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
-        _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
-
-		var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
-		currentDungeonLevel.QueueFree();
-        currentSplitScreenManager.QueueFree();
+		catch (Exception ex)
+		{
+			GD.PrintErr(ex);
+		}
 	}
 
 	private void ChangeScreenToTitleScreen()

@@ -67,6 +67,7 @@ theme_override_font_sizes/normal_font_size = 30
 text = "0"
 
 [node name="CurrentValue" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 291.0
 offset_top = 79.0
 offset_right = 329.0
@@ -77,6 +78,7 @@ theme_override_font_sizes/normal_font_size = 30
 text = "50"
 
 [node name="MaximumNumber" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 346.0
 offset_top = 127.0
 offset_right = 406.0
