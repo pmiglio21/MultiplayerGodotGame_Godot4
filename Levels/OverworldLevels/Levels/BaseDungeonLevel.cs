@@ -27,6 +27,8 @@ public partial class BaseDungeonLevel : Node
     private Dictionary<Vector2I, int> _possibleIndicesByFloorPositions = new Dictionary<Vector2I, int>();
     private Dictionary<Vector2I, TileMapSpace> _possibleTileMapSpacesByFloorPosition = new Dictionary<Vector2I, TileMapSpace>();
 
+    private List<TileMapSpace> _spawnPoints = new List<TileMapSpace>();
+
     private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
 	private int _maxNumberOfTiles = 0;
@@ -40,6 +42,7 @@ public partial class BaseDungeonLevel : Node
 	#region Key Level Object Generation
 
 	private PackedScene _portalScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/Portal/Portal.tscn");
+    private Vector2 _portalGlobalPosition;
 
 	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
 
@@ -65,6 +68,7 @@ public partial class BaseDungeonLevel : Node
     #region Selected Game Rules
 
     public string SelectedSpawnProximityType;
+    public string SelectedSwitchProximityType;
     public string SelectedLevelSize;
     public string SelectedBiomeType;
 
@@ -92,6 +96,8 @@ public partial class BaseDungeonLevel : Node
 
         SelectedSpawnProximityType = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.SpawnProximityTypes);
 
+        SelectedSwitchProximityType = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.SwitchProximityTypes);
+
         SelectedLevelSize = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.LevelSizes);
 
         SelectedBiomeType = SetSelectedType(_parentDungeonLevelSwapper.CurrentGameRules.BiomeTypes);
@@ -102,10 +108,10 @@ public partial class BaseDungeonLevel : Node
 
 		RunProceduralPathGeneration();
 
-		while (_enemyCount < _enemyCountMax)
-		{
-			SpawnEnemy();
-		}	 
+		//while (_enemyCount < _enemyCountMax)
+		//{
+		//	SpawnEnemy();
+		//}	 
 		_enemyRespawnTimer.Start();
 	}
 
@@ -288,9 +294,10 @@ public partial class BaseDungeonLevel : Node
         newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
 
         newSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-        newSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
+        newSpawnPoint_TileMapSpace.LastNumberToClearSpace = playerNumber;
+        newSpawnPoint_TileMapSpace.SpawnPointNumber = playerNumber;
 
-        _possibleTileMapSpacesByFloorPosition[newSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
+        _possibleTileMapSpacesByFloorPosition[newSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = playerNumber;
 
         var richTextLabel = newSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
         richTextLabel.Text = playerNumber.ToString();
@@ -321,9 +328,9 @@ public partial class BaseDungeonLevel : Node
 
                 nearSpawnPoint_TileMapSpace.IsAdjacentToSpawnPoint = true;
                 nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-                nearSpawnPoint_TileMapSpace.NumberOfSpawnPointWhoClearedIt = playerNumber;
+                nearSpawnPoint_TileMapSpace.SpawnPointNumber = playerNumber;
 
-                _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = playerNumber;
+                _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = playerNumber;
 
                 var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
                 rtl.Text = playerNumber.ToString();
@@ -331,6 +338,8 @@ public partial class BaseDungeonLevel : Node
                 DrawOnTileMap(nearSpawnPoint_TileMapSpace.TileMapPosition);
             }
         }
+
+        _spawnPoints.Add(newSpawnPoint_TileMapSpace);
     }
 
     private void GenerateMultipleSpawnPoints()
@@ -429,21 +438,21 @@ public partial class BaseDungeonLevel : Node
                             nextWalk_TileMapSpace.InteriorBlock.QueueFree();
 						}
 
-						var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
+						var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.LastNumberToClearSpace;
 
 						walkingFloorSpace = nextWalk_TileMapSpace;
-						walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
+						walkingFloorSpace.LastNumberToClearSpace = startingSpawnPoint.LastNumberToClearSpace;
 
 
-                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = startingSpawnPoint.NumberOfSpawnPointWhoClearedIt;
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = startingSpawnPoint.LastNumberToClearSpace;
 
                         var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-						rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+						rtl.Text = walkingFloorSpace.LastNumberToClearSpace.ToString();
 
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
                         if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.NumberOfSpawnPointWhoClearedIt)
+							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.LastNumberToClearSpace)
 						{
 							break;
 						}
@@ -589,15 +598,15 @@ public partial class BaseDungeonLevel : Node
                             nextWalk_TileMapSpace.InteriorBlock.QueueFree();
                         }
 
-                        var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.NumberOfSpawnPointWhoClearedIt;
+                        var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.LastNumberToClearSpace;
 
                         walkingFloorSpace = nextWalk_TileMapSpace;
-                        walkingFloorSpace.NumberOfSpawnPointWhoClearedIt = 99;
+                        walkingFloorSpace.LastNumberToClearSpace = 99;
 
-                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].NumberOfSpawnPointWhoClearedIt = 99;
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = 99;
 
                         var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-                        rtl.Text = walkingFloorSpace.NumberOfSpawnPointWhoClearedIt.ToString();
+                        rtl.Text = walkingFloorSpace.LastNumberToClearSpace.ToString();
 
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
@@ -674,7 +683,7 @@ public partial class BaseDungeonLevel : Node
 
                         newWall_TileMapSpace = CreateDefaultTileMapSpace(adjacentFloorSpacePosition, TileMapSpaceType.Overview);
 
-						newWall_TileMapSpace.NumberOfSpawnPointWhoClearedIt = 90;
+						newWall_TileMapSpace.LastNumberToClearSpace = 90;
 
                         //Can't add to list of TileMapSpaces-by-FloorPosition because it will alter the enumeration we're looping through
 
@@ -706,7 +715,7 @@ public partial class BaseDungeonLevel : Node
                     Vector2I northBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X, wallTileMapSpace.TileMapPosition.Y - 1);
 
                     if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) ||
-                        (_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) && _possibleTileMapSpacesByFloorPosition[northBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
+                        (_possibleTileMapSpacesByFloorPosition.ContainsKey(northBlockPosition) && _possibleTileMapSpacesByFloorPosition[northBlockPosition].LastNumberToClearSpace != 90)) &&
                         allAdjacentFloorSpacePositions.Any(x => x == northBlockPosition))
                     {
                         var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
@@ -721,7 +730,7 @@ public partial class BaseDungeonLevel : Node
                 {
                     Vector2I southBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X, wallTileMapSpace.TileMapPosition.Y + 1);
 
-                    if (((_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].NumberOfSpawnPointWhoClearedIt != 90)) &&
+                    if (((_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].LastNumberToClearSpace != 90)) &&
                         allAdjacentFloorSpacePositions.Any(x => x == southBlockPosition))
                     {
                         var interiorBlockSprite = wallTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
@@ -806,6 +815,7 @@ public partial class BaseDungeonLevel : Node
         }
     }
 
+    //TODO: Verify that it only returns adjacents that aren't out of bounds... when necessary
     private List<Vector2I> GetAllAdjacentFloorSpacePositions(Vector2I centralFloorSpacePosition)
 	{
         List<Vector2I> adjacentFloorSpaces = new List<Vector2I>();
@@ -928,19 +938,58 @@ public partial class BaseDungeonLevel : Node
 
 		//Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
 		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
-	}
+
+        _portalGlobalPosition = portal.GlobalPosition;
+
+    }
 
 	private void GenerateSwitches() 
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < _parentDungeonLevelSwapper.ActivePlayers.Count; i++)
 		{
 			var tempPortalSwitch = _portalSwitchScene.Instantiate();
 			var portalSwitch = tempPortalSwitch as Node2D;
 			AddChild(portalSwitch);
 
-			var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
+            var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
 
-			portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+            //portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+
+
+            if (SelectedSwitchProximityType == GlobalConstants.SwitchProximitySuperClose)
+            {
+                var spawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == i);
+
+                var spawnPointTileMapPosition = spawnPoint.TileMapPosition;
+
+                var spawnPointAdjacentTileMapPositions = GetAllAdjacentFloorSpacePositions(spawnPointTileMapPosition);
+
+                var spawnPointAdjacentTileMapSpaces = new List<TileMapSpace>();
+
+                foreach(Vector2I adjacentTileMapPosition in spawnPointAdjacentTileMapPositions)
+                {
+                    TileMapSpace adjacentTileMapSpace = _possibleTileMapSpacesByFloorPosition[adjacentTileMapPosition];
+
+                    if (adjacentTileMapSpace.InteriorBlock.IsQueuedForDeletion() && adjacentTileMapSpace.ActualGlobalPosition != _portalGlobalPosition)
+                    {
+                        spawnPointAdjacentTileMapSpaces.Add(adjacentTileMapSpace);
+                    }
+                }
+
+                portalSwitch.GlobalPosition = spawnPointAdjacentTileMapSpaces[_rng.RandiRange(0, spawnPointAdjacentTileMapSpaces.Count - 1)].ActualGlobalPosition;
+            }
+            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
+            {
+
+            }
+            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityNormal)
+            {
+
+            }
+            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityFar)
+            {
+
+            }
 		}
 	}
 
@@ -1016,7 +1065,7 @@ public partial class BaseDungeonLevel : Node
             _enemyCount = GetTree().GetNodesInGroup("Enemy").Count;
         }
 
-		SpawnEnemies();
+		//SpawnEnemies();
 	}
 
 	#region Enemy Generation

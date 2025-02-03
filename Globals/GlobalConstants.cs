@@ -18,7 +18,7 @@ namespace Globals
 
         #region Spawn Proximity
 
-        public const string SpawnProximitySuperClose = "SuperClose";
+        public const string SpawnProximitySuperClose = "Super Close";
         public const string SpawnProximityClose = "Close";
         public const string SpawnProximityNormal = "Normal";
         public const string SpawnProximityFar = "Far";
@@ -27,7 +27,7 @@ namespace Globals
 
         #region Switch Proximity
 
-        public const string SwitchProximitySuperClose = "SuperClose";
+        public const string SwitchProximitySuperClose = "Super Close";
         public const string SwitchProximityClose = "Close";
         public const string SwitchProximityNormal = "Normal";
         public const string SwitchProximityFar = "Far";

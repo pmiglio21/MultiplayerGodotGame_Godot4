@@ -9,9 +9,11 @@ public partial class TileMapSpace
 
     public bool IsAdjacentToSpawnPoint = false;
 
-    public int NumberOfSpawnPointWhoClearedIt = -1;
+    public int LastNumberToClearSpace = -1;
 
-	public Node2D TestText = null;
+    public int SpawnPointNumber = -1;
+
+    public Node2D TestText = null;
 
 	public Vector2I TileMapPosition = Vector2I.Zero;
 
