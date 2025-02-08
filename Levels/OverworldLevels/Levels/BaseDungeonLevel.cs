@@ -976,29 +976,103 @@ public partial class BaseDungeonLevel : Node
         }
         else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
         {
-            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles *.25f));
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles *.15f), Mathf.Floor(_maxNumberOfTiles * .2f));
         }
         else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityNormal)
         {
-            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .5f));
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .3f), Mathf.Floor(_maxNumberOfTiles * .45f));
         }
         else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityFar)
         {
-            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .75f));
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .45f), Mathf.Floor(_maxNumberOfTiles * .6f));
         }
 	}
 
-    private void SetSwitchPositions(float minDistanceFromPlayer)
+    private void SetSwitchPositions(float minDistanceFromSpawnPoint, float maxDistanceFromSpawnPoint)
     {
-        //for (int i = 0; i < _spawnPoints.Count; i++)
-        //{
+        var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null;
+        var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null;
+        var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null;
+        var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null;
 
-        //}
+        foreach (TileMapSpace currentTileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
+        {
+             if (!firstSpawnPointSatisfied)
+             {
+                 float distanceBetweenFirstSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[0].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
 
-       foreach (KeyValuePair<Vector2I,TileMapSpace> pair in _possibleTileMapSpacesByFloorPosition)
-       {
+                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                     && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                     && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                 {
+                     var tempPortalSwitch = _portalSwitchScene.Instantiate();
+                     var portalSwitch = tempPortalSwitch as Node2D;
+                     AddChild(portalSwitch);
 
-       }
+                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+                     firstSpawnPointSatisfied = true;
+                 }
+             }
+
+             if (!secondSpawnPointSatisfied)
+             {
+                 float distanceBetweenSecondSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[1].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+
+                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                     && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                     && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                 {
+                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
+                    var portalSwitch = tempPortalSwitch as Node2D;
+                    AddChild(portalSwitch);
+
+                    portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                    secondSpawnPointSatisfied = true;
+                 }
+             }
+
+             if (!thirdSpawnPointSatisfied)
+             {
+                 float distanceBetweenThirdSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[2].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+
+                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                     && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                     && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                 {
+                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
+                    var portalSwitch = tempPortalSwitch as Node2D;
+                    AddChild(portalSwitch);
+
+                    portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                    thirdSpawnPointSatisfied = true;
+                 }
+             }
+
+             if (!fourthSpawnPointSatisfied)
+             {
+                 float distanceBetweenFourthSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[3].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+
+                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                     && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                     && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                 {
+                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
+                    var portalSwitch = tempPortalSwitch as Node2D;
+                    AddChild(portalSwitch);
+
+                    portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+                    fourthSpawnPointSatisfied = true;
+                 }
+             }
+
+
+             if (firstSpawnPointSatisfied && secondSpawnPointSatisfied && thirdSpawnPointSatisfied && fourthSpawnPointSatisfied)
+             {
+                 break;
+             }
+        }
     }
 
 	#endregion
