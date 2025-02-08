@@ -436,6 +436,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					//GD.Print("!IsInPortal");
 					isInPortal = false;
+					IsWaitingForNextLevel = false;
 					_portalWaitTimer = 0;
 				}
 			}

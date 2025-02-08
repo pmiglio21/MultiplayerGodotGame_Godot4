@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MobileEntities.Enemies.Scripts;
 using Root;
+using Levels.OverworldLevels.KeyLevelObjects;
 
 public partial class BaseDungeonLevel : Node
 {
@@ -18,6 +19,9 @@ public partial class BaseDungeonLevel : Node
 
     [Signal]
     public delegate void GoToGameOverScreenEventHandler();
+
+    [Signal]
+    public delegate void ResetBaseDungeonLevelEventHandler();
 
     #endregion
 
@@ -42,15 +46,16 @@ public partial class BaseDungeonLevel : Node
 	#region Key Level Object Generation
 
 	private PackedScene _portalScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/Portal/Portal.tscn");
-    private Vector2 _portalGlobalPosition;
+    private Portal _portal;
 
 	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
+    private List<PortalSwitch> _portalSwitches = new List<PortalSwitch>();
 
-	#endregion
+    #endregion
 
-	#region Enemy Generation
+    #region Enemy Generation
 
-	private int _enemyCountMax = 5;
+    private int _enemyCountMax = 5;
 	private int _enemyCount = 0;
 
 	#endregion
@@ -106,7 +111,7 @@ public partial class BaseDungeonLevel : Node
 
         SetPossibleFloorTiles();
 
-		RunProceduralPathGeneration();
+        RunProceduralDungeonGeneration();
 
 		//while (_enemyCount < _enemyCountMax)
 		//{
@@ -148,7 +153,7 @@ public partial class BaseDungeonLevel : Node
 
     #endregion
 
-    private void RunProceduralPathGeneration()
+    private void RunProceduralDungeonGeneration()
 	{
         if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
 		{
@@ -931,16 +936,13 @@ public partial class BaseDungeonLevel : Node
 	private void GeneratePortal() 
 	{
 		var tempPortal = _portalScene.Instantiate();
-		var portal = tempPortal as Node2D;
-		AddChild(portal);
+		_portal = tempPortal as Portal;
+		AddChild(_portal);
 
 		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
 
-		//Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
-		portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
-
-        _portalGlobalPosition = portal.GlobalPosition;
-
+        //Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
+        _portal.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
     }
 
 	private void GenerateSwitches() 
@@ -965,7 +967,7 @@ public partial class BaseDungeonLevel : Node
                 {
                     TileMapSpace adjacentTileMapSpace = _possibleTileMapSpacesByFloorPosition[adjacentTileMapPosition];
 
-                    if (adjacentTileMapSpace.InteriorBlock.IsQueuedForDeletion() && adjacentTileMapSpace.ActualGlobalPosition != _portalGlobalPosition)
+                    if (adjacentTileMapSpace.InteriorBlock.IsQueuedForDeletion() && adjacentTileMapSpace.ActualGlobalPosition != _portal.GlobalPosition)
                     {
                         spawnPointAdjacentTileMapSpaces.Add(adjacentTileMapSpace);
                     }
@@ -986,6 +988,11 @@ public partial class BaseDungeonLevel : Node
         {
             SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .45f), Mathf.Floor(_maxNumberOfTiles * .6f));
         }
+
+        foreach (PortalSwitch portalSwitch in _portalSwitches)
+        {
+            portalSwitch.SwitchActivated += CheckToActivatePortal; 
+        }
 	}
 
     private void SetSwitchPositions(float minDistanceFromSpawnPoint, float maxDistanceFromSpawnPoint)
@@ -1005,12 +1012,14 @@ public partial class BaseDungeonLevel : Node
                      && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
                      && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
                  {
-                     var tempPortalSwitch = _portalSwitchScene.Instantiate();
-                     var portalSwitch = tempPortalSwitch as Node2D;
-                     AddChild(portalSwitch);
+                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
+                    AddChild(portalSwitch);
 
                      portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
-                     firstSpawnPointSatisfied = true;
+
+                    _portalSwitches.Add(portalSwitch);
+
+                    firstSpawnPointSatisfied = true;
                  }
              }
 
@@ -1022,11 +1031,12 @@ public partial class BaseDungeonLevel : Node
                      && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
                      && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
                  {
-                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
-                    var portalSwitch = tempPortalSwitch as Node2D;
+                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
                     AddChild(portalSwitch);
 
                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                    _portalSwitches.Add(portalSwitch);
 
                     secondSpawnPointSatisfied = true;
                  }
@@ -1040,11 +1050,12 @@ public partial class BaseDungeonLevel : Node
                      && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
                      && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
                  {
-                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
-                    var portalSwitch = tempPortalSwitch as Node2D;
+                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
                     AddChild(portalSwitch);
 
                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                    _portalSwitches.Add(portalSwitch);
 
                     thirdSpawnPointSatisfied = true;
                  }
@@ -1058,11 +1069,13 @@ public partial class BaseDungeonLevel : Node
                      && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
                      && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
                  {
-                    var tempPortalSwitch = _portalSwitchScene.Instantiate();
-                    var portalSwitch = tempPortalSwitch as Node2D;
+                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
                     AddChild(portalSwitch);
 
                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                    _portalSwitches.Add(portalSwitch);
+
                     fourthSpawnPointSatisfied = true;
                  }
              }
@@ -1075,11 +1088,21 @@ public partial class BaseDungeonLevel : Node
         }
     }
 
-	#endregion
+    private void CheckToActivatePortal()
+    {
+        if (_portalSwitches.All(x => x.IsSwitchActivated))
+        {
+            _portal.IsPortalActivated = true;
 
-	#region Direction-Changing Utility Methods
+            EmitSignal(SignalName.ResetBaseDungeonLevel);
+        }
+    }
 
-	private int SetRandomChangeInDirection(int weightedValue = 1)
+    #endregion
+
+    #region Direction-Changing Utility Methods
+
+    private int SetRandomChangeInDirection(int weightedValue = 1)
 	{
 		var randChance = _rng.RandfRange(0, 1);
 

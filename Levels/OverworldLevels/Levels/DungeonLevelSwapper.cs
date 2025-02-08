@@ -30,8 +30,10 @@ public partial class DungeonLevelSwapper : Node
     public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 
     private int _levelCounter = 0;
+    private bool _allSwitchesActivated = false;
 
-	public override void _Ready()
+
+    public override void _Ready()
 	{
 		_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 		CurrentGameRules = _rootSceneSwapper.CurrentGameRules;
@@ -43,34 +45,28 @@ public partial class DungeonLevelSwapper : Node
 
 		_latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
 		_latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
+        _latestBaseDungeonLevel.ResetBaseDungeonLevel += () => _allSwitchesActivated = true;
 	}
 
 	public override void _Process(double delta)
 	{
-		if (_levelCounter < CurrentGameRules.NumberOfLevels)
-		{
-			if (ActivePlayers.All(x => x.IsWaitingForNextLevel))
-			{
-				_levelCounter++;
+        if (_levelCounter < CurrentGameRules.NumberOfLevels)
+        {
+            if (_allSwitchesActivated && ActivePlayers.All(x => x.IsWaitingForNextLevel))
+            {
+                _levelCounter++;
 
-				if (_levelCounter != CurrentGameRules.NumberOfLevels)
-				{
-					ResetSplitScreenManager();
-				}
-				else
-				{
+                if (_levelCounter != CurrentGameRules.NumberOfLevels)
+                {
+                    ResetSplitScreenManager();
+                }
+                else
+                {
                     ChangeScreenToTitleScreen();
-				}
-			}
-		}
-		//else if (CurrentGameRules.NumberOfLevels == GlobalConstants.Infinity)
-		//{
-		//	if (ActivePlayers.All(x => x.IsWaitingForNextLevel))
-		//	{
-		//		ResetSplitScreenManager();
-		//	}
-		//}
-	}
+                }
+            }
+        }
+    }
 
 	private void ResetSplitScreenManager()
 	{

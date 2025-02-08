@@ -1,6 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
+using Levels.UtilityLevels.UserInterfaceComponents;
 using MobileEntities.PlayerCharacters.Scripts;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,23 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 {
 	public partial class PortalSwitch : Node2D
 	{
+        #region Signals
+
+        [Signal]
+        public delegate void SwitchActivatedEventHandler();
+
+        #endregion
+
+        private AnimationPlayer _animationPlayer;
+
 		public bool IsSwitchActivated = false;
 		private bool _isAreaEntered = false;
 		private List<string> _playersInArea = new List<string>();
 
 		public override void _Ready()
 		{
-		}
+			_animationPlayer = FindChild("AnimationPlayer") as AnimationPlayer;
+        }
 
 		public override void _Process(double delta)
 		{
@@ -45,7 +56,10 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 				if (didOneOfThePlayersInAreaPressTheButton)
 				{
 					IsSwitchActivated = !IsSwitchActivated;
-				}
+					_animationPlayer.Play("Activated");
+
+					EmitSignal(SignalName.SwitchActivated);
+                }
 			}
 		}
 
