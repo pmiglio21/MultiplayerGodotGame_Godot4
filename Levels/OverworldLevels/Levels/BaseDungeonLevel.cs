@@ -945,19 +945,14 @@ public partial class BaseDungeonLevel : Node
 
 	private void GenerateSwitches() 
 	{
-		for (int i = 0; i < _parentDungeonLevelSwapper.ActivePlayers.Count; i++)
-		{
-			var tempPortalSwitch = _portalSwitchScene.Instantiate();
-			var portalSwitch = tempPortalSwitch as Node2D;
-			AddChild(portalSwitch);
-
-            var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor).ToList();
-
-            //portalSwitch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
-
-
-            if (SelectedSwitchProximityType == GlobalConstants.SwitchProximitySuperClose)
+        if (SelectedSwitchProximityType == GlobalConstants.SwitchProximitySuperClose)
+        {
+            for (int i = 0; i < _spawnPoints.Count; i++)
             {
+                var tempPortalSwitch = _portalSwitchScene.Instantiate();
+                var portalSwitch = tempPortalSwitch as Node2D;
+                AddChild(portalSwitch);
+
                 var spawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == i);
 
                 var spawnPointTileMapPosition = spawnPoint.TileMapPosition;
@@ -966,7 +961,7 @@ public partial class BaseDungeonLevel : Node
 
                 var spawnPointAdjacentTileMapSpaces = new List<TileMapSpace>();
 
-                foreach(Vector2I adjacentTileMapPosition in spawnPointAdjacentTileMapPositions)
+                foreach (Vector2I adjacentTileMapPosition in spawnPointAdjacentTileMapPositions)
                 {
                     TileMapSpace adjacentTileMapSpace = _possibleTileMapSpacesByFloorPosition[adjacentTileMapPosition];
 
@@ -978,23 +973,28 @@ public partial class BaseDungeonLevel : Node
 
                 portalSwitch.GlobalPosition = spawnPointAdjacentTileMapSpaces[_rng.RandiRange(0, spawnPointAdjacentTileMapSpaces.Count - 1)].ActualGlobalPosition;
             }
-            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
-            {
-
-            }
-            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityNormal)
-            {
-
-            }
-            else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityFar)
-            {
-
-            }
-		}
+        }
+        else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
+        {
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles *.25f));
+        }
+        else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityNormal)
+        {
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .5f));
+        }
+        else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityFar)
+        {
+            SetSwitchPositions(Mathf.Floor(_maxNumberOfTiles * .75f));
+        }
 	}
 
     private void SetSwitchPositions(float minDistanceFromPlayer)
     {
+        //for (int i = 0; i < _spawnPoints.Count; i++)
+        //{
+
+        //}
+
        foreach (KeyValuePair<Vector2I,TileMapSpace> pair in _possibleTileMapSpacesByFloorPosition)
        {
 
