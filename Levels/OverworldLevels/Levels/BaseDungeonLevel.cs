@@ -441,10 +441,10 @@ public partial class BaseDungeonLevel : Node
 						var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.LastNumberToClearSpace;
 
 						walkingFloorSpace = nextWalk_TileMapSpace;
-						walkingFloorSpace.LastNumberToClearSpace = startingSpawnPoint.LastNumberToClearSpace;
+						walkingFloorSpace.LastNumberToClearSpace = startingSpawnPoint.SpawnPointNumber;
 
 
-                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = startingSpawnPoint.LastNumberToClearSpace;
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = startingSpawnPoint.SpawnPointNumber;
 
                         var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
 						rtl.Text = walkingFloorSpace.LastNumberToClearSpace.ToString();
@@ -452,7 +452,7 @@ public partial class BaseDungeonLevel : Node
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
                         if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.LastNumberToClearSpace)
+							numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.SpawnPointNumber)
 						{
 							break;
 						}
@@ -992,6 +992,14 @@ public partial class BaseDungeonLevel : Node
             }
 		}
 	}
+
+    private void SetSwitchPositions(float minDistanceFromPlayer)
+    {
+       foreach (KeyValuePair<Vector2I,TileMapSpace> pair in _possibleTileMapSpacesByFloorPosition)
+       {
+
+       }
+    }
 
 	#endregion
 
