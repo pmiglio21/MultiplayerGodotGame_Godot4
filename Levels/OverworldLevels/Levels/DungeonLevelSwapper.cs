@@ -86,9 +86,11 @@ public partial class DungeonLevelSwapper : Node
                 parent.RemoveChild(player);
             }
 
-			//Vector2 pauseScreenManagerOriginalGlobalPosition = _pauseScreenManager.GlobalPosition;
+            _allSwitchesActivated = false;
 
-			this.AddChild(nextSplitScreenManager);
+            //Vector2 pauseScreenManagerOriginalGlobalPosition = _pauseScreenManager.GlobalPosition;
+
+            this.AddChild(nextSplitScreenManager);
 
             //Remove pause screen node from original SplitScreenManager
             _pauseScreenManager.Reparent(nextSplitScreenManager);
@@ -97,6 +99,7 @@ public partial class DungeonLevelSwapper : Node
 
             _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
             _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
+            _latestBaseDungeonLevel.ResetBaseDungeonLevel += () => _allSwitchesActivated = true;
 
             var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
             currentDungeonLevel.QueueFree();

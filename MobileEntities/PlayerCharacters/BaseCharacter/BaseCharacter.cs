@@ -1,6 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
+using Levels.OverworldLevels.KeyLevelObjects;
 using Levels.UtilityLevels;
 using System;
 using System.Collections.Generic;
@@ -415,7 +416,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape2D");
 
-				if (!collisionShape.Disabled)
+				if (!collisionShape.Disabled && (collisionShape.GetParent().GetParent() as Portal).IsPortalActivated)
 				{
 					//GD.Print("IsInPortal");
 					isInPortal = true;
@@ -436,7 +437,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					//GD.Print("!IsInPortal");
 					isInPortal = false;
-					IsWaitingForNextLevel = false;
+					//IsWaitingForNextLevel = false;
 					_portalWaitTimer = 0;
 				}
 			}

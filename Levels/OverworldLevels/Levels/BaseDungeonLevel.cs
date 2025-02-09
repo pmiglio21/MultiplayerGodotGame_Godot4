@@ -1093,6 +1093,7 @@ public partial class BaseDungeonLevel : Node
         if (_portalSwitches.All(x => x.IsSwitchActivated))
         {
             _portal.IsPortalActivated = true;
+            _portal.PlayPortalActivation();
 
             EmitSignal(SignalName.ResetBaseDungeonLevel);
         }

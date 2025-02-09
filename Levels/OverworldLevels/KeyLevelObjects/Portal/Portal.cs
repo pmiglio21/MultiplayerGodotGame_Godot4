@@ -18,14 +18,17 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 		public override void _Ready()
 		{
 			_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-
-			_animationPlayer.Play("Idle");
 		}
 
 		public override void _Process(double delta)
 		{
 			//CheckForPortalActivation();
 		}
+
+		public void PlayPortalActivation()
+		{
+            _animationPlayer.Play("Idle");
+        }
 
 		private void CheckForPortalActivation()
 		{
