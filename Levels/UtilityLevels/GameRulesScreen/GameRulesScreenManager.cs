@@ -23,39 +23,39 @@ namespace Levels.UtilityLevels
 
 		private readonly List<string> _levelSizeOptions = new List<string>()
         {
-           "Small",
-           "Medium",
-           "Large"
+           GlobalConstants.LevelSizeSmall,
+           GlobalConstants.LevelSizeMedium,
+           GlobalConstants.LevelSizeLarge,
         };
 
         private readonly List<string> _biomeOptions = new List<string>()
         {
-           "Castle",
-		   "Cave",
-		   "Swamp",
-		   "Frost"
+           GlobalConstants.BiomeCastle,
+           GlobalConstants.BiomeCave,
+           GlobalConstants.BiomeSwamp,
+           GlobalConstants.BiomeFrost,
         };
 
         private readonly List<string> _spawnProximityOptions = new List<string>()
         {
-           "Super Close",
-           "Close",
-           "Normal",
-           "Far"
+            GlobalConstants.SpawnProximitySuperClose,
+            GlobalConstants.SpawnProximityClose,
+            GlobalConstants.SpawnProximityNormal,
+            GlobalConstants.SpawnProximityFar,
         };
 
         private readonly List<string> _switchProximityOptions = new List<string>()
         {
-           "Super Close",
-           "Close",
-           "Normal",
-           "Far"
+            GlobalConstants.SwitchProximitySuperClose,
+            GlobalConstants.SwitchProximityClose,
+            GlobalConstants.SwitchProximityNormal,
+            GlobalConstants.SwitchProximityFar,
         };
 
         private readonly List<string> _offOnOptions = new List<string>()
         {
-           "OFF",
-           "ON"
+           GlobalConstants.OffOnOptionOff,
+           GlobalConstants.OffOnOptionOn,
         };
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Globals;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -8,9 +9,9 @@ namespace Models
 
         public Dictionary<string, bool> LevelSizes = new Dictionary<string, bool>()
         {
-            { "Small", true },
-            { "Medium", true },
-            { "Large", true },
+            { GlobalConstants.LevelSizeSmall, true },
+            { GlobalConstants.LevelSizeMedium, true },
+            { GlobalConstants.LevelSizeLarge, true },
         };
 
         public int NumberOfLevels = 1;
@@ -19,26 +20,26 @@ namespace Models
 
         public Dictionary<string, bool> BiomeTypes = new Dictionary<string, bool>()
         {
-            { "Castle", true },
-            { "Cave", true },
-            { "Swamp", true },
-            { "Frost", true },
+            { GlobalConstants.BiomeCastle, true },
+            { GlobalConstants.BiomeCave, true },
+            { GlobalConstants.BiomeSwamp, true },
+            { GlobalConstants.BiomeFrost, true },
         };
 
         public Dictionary<string, bool> SpawnProximityTypes = new Dictionary<string, bool>()
         {
-            { "Super Close", true },
-            { "Close", true },
-            { "Normal", true },
-            { "Far", true },
+            { GlobalConstants.SpawnProximitySuperClose, true },
+            { GlobalConstants.SpawnProximityClose, true },
+            { GlobalConstants.SpawnProximityNormal, true },
+            { GlobalConstants.SpawnProximityFar, true },
         };
 
         public Dictionary<string, bool> SwitchProximityTypes = new Dictionary<string, bool>()
         {
-            { "Super Close", true },
-            { "Close", true },
-            { "Normal", true },
-            { "Far", true },
+            { GlobalConstants.SwitchProximitySuperClose, true },
+            { GlobalConstants.SwitchProximityClose, true },
+            { GlobalConstants.SwitchProximityNormal, true },
+            { GlobalConstants.SwitchProximityFar, true },
         };
 
         public bool CanMinibossSpawn = false;

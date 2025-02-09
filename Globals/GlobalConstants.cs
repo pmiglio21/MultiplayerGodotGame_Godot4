@@ -42,5 +42,12 @@ namespace Globals
         public const string BiomeFrost = "Frost";
 
         #endregion
+
+        #region Off/On Options
+
+        public const string OffOnOptionOff = "OFF";
+        public const string OffOnOptionOn = "ON";
+
+        #endregion
     }
 }

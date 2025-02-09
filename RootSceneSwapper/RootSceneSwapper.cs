@@ -504,7 +504,7 @@ namespace Root
                 }
             }
 
-			if (CurrentSettings.FullscreenState != "ON")
+			if (CurrentSettings.FullscreenState != GlobalConstants.OffOnOptionOn)
 			{
                 DisplayServer.WindowSetSize(new Vector2I(CurrentSettings.Resolution.X, CurrentSettings.Resolution.Y));
             }
