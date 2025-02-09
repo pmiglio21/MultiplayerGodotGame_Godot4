@@ -1095,6 +1095,14 @@ public partial class BaseDungeonLevel : Node
             _portal.IsPortalActivated = true;
             _portal.PlayPortalActivation();
 
+            foreach (BaseCharacter player in _parentDungeonLevelSwapper.ActivePlayers)
+            {
+                if (player.IsInPortalArea)
+                {
+                    player.IsWaitingForPortal = true;
+                }
+            }
+
             EmitSignal(SignalName.ResetBaseDungeonLevel);
         }
     }

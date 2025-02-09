@@ -75,7 +75,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		#endregion
 
 		#region Player State Properties
-		protected bool isControllable = true;
+		public bool IsControllable = true;
 
 		protected bool isHurt = false;
 
@@ -85,9 +85,11 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public bool IsDead = false;
 
-		protected bool isInPortal = false;
+		public bool IsInPortalArea = false;	 //Portal not necessarily activated
 
-		public bool IsWaitingForNextLevel = false;
+        public bool IsWaitingForPortal = false;	//Portal is activated and character is awaiting jump
+
+        public bool IsWaitingForNextLevel = false;
 		#endregion
 
 		#region References to Outside Nodes
@@ -157,26 +159,28 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				IsDead = true;
 
-				isControllable = false;
+                IsControllable = false;
 
 				GD.Print("DEAD");
 
 				//PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
 			}
 
-			if (isControllable)
+			if (IsControllable)
 			{
-				if (_portalWaitTimer < _portalWaitTimerMax && isInPortal)
+				if (_portalWaitTimer < _portalWaitTimerMax && IsWaitingForPortal)
 				{
 					_portalWaitTimer++;
 				}
-				else if (_portalWaitTimer >= _portalWaitTimerMax && isInPortal)
+				else if (_portalWaitTimer >= _portalWaitTimerMax && IsWaitingForPortal)
 				{
 					GD.Print("PORTAL JUMP");
 
 					_portalWaitTimer = 0;
 
 					IsWaitingForNextLevel = true;
+                    IsControllable = false;
+					Hide();
 				}
 
 				if (initialInputTimer < initialInputTimerMax)
@@ -219,7 +223,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		public override void _PhysicsProcess(double delta)
 		{
-			if (isControllable && !isHurt)
+			if (IsControllable && !isHurt)
 			{
 				MovePlayer();
 			}
@@ -416,12 +420,16 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape2D");
 
-				if (!collisionShape.Disabled && (collisionShape.GetParent().GetParent() as Portal).IsPortalActivated)
+				if (!collisionShape.Disabled)
 				{
-					//GD.Print("IsInPortal");
-					isInPortal = true;
+                    IsInPortalArea = true;
 				}
-			}
+
+                if (!collisionShape.Disabled && (collisionShape.GetParent().GetParent() as Portal).IsPortalActivated)
+                {
+                    IsWaitingForPortal = true;
+                }
+            }
 		}
 
 
@@ -435,10 +443,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					//GD.Print("!IsInPortal");
-					isInPortal = false;
-					//IsWaitingForNextLevel = false;
-					_portalWaitTimer = 0;
+                    IsInPortalArea = false;
+                    IsWaitingForPortal = false;
+                    _portalWaitTimer = 0;
 				}
 			}
 		}

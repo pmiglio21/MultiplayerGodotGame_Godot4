@@ -190,15 +190,15 @@ namespace Levels.UtilityLevels
                     _fullscreenOptionSelector.PlayClickedOnRightArrow();
                     _fullscreenOptionSelector.PlayClickedOnLeftArrow();
 
-                    if (_fullscreenButton.Text == "OFF")
+                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
-                        _fullscreenButton.Text = "ON";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
-                        _fullscreenButton.Text = "OFF";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
@@ -266,15 +266,15 @@ namespace Levels.UtilityLevels
                     _fullscreenOptionSelector.PlayClickedOnRightArrow();
                     _fullscreenOptionSelector.PlayClickedOnLeftArrow();
 
-                    if (_fullscreenButton.Text == "OFF")
+                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
-                        _fullscreenButton.Text = "ON";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
-                        _fullscreenButton.Text = "OFF";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
@@ -308,15 +308,15 @@ namespace Levels.UtilityLevels
                     _fullscreenOptionSelector.PlayClickedOnRightArrow();
                     _fullscreenOptionSelector.PlayClickedOnLeftArrow();
 
-                    if (_fullscreenButton.Text == "OFF")
+                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
-                        _fullscreenButton.Text = "ON";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
-                        _fullscreenButton.Text = "OFF";
+                        _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
 
                         _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
@@ -344,7 +344,7 @@ namespace Levels.UtilityLevels
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
-                    if (_fullscreenButton.Text == "ON")
+                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOn)
                     {
                         _fullscreenButton.GrabFocus();
                     }
@@ -378,7 +378,7 @@ namespace Levels.UtilityLevels
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     
-                    if (_fullscreenButton.Text == "ON")
+                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOn)
                     {
                         _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
                     }
@@ -462,7 +462,7 @@ namespace Levels.UtilityLevels
 
         private void ToggleFullscreen()
         {
-            if (_fullscreenButton.Text == "ON")
+            if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOn)
             {
                 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
             }
@@ -565,15 +565,15 @@ namespace Levels.UtilityLevels
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
-            if (_fullscreenButton.Text == "OFF")
+            if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
             {
-                _fullscreenButton.Text = "ON";
+                _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
 
                 _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
             }
             else
             {
-                _fullscreenButton.Text = "OFF";
+                _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
 
                 _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
             }

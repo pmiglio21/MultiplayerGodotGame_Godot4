@@ -59,39 +59,39 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 			}
 		}
 
-		//private void OnCollisionAreaEntered(Area2D area)
-		//{
-		//	if (area.IsInGroup("PlayerHurtBox"))
-		//	{
-		//		CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+		private void OnCollisionAreaEntered(Area2D area)
+		{
+			if (area.IsInGroup("PlayerHurtBox"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
-		//		var character = area.GetParent() as BaseCharacter;
+				var character = area.GetParent() as BaseCharacter;
 
-		//		if (!collisionShape.Disabled)
-		//		{
-		//			_isAreaEntered = true;
+				if (!collisionShape.Disabled)
+				{
+					_isAreaEntered = true;
 
-		//			_playersInArea.Add(character.DeviceIdentifier);
-		//		}
-		//	}
-		//}
+					_playersInArea.Add(character.DeviceIdentifier);
+				}
+			}
+		}
 
-		//private void OnCollisionAreaExited(Area2D area)
-		//{
-		//	if (area.IsInGroup("PlayerHurtBox"))
-		//	{
-		//		CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+		private void OnCollisionAreaExited(Area2D area)
+		{
+			if (area.IsInGroup("PlayerHurtBox"))
+			{
+				CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
-		//		var character = area.GetParent() as BaseCharacter;
+				var character = area.GetParent() as BaseCharacter;
 
-		//		if (!collisionShape.Disabled)
-		//		{
-		//			_isAreaEntered = false;
+				if (!collisionShape.Disabled)
+				{
+					_isAreaEntered = false;
 
-		//			_playersInArea.Remove(character.DeviceIdentifier);
-		//		}
-		//	}
-		//}
+					_playersInArea.Remove(character.DeviceIdentifier);
+				}
+			}
+		}
 	}
 }
 

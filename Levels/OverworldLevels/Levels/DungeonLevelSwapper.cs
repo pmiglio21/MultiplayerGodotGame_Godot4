@@ -77,9 +77,11 @@ public partial class DungeonLevelSwapper : Node
             var nextSplitScreenManager = GD.Load<PackedScene>(LevelScenePaths.SplitScreenManagerPath).Instantiate();
 
             //Remove player node from original SplitScreenManager
-            foreach (var player in ActivePlayers)
+            foreach (BaseCharacter player in ActivePlayers)
             {
                 player.IsWaitingForNextLevel = false;
+                player.IsControllable = true;
+                player.Show();
 
                 var parent = player.GetParent();
 
