@@ -9,8 +9,8 @@ script = ExtResource("1_u85ix")
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(818.118, 1006.94)
-scale = Vector2(-239.394, -196.397)
+position = Vector2(883, 1.13687e-13)
+scale = Vector2(-380.824, -330.531)
 texture = ExtResource("2_8bk4s")
 
 [node name="BaseFloor" parent="." instance=ExtResource("3_5cr4r")]

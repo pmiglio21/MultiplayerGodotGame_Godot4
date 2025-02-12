@@ -32,6 +32,7 @@ public partial class BaseDungeonLevel : Node
     private Dictionary<Vector2I, TileMapSpace> _possibleTileMapSpacesByFloorPosition = new Dictionary<Vector2I, TileMapSpace>();
 
     private List<TileMapSpace> _spawnPoints = new List<TileMapSpace>();
+    private List<TileMapSpace> _generationStartPoints = new List<TileMapSpace>();
 
     private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -172,6 +173,8 @@ public partial class BaseDungeonLevel : Node
 				GenerateSingleSpawnPoint();
 			}
 		}
+
+        GenerateMultipleGenerationStartPoints();
 
 		float percentageOfFloorToCover = 0;
 
@@ -524,6 +527,226 @@ public partial class BaseDungeonLevel : Node
 
     #endregion
 
+    #region Generation Start Points
+
+    private void GenerateSingleGenerationStartPoint(int generationStartPointNumber)
+    {
+        Dictionary<int, Vector2I> nonBorderPositions = new Dictionary<int, Vector2I>();
+
+        int counter = 0;
+        foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => position.Value.X != 0 && position.Value.X != _maxNumberOfTiles - 1 &&
+                                                                           position.Value.Y != 0 && position.Value.Y != _maxNumberOfTiles - 1))
+        {
+            nonBorderPositions.Add(counter, indexPositionPair.Value);
+            counter++;
+        }
+
+        //Get a random space in possible floor spaces to pick as generation start point
+        var floorTileIndex = _rng.RandiRange(0, nonBorderPositions.Count - 1);
+
+        //Create Generation Start Point
+        var newGenerationStartPoint_TileMapSpace = new TileMapSpace();
+
+        //This line has a "key not present" issue
+        if (_possibleTileMapSpacesByFloorPosition.ContainsKey(nonBorderPositions[floorTileIndex]))
+        {
+            newGenerationStartPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[nonBorderPositions[floorTileIndex]];
+        }
+        else
+        {
+            newGenerationStartPoint_TileMapSpace = CreateDefaultTileMapSpace(nonBorderPositions[floorTileIndex], TileMapSpaceType.Floor);
+
+            _possibleTileMapSpacesByFloorPosition.Add(nonBorderPositions[floorTileIndex], newGenerationStartPoint_TileMapSpace);
+        }
+
+        newGenerationStartPoint_TileMapSpace.IsGenerationStartPoint = true;
+
+        newGenerationStartPoint_TileMapSpace.InteriorBlock.QueueFree();
+        newGenerationStartPoint_TileMapSpace.LastNumberToClearSpace = generationStartPointNumber;
+        newGenerationStartPoint_TileMapSpace.GenerationStartPointNumber = generationStartPointNumber;
+
+        _possibleTileMapSpacesByFloorPosition[newGenerationStartPoint_TileMapSpace.TileMapPosition].GenerationStartPointNumber = generationStartPointNumber;
+
+        var richTextLabel = newGenerationStartPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+        richTextLabel.Text = generationStartPointNumber.ToString();
+
+        DrawOnTileMap(newGenerationStartPoint_TileMapSpace.TileMapPosition);
+
+        //Clear out area near generation start point                     //TODO: Fix this to use GetAllAdjacent()...
+        var floorSpacesAdjacentToGenerateStartPoint = _possibleFloorPositionsByIndex.Values.Where(
+            floorSpace => (floorSpace != newGenerationStartPoint_TileMapSpace.TileMapPosition &&
+                          ((Vector2)newGenerationStartPoint_TileMapSpace.TileMapPosition).DistanceTo(floorSpace) <= Math.Sqrt(2))).ToList();
+
+        foreach (Vector2I floorSpaceAdjacentToGenerateStartPoint in floorSpacesAdjacentToGenerateStartPoint)
+        {
+            if (floorSpaceAdjacentToGenerateStartPoint.X != 0 && floorSpaceAdjacentToGenerateStartPoint.X != _maxNumberOfTiles - 1 && floorSpaceAdjacentToGenerateStartPoint.Y != 0 && floorSpaceAdjacentToGenerateStartPoint.Y != _maxNumberOfTiles - 1)
+            {
+                var nearGenerateStartPoint_TileMapSpace = new TileMapSpace();
+
+                if (_possibleTileMapSpacesByFloorPosition.ContainsKey(floorSpaceAdjacentToGenerateStartPoint))
+                {
+                    nearGenerateStartPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[floorSpaceAdjacentToGenerateStartPoint];
+                }
+                else
+                {
+                    nearGenerateStartPoint_TileMapSpace = CreateDefaultTileMapSpace(floorSpaceAdjacentToGenerateStartPoint, TileMapSpaceType.Floor);
+
+                    _possibleTileMapSpacesByFloorPosition.Add(floorSpaceAdjacentToGenerateStartPoint, nearGenerateStartPoint_TileMapSpace);
+                }
+
+                nearGenerateStartPoint_TileMapSpace.IsAdjacentToGenerationStartPoint = true;
+                nearGenerateStartPoint_TileMapSpace.InteriorBlock.QueueFree();
+                nearGenerateStartPoint_TileMapSpace.GenerationStartPointNumber = generationStartPointNumber;
+
+                _possibleTileMapSpacesByFloorPosition[nearGenerateStartPoint_TileMapSpace.TileMapPosition].GenerationStartPointNumber = generationStartPointNumber;
+
+                var rtl = nearGenerateStartPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                rtl.Text = generationStartPointNumber.ToString();
+
+                DrawOnTileMap(nearGenerateStartPoint_TileMapSpace.TileMapPosition);
+            }
+        }
+
+        _generationStartPoints.Add(newGenerationStartPoint_TileMapSpace);
+    }
+
+    private void GenerateMultipleGenerationStartPoints()
+    {
+        int maxTilesAdditionalNumber = 0;
+
+        if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
+        {
+            maxTilesAdditionalNumber = 2;
+        }
+        else if (SelectedLevelSize == GlobalConstants.LevelSizeMedium)
+        {
+            maxTilesAdditionalNumber = 3;
+        }
+        else if (SelectedLevelSize == GlobalConstants.LevelSizeLarge)
+        {
+            maxTilesAdditionalNumber = 4;
+        }
+
+        for (int generationStartPointGeneratedCount = 100; generationStartPointGeneratedCount < 100 + _parentDungeonLevelSwapper.ActivePlayers.Count + maxTilesAdditionalNumber; generationStartPointGeneratedCount++)
+        {
+            GenerateSingleGenerationStartPoint(generationStartPointGeneratedCount);
+        }
+    }
+
+    //TODO: Check if this method and the other one are similar enough to just make into one method
+    private void CreatePathsBetweenGenerationStartPoints()
+    {
+        foreach (TileMapSpace startingGenerationStartPoint in _generationStartPoints)
+        {
+            TileMapSpace walkingFloorSpace = startingGenerationStartPoint;
+
+            List<TileMapSpace> availableGenerationStartPoints = _generationStartPoints.Where(x => x != startingGenerationStartPoint).ToList();
+
+            var targetGenerationStartPoint = availableGenerationStartPoints[_rng.RandiRange(0, availableGenerationStartPoints.Count - 1)];
+
+            //For some reason, trig circle is flipped across its y axis... whatever...
+            var angleFromWalkingFloorSpaceToTargetGenerationStartPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetGenerationStartPoint.InteriorBlock.GlobalPosition);
+
+            var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetGenerationStartPoint);
+
+            var changeInX = 0;
+            var changeInY = 0;
+
+            int iterationCount = 0;
+
+            //Do this until the walkingFloorSpace is no longer on the starting GenerationStartPoint
+            while (true)
+            {
+                if (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
+                {
+                    angleFromWalkingFloorSpaceToTargetGenerationStartPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetGenerationStartPoint.InteriorBlock.GlobalPosition);
+
+                    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetGenerationStartPoint);
+
+                    iterationCount = 0;
+                }
+
+                if (_rng.RandfRange(0, 1) <= .5)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                    if (changeInX == 0)
+                    {
+                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    }
+                    else
+                    {
+                        changeInY = 0;
+                    }
+                }
+                else
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+                    if (changeInY == 0)
+                    {
+                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                    }
+                    else
+                    {
+                        changeInX = 0;
+                    }
+                }
+
+                var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+
+                //Set walkingFloorSpace to somewhere adjacent to generation start point
+                //Instead of using any, just check that new x and y are within the max dimension range
+                if (IsBlockInsideBorders(newPositionToCheck) && _possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
+                {
+                    var nextWalk_TileMapSpace = new TileMapSpace();
+
+                    if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
+                    {
+                        nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
+                    }
+                    else
+                    {
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck, TileMapSpaceType.Floor);
+
+                        _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
+                    }
+
+                    if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingGenerationStartPoint)
+                    {
+                        if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+                        {
+                            nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+                        }
+
+                        var numberOfGenerationStartPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.LastNumberToClearSpace;
+
+                        walkingFloorSpace = nextWalk_TileMapSpace;
+                        walkingFloorSpace.LastNumberToClearSpace = startingGenerationStartPoint.GenerationStartPointNumber;
+
+
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = startingGenerationStartPoint.GenerationStartPointNumber;
+
+                        var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                        rtl.Text = walkingFloorSpace.LastNumberToClearSpace.ToString();
+
+                        DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+                        if (numberOfGenerationStartPointWhoClearedMatchingFloorSpace != -1 &&
+                            numberOfGenerationStartPointWhoClearedMatchingFloorSpace != startingGenerationStartPoint.GenerationStartPointNumber)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                iterationCount++;
+            }
+        }
+    }
+
+    #endregion
+
     #region Creating Paths
 
     private void CreatePathsBetweenPoints()
@@ -616,7 +839,7 @@ public partial class BaseDungeonLevel : Node
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
                         if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-                            numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
+                            numberOfSpawnPointWhoClearedMatchingFloorSpace != 99 && !_generationStartPoints.Any(x => x.GenerationStartPointNumber == numberOfSpawnPointWhoClearedMatchingFloorSpace))
                         {
                             break;
                         }
