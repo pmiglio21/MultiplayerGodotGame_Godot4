@@ -16,7 +16,8 @@ namespace Levels.OverworldLevels.TileMapping
         // 32 * SQRT(2) = diagonal distance between interior blocks
         public const double DiagonalDistanceBetweenInteriorBlocks = 45.25483399593904;
 
-        public const int NumberOfIterationsBeforeChangingAngle_PathCreation = 500;
+        public const int NumberOfIterationsBeforeChangingAngle_PathCreation = 250;
+        //public const int NumberOfIterationsBeforeChangingAngle_PathCreation = 500;
         public const int NumberOfIterationsBeforeChangingAngle_WaterCreation = 100;
     }
 }

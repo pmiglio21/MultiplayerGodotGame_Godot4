@@ -176,7 +176,9 @@ public partial class BaseDungeonLevel : Node
 
         GenerateMultipleGenerationStartPoints();
 
-		float percentageOfFloorToCover = 0;
+        CreatePathsBetweenGenerationStartPoints();
+
+        float percentageOfFloorToCover = 0;
 
 		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
 		{
@@ -199,13 +201,13 @@ public partial class BaseDungeonLevel : Node
 
 		percentageOfFloorToCover = .05f;
 
-        //TODO: Get this to work concurrently
-        while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
-		{
-			CreatePathsBetweenPoints();
-        }
+        ////TODO: Get this to work concurrently
+        //while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
+        //{
+        //    CreatePathsBetweenPoints();
+        //}
 
-		DrawOverviewAndWalls();
+        DrawOverviewAndWalls();
 
         //Add water
         if (SelectedBiomeType == GlobalConstants.BiomeFrost)
@@ -361,15 +363,20 @@ public partial class BaseDungeonLevel : Node
 	//TODO: Check if this method and the other one are similar enough to just make into one method
 	private void CreatePathsBetweenSpawnPoints()
 	{
-		List<TileMapSpace> spawnPoints = _possibleTileMapSpacesByFloorPosition.Values.Where(x => x.IsSpawnPoint).ToList();
-
-		foreach (TileMapSpace startingSpawnPoint in spawnPoints)
+		foreach (TileMapSpace startingSpawnPoint in _spawnPoints)
 		{
 			TileMapSpace walkingFloorSpace = startingSpawnPoint;
 
-			List<TileMapSpace> availableSpawnPoints = spawnPoints.Where(x => x != startingSpawnPoint).ToList();
-
-			var targetSpawnPoint = availableSpawnPoints[_rng.RandiRange(0, availableSpawnPoints.Count - 1)];
+            TileMapSpace targetSpawnPoint = null;
+            
+            if (startingSpawnPoint.SpawnPointNumber == _spawnPoints.Count - 1)
+            {
+                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0);
+            }
+            else
+            {
+                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == startingSpawnPoint.SpawnPointNumber + 1);
+            }
 
 			//For some reason, trig circle is flipped across its y axis... whatever...
 			var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
@@ -390,7 +397,7 @@ public partial class BaseDungeonLevel : Node
 
 					weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
-					iterationCount = 0;
+					//iterationCount = 0;
 				}
 
 				if (_rng.RandfRange(0, 1) <= .5)
@@ -608,6 +615,13 @@ public partial class BaseDungeonLevel : Node
         }
 
         _generationStartPoints.Add(newGenerationStartPoint_TileMapSpace);
+
+        if (_generationStartPoints.Count(x => x.SpawnPointNumber == 100) > 1 ||
+            _generationStartPoints.Count(x => x.SpawnPointNumber == 101) > 1 ||
+            _generationStartPoints.Count(x => x.SpawnPointNumber == 102) > 1)
+        {
+            var a = 0;
+        }
     }
 
     private void GenerateMultipleGenerationStartPoints()
@@ -640,9 +654,16 @@ public partial class BaseDungeonLevel : Node
         {
             TileMapSpace walkingFloorSpace = startingGenerationStartPoint;
 
-            List<TileMapSpace> availableGenerationStartPoints = _generationStartPoints.Where(x => x != startingGenerationStartPoint).ToList();
+            TileMapSpace targetGenerationStartPoint = null;
 
-            var targetGenerationStartPoint = availableGenerationStartPoints[_rng.RandiRange(0, availableGenerationStartPoints.Count - 1)];
+            if (startingGenerationStartPoint.GenerationStartPointNumber == _generationStartPoints.Count - 1 + 100)
+            {
+                targetGenerationStartPoint = _generationStartPoints.FirstOrDefault(x => x.GenerationStartPointNumber == 100);
+            }
+            else
+            {
+                targetGenerationStartPoint = _generationStartPoints.FirstOrDefault(x => x.GenerationStartPointNumber == startingGenerationStartPoint.GenerationStartPointNumber + 1);
+            }
 
             //For some reason, trig circle is flipped across its y axis... whatever...
             var angleFromWalkingFloorSpaceToTargetGenerationStartPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetGenerationStartPoint.InteriorBlock.GlobalPosition);
@@ -657,8 +678,10 @@ public partial class BaseDungeonLevel : Node
             //Do this until the walkingFloorSpace is no longer on the starting GenerationStartPoint
             while (true)
             {
-                if (iterationCount < TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
+                if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
                 {
+                    walkingFloorSpace = startingGenerationStartPoint;
+
                     angleFromWalkingFloorSpaceToTargetGenerationStartPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetGenerationStartPoint.InteriorBlock.GlobalPosition);
 
                     weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetGenerationStartPoint);
@@ -732,11 +755,23 @@ public partial class BaseDungeonLevel : Node
 
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
-                        if (numberOfGenerationStartPointWhoClearedMatchingFloorSpace != -1 &&
-                            numberOfGenerationStartPointWhoClearedMatchingFloorSpace != startingGenerationStartPoint.GenerationStartPointNumber)
-                        {
-                            break;
-                        }
+                        //if (startingGenerationStartPoint.GenerationStartPointNumber == 100) 
+                        //{
+                        //    //Doesn't work so far
+                        //    if (numberOfGenerationStartPointWhoClearedMatchingFloorSpace != -1 &&
+                        //        _spawnPoints.Any(x => x.SpawnPointNumber == nextWalk_TileMapSpace.SpawnPointNumber))
+                        //    {
+                        //        break;
+                        //    }
+                        //}
+                        //else
+                        //{
+                            if (numberOfGenerationStartPointWhoClearedMatchingFloorSpace != -1 &&
+                                numberOfGenerationStartPointWhoClearedMatchingFloorSpace == targetGenerationStartPoint.GenerationStartPointNumber)
+                            {
+                                break;
+                            }
+                        //}
                     }
                 }
 
@@ -1352,43 +1387,106 @@ public partial class BaseDungeonLevel : Node
 		}
 	}
 
-	private Tuple<int, int> GetWeightedValues(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
-	{
-		var weightedXValue = 0;
-		var weightedYValue = 0;
+    private Tuple<int, int> GetWeightedValues(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
+    {
+        var weightedXValue = 0;
+        var weightedYValue = 0;
 
-		if (angleFromWalkingFloorSpaceToTargetSpawnPoint > 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 2f))
-		{
-			weightedXValue = 1;
-			weightedYValue = 1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= Math.PI)
-		{
-			weightedXValue = -1;
-			weightedYValue = 1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 2f))
-		{
-			weightedXValue = 1;
-			weightedYValue = -1;
-		}
-		else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -Math.PI)
-		{
-			weightedXValue = -1;
-			weightedYValue = -1;
-		}
-		else
-		{
-			weightedXValue = 1;
-			weightedYValue = 1;
-		}
+        if (angleFromWalkingFloorSpaceToTargetSpawnPoint > 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 2f))
+        {
+            weightedXValue = 1;
+            weightedYValue = 1;
+        }
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= Math.PI)
+        {
+            weightedXValue = -1;
+            weightedYValue = 1;
+        }
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < 0 && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 2f))
+        {
+            weightedXValue = 1;
+            weightedYValue = -1;
+        }
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 2f) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -Math.PI)
+        {
+            weightedXValue = -1;
+            weightedYValue = -1;
+        }
+        else
+        {
+            weightedXValue = 1;
+            weightedYValue = 1;
+        }
 
-		return new Tuple<int, int>(weightedXValue, weightedYValue); ;
-	}
+        return new Tuple<int, int>(weightedXValue, weightedYValue); ;
+    }
 
-	#endregion
+    //private Tuple<int, int> GetWeightedValues2(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
+    //{
+    //	var weightedXValue = 0;
+    //	var weightedYValue = 0;
 
-	public override void _Process(double delta)
+    //       //Northeast
+    //	if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 3f))
+    //	{
+    //		weightedXValue = 1;
+    //		weightedYValue = 1;
+    //	}
+    //       //North
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2*Math.PI / 3f))
+    //       {
+    //           weightedXValue = 0;
+    //           weightedYValue = 1;
+    //       }
+    //       //Northwest
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (2 * Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (5*Math.PI / 6))
+    //	{
+    //		weightedXValue = -1;
+    //		weightedYValue = 1;
+    //	}
+    //       //West
+    //       else if ((angleFromWalkingFloorSpaceToTargetSpawnPoint > (5 * Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2 * Math.PI)) ||
+    //                (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(5 * Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI)))
+    //       {
+    //           weightedXValue = -1;
+    //           weightedYValue = 0;
+    //       }
+    //       //Southwest
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(2 * Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(5 * Math.PI / 6))
+    //       {
+    //           weightedXValue = -1;
+    //           weightedYValue = -1;
+    //       }
+    //       //South
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI / 3))
+    //       {
+    //           weightedXValue = 0;
+    //           weightedYValue = -1;
+    //       }
+    //       //Southeast
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 3))
+    //       {
+    //           weightedXValue = 1;
+    //           weightedYValue = -1;
+    //       }
+    //       //East
+    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 6))
+    //       {
+    //           weightedXValue = 1;
+    //           weightedYValue = 0;
+    //       }
+    //       else //default
+    //	{
+    //		weightedXValue = 1;
+    //		weightedYValue = 1;
+    //	}
+
+    //	return new Tuple<int, int>(weightedXValue, weightedYValue); ;
+    //}
+
+    #endregion
+
+    public override void _Process(double delta)
 	{
 		if (_parentDungeonLevelSwapper.ActivePlayers.Count > 0 && _parentDungeonLevelSwapper.ActivePlayers.All(x => x.IsDead))
 		{
