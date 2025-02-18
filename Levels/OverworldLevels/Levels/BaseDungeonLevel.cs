@@ -202,13 +202,13 @@ public partial class BaseDungeonLevel : Node
 				break;
 		}
 
-		percentageOfFloorToCover = .05f;
+        percentageOfFloorToCover = .05f;
 
-        ////TODO: Get this to work concurrently
-        //while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
-        //{
-        //    CreatePathsBetweenPoints();
-        //}
+        //TODO: Get this to work concurrently
+        while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
+        {
+            CreatePathsBetweenPoints();
+        }
 
         DrawOverviewAndWalls();
 
@@ -361,17 +361,30 @@ public partial class BaseDungeonLevel : Node
 	{
         int maxTilesAdditionalNumber = 0;
 
+        //if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
+        //{
+        //    maxTilesAdditionalNumber = 2;
+        //}
+        //else if (SelectedLevelSize == GlobalConstants.LevelSizeMedium)
+        //{
+        //    maxTilesAdditionalNumber = 3;
+        //}
+        //else if (SelectedLevelSize == GlobalConstants.LevelSizeLarge)
+        //{
+        //    maxTilesAdditionalNumber = 4;
+        //}
+
         if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
         {
-            maxTilesAdditionalNumber = 2;
+            maxTilesAdditionalNumber = 5;
         }
         else if (SelectedLevelSize == GlobalConstants.LevelSizeMedium)
         {
-            maxTilesAdditionalNumber = 3;
+            maxTilesAdditionalNumber = 7;
         }
         else if (SelectedLevelSize == GlobalConstants.LevelSizeLarge)
         {
-            maxTilesAdditionalNumber = 4;
+            maxTilesAdditionalNumber = 9;
         }
 
         for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count + maxTilesAdditionalNumber; spawnPointGeneratedCount++)
@@ -394,14 +407,7 @@ public partial class BaseDungeonLevel : Node
 
             TileMapSpace targetSpawnPoint = null;
 
-            if (startingSpawnPoint.SpawnPointNumber == _spawnPoints.Count - 1)
-            {
-                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0);
-            }
-            else
-            {
-                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == startingSpawnPoint.SpawnPointNumber + 1);
-            }
+            targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == startingSpawnPoint.SpawnPointNumber - 1);
 
             //For some reason, trig circle is flipped across its y axis... whatever...
             var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
@@ -416,49 +422,49 @@ public partial class BaseDungeonLevel : Node
             //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
             while (true)
             {
-                //if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
-                //{
-                //    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+                if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
+                {
+                    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-                //    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+                    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
-                //    iterationCount = 0;
-                //}
+                    iterationCount = 0;
+                }
 
-                angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+                //angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-                weightedValues = GetWeightedValues2(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+                //weightedValues = GetWeightedValues2(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
-                changeInX = weightedValues.Item1;
-                changeInY = weightedValues.Item2;
+                //changeInX = weightedValues.Item1;
+                //changeInY = weightedValues.Item2;
 
-                ////TODO: Try without randomness involved...
-                //if (_rng.RandfRange(0, 1) <= .5)
-                //{
-                //    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                //TODO: Try without randomness involved...
+                if (_rng.RandfRange(0, 1) <= .5)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
 
-                //    if (changeInX == 0)
-                //    {
-                //        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-                //    }
-                //    else
-                //    {
-                //        changeInY = 0;
-                //    }
-                //}
-                //else
-                //{
-                //    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    if (changeInX == 0)
+                    {
+                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    }
+                    else
+                    {
+                        changeInY = 0;
+                    }
+                }
+                else
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
 
-                //    if (changeInY == 0)
-                //    {
-                //        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-                //    }
-                //    else
-                //    {
-                //        changeInX = 0;
-                //    }
-                //}
+                    if (changeInY == 0)
+                    {
+                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                    }
+                    else
+                    {
+                        changeInX = 0;
+                    }
+                }
 
                 var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
@@ -479,7 +485,7 @@ public partial class BaseDungeonLevel : Node
                         _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
                     }
 
-                    if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingSpawnPoint)
+                    if (nextWalk_TileMapSpace != null)// && nextWalk_TileMapSpace != startingSpawnPoint)
                     {
                         if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
                         {
@@ -1525,7 +1531,7 @@ public partial class BaseDungeonLevel : Node
 
     #region Direction-Changing Utility Methods
 
-    private int SetRandomChangeInDirection(int weightedValue = 1)
+    private int SetRandomChangeInDirection(int weightedValue)
 	{
 		var randChance = _rng.RandfRange(0, 1);
 
@@ -1542,6 +1548,24 @@ public partial class BaseDungeonLevel : Node
 			return weightedValue;
 		}
 	}
+
+    private int SetRandomChangeInDirection2(int weightedValue)
+    {
+        var randChance = _rng.RandfRange(0, 1);
+
+        if (randChance < .1)
+        {
+            return -weightedValue;
+        }
+        else if (randChance >= .1 && randChance < .2)
+        {
+            return 0;
+        }
+        else
+        {
+            return weightedValue;
+        }
+    }
 
     private Tuple<int, int> GetWeightedValues(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
     {
