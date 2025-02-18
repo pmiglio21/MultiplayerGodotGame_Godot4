@@ -406,7 +406,7 @@ public partial class BaseDungeonLevel : Node
             //For some reason, trig circle is flipped across its y axis... whatever...
             var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-            var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+            var weightedValues = GetWeightedValues2(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
             var changeInX = 0;
             var changeInY = 0;
@@ -416,42 +416,49 @@ public partial class BaseDungeonLevel : Node
             //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
             while (true)
             {
-                if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
-                {
-                    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+                //if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
+                //{
+                //    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-                    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+                //    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
-                    iterationCount = 0;
-                }
+                //    iterationCount = 0;
+                //}
 
-                //TODO: Try without randomness involved...
-                if (_rng.RandfRange(0, 1) <= .5)
-                {
-                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-                    if (changeInX == 0)
-                    {
-                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
-                    }
-                    else
-                    {
-                        changeInY = 0;
-                    }
-                }
-                else
-                {
-                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                weightedValues = GetWeightedValues2(angleFromWalkingFloorSpaceToTargetSpawnPoint);
 
-                    if (changeInY == 0)
-                    {
-                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
-                    }
-                    else
-                    {
-                        changeInX = 0;
-                    }
-                }
+                changeInX = weightedValues.Item1;
+                changeInY = weightedValues.Item2;
+
+                ////TODO: Try without randomness involved...
+                //if (_rng.RandfRange(0, 1) <= .5)
+                //{
+                //    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                //    if (changeInX == 0)
+                //    {
+                //        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                //    }
+                //    else
+                //    {
+                //        changeInY = 0;
+                //    }
+                //}
+                //else
+                //{
+                //    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+                //    if (changeInY == 0)
+                //    {
+                //        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                //    }
+                //    else
+                //    {
+                //        changeInX = 0;
+                //    }
+                //}
 
                 var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
 
@@ -1570,68 +1577,68 @@ public partial class BaseDungeonLevel : Node
         return new Tuple<int, int>(weightedXValue, weightedYValue); ;
     }
 
-    //private Tuple<int, int> GetWeightedValues2(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
-    //{
-    //	var weightedXValue = 0;
-    //	var weightedYValue = 0;
+    private Tuple<int, int> GetWeightedValues2(float angleFromWalkingFloorSpaceToTargetSpawnPoint)
+    {
+        var weightedXValue = 0;
+        var weightedYValue = 0;
 
-    //       //Northeast
-    //	if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 3f))
-    //	{
-    //		weightedXValue = 1;
-    //		weightedYValue = 1;
-    //	}
-    //       //North
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2*Math.PI / 3f))
-    //       {
-    //           weightedXValue = 0;
-    //           weightedYValue = 1;
-    //       }
-    //       //Northwest
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (2 * Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (5*Math.PI / 6))
-    //	{
-    //		weightedXValue = -1;
-    //		weightedYValue = 1;
-    //	}
-    //       //West
-    //       else if ((angleFromWalkingFloorSpaceToTargetSpawnPoint > (5 * Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2 * Math.PI)) ||
-    //                (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(5 * Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI)))
-    //       {
-    //           weightedXValue = -1;
-    //           weightedYValue = 0;
-    //       }
-    //       //Southwest
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(2 * Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(5 * Math.PI / 6))
-    //       {
-    //           weightedXValue = -1;
-    //           weightedYValue = -1;
-    //       }
-    //       //South
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI / 3))
-    //       {
-    //           weightedXValue = 0;
-    //           weightedYValue = -1;
-    //       }
-    //       //Southeast
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 3))
-    //       {
-    //           weightedXValue = 1;
-    //           weightedYValue = -1;
-    //       }
-    //       //East
-    //       else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 6))
-    //       {
-    //           weightedXValue = 1;
-    //           weightedYValue = 0;
-    //       }
-    //       else //default
-    //	{
-    //		weightedXValue = 1;
-    //		weightedYValue = 1;
-    //	}
+        //Northeast
+        if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 3f))
+        {
+            weightedXValue = 1;
+            weightedYValue = 1;
+        }
+        //North
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2 * Math.PI / 3f))
+        {
+            weightedXValue = 0;
+            weightedYValue = 1;
+        }
+        //Northwest
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > (2 * Math.PI / 3f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (5 * Math.PI / 6))
+        {
+            weightedXValue = -1;
+            weightedYValue = 1;
+        }
+        //West
+        else if ((angleFromWalkingFloorSpaceToTargetSpawnPoint > (5 * Math.PI / 6f) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (2 * Math.PI)) ||
+                 (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(5 * Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI)))
+        {
+            weightedXValue = -1;
+            weightedYValue = 0;
+        }
+        //Southwest
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(2 * Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(5 * Math.PI / 6))
+        {
+            weightedXValue = -1;
+            weightedYValue = -1;
+        }
+        //South
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 3) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(2 * Math.PI / 3))
+        {
+            weightedXValue = 0;
+            weightedYValue = -1;
+        }
+        //Southeast
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint < -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint >= -(Math.PI / 3))
+        {
+            weightedXValue = 1;
+            weightedYValue = -1;
+        }
+        //East
+        else if (angleFromWalkingFloorSpaceToTargetSpawnPoint > -(Math.PI / 6) && angleFromWalkingFloorSpaceToTargetSpawnPoint <= (Math.PI / 6))
+        {
+            weightedXValue = 1;
+            weightedYValue = 0;
+        }
+        else //default
+        {
+            weightedXValue = 1;
+            weightedYValue = 1;
+        }
 
-    //	return new Tuple<int, int>(weightedXValue, weightedYValue); ;
-    //}
+        return new Tuple<int, int>(weightedXValue, weightedYValue); ;
+    }
 
     #endregion
 
