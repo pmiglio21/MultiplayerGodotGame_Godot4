@@ -156,27 +156,30 @@ public partial class BaseDungeonLevel : Node
 
     private void RunProceduralDungeonGeneration()
 	{
-        if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
-		{
-			GenerateSingleSpawnPoint();
-		}
-		else
-		{
-			if (_parentDungeonLevelSwapper.ActivePlayers.Count > 1)
-			{
-				GenerateMultipleSpawnPoints();
+        GenerateMultipleSpawnPoints();
 
-				CreatePathsBetweenSpawnPoints();
-			}
-			else
-			{
-				GenerateSingleSpawnPoint();
-			}
-		}
 
-        GenerateMultipleGenerationStartPoints();
+        //      if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
+        //{
+        //	GenerateSingleSpawnPoint();
+        //}
+        //else
+        //{
+        //	if (_parentDungeonLevelSwapper.ActivePlayers.Count > 1)
+        //	{
+        //		GenerateMultipleSpawnPoints();
 
-        CreatePathsBetweenGenerationStartPoints();
+        //		CreatePathsBetweenSpawnPoints();
+        //	}
+        //	else
+        //	{
+        //		GenerateSingleSpawnPoint();
+        //	}
+        //}
+
+        //GenerateMultipleGenerationStartPoints();
+
+        //CreatePathsBetweenGenerationStartPoints();
 
         float percentageOfFloorToCover = 0;
 
@@ -276,6 +279,8 @@ public partial class BaseDungeonLevel : Node
 		Dictionary<int,Vector2I> nonBorderPositions = new Dictionary<int, Vector2I>();
 
 		int counter = 0;
+
+        //TODO: Make sure this point is not a spawn point too
 		foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => position.Value.X != 0 && position.Value.X != _maxNumberOfTiles - 1 &&
                                                                            position.Value.Y != 0 && position.Value.Y != _maxNumberOfTiles - 1))
 		{
@@ -354,14 +359,158 @@ public partial class BaseDungeonLevel : Node
 
     private void GenerateMultipleSpawnPoints()
 	{
-		for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count; spawnPointGeneratedCount++)
+        int maxTilesAdditionalNumber = 0;
+
+        if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
+        {
+            maxTilesAdditionalNumber = 2;
+        }
+        else if (SelectedLevelSize == GlobalConstants.LevelSizeMedium)
+        {
+            maxTilesAdditionalNumber = 3;
+        }
+        else if (SelectedLevelSize == GlobalConstants.LevelSizeLarge)
+        {
+            maxTilesAdditionalNumber = 4;
+        }
+
+        for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count + maxTilesAdditionalNumber; spawnPointGeneratedCount++)
 		{
 			GenerateSingleSpawnPoint(spawnPointGeneratedCount);
+
+            if (spawnPointGeneratedCount != 0)
+            {
+                CreatePathBetweenSpawnPoints2(_spawnPoints[spawnPointGeneratedCount]);
+            }
 		}
 	}
 
-	//TODO: Check if this method and the other one are similar enough to just make into one method
-	private void CreatePathsBetweenSpawnPoints()
+    //CREATE BETTER TARGET PATHING
+    private void CreatePathBetweenSpawnPoints2(TileMapSpace startingSpawnPoint)
+    {
+        try
+        {
+            TileMapSpace walkingFloorSpace = startingSpawnPoint;
+
+            TileMapSpace targetSpawnPoint = null;
+
+            if (startingSpawnPoint.SpawnPointNumber == _spawnPoints.Count - 1)
+            {
+                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0);
+            }
+            else
+            {
+                targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == startingSpawnPoint.SpawnPointNumber + 1);
+            }
+
+            //For some reason, trig circle is flipped across its y axis... whatever...
+            var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+
+            var weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+
+            var changeInX = 0;
+            var changeInY = 0;
+
+            int iterationCount = 0;
+
+            //Do this until the walkingFloorSpace is no longer on the starting spawnPoint
+            while (true)
+            {
+                if (iterationCount == TileMappingConstants.NumberOfIterationsBeforeChangingAngle_PathCreation)
+                {
+                    angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
+
+                    weightedValues = GetWeightedValues(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+
+                    iterationCount = 0;
+                }
+
+                //TODO: Try without randomness involved...
+                if (_rng.RandfRange(0, 1) <= .5)
+                {
+                    changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+
+                    if (changeInX == 0)
+                    {
+                        changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+                    }
+                    else
+                    {
+                        changeInY = 0;
+                    }
+                }
+                else
+                {
+                    changeInY = SetRandomChangeInDirection(weightedValues.Item2);
+
+                    if (changeInY == 0)
+                    {
+                        changeInX = SetRandomChangeInDirection(weightedValues.Item1);
+                    }
+                    else
+                    {
+                        changeInX = 0;
+                    }
+                }
+
+                var newPositionToCheck = new Vector2I(walkingFloorSpace.TileMapPosition.X + changeInX, walkingFloorSpace.TileMapPosition.Y + changeInY);
+
+                //Set walkingFloorSpace to somewhere adjacent to spawn
+                //Instead of using any, just check that new x and y are within the max dimension range
+                if (IsBlockInsideBorders(newPositionToCheck) && _possibleIndicesByFloorPositions.ContainsKey(newPositionToCheck))
+                {
+                    var nextWalk_TileMapSpace = new TileMapSpace();
+
+                    if (_possibleTileMapSpacesByFloorPosition.ContainsKey(newPositionToCheck))
+                    {
+                        nextWalk_TileMapSpace = _possibleTileMapSpacesByFloorPosition[newPositionToCheck];
+                    }
+                    else
+                    {
+                        nextWalk_TileMapSpace = CreateDefaultTileMapSpace(newPositionToCheck, TileMapSpaceType.Floor);
+
+                        _possibleTileMapSpacesByFloorPosition.Add(newPositionToCheck, nextWalk_TileMapSpace);
+                    }
+
+                    if (nextWalk_TileMapSpace != null && nextWalk_TileMapSpace != startingSpawnPoint)
+                    {
+                        if (!nextWalk_TileMapSpace.InteriorBlock.IsQueuedForDeletion())
+                        {
+                            nextWalk_TileMapSpace.InteriorBlock.QueueFree();
+                        }
+
+                        var numberOfSpawnPointWhoClearedMatchingFloorSpace = nextWalk_TileMapSpace.LastNumberToClearSpace;
+
+                        walkingFloorSpace = nextWalk_TileMapSpace;
+                        walkingFloorSpace.LastNumberToClearSpace = startingSpawnPoint.SpawnPointNumber;
+
+
+                        _possibleTileMapSpacesByFloorPosition[walkingFloorSpace.TileMapPosition].LastNumberToClearSpace = startingSpawnPoint.SpawnPointNumber;
+
+                        var rtl = walkingFloorSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
+                        rtl.Text = walkingFloorSpace.LastNumberToClearSpace.ToString();
+
+                        DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
+
+                        if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
+                            numberOfSpawnPointWhoClearedMatchingFloorSpace != startingSpawnPoint.SpawnPointNumber)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                iterationCount++;
+            }
+        }
+        catch (Exception e)
+        { 
+
+        }
+    }
+
+    //TODO: Check if this method and the other one are similar enough to just make into one method
+    private void CreatePathsBetweenSpawnPoints()
 	{
 		foreach (TileMapSpace startingSpawnPoint in _spawnPoints)
 		{
