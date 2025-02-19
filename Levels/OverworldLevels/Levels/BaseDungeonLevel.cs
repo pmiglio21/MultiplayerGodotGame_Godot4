@@ -185,24 +185,45 @@ public partial class BaseDungeonLevel : Node
 
 		switch (_parentDungeonLevelSwapper.ActivePlayers.Count)
 		{
-			case 1:
-				percentageOfFloorToCover = .125f;
-				break;
-			case 2:
-				percentageOfFloorToCover = .25f;
-				break;
-			case 3:
-				percentageOfFloorToCover = .333f;
-				break;
-			case 4:
-				percentageOfFloorToCover = .4f;
-				break;
-			default:
-				percentageOfFloorToCover = .25f;
-				break;
-		}
+            //case 1:
+            //	percentageOfFloorToCover = .125f;
+            //	break;
+            //case 2:
+            //	percentageOfFloorToCover = .25f;
+            //	break;
+            //case 3:
+            //	percentageOfFloorToCover = .333f;
+            //	break;
+            //case 4:
+            //	percentageOfFloorToCover = .4f;
+            //	break;
+            //default:
+            //	percentageOfFloorToCover = .25f;
+            //	break;
+            case 1:
+                percentageOfFloorToCover = .25f;
+                break;
+            case 2:
+                percentageOfFloorToCover = .333f;
+                break;
+            case 3:
+                percentageOfFloorToCover = .4f;
+                break;
+            case 4:
+                percentageOfFloorToCover = .5f;
+                break;
+            default:
+                percentageOfFloorToCover = .25f;
+                break;
+        }
 
-        percentageOfFloorToCover = .05f;
+        //For cave and frost
+        percentageOfFloorToCover = .15f;
+
+        //For castle
+        //percentageOfFloorToCover = .05f;
+
+        //percentageOfFloorToCover = .05f;
 
         //TODO: Get this to work concurrently
         while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
