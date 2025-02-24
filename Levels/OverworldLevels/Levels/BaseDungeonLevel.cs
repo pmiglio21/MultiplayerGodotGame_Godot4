@@ -32,7 +32,6 @@ public partial class BaseDungeonLevel : Node
     private Dictionary<Vector2I, TileMapSpace> _possibleTileMapSpacesByFloorPosition = new Dictionary<Vector2I, TileMapSpace>();
 
     private List<TileMapSpace> _spawnPoints = new List<TileMapSpace>();
-    private List<TileMapSpace> _generationStartPoints = new List<TileMapSpace>();
 
     private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -636,7 +635,7 @@ public partial class BaseDungeonLevel : Node
                         DrawOnTileMap(nextWalk_TileMapSpace.TileMapPosition);
 
                         if (numberOfSpawnPointWhoClearedMatchingFloorSpace != -1 &&
-                            numberOfSpawnPointWhoClearedMatchingFloorSpace != 99 && !_generationStartPoints.Any(x => x.GenerationStartPointNumber == numberOfSpawnPointWhoClearedMatchingFloorSpace))
+                            numberOfSpawnPointWhoClearedMatchingFloorSpace != 99)
                         {
                             break;
                         }
@@ -969,7 +968,9 @@ public partial class BaseDungeonLevel : Node
 	{
         if (SelectedSwitchProximityType == GlobalConstants.SwitchProximitySuperClose)
         {
-            for (int i = 0; i < _spawnPoints.Count; i++)
+            int switchCount = SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose ? 1 : _parentDungeonLevelSwapper.ActivePlayers.Count;
+
+            for (int i = 0; i < switchCount; i++)
             {
                 var tempPortalSwitch = _portalSwitchScene.Instantiate();
                 var portalSwitch = tempPortalSwitch as Node2D;

@@ -9,15 +9,11 @@ public partial class TileMapSpace
 
     public bool IsAdjacentToSpawnPoint = false;
 
-    public bool IsGenerationStartPoint = false;
-
     public bool IsAdjacentToGenerationStartPoint = false;
 
     public int LastNumberToClearSpace = -1;
 
     public int SpawnPointNumber = -1;
-
-    public int GenerationStartPointNumber = -1;
 
     public Node2D TestText = null;
 
