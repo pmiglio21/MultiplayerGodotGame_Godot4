@@ -973,7 +973,7 @@ public partial class BaseDungeonLevel : Node
             for (int i = 0; i < switchCount; i++)
             {
                 var tempPortalSwitch = _portalSwitchScene.Instantiate();
-                var portalSwitch = tempPortalSwitch as Node2D;
+                var portalSwitch = tempPortalSwitch as PortalSwitch;
                 AddChild(portalSwitch);
 
                 var spawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == i);
@@ -995,6 +995,8 @@ public partial class BaseDungeonLevel : Node
                 }
 
                 portalSwitch.GlobalPosition = spawnPointAdjacentTileMapSpaces[_rng.RandiRange(0, spawnPointAdjacentTileMapSpaces.Count - 1)].ActualGlobalPosition;
+
+                _portalSwitches.Add(portalSwitch);
             }
         }
         else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
@@ -1018,10 +1020,10 @@ public partial class BaseDungeonLevel : Node
 
     private void SetSwitchPositions(float minDistanceFromSpawnPoint, float maxDistanceFromSpawnPoint)
     {
-        var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null;
-        var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null;
-        var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null;
-        var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null;
+        var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 1;
+        var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 2;
+        var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 3;
+        var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 4;
 
         foreach (TileMapSpace currentTileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
         {
