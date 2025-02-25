@@ -356,7 +356,7 @@ public partial class BaseDungeonLevel : Node
 
             TileMapSpace targetSpawnPoint = null;
 
-            targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == startingSpawnPoint.SpawnPointNumber - 1);
+            targetSpawnPoint = _spawnPoints.FirstOrDefault(x => x.LastNumberToClearSpace == startingSpawnPoint.LastNumberToClearSpace - 1);
 
             //For some reason, trig circle is flipped across its y axis... whatever...
             var angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
