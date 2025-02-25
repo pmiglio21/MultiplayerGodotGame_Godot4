@@ -21,5 +21,7 @@ public partial class TileMapSpace
 
     public Vector2 ActualGlobalPosition = Vector2I.Zero; //Needed because can't access InteriorBlock's global position if it is queued for deletion
 
-	public TileMapSpaceType TileMapSpaceType = TileMapSpaceType.None;
+    public bool IsSomethingInTileMapSpace = false;
+
+    public TileMapSpaceType TileMapSpaceType = TileMapSpaceType.None;
 }
