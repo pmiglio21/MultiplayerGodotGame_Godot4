@@ -27,6 +27,7 @@ libraries = {
 visible = false
 position = Vector2(-0.5, 0.5)
 scale = Vector2(4.65891, -4.97787)
+shadow_enabled = true
 shadow_color = Color(0.184314, 0.184314, 0.184314, 0.819608)
 texture = ExtResource("4_6ligv")
 
