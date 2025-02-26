@@ -50,7 +50,7 @@ public partial class DungeonLevelSwapper : Node
 
 	public override void _Process(double delta)
 	{
-        if (_levelCounter < CurrentGameRules.NumberOfLevels)
+        if (CurrentGameRules.IsEndlessLevelsOn || _levelCounter < CurrentGameRules.NumberOfLevels)
         {
             if (_allSwitchesActivated && ActivePlayers.All(x => x.IsWaitingForNextLevel))
             {
