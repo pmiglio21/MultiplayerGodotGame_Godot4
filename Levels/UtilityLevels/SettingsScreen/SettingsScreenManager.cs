@@ -54,9 +54,6 @@ namespace Levels.UtilityLevels
         private SliderButton _musicVolumeSliderButton;
         private SliderButton _soundEffectsVolumeSliderButton;
         private SliderButton _dungeonSoundsVolumeSliderButton;
-        private OptionSelector _resolutionOptionSelector;
-        private RichTextLabel _resolutionTextLabel;
-        private Button _resolutionButton;
         private OptionSelector _fullscreenOptionSelector;
         private Button _fullscreenButton;
         private Button _returnButton;
@@ -78,15 +75,6 @@ namespace Levels.UtilityLevels
             _soundEffectsVolumeSliderButton.GetHSlider().ValueChanged += ((double newValue) => OnChanged_SoundEffectsVolumeSliderButton(_soundEffectsVolumeSliderButton.GetHSlider().Value));
 
             _dungeonSoundsVolumeSliderButton = FindChild("DungeonSoundsVolumeSliderButton") as SliderButton;
-
-            _resolutionOptionSelector = FindChild("ResolutionOptionSelector") as OptionSelector;
-            _resolutionTextLabel = FindChild("ResolutionTextLabel") as RichTextLabel;
-            _defaultResolutionTextColor = _resolutionTextLabel.GetThemeColor("default_color");
-
-            _resolutionButton = FindChild("ResolutionButton") as Button;
-            _resolutionButton.Text = $"{_rootSceneSwapper.CurrentSettings.Resolution.X} x {_rootSceneSwapper.CurrentSettings.Resolution.Y}";
-            _resolutionButton.FocusEntered += _resolutionOptionSelector.PlayOnFocusAnimation;
-            _resolutionButton.FocusExited += _resolutionOptionSelector.PlayLoseFocusAnimation;
 
             _fullscreenOptionSelector = FindChild("FullscreenOptionSelector") as OptionSelector;
             _fullscreenButton = FindChild("FullscreenButton") as Button;
@@ -112,7 +100,6 @@ namespace Levels.UtilityLevels
                 MusicVolume = _rootSceneSwapper.CurrentSettings.MusicVolume,
                 SoundEffectsVolume = _rootSceneSwapper.CurrentSettings.SoundEffectsVolume,
                 DungeonSoundsVolume = _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume,
-                Resolution = _rootSceneSwapper.CurrentSettings.Resolution,
                 FullscreenState = _rootSceneSwapper.CurrentSettings.FullscreenState
             };
 
@@ -166,23 +153,6 @@ namespace Levels.UtilityLevels
                 {
                     _dungeonSoundsVolumeSliderButton.GetHSlider().GrabFocus();
                 }
-                else if (_resolutionButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    _resolutionOptionSelector.PlayClickedOnRightArrow();
-
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
-                    var nextIndexOfResolutionOptions = 0;
-
-                    if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
-                    {
-                        nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
-                    }
-
-                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
-                }
                 else if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
@@ -193,14 +163,10 @@ namespace Levels.UtilityLevels
                     if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
 
                     _changedSettings.FullscreenState = _fullscreenButton.Text;
@@ -242,24 +208,7 @@ namespace Levels.UtilityLevels
             }
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionJustPressed(InputType.MoveEast) || UniversalInputHelper.IsActionJustPressed_GamePadOnly(InputType.DPadEast)))
             {
-                if (_resolutionButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    _resolutionOptionSelector.PlayClickedOnRightArrow();
-
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
-                    var nextIndexOfResolutionOptions = _resolutionOptions.Count - 1;
-
-                    if (indexOfCurrentResolution != 0)
-                    {
-                        nextIndexOfResolutionOptions = indexOfCurrentResolution - 1;
-                    }
-
-                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
-                }
-                else if (_fullscreenButton.HasFocus())
+               if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
@@ -269,14 +218,10 @@ namespace Levels.UtilityLevels
                     if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
 
                     _changedSettings.FullscreenState = _fullscreenButton.Text;
@@ -284,24 +229,7 @@ namespace Levels.UtilityLevels
             }
             else if (_inputTimer.IsStopped() && (UniversalInputHelper.IsActionJustPressed(InputType.MoveWest) || UniversalInputHelper.IsActionJustPressed_GamePadOnly(InputType.DPadWest)))
             {
-                if (_resolutionButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-                    _resolutionOptionSelector.PlayClickedOnLeftArrow();
-
-                    var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
-                    var nextIndexOfResolutionOptions = 0;
-
-                    if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
-                    {
-                        nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
-                    }
-
-                    _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-                    _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
-                }
-                else if (_fullscreenButton.HasFocus())
+                if (_fullscreenButton.HasFocus())
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 
@@ -311,14 +239,10 @@ namespace Levels.UtilityLevels
                     if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
                     }
                     else
                     {
                         _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
-
-                        _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
                     }
 
                     _changedSettings.FullscreenState = _fullscreenButton.Text;
@@ -344,18 +268,6 @@ namespace Levels.UtilityLevels
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
 
-                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOn)
-                    {
-                        _fullscreenButton.GrabFocus();
-                    }
-                    else
-                    {
-                        _resolutionButton.GrabFocus();
-                    }
-                }
-                else if (_resolutionButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     _fullscreenButton.GrabFocus();
                 }
                 else if (_fullscreenButton.HasFocus())
@@ -378,19 +290,8 @@ namespace Levels.UtilityLevels
                 {
                     _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     
-                    if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOn)
-                    {
-                        _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
-                    }
-                    else
-                    {
-                        _resolutionButton.GrabFocus();
-                    }
-                }
-                else if (_resolutionButton.HasFocus())
-                {
-                    _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiButtonSelectSoundPath);
                     _dungeonSoundsVolumeSliderButton.GetFocusHolder().GrabFocus();
+                    
                 }
                 else if (_dungeonSoundsVolumeSliderButton.GetFocusHolder().HasFocus())
                 {
@@ -438,7 +339,6 @@ namespace Levels.UtilityLevels
             config.SetValue("Settings", "music_volume", _rootSceneSwapper.CurrentSettings.MusicVolume);
             config.SetValue("Settings", "menu_sounds_volume", _rootSceneSwapper.CurrentSettings.SoundEffectsVolume);
             config.SetValue("Settings", "dungeon_sounds_volume", _rootSceneSwapper.CurrentSettings.DungeonSoundsVolume);
-            config.SetValue("Settings", "resolution", _rootSceneSwapper.CurrentSettings.Resolution);
             config.SetValue("Settings", "fullscreen_state", _rootSceneSwapper.CurrentSettings.FullscreenState);
 
             // Save it to a file (overwrite if already exists).
@@ -477,7 +377,7 @@ namespace Levels.UtilityLevels
 
         private void ResizeScreenToResolution()
         {
-            DisplayServer.WindowSetSize(new Vector2I(_rootSceneSwapper.CurrentSettings.Resolution.X, _rootSceneSwapper.CurrentSettings.Resolution.Y));
+            DisplayServer.WindowSetSize(GlobalConstants.DefaultResolution);
         }
 
         private void ReturnToPriorSceneTimeout()
@@ -494,7 +394,6 @@ namespace Levels.UtilityLevels
                     MusicVolume = _changedSettings.MusicVolume,
                     SoundEffectsVolume = _changedSettings.SoundEffectsVolume,
                     DungeonSoundsVolume = _changedSettings.DungeonSoundsVolume,
-                    Resolution = _changedSettings.Resolution,
                     FullscreenState = _changedSettings.FullscreenState
                 };
 
@@ -529,38 +428,6 @@ namespace Levels.UtilityLevels
 
         #region Signal Receptions
 
-        public void OnResolutionOptionSelector_LeftArrowClicked()
-        {
-            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
-            var nextIndexOfResolutionOptions = _resolutionOptions.Count - 1;
-
-            if (indexOfCurrentResolution != 0)
-            {
-                nextIndexOfResolutionOptions = indexOfCurrentResolution - 1;
-            }
-
-            _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-            _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
-        }
-
-        public void OnResolutionOptionSelector_RightArrowClicked()
-        {
-            _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
-
-            var indexOfCurrentResolution = _resolutionOptions.IndexOf(new Vector2I(_changedSettings.Resolution.X, _changedSettings.Resolution.Y));
-            var nextIndexOfResolutionOptions = 0;
-
-            if (indexOfCurrentResolution != _resolutionOptions.Count - 1)
-            {
-                nextIndexOfResolutionOptions = indexOfCurrentResolution + 1;
-            }
-
-            _changedSettings.Resolution = _resolutionOptions[nextIndexOfResolutionOptions];
-            _resolutionButton.Text = $"{_changedSettings.Resolution.X} x {_changedSettings.Resolution.Y}";
-        }
-
         public void OnFullscreenOptionSelector_EitherArrowClicked()
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
@@ -568,14 +435,10 @@ namespace Levels.UtilityLevels
             if (_fullscreenButton.Text == GlobalConstants.OffOnOptionOff)
             {
                 _fullscreenButton.Text = GlobalConstants.OffOnOptionOn;
-
-                _resolutionTextLabel.AddThemeColorOverride("default_color", new Color(Colors.DarkGray));
             }
             else
             {
                 _fullscreenButton.Text = GlobalConstants.OffOnOptionOff;
-
-                _resolutionTextLabel.AddThemeColorOverride("default_color", _defaultResolutionTextColor);
             }
         }
 

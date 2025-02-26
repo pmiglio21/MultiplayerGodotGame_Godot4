@@ -499,14 +499,13 @@ namespace Root
                     CurrentSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
                     CurrentSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
                     CurrentSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
-                    CurrentSettings.Resolution = (Vector2I)config.GetValue(section, "resolution");
                     CurrentSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
                 }
             }
 
 			if (CurrentSettings.FullscreenState != GlobalConstants.OffOnOptionOn)
 			{
-                DisplayServer.WindowSetSize(new Vector2I(CurrentSettings.Resolution.X, CurrentSettings.Resolution.Y));
+                DisplayServer.WindowSetSize(GlobalConstants.DefaultResolution);
             }
 			else
 			{

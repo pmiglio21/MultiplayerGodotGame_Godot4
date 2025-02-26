@@ -56,7 +56,7 @@ public partial class DungeonLevelSwapper : Node
             {
                 _levelCounter++;
 
-                if (_levelCounter != CurrentGameRules.NumberOfLevels)
+                if (CurrentGameRules.IsEndlessLevelsOn || _levelCounter != CurrentGameRules.NumberOfLevels)
                 {
                     ResetSplitScreenManager();
                 }

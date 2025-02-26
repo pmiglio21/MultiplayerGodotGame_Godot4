@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 
 namespace Globals
 {
@@ -45,6 +46,8 @@ namespace Globals
 
         public const string OffOnOptionOff = "OFF";
         public const string OffOnOptionOn = "ON";
+
+        public static Vector2I DefaultResolution = new Vector2I(1152, 648);
 
         #endregion
     }

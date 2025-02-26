@@ -345,7 +345,7 @@ theme_override_colors/font_hover_color = Color(0.870588, 0.870588, 0.870588, 1)
 theme_override_fonts/font = ExtResource("4_nmvb2")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxEmpty_q4c8k")
-text = "Super Close"
+text = "Individual"
 flat = true
 
 [node name="SwitchProximityOptionSelectorMultiSelect" parent="." instance=ExtResource("3_xf5wo")]
