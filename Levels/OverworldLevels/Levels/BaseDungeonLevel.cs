@@ -219,7 +219,7 @@ public partial class BaseDungeonLevel : Node
 
         #region Spawn Key Objects
 
-        if (SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose)
+        if (SelectedSpawnProximityType == GlobalConstants.SpawnProximityGroup)
         {
             SpawnPlayersSuperClose();
         }
@@ -237,15 +237,14 @@ public partial class BaseDungeonLevel : Node
 
     #region Spawn Point Generation
 
-    private void GenerateSingleSpawnPoint(int playerNumber = 0)
+    private void GenerateSingleSpawnPoint(int spawnPointGeneratedCount = 0)
     {
 		Dictionary<int,Vector2I> nonBorderPositions = new Dictionary<int, Vector2I>();
 
 		int counter = 0;
 
         //TODO: Make sure this point is not a spawn point too
-		foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => position.Value.X != 0 && position.Value.X != _maxNumberOfTiles - 1 &&
-                                                                           position.Value.Y != 0 && position.Value.Y != _maxNumberOfTiles - 1))
+		foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => IsBlockInsideBorders(position.Value)))
 		{
 			nonBorderPositions.Add(counter, indexPositionPair.Value);
 			counter++;
@@ -257,7 +256,6 @@ public partial class BaseDungeonLevel : Node
         //Create Spawn Point
         var newSpawnPoint_TileMapSpace = new TileMapSpace();
 
-		//This line has a "key not present" issue
         if (_possibleTileMapSpacesByFloorPosition.ContainsKey(nonBorderPositions[floorTileIndex]))
         {
 			newSpawnPoint_TileMapSpace = _possibleTileMapSpacesByFloorPosition[nonBorderPositions[floorTileIndex]];
@@ -272,13 +270,13 @@ public partial class BaseDungeonLevel : Node
         newSpawnPoint_TileMapSpace.IsSpawnPoint = true;
 
         newSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-        newSpawnPoint_TileMapSpace.LastNumberToClearSpace = playerNumber;
-        newSpawnPoint_TileMapSpace.SpawnPointNumber = playerNumber;
+        newSpawnPoint_TileMapSpace.LastNumberToClearSpace = spawnPointGeneratedCount;
+        newSpawnPoint_TileMapSpace.SpawnPointNumber = spawnPointGeneratedCount;
 
-        _possibleTileMapSpacesByFloorPosition[newSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = playerNumber;
+        _possibleTileMapSpacesByFloorPosition[newSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = spawnPointGeneratedCount;
 
         var richTextLabel = newSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-        richTextLabel.Text = playerNumber.ToString();
+        richTextLabel.Text = spawnPointGeneratedCount.ToString();
 
 		DrawOnTileMap(newSpawnPoint_TileMapSpace.TileMapPosition);
 
@@ -306,12 +304,12 @@ public partial class BaseDungeonLevel : Node
 
                 nearSpawnPoint_TileMapSpace.IsAdjacentToSpawnPoint = true;
                 nearSpawnPoint_TileMapSpace.InteriorBlock.QueueFree();
-                nearSpawnPoint_TileMapSpace.SpawnPointNumber = playerNumber;
+                nearSpawnPoint_TileMapSpace.SpawnPointNumber = spawnPointGeneratedCount;
 
-                _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = playerNumber;
+                _possibleTileMapSpacesByFloorPosition[nearSpawnPoint_TileMapSpace.TileMapPosition].SpawnPointNumber = spawnPointGeneratedCount;
 
                 var rtl = nearSpawnPoint_TileMapSpace.TestText.GetNode("RichTextLabel") as RichTextLabel;
-                rtl.Text = playerNumber.ToString();
+                rtl.Text = spawnPointGeneratedCount.ToString();
 
                 DrawOnTileMap(nearSpawnPoint_TileMapSpace.TileMapPosition);
             }
@@ -954,50 +952,56 @@ public partial class BaseDungeonLevel : Node
 
 	private void GeneratePortal() 
 	{
-		var tempPortal = _portalScene.Instantiate();
-		_portal = tempPortal as Portal;
-		AddChild(_portal);
-
-		var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace).ToList();
-
-        Vector2 targetPortalPosition = new Vector2();
-
-        foreach (TileMapSpace spawnPoint in _spawnPoints)
+        try
         {
-            targetPortalPosition += spawnPoint.ActualGlobalPosition;
-        }
+            var tempPortal = _portalScene.Instantiate();
+            _portal = tempPortal as Portal;
+            AddChild(_portal);
 
-        targetPortalPosition = targetPortalPosition / _spawnPoints.Count;
+            var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace && x.InteriorBlock.IsQueuedForDeletion()).ToList();
 
-        targetPortalPosition = new Vector2(Mathf.Floor(targetPortalPosition.X), Mathf.Floor(targetPortalPosition.Y));
+            Vector2 targetPortalPosition = new Vector2();
 
-        Vector2 actualPortalPosition = new Vector2();
-
-        float closestDistance = float.MaxValue;
-
-        foreach (TileMapSpace availableSpace in availableTargetSpaces)
-        {
-            float distance = availableSpace.ActualGlobalPosition.DistanceTo(targetPortalPosition);
-
-            if (distance < closestDistance)
+            foreach (TileMapSpace spawnPoint in _spawnPoints)
             {
-                closestDistance = distance;
-
-                actualPortalPosition = availableSpace.ActualGlobalPosition;
+                targetPortalPosition += spawnPoint.ActualGlobalPosition;
             }
+
+            targetPortalPosition = targetPortalPosition / _spawnPoints.Count;
+
+            targetPortalPosition = new Vector2(Mathf.Floor(targetPortalPosition.X), Mathf.Floor(targetPortalPosition.Y));
+
+            Vector2 actualPortalPosition = new Vector2();
+
+            float closestDistance = float.MaxValue;
+
+            foreach (TileMapSpace availableSpace in availableTargetSpaces)
+            {
+                float distance = availableSpace.ActualGlobalPosition.DistanceTo(targetPortalPosition);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+
+                    actualPortalPosition = availableSpace.ActualGlobalPosition;
+                }
+            }
+
+            _portal.GlobalPosition = actualPortalPosition;
+
+            _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(actualPortalPosition)].IsSomethingInTileMapSpace = true;
         }
-
-        //Need to match to make sure portals and switches don't spawn on each other, maybe add "holding something flag" to tile class
-        _portal.GlobalPosition = actualPortalPosition;// availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
-
-        _possibleTileMapSpacesByFloorPosition[(Vector2I)actualPortalPosition].IsSomethingInTileMapSpace = true;
+        catch (Exception ex)
+        { 
+            GD.PushError(ex);
+        }
     }
 
 	private void GenerateSwitches() 
 	{
         if (SelectedSwitchProximityType == GlobalConstants.SwitchProximitySuperClose)
         {
-            int switchCount = SelectedSpawnProximityType == GlobalConstants.SpawnProximitySuperClose ? 1 : _parentDungeonLevelSwapper.ActivePlayers.Count;
+            int switchCount = SelectedSpawnProximityType == GlobalConstants.SpawnProximityGroup ? 1 : _parentDungeonLevelSwapper.ActivePlayers.Count;
 
             for (int i = 0; i < switchCount; i++)
             {
@@ -1017,7 +1021,7 @@ public partial class BaseDungeonLevel : Node
                 {
                     TileMapSpace adjacentTileMapSpace = _possibleTileMapSpacesByFloorPosition[adjacentTileMapPosition];
 
-                    if (adjacentTileMapSpace.InteriorBlock.IsQueuedForDeletion() && adjacentTileMapSpace.ActualGlobalPosition != _portal.GlobalPosition)
+                    if (adjacentTileMapSpace.InteriorBlock.IsQueuedForDeletion() && adjacentTileMapSpace.ActualGlobalPosition != _portal.GlobalPosition && adjacentTileMapSpace.TileMapSpaceType == TileMapSpaceType.Floor && !adjacentTileMapSpace.IsSomethingInTileMapSpace)
                     {
                         spawnPointAdjacentTileMapSpaces.Add(adjacentTileMapSpace);
                     }
@@ -1027,7 +1031,7 @@ public partial class BaseDungeonLevel : Node
 
                 _portalSwitches.Add(portalSwitch);
 
-                _possibleTileMapSpacesByFloorPosition[(Vector2I)portalSwitch.GlobalPosition].IsSomethingInTileMapSpace = true;
+                _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
             }
         }
         else if (SelectedSwitchProximityType == GlobalConstants.SwitchProximityClose)
@@ -1051,12 +1055,14 @@ public partial class BaseDungeonLevel : Node
 
     private void SetSwitchPositions(float minDistanceFromSpawnPoint, float maxDistanceFromSpawnPoint)
     {
+        var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace).ToList();
+
         var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 1;
         var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 2;
         var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 3;
         var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 4;
 
-        foreach (TileMapSpace currentTileMapSpace in _possibleTileMapSpacesByFloorPosition.Values)
+        foreach (TileMapSpace currentTileMapSpace in availableTargetSpaces)
         {
              if (!firstSpawnPointSatisfied)
              {
@@ -1073,7 +1079,7 @@ public partial class BaseDungeonLevel : Node
 
                     _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[(Vector2I)portalSwitch.GlobalPosition].IsSomethingInTileMapSpace = true;
+                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
                     firstSpawnPointSatisfied = true;
                  }
@@ -1094,7 +1100,7 @@ public partial class BaseDungeonLevel : Node
 
                     _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[(Vector2I)portalSwitch.GlobalPosition].IsSomethingInTileMapSpace = true;
+                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
                     secondSpawnPointSatisfied = true;
                  }
@@ -1115,7 +1121,7 @@ public partial class BaseDungeonLevel : Node
 
                     _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[(Vector2I)portalSwitch.GlobalPosition].IsSomethingInTileMapSpace = true;
+                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
                     thirdSpawnPointSatisfied = true;
                  }
@@ -1136,7 +1142,7 @@ public partial class BaseDungeonLevel : Node
 
                     _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[(Vector2I)portalSwitch.GlobalPosition].IsSomethingInTileMapSpace = true;
+                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
                     fourthSpawnPointSatisfied = true;
                  }

@@ -38,10 +38,8 @@ namespace Levels.UtilityLevels
 
         private readonly List<string> _spawnProximityOptions = new List<string>()
         {
-            GlobalConstants.SpawnProximitySuperClose,
-            GlobalConstants.SpawnProximityClose,
-            GlobalConstants.SpawnProximityNormal,
-            GlobalConstants.SpawnProximityFar,
+            GlobalConstants.SpawnProximityIndividual,
+            GlobalConstants.SpawnProximityGroup,
         };
 
         private readonly List<string> _switchProximityOptions = new List<string>()

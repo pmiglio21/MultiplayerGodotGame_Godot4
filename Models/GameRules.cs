@@ -28,10 +28,8 @@ namespace Models
 
         public Dictionary<string, bool> SpawnProximityTypes = new Dictionary<string, bool>()
         {
-            { GlobalConstants.SpawnProximitySuperClose, true },
-            { GlobalConstants.SpawnProximityClose, true },
-            { GlobalConstants.SpawnProximityNormal, true },
-            { GlobalConstants.SpawnProximityFar, true },
+            { GlobalConstants.SpawnProximityIndividual, true },
+            { GlobalConstants.SpawnProximityGroup, true },
         };
 
         public Dictionary<string, bool> SwitchProximityTypes = new Dictionary<string, bool>()
