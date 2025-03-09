@@ -48,7 +48,7 @@ public partial class DungeonLevelSwapper : Node
 
 		_latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
 		_latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
-        _latestBaseDungeonLevel.ResetBaseDungeonLevel += () => _allSwitchesActivated = true;
+        _latestBaseDungeonLevel.ActivatePortal += RunPortalActivationProcess;
 	}
 
 	public override void _Process(double delta)
@@ -94,23 +94,34 @@ public partial class DungeonLevelSwapper : Node
             _allSwitchesActivated = false;
 
             this.AddChild(nextSplitScreenManager);
-            this.MoveChild(nextSplitScreenManager, 0);
+            this.MoveChild(nextSplitScreenManager, 0); //Move nextSplitScreenManager to the top of the hierarchy so timer and paus screen are on top
 
             _latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
 
             _latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
             _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
-            _latestBaseDungeonLevel.ResetBaseDungeonLevel += () => _allSwitchesActivated = true;
+            _latestBaseDungeonLevel.ActivatePortal += RunPortalActivationProcess;
 
             var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
             currentDungeonLevel.QueueFree();
             currentSplitScreenManager.QueueFree();
-		}
+
+            _portalTimer.ResetTimer();
+            _portalTimer.PauseTimer();
+            _portalTimer.Hide();
+        }
 		catch (Exception ex)
 		{
 			GD.PrintErr(ex);
 		}
 	}
+
+    private void RunPortalActivationProcess()
+    {
+        _allSwitchesActivated = true;
+        _portalTimer.ResetTimer();
+        _portalTimer.Show();
+    }
 
 	private void ChangeScreenToTitleScreen()
 	{

@@ -21,7 +21,7 @@ public partial class BaseDungeonLevel : Node
     public delegate void GoToGameOverScreenEventHandler();
 
     [Signal]
-    public delegate void ResetBaseDungeonLevelEventHandler();
+    public delegate void ActivatePortalEventHandler();
 
     #endregion
 
@@ -1171,7 +1171,7 @@ public partial class BaseDungeonLevel : Node
                 }
             }
 
-            EmitSignal(SignalName.ResetBaseDungeonLevel);
+            EmitSignal(SignalName.ActivatePortal);
         }
     }
 

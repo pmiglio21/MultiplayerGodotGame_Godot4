@@ -30,35 +30,6 @@ namespace Levels.OverworldLevels.KeyLevelObjects
             _animationPlayer.Play("Idle");
         }
 
-		private void CheckForPortalActivation()
-		{
-			if (_isAreaEntered && UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
-			{
-				var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.SouthButton);
-
-				bool didOneOfThePlayersInAreaPressTheButton = false;
-
-				foreach (string playerWhoPressedButton in playersWhoPressedButtonThisFrame)
-				{
-					foreach (string playerInArea in _playersInArea)
-					{
-						if (playerWhoPressedButton == playerInArea)
-						{
-							didOneOfThePlayersInAreaPressTheButton = true;
-							break;
-						}
-					}
-				}
-
-				if (didOneOfThePlayersInAreaPressTheButton)
-				{
-					IsPortalActivated = !IsPortalActivated;
-
-					GD.Print("Yuh");
-				}
-			}
-		}
-
 		private void OnCollisionAreaEntered(Area2D area)
 		{
 			if (area.IsInGroup("PlayerHurtBox"))

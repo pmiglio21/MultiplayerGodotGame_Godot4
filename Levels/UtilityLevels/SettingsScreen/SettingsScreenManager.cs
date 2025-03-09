@@ -15,29 +15,6 @@ namespace Levels.UtilityLevels
 	{
         private RootSceneSwapper _rootSceneSwapper;
 
-        private Color _defaultResolutionTextColor;
-
-        private List<Vector2I> _resolutionOptions = new List<Vector2I>()
-        {
-            new Vector2I(1152,648),
-            new Vector2I(1280,720),
-            new Vector2I(1128,634),
-            new Vector2I(1024,768),
-            new Vector2I(832,624),
-            new Vector2I(800,600),
-            new Vector2I(720,576),
-            new Vector2I(720,480),
-            new Vector2I(640,480),
-            new Vector2I(1920,1080),
-            new Vector2I(1760,990),
-            new Vector2I(1680,1050),
-            new Vector2I(1600,900),
-            new Vector2I(1440,900),
-            new Vector2I(1366,768),
-            new Vector2I(1280,1024),
-            new Vector2I(1280,960)
-        };
-
         #region Pause Screen Stuff
 
         public bool IsSettingsScreenBeingShown = false;
