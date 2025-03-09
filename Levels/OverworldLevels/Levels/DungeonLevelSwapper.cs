@@ -43,6 +43,7 @@ public partial class DungeonLevelSwapper : Node
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
 
         _portalTimer = FindChild("PortalTimer") as PortalTimer;
+        _portalTimer.GetTimer().Timeout += RunPortalTimerTimeoutProcess;
 
         _latestSplitScreenManager = GetNode<SplitScreenManager>("SplitScreenManager");
 
@@ -106,8 +107,8 @@ public partial class DungeonLevelSwapper : Node
             currentDungeonLevel.QueueFree();
             currentSplitScreenManager.QueueFree();
 
-            _portalTimer.ResetTimer();
-            _portalTimer.PauseTimer();
+            _portalTimer.GetTimer().Start();
+            _portalTimer.GetTimer().Stop();
             _portalTimer.Hide();
         }
 		catch (Exception ex)
@@ -119,13 +120,31 @@ public partial class DungeonLevelSwapper : Node
     private void RunPortalActivationProcess()
     {
         _allSwitchesActivated = true;
-        _portalTimer.ResetTimer();
+        _portalTimer.GetTimer().Start();
         _portalTimer.Show();
     }
 
 	private void ChangeScreenToTitleScreen()
 	{
         EmitSignal(SignalName.GoToTitleScreen);
+    }
+
+    private void RunPortalTimerTimeoutProcess()
+    {
+        KillAllExposedPlayers();
+
+        if (ActivePlayers.All(x => x.IsDead))
+        {
+            ChangeSceneToGameOverScreen();
+        }
+    }
+
+    private void KillAllExposedPlayers()
+    {
+        foreach (BaseCharacter player in ActivePlayers.Where(x => !x.IsWaitingForNextLevel))
+        {
+            player.IsDead = true;
+        }
     }
 
 	private void ChangeSceneToGameOverScreen()

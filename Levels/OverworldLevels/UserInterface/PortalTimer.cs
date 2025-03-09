@@ -18,15 +18,10 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
         {
             _timeTextBox.Text = Mathf.Floor(_timer.TimeLeft).ToString();
         }
-    
-        public void ResetTimer()
-        {
-            _timer.Start();
-        }
 
-        public void PauseTimer()
+        public Timer GetTimer()
         {
-            _timer.Stop();
+            return _timer;
         }
     }
 }

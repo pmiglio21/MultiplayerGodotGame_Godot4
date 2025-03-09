@@ -371,6 +371,7 @@ namespace Root
                     _dungeonLevelSwapper.QueueFree();
                 }
 
+                _gameOverScreenManager?.QueueFree();
                 _playerCharacterSelectScreenManager?.QueueFree();
                 _settingsScreenManager?.QueueFree();
                 _gameRulesScreenManager?.QueueFree();
