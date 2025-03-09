@@ -13,6 +13,7 @@ public partial class DungeonLevelSwapper : Node
 {
 	private RootSceneSwapper _rootSceneSwapper;
     private PauseScreenManager _pauseScreenManager;
+    private PortalTimer _portalTimer;
     private SplitScreenManager _latestSplitScreenManager;
     private BaseDungeonLevel _latestBaseDungeonLevel;
 
@@ -40,6 +41,8 @@ public partial class DungeonLevelSwapper : Node
 
 		_pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
+
+        _portalTimer = FindChild("PortalTimer") as PortalTimer;
 
         _latestSplitScreenManager = GetNode<SplitScreenManager>("SplitScreenManager");
 
@@ -90,12 +93,8 @@ public partial class DungeonLevelSwapper : Node
 
             _allSwitchesActivated = false;
 
-            //Vector2 pauseScreenManagerOriginalGlobalPosition = _pauseScreenManager.GlobalPosition;
-
             this.AddChild(nextSplitScreenManager);
-
-            //Remove pause screen node from original SplitScreenManager
-            _pauseScreenManager.Reparent(nextSplitScreenManager);
+            this.MoveChild(nextSplitScreenManager, 0);
 
             _latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
 
@@ -106,8 +105,6 @@ public partial class DungeonLevelSwapper : Node
             var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
             currentDungeonLevel.QueueFree();
             currentSplitScreenManager.QueueFree();
-
-			//_pauseScreenManager.GlobalPosition = pauseScreenManagerOriginalGlobalPosition;
 		}
 		catch (Exception ex)
 		{

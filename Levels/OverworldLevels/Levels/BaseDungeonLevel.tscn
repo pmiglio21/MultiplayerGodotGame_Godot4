@@ -10,7 +10,6 @@ script = ExtResource("1_u85ix")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 position = Vector2(-6.10352e-05, 0)
-scale = Vector2(1, 1)
 color = Color(0.0117647, 0.184314, 0.223529, 1)
 
 [node name="Background" type="Sprite2D" parent="."]

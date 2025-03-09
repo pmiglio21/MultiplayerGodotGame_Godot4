@@ -299,21 +299,28 @@ namespace Root
 
 		private void ChangeSceneToDungeonLevelSwapperScreen(Control currentUiScene)
 		{
-            //GetTree().Root.SizeChanged -= AdjustUiOnWindowSizeChanged;
+			try
+			{
+                //GetTree().Root.SizeChanged -= AdjustUiOnWindowSizeChanged;
 
-            //Doesn't need to be checked for null, just reset every time
-            _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
+                //Doesn't need to be checked for null, just reset every time
+                _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
-			_dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
-			_dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
+                _dungeonLevelSwapper.GoToTitleScreen += OnDungeonLevelSwapperScreenGoToTitleScreen;
+                _dungeonLevelSwapper.GoToGameOverScreen += OnDungeonLevelSwapperScreenGoToGameOverScreen;
 
-			_dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
-			_dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
-			this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
+                _dungeonLevelSwapper.ActivePlayers = _playerCharacterSelectScreenManager.ActivePlayers;
+                _dungeonLevelSwapper.CurrentGameRules = this.CurrentGameRules;
+                this.ActivePlayerCharacterPickers = _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers;
 
-			_rootGuiControl.AddChild(_dungeonLevelSwapper);
+                _rootGuiControl.AddChild(_dungeonLevelSwapper);
 
-			_rootGuiControl.RemoveChild(currentUiScene);
+                _rootGuiControl.RemoveChild(currentUiScene);
+            }
+			catch (Exception ex)
+			{
+				GD.PushError(ex.Message);
+			}
 		}
 
 		private void ChangeSceneToGameOverScreen(Node currentUiScene)
