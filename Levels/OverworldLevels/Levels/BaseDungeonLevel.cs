@@ -1005,6 +1005,11 @@ public partial class BaseDungeonLevel : Node
 
             for (int i = 0; i < switchCount; i++)
             {
+                if (_parentDungeonLevelSwapper.ActivePlayers.FirstOrDefault(x => x.PlayerNumber == i).IsDead)
+                {
+                    continue;
+                }
+
                 var tempPortalSwitch = _portalSwitchScene.Instantiate();
                 var portalSwitch = tempPortalSwitch as PortalSwitch;
                 AddChild(portalSwitch);
@@ -1057,102 +1062,104 @@ public partial class BaseDungeonLevel : Node
     {
         var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace).ToList();
 
-        var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 1;
-        var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 2;
-        var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 3;
-        var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 4;
+        var firstSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 0) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 1 || _parentDungeonLevelSwapper.ActivePlayers.FirstOrDefault(x => x.PlayerNumber == 0).IsDead;
+        var secondSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 1) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 2 ||
+            _parentDungeonLevelSwapper.ActivePlayers.FirstOrDefault(x => x.PlayerNumber == 1).IsDead;
+        var thirdSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 2) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 3 || _parentDungeonLevelSwapper.ActivePlayers.FirstOrDefault(x => x.PlayerNumber == 2).IsDead;
+        var fourthSpawnPointSatisfied = _spawnPoints.FirstOrDefault(x => x.SpawnPointNumber == 3) == null || _parentDungeonLevelSwapper.ActivePlayers.Count < 4 ||
+            _parentDungeonLevelSwapper.ActivePlayers.FirstOrDefault(x => x.PlayerNumber == 3).IsDead;
 
         foreach (TileMapSpace currentTileMapSpace in availableTargetSpaces)
         {
-             if (!firstSpawnPointSatisfied)
-             {
-                 float distanceBetweenFirstSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[0].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+            if (!firstSpawnPointSatisfied)
+            {
+                float distanceBetweenFirstSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[0].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
 
-                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
-                     && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
-                     && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
-                 {
-                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
-                    AddChild(portalSwitch);
-
-                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
-
-                    _portalSwitches.Add(portalSwitch);
-
-                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
-
-                    firstSpawnPointSatisfied = true;
-                 }
-             }
-
-             if (!secondSpawnPointSatisfied)
-             {
-                 float distanceBetweenSecondSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[1].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
-
-                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
-                     && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
-                     && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
-                 {
-                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
-                    AddChild(portalSwitch);
+                if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                    && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                    && distanceBetweenFirstSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                {
+                   var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
+                   AddChild(portalSwitch);
 
                     portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
 
-                    _portalSwitches.Add(portalSwitch);
+                   _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+                   _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
-                    secondSpawnPointSatisfied = true;
-                 }
-             }
+                   firstSpawnPointSatisfied = true;
+                }
+            }
 
-             if (!thirdSpawnPointSatisfied)
-             {
-                 float distanceBetweenThirdSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[2].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+            if (!secondSpawnPointSatisfied)
+            {
+                float distanceBetweenSecondSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[1].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
 
-                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
-                     && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
-                     && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
-                 {
-                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
-                    AddChild(portalSwitch);
+                if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                    && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                    && distanceBetweenSecondSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                {
+                   var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
+                   AddChild(portalSwitch);
 
-                    portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+                   portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
 
-                    _portalSwitches.Add(portalSwitch);
+                   _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+                   _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
-                    thirdSpawnPointSatisfied = true;
-                 }
-             }
+                   secondSpawnPointSatisfied = true;
+                }
+            }
 
-             if (!fourthSpawnPointSatisfied)
-             {
-                 float distanceBetweenFourthSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[3].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+            if (!thirdSpawnPointSatisfied)
+            {
+                float distanceBetweenThirdSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[2].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
 
-                 if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
-                     && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
-                     && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
-                 {
-                    var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
-                    AddChild(portalSwitch);
+                if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                    && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                    && distanceBetweenThirdSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                {
+                   var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
+                   AddChild(portalSwitch);
 
-                    portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+                   portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
 
-                    _portalSwitches.Add(portalSwitch);
+                   _portalSwitches.Add(portalSwitch);
 
-                    _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+                   _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
 
-                    fourthSpawnPointSatisfied = true;
-                 }
-             }
+                   thirdSpawnPointSatisfied = true;
+                }
+            }
+
+            if (!fourthSpawnPointSatisfied)
+            {
+                float distanceBetweenFourthSpawnPointAndCurrentTileMapSpace = ((Vector2)_spawnPoints[3].TileMapPosition).DistanceTo(currentTileMapSpace.TileMapPosition);
+
+                if (currentTileMapSpace.InteriorBlock.IsQueuedForDeletion()
+                    && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace > minDistanceFromSpawnPoint
+                    && distanceBetweenFourthSpawnPointAndCurrentTileMapSpace < maxDistanceFromSpawnPoint)
+                {
+                   var portalSwitch = _portalSwitchScene.Instantiate() as PortalSwitch;
+                   AddChild(portalSwitch);
+
+                   portalSwitch.GlobalPosition = currentTileMapSpace.ActualGlobalPosition;
+
+                   _portalSwitches.Add(portalSwitch);
+
+                   _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(portalSwitch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+
+                   fourthSpawnPointSatisfied = true;
+                }
+            }
 
 
-             if (firstSpawnPointSatisfied && secondSpawnPointSatisfied && thirdSpawnPointSatisfied && fourthSpawnPointSatisfied)
-             {
-                 break;
-             }
+            if (firstSpawnPointSatisfied && secondSpawnPointSatisfied && thirdSpawnPointSatisfied && fourthSpawnPointSatisfied)
+            {
+                break;
+            }
         }
     }
 

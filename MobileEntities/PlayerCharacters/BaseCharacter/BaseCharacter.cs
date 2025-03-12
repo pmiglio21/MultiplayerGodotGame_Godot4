@@ -83,7 +83,24 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected bool finishedAttack = false;
 
-		public bool IsDead = false;
+		public bool IsDead
+		{
+			get { return _isDead; }
+			set
+			{
+				if (_isDead != value)
+				{
+					_isDead = value;
+
+                    //IsControllable = false;
+
+                    GD.Print("DEAD");
+
+                    this.playerSprite.Modulate = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                }
+            }
+		}
+		private bool _isDead = false;
 
 		public bool IsInPortalArea = false;	 //Portal not necessarily activated
 
@@ -159,14 +176,10 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			{
 				IsDead = true;
 
-                IsControllable = false;
+                //PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
+            }
 
-				GD.Print("DEAD");
-
-				//PlayAppropriateAnimation(latestCardinalDirection, AnimationType.Dead);
-			}
-
-			if (IsControllable)
+            if (IsControllable)
 			{
 				if (_portalWaitTimer < _portalWaitTimerMax && IsWaitingForPortal)
 				{

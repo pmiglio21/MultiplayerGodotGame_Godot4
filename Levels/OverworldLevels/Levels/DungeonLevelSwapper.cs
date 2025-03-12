@@ -56,7 +56,7 @@ public partial class DungeonLevelSwapper : Node
 	{
         if (CurrentGameRules.IsEndlessLevelsOn || _levelCounter < CurrentGameRules.NumberOfLevels)
         {
-            if (_allSwitchesActivated && ActivePlayers.All(x => x.IsWaitingForNextLevel))
+            if (_allSwitchesActivated && ActivePlayers.All(x => x.IsWaitingForNextLevel || x.IsDead))
             {
                 _levelCounter++;
 
