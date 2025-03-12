@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bytye8pr8nonr"]
+
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/PlayerUpgradesScreen.cs" id="1_vnm2g"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_yfq3d"]
+
+[node name="PlayerUpgradesScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vnm2g")
+
+[node name="SettingsBackground" type="TextureRect" parent="."]
+offset_left = -3180.0
+offset_top = -2441.0
+offset_right = 3615.0
+offset_bottom = 2071.0
+texture = ExtResource("2_yfq3d")
