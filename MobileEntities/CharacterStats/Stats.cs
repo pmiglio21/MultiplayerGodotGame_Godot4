@@ -8,9 +8,9 @@ namespace MobileEntities.CharacterStats
 {
     public class Stats
     {
-        public Experience Experience = new Experience();
+        public float Experience = 0;
 
-        public Health Health = new Health();
+        public float Health = 0;
 
         public float Attack = 0;
 
@@ -18,9 +18,21 @@ namespace MobileEntities.CharacterStats
 
         public float Speed = 0;
 
+        #region Base Stats
+
+        public float BaseHealth = 0;
+
+        public float BaseAttack = 0;
+
+        public float BaseDefense = 0;
+
+        public float BaseSpeed = 0;
+
+        #endregion
+
         public Stats(float _healthAmount)
         {
-            Health.HealthAmount = _healthAmount;
+            Health = _healthAmount;
         }
     }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using MobileEntities.CharacterStats;
 using MobileEntities.PlayerCharacters;
 using System;
 
@@ -6,16 +7,14 @@ namespace MobileEntities.PlayerCharacters.Scripts
 {
 	public partial class Cleric : BaseCharacter
 	{
-		// Called when the node enters the scene tree for the first time.
-		//public override void _Ready()
-		//{
-			
-		//}
+        protected override void InitializeClassSpecificProperties()
+        {
+            characterStats = new Stats(3);
 
-		//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-		//  public override void _Process(float delta)
-		//  {
-		//      
-		//  }
-	}
+            characterStats.BaseHealth = 4;
+            characterStats.BaseAttack = 2;
+            characterStats.BaseDefense = 2;
+            characterStats.BaseSpeed = 2;
+        }
+    }
 }

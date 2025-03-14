@@ -114,11 +114,11 @@ namespace MobileEntities.Enemies.Scripts
 
 					if (gracePeriodTimer.IsStopped())
 					{
-						characterStats.Health.HealthAmount -= 1;
+						characterStats.Health -= 1;
 
-						GD.Print($"Health: {characterStats.Health.HealthAmount}");
+						GD.Print($"Health: {characterStats.Health}");
 
-						if (characterStats.Health.HealthAmount <= 0)
+						if (characterStats.Health <= 0)
 						{
 							this.QueueFree();
 						}

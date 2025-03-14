@@ -172,7 +172,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			ZIndex = (int)this.GlobalPosition.Y;
 
-			if (characterStats.Health.HealthAmount <= 0)
+			if (characterStats.Health <= 0)
 			{
 				IsDead = true;
 
@@ -424,9 +424,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print($"Player Hurt Entered - Health: {characterStats.Health.HealthAmount}");
+					GD.Print($"Player Hurt Entered - Health: {characterStats.Health}");
 
-					characterStats.Health.HealthAmount -= 1;
+					characterStats.Health -= 1;
 				}
 			}
 			else if (area.IsInGroup("PortalArea"))

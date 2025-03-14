@@ -12,7 +12,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected override void InitializeClassSpecificProperties()
 		{
 			characterStats = new Stats(3);
-		}
+
+			characterStats.BaseHealth = 3;
+            characterStats.BaseAttack = 2;
+            characterStats.BaseDefense = 4;
+            characterStats.BaseSpeed = 1;
+        }
 
 		protected override void RunAttack()
 		{

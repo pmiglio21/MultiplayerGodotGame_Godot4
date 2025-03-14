@@ -11,7 +11,12 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		protected override void InitializeClassSpecificProperties()
 		{
 			characterStats = new Stats(3);
-		}
+
+            characterStats.BaseHealth = 2;
+            characterStats.BaseAttack = 4;
+            characterStats.BaseDefense = 1;
+            characterStats.BaseSpeed = 2;
+        }
 
 		protected override void MoveHurtBoxes(CardinalDirection hurtBoxDirection)
 		{
