@@ -337,7 +337,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
 			{
 				//if you want to check input for walking and running speeds, do it here
-				moveDirection = moveInput.Normalized();
+				moveDirection = moveInput.Normalized() * (Mathf.Log(characterStats.Speed) + 1);
 			}
 			else
 			{

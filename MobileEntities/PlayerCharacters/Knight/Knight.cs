@@ -17,6 +17,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
             characterStats.BaseAttack = 2;
             characterStats.BaseDefense = 4;
             characterStats.BaseSpeed = 1;
+
+			characterStats.CalculateStatsOnLevelUp();
         }
 
 		protected override void RunAttack()

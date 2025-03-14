@@ -15,6 +15,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
             characterStats.BaseAttack = 3;
             characterStats.BaseDefense = 2;
             characterStats.BaseSpeed = 4;
+
+            characterStats.CalculateStatsOnLevelUp();
         }
     }
 }

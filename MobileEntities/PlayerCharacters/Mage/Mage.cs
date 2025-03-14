@@ -16,6 +16,8 @@ namespace MobileEntities.PlayerCharacters.Scripts
             characterStats.BaseAttack = 4;
             characterStats.BaseDefense = 1;
             characterStats.BaseSpeed = 2;
+
+            characterStats.CalculateStatsOnLevelUp();
         }
 
 		protected override void MoveHurtBoxes(CardinalDirection hurtBoxDirection)
