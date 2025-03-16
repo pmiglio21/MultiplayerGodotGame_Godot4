@@ -335,6 +335,12 @@ public partial class BaseDungeonLevel : Node
             maxTilesAdditionalNumber = 9;
         }
 
+        //TODO: Test this out more later... Still need to figure out castle generation
+        //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+        //{
+        //    maxTilesAdditionalNumber += 20;
+        //}
+
         for (int spawnPointGeneratedCount = 0; spawnPointGeneratedCount < _parentDungeonLevelSwapper.ActivePlayers.Count + maxTilesAdditionalNumber; spawnPointGeneratedCount++)
 		{
 			GenerateSingleSpawnPoint(spawnPointGeneratedCount);
