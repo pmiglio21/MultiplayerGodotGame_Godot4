@@ -7,8 +7,35 @@
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\playerupgradesscreenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\earlylevels\\playerselectscreen\\playercharacterselectscreenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\earlylevels\\playerselectscreen\\playercharacterselectscreenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\characterstats\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\characterstats\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\earlylevels\\playerselectscreen\\playercharacterpicker\\playercharacterpicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\earlylevels\\playerselectscreen\\playercharacterpicker\\playercharacterpicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\dungeonlevelswapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\dungeonlevelswapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\140767bd9d110b280a3662039239a4bd488f31f9\\Godot.NativeInterop.NativeFuncs.generated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\globals\\universalinputhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:globals\\universalinputhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\models\\gamerules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:models\\gamerules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\basemobileentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,24 +58,12 @@
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\utilitylevels\\gamerulesscreen\\gamerulesscreenmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\basecharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\basecharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\characterstats\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\characterstats\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\enemies\\baseenemy\\baseenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\enemies\\baseenemy\\baseenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\models\\gamerules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:models\\gamerules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\globals\\persistentfilepaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -92,10 +107,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\globals\\soundfilepaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:globals\\soundfilepaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\globals\\universalinputhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:globals\\universalinputhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -105,8 +116,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PlayerCharacterPicker.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterPicker\\PlayerCharacterPicker.cs",
+              "RelativeDocumentMoniker": "Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterPicker\\PlayerCharacterPicker.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterPicker\\PlayerCharacterPicker.cs",
+              "RelativeToolTip": "Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterPicker\\PlayerCharacterPicker.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T16:02:19.465Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerCharacterSelectScreenManager.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterSelectScreenManager.cs",
+              "RelativeDocumentMoniker": "Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterSelectScreenManager.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterSelectScreenManager.cs",
+              "RelativeToolTip": "Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterSelectScreenManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T16:01:23.277Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -115,20 +152,20 @@
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\Levels\\PlayerUpgradesScreenManager.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\Levels\\PlayerUpgradesScreenManager.cs",
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\PlayerUpgradesScreenManager.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAiwD0AAAA4AAAA",
+              "ViewState": "AQIAABQAAAAAAAAAAAAiwBkAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T15:42:11.05Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "DungeonLevelSwapper.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAAwFwAAAAJAAAA",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAlwFAAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-04T17:58:19.05Z",
               "EditorCaption": ""
@@ -136,19 +173,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "BaseCharacter.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "ViewState": "AQIAANgAAAAAAAAAAAAlwFMBAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-24T18:16:36.983Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "GameRules.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Models\\GameRules.cs",
               "RelativeDocumentMoniker": "Models\\GameRules.cs",
@@ -174,7 +198,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "TileMappingConstants.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\TileMapping\\TileMappingConstants.cs",
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\TileMapping\\TileMappingConstants.cs",
@@ -186,7 +210,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
+              "Title": "Stats.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\CharacterStats\\Stats.cs",
+              "RelativeDocumentMoniker": "MobileEntities\\CharacterStats\\Stats.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\CharacterStats\\Stats.cs",
+              "RelativeToolTip": "MobileEntities\\CharacterStats\\Stats.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAADgvx4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-14T02:08:09.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Godot.NativeInterop.NativeFuncs.generated.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\140767bd9d110b280a3662039239a4bd488f31f9\\Godot.NativeInterop.NativeFuncs.generated.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\140767bd9d110b280a3662039239a4bd488f31f9\\Godot.NativeInterop.NativeFuncs.generated.cs",
+              "ToolTip": "C:\\Users\\pmigl\\AppData\\Local\\Temp\\.vsdbgsrc\\140767bd9d110b280a3662039239a4bd488f31f9\\Godot.NativeInterop.NativeFuncs.generated.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\140767bd9d110b280a3662039239a4bd488f31f9\\Godot.NativeInterop.NativeFuncs.generated.cs [Read Only]",
+              "ViewState": "AQIAAFQAAAAAAAAAAAD4v1wAAABwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T16:15:46.047Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UniversalInputHelper.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\UniversalInputHelper.cs",
+              "RelativeDocumentMoniker": "Globals\\UniversalInputHelper.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\UniversalInputHelper.cs",
+              "RelativeToolTip": "Globals\\UniversalInputHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T01:24:00.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "BaseCharacter.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "ViewState": "AQIAANgAAAAAAAAAAAAlwFMBAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-24T18:16:36.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "LevelScenePaths.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\LevelScenePaths.cs",
               "RelativeDocumentMoniker": "Globals\\LevelScenePaths.cs",
@@ -199,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "SplitScreenManager.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
@@ -212,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "BaseMobileEntity.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\BaseMobileEntity.cs",
               "RelativeDocumentMoniker": "MobileEntities\\BaseMobileEntity.cs",
@@ -225,7 +301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "RootSceneSwapper.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\RootSceneSwapper\\RootSceneSwapper.cs",
               "RelativeDocumentMoniker": "RootSceneSwapper\\RootSceneSwapper.cs",
@@ -238,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "GameRulesScreenManager.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\GameRulesScreen\\GameRulesScreenManager.cs",
@@ -251,20 +327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Stats.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\CharacterStats\\Stats.cs",
-              "RelativeDocumentMoniker": "MobileEntities\\CharacterStats\\Stats.cs",
-              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\CharacterStats\\Stats.cs",
-              "RelativeToolTip": "MobileEntities\\CharacterStats\\Stats.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAhwCYAAABFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T02:08:09.012Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "BaseEnemy.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\Enemies\\BaseEnemy\\BaseEnemy.cs",
               "RelativeDocumentMoniker": "MobileEntities\\Enemies\\BaseEnemy\\BaseEnemy.cs",
@@ -277,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "Portal.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\KeyLevelObjects\\Portal\\Portal.cs",
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\KeyLevelObjects\\Portal\\Portal.cs",
@@ -290,7 +353,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "PersistentFilePaths.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\PersistentFilePaths.cs",
               "RelativeDocumentMoniker": "Globals\\PersistentFilePaths.cs",
@@ -303,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Portal.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\AppData\\Local\\SourceServer\\6bd802dcfe40987749200038225d472234671f24f601533ab5450abdd13945c9\\Levels\\OverworldLevels\\KeyLevelObjects\\Portal\\Portal.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\SourceServer\\6bd802dcfe40987749200038225d472234671f24f601533ab5450abdd13945c9\\Levels\\OverworldLevels\\KeyLevelObjects\\Portal\\Portal.cs",
@@ -315,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "PauseScreenManager.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\PauseScreen\\PauseScreenManager.cs",
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\PauseScreen\\PauseScreenManager.cs",
@@ -327,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "TitleScreenManager.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\EarlyLevels\\TitleScreen\\TitleScreenManager.cs",
               "RelativeDocumentMoniker": "Levels\\EarlyLevels\\TitleScreen\\TitleScreenManager.cs",
@@ -339,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "SliderButton.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\UserInterfaceComponents\\SliderButton\\SliderButton.cs",
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\UserInterfaceComponents\\SliderButton\\SliderButton.cs",
@@ -351,7 +414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "PlayerCamera.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\Utilities\\PlayerCamera.cs",
               "RelativeDocumentMoniker": "MobileEntities\\Utilities\\PlayerCamera.cs",
@@ -363,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "OptionSelector.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\UtilityLevels\\UserInterfaceComponents\\OptionSelector\\OptionSelector.cs",
               "RelativeDocumentMoniker": "Levels\\UtilityLevels\\UserInterfaceComponents\\OptionSelector\\OptionSelector.cs",
@@ -375,19 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "UniversalInputHelper.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\UniversalInputHelper.cs",
-              "RelativeDocumentMoniker": "Globals\\UniversalInputHelper.cs",
-              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\UniversalInputHelper.cs",
-              "RelativeToolTip": "Globals\\UniversalInputHelper.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAUwCYAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T01:24:00.405Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "InputType.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Enums\\InputType.cs",
               "RelativeDocumentMoniker": "Enums\\InputType.cs",
@@ -399,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "SoundFilePaths.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\SoundFilePaths.cs",
               "RelativeDocumentMoniker": "Globals\\SoundFilePaths.cs",

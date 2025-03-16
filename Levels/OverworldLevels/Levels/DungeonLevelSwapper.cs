@@ -96,6 +96,7 @@ public partial class DungeonLevelSwapper : Node
         this.MoveChild(nextPlayerUpgradesScreenManager, 0); //Move nextSplitScreenManager to the top of the hierarchy so timer and pause screen are on top
 
         _latestPlayerUpgradesScreenManager = nextPlayerUpgradesScreenManager as PlayerUpgradesScreenManager;
+        _latestPlayerUpgradesScreenManager.GoToSplitScreenManager += ResetSplitScreenManager;
 
         var currentSplitScreenManager = GetTree().GetNodesInGroup("SplitScreenManager").FirstOrDefault() as SplitScreenManager;
 
@@ -112,21 +113,7 @@ public partial class DungeonLevelSwapper : Node
 	{
 		try
 		{
-            var currentSplitScreenManager = GetTree().GetNodesInGroup("SplitScreenManager").FirstOrDefault() as SplitScreenManager;
-
             var nextSplitScreenManager = GD.Load<PackedScene>(LevelScenePaths.SplitScreenManagerPath).Instantiate();
-
-            //Remove player node from original SplitScreenManager
-            foreach (BaseCharacter player in ActivePlayers)
-            {
-                player.IsWaitingForNextLevel = false;
-                player.IsControllable = true;
-                player.Show();
-
-                var parent = player.GetParent();
-
-                parent.RemoveChild(player);
-            }
 
             _allSwitchesActivated = false;
 
@@ -139,13 +126,7 @@ public partial class DungeonLevelSwapper : Node
             _latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
             _latestBaseDungeonLevel.ActivatePortal += RunPortalActivationProcess;
 
-            var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
-            currentDungeonLevel.QueueFree();
-            currentSplitScreenManager.QueueFree();
-
-            _portalTimer.GetTimer().Start();
-            _portalTimer.GetTimer().Stop();
-            _portalTimer.Hide();
+            _latestPlayerUpgradesScreenManager.QueueFree();
         }
 		catch (Exception ex)
 		{

@@ -38,10 +38,10 @@ namespace MobileEntities.CharacterStats
         {
             RandomNumberGenerator _rng = new RandomNumberGenerator();
 
-            Health = _rng.RandiRange(BaseHealth, BaseHealth + (int)Mathf.Ceil(BaseHealth / 2));
-            Attack = _rng.RandiRange(BaseAttack, BaseAttack + (int)Mathf.Ceil(BaseAttack / 2));
-            Defense = _rng.RandiRange(BaseDefense, BaseDefense + (int)Mathf.Ceil(BaseDefense / 2));
-            Speed = _rng.RandiRange(BaseSpeed, BaseSpeed + (int)Mathf.Ceil(BaseSpeed / 2));
+            Health += _rng.RandiRange(BaseHealth, BaseHealth + (int)Mathf.Ceil(BaseHealth / 2));
+            Attack += _rng.RandiRange(BaseAttack, BaseAttack + (int)Mathf.Ceil(BaseAttack / 2));
+            Defense += _rng.RandiRange(BaseDefense, BaseDefense + (int)Mathf.Ceil(BaseDefense / 2));
+            Speed += _rng.RandiRange(BaseSpeed, BaseSpeed + (int)Mathf.Ceil(BaseSpeed / 2));
 
             GD.Print($"Health: {Health}, Attack: {Attack}, Defense: {Defense}, Speed: {Speed}");
         }
