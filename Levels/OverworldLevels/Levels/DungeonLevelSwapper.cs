@@ -1,5 +1,6 @@
 using Globals;
 using Godot;
+using Levels.OverworldLevels;
 using Levels.UtilityLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
 using MobileEntities.PlayerCharacters.Scripts;
@@ -16,6 +17,7 @@ public partial class DungeonLevelSwapper : Node
     private PortalTimer _portalTimer;
     private SplitScreenManager _latestSplitScreenManager;
     private BaseDungeonLevel _latestBaseDungeonLevel;
+    private PlayerUpgradesScreenManager _latestPlayerUpgradesScreenManager;
 
     #region Signals
 
@@ -62,7 +64,9 @@ public partial class DungeonLevelSwapper : Node
 
                 if (CurrentGameRules.IsEndlessLevelsOn || _levelCounter != CurrentGameRules.NumberOfLevels)
                 {
-                    ResetSplitScreenManager();
+                    GoToUpgradesScreen();
+
+                    //ResetSplitScreenManager();
                 }
                 else
                 {
@@ -70,6 +74,38 @@ public partial class DungeonLevelSwapper : Node
                 }
             }
         }
+    }
+
+    private void GoToUpgradesScreen()
+    {
+        var nextPlayerUpgradesScreenManager = GD.Load<PackedScene>(LevelScenePaths.UpgradesScreenManagerPath).Instantiate();
+
+        //Remove player node from original SplitScreenManager
+        foreach (BaseCharacter player in ActivePlayers)
+        {
+            player.IsWaitingForNextLevel = false;
+            player.IsControllable = true;
+            player.Show();
+
+            var parent = player.GetParent();
+
+            parent.RemoveChild(player);
+        }
+
+        this.AddChild(nextPlayerUpgradesScreenManager);
+        this.MoveChild(nextPlayerUpgradesScreenManager, 0); //Move nextSplitScreenManager to the top of the hierarchy so timer and pause screen are on top
+
+        _latestPlayerUpgradesScreenManager = nextPlayerUpgradesScreenManager as PlayerUpgradesScreenManager;
+
+        var currentSplitScreenManager = GetTree().GetNodesInGroup("SplitScreenManager").FirstOrDefault() as SplitScreenManager;
+
+        var currentDungeonLevel = currentSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
+        currentDungeonLevel.QueueFree();
+        currentSplitScreenManager.QueueFree();
+
+        _portalTimer.GetTimer().Start();
+        _portalTimer.GetTimer().Stop();
+        _portalTimer.Hide();
     }
 
 	private void ResetSplitScreenManager()
@@ -95,7 +131,7 @@ public partial class DungeonLevelSwapper : Node
             _allSwitchesActivated = false;
 
             this.AddChild(nextSplitScreenManager);
-            this.MoveChild(nextSplitScreenManager, 0); //Move nextSplitScreenManager to the top of the hierarchy so timer and paus screen are on top
+            this.MoveChild(nextSplitScreenManager, 0); //Move nextSplitScreenManager to the top of the hierarchy so timer and pause screen are on top
 
             _latestSplitScreenManager = nextSplitScreenManager as SplitScreenManager;
 

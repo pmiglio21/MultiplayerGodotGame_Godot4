@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bytye8pr8nonr"]
 
-[ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/PlayerUpgradesScreen.cs" id="1_vnm2g"]
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/PlayerUpgradesScreenManager.cs" id="1_0g420"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_yfq3d"]
 
 [node name="PlayerUpgradesScreen" type="Control"]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vnm2g")
+script = ExtResource("1_0g420")
 
 [node name="SettingsBackground" type="TextureRect" parent="."]
 offset_left = -3180.0
@@ -18,3 +18,32 @@ offset_top = -2441.0
 offset_right = 3615.0
 offset_bottom = 2071.0
 texture = ExtResource("2_yfq3d")
+
+[node name="Player1Stats" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 214.0
+offset_right = 341.0
+offset_bottom = 461.0
+text = "Player 1"
+
+[node name="Player2Stats" type="RichTextLabel" parent="."]
+offset_left = 341.0
+offset_top = 214.0
+offset_right = 485.0
+offset_bottom = 461.0
+text = "Player 2"
+
+[node name="Player3Stats" type="RichTextLabel" parent="."]
+offset_left = 465.0
+offset_top = 214.0
+offset_right = 609.0
+offset_bottom = 461.0
+text = "Player 3"
+
+[node name="Player4Stats" type="RichTextLabel" parent="."]
+offset_left = 595.0
+offset_top = 214.0
+offset_right = 739.0
+offset_bottom = 461.0
+text = "Player 4"
