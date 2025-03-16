@@ -429,7 +429,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 				{
 					GD.Print($"Player Hurt Entered - Health: {CharacterStats.Health}");
 
-					CharacterStats.Health -= 1;
+					//CharacterStats.Health -= 1;
 				}
 			}
 			else if (area.IsInGroup("PortalArea"))

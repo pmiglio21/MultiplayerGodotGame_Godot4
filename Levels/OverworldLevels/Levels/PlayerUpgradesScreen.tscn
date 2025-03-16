@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/PlayerUpgradesScreenManager.cs" id="1_0g420"]
 [ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="2_yfq3d"]
 
-[node name="PlayerUpgradesScreen" type="Control"]
+[node name="PlayerUpgradesScreen" type="Control" groups=["PlayerUpgradesScreenManager"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

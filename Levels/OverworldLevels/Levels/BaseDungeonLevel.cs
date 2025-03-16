@@ -55,7 +55,7 @@ public partial class BaseDungeonLevel : Node
 
     #region Enemy Generation
 
-    private int _enemyCountMax = 5;
+    private int _enemyCountMax = 10;
 	private int _enemyCount = 0;
 
 	#endregion
@@ -113,16 +113,16 @@ public partial class BaseDungeonLevel : Node
 
         RunProceduralDungeonGeneration();
 
-		//while (_enemyCount < _enemyCountMax)
-		//{
-		//	SpawnEnemy();
-		//}	 
-		_enemyRespawnTimer.Start();
-	}
+        while (_enemyCount < _enemyCountMax)
+        {
+            SpawnEnemy();
+        }
+        _enemyRespawnTimer.Start();
+    }
 
-	#region Possible Floor Generation
+    #region Possible Floor Generation
 
-	private void SetPossibleFloorTiles()
+    private void SetPossibleFloorTiles()
 	{
         if (SelectedLevelSize == GlobalConstants.LevelSizeSmall)
 		{
