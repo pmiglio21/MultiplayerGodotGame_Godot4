@@ -11,7 +11,7 @@ namespace MobileEntities.Enemies.Scripts
 		{
 			enemyType = EnemyType.Slime;
 
-			characterStats = new Stats(3);
+			CharacterStats = new Stats(3);
 		}
 
 		protected override void MoveEnemy()

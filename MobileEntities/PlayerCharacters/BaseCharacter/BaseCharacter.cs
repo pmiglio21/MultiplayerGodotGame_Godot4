@@ -172,7 +172,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 		{
 			ZIndex = (int)this.GlobalPosition.Y;
 
-			if (characterStats.Health <= 0)
+			if (CharacterStats.Health <= 0)
 			{
 				IsDead = true;
 
@@ -254,7 +254,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 		protected virtual void InitializeClassSpecificProperties() 
 		{
-            characterStats = new Stats(3);
+            CharacterStats = new Stats(3);
         }
 
 		protected virtual void MoveHurtBoxes(CardinalDirection hurtBoxDirection) { }
@@ -336,7 +336,7 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
 			{
-                float speed = (float)((float)(100 + characterStats.Speed) / 100);
+                float speed = (float)((float)(100 + CharacterStats.Speed) / 100);
 				var normalizedMoveInput = moveInput.Normalized();
 
                 //if you want to check input for walking and running speeds, do it here
@@ -427,9 +427,9 @@ namespace MobileEntities.PlayerCharacters.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print($"Player Hurt Entered - Health: {characterStats.Health}");
+					GD.Print($"Player Hurt Entered - Health: {CharacterStats.Health}");
 
-					characterStats.Health -= 1;
+					CharacterStats.Health -= 1;
 				}
 			}
 			else if (area.IsInGroup("PortalArea"))
