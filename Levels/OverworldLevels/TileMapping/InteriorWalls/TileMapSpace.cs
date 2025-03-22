@@ -3,7 +3,7 @@ using Godot;
 
 public partial class TileMapSpace 
 {
-	public Node2D InteriorBlock = null;
+	public InteriorWallBlock InteriorBlock = null;
 
 	public bool IsSpawnPoint = false;
 

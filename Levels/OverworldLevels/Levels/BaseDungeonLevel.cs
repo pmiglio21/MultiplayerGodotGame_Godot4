@@ -659,7 +659,7 @@ public partial class BaseDungeonLevel : Node
 	{
 		//Generate InteriorWallBlock at that position
 		var tempBlock = _interiorBlockScene.Instantiate();
-		var interiorBlock = tempBlock as Node2D;
+		var interiorBlock = tempBlock as InteriorWallBlock;
 		var interiorWallBlock = tempBlock as InteriorWallBlock;
 		AddChild(interiorBlock);
 
@@ -765,7 +765,9 @@ public partial class BaseDungeonLevel : Node
 
 						interiorBlockSprite.Texture = GetWallTexture();
                         wallTileMapSpace.TileMapSpaceType = TileMapSpaceType.Wall;
-					}
+                        wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
+
+                    }
                 }
             }
         }
