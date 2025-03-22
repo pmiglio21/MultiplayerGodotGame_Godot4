@@ -123,9 +123,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				//Remove all but the first SubviewportContainer
 				for (int i = 1; i < _availableSubViewportContainers.Count; i++)
 				{
-					this.RemoveChild(_availableSubViewportContainers[i]);
+					this.RemoveChild(_availableSubViewportContainers[1]);
 
-					_availableSubViewportContainers.RemoveAt(i);
+					_availableSubViewportContainers.RemoveAt(1);
 				}
 
 				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkCenter | SizeFlags.Expand;
@@ -137,9 +137,9 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 				//Remove all but the first and second SubviewportContainer
 				for (int i = 2; i < _availableSubViewportContainers.Count; i++)
 				{
-					this.RemoveChild(_availableSubViewportContainers[i]);
+					this.RemoveChild(_availableSubViewportContainers[2]);
 
-					_availableSubViewportContainers.RemoveAt(i);
+					_availableSubViewportContainers.RemoveAt(2);
 				}
 
 				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
