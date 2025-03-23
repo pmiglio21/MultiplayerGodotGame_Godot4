@@ -25,8 +25,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_right = 1156.0
+offset_left = 2.0
+offset_right = 1158.0
 
 [node name="PauseScreen" parent="." instance=ExtResource("3_srn8q")]
 visible = false
@@ -45,3 +45,33 @@ offset_top = -324.0
 offset_right = 104.0
 offset_bottom = -210.0
 grow_vertical = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button1" type="Button" parent="CanvasLayer"]
+offset_right = 182.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
+text = "HELLO"
+
+[node name="Button2" type="Button" parent="CanvasLayer"]
+offset_left = 571.0
+offset_right = 753.0
+offset_bottom = 108.0
+theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
+text = "HELLO"
+
+[node name="Button3" type="Button" parent="CanvasLayer"]
+offset_top = 328.0
+offset_right = 182.0
+offset_bottom = 436.0
+theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
+text = "HELLO"
+
+[node name="Button4" type="Button" parent="CanvasLayer"]
+offset_left = 574.0
+offset_top = 328.0
+offset_right = 756.0
+offset_bottom = 436.0
+theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
+text = "HELLO"

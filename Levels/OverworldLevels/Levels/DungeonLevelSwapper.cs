@@ -13,6 +13,10 @@ using System.Linq;
 public partial class DungeonLevelSwapper : Node
 {
 	private RootSceneSwapper _rootSceneSwapper;
+
+    private CanvasLayer _canvasLayer;
+    private List<Button> _hudButtons = new List<Button>();
+
     private PauseScreenManager _pauseScreenManager;
     private PortalTimer _portalTimer;
     private SplitScreenManager _latestSplitScreenManager;
@@ -41,7 +45,7 @@ public partial class DungeonLevelSwapper : Node
 		_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 		CurrentGameRules = _rootSceneSwapper.CurrentGameRules;
 
-		_pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
+        _pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
 
         _portalTimer = FindChild("PortalTimer") as PortalTimer;
@@ -52,9 +56,70 @@ public partial class DungeonLevelSwapper : Node
 		_latestBaseDungeonLevel = _latestSplitScreenManager.FindChild("Level") as BaseDungeonLevel;
 		_latestBaseDungeonLevel.GoToGameOverScreen += ChangeSceneToGameOverScreen;
         _latestBaseDungeonLevel.ActivatePortal += RunPortalActivationProcess;
-	}
 
-	public override void _Process(double delta)
+        _canvasLayer = FindChild("CanvasLayer") as CanvasLayer;
+        _hudButtons = GetCanvasLayerButtons();
+        MoveButtonsAround();
+
+        GetTree().Root.SizeChanged += MoveButtonsAround;
+    }
+
+    private List<Button> GetCanvasLayerButtons()
+    {
+        var availableSubViewportContainers = _latestSplitScreenManager.ReturnSubViewportContainers();
+
+        List<Button> hudButtons = new List<Button>();
+
+        int buttonCount = 1;
+
+        while (buttonCount < 5)
+        {
+            Button button = _canvasLayer.FindChild($"Button{buttonCount}") as Button;
+            
+            if (this.ActivePlayers.Count < buttonCount)
+            {
+                _canvasLayer.RemoveChild(button);
+            }
+            else
+            {
+                hudButtons.Add(button);
+            }
+
+            buttonCount++;
+        }
+
+        return hudButtons;
+    }
+
+    private void MoveButtonsAround()
+    {
+        var tree = GetTree();
+
+        Vector2I mainViewportSize = tree.Root.Size;
+
+        int buttonCount = 1;
+
+        foreach(Button button in _hudButtons)
+        {
+            if (buttonCount == 2)
+            {
+                button.GlobalPosition = new Vector2(mainViewportSize.X / 2, 0);
+            }
+            else if (buttonCount == 3)
+            {
+                button.GlobalPosition = new Vector2(0, mainViewportSize.Y / 2);
+            }
+            else if (buttonCount == 4)
+            {
+                button.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+            }
+
+            buttonCount++;
+        }
+    }
+
+
+    public override void _Process(double delta)
 	{
         if (CurrentGameRules.IsEndlessLevelsOn || _levelCounter < CurrentGameRules.NumberOfLevels)
         {
