@@ -66,11 +66,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 			return subViewports;
 		}
 
-		public List<SubViewportContainer> ReturnSubViewportContainers()
-        {
-            return _availableSubViewportContainers;
-        }
-
 		private List<SubViewportContainer> GetSubViewportContainers()
 		{
 			List<SubViewportContainer> subViewportContainers = new List<SubViewportContainer>();

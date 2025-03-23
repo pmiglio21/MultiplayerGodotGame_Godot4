@@ -61,13 +61,11 @@ public partial class DungeonLevelSwapper : Node
         _hudButtons = GetCanvasLayerButtons();
         MoveButtonsAround();
 
-        GetTree().Root.SizeChanged += MoveButtonsAround;
+        GetTree().Root.SizeChanged += ResizeUI;
     }
 
     private List<Button> GetCanvasLayerButtons()
     {
-        var availableSubViewportContainers = _latestSplitScreenManager.ReturnSubViewportContainers();
-
         List<Button> hudButtons = new List<Button>();
 
         int buttonCount = 1;
@@ -91,28 +89,43 @@ public partial class DungeonLevelSwapper : Node
         return hudButtons;
     }
 
+    private void ResizeUI()
+    {
+        MoveButtonsAround();
+    }
+
     private void MoveButtonsAround()
     {
         var tree = GetTree();
 
-        Vector2I mainViewportSize = tree.Root.Size;
+        Vector2 mainViewportSize = tree.Root.Size;
 
         int buttonCount = 1;
 
+        int offset = 20;
+
         foreach(Button button in _hudButtons)
         {
-            if (buttonCount == 2)
+            if (buttonCount == 1)
             {
-                button.GlobalPosition = new Vector2(mainViewportSize.X / 2, 0);
+                button.GlobalPosition = new Vector2(offset, offset);
+            }
+            else if (buttonCount == 2)
+            {
+                button.GlobalPosition = new Vector2((mainViewportSize.X / 2) + offset, offset);
             }
             else if (buttonCount == 3)
             {
-                button.GlobalPosition = new Vector2(0, mainViewportSize.Y / 2);
+                button.GlobalPosition = new Vector2(offset, (mainViewportSize.Y / 2) + offset);
             }
             else if (buttonCount == 4)
             {
-                button.GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+                button.GlobalPosition = new Vector2((mainViewportSize.X / 2) + offset, (mainViewportSize.Y / 2) + offset);
             }
+
+            Vector2 viewPortProportionalScale = mainViewportSize / _rootSceneSwapper.MaxScreenSize;
+
+            button.Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
 
             buttonCount++;
         }

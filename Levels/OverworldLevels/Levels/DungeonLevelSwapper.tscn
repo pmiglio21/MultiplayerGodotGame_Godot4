@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dufj0qhb8nb2u"]
+[gd_scene load_steps=6 format=3 uid="uid://dufj0qhb8nb2u"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Levels/DungeonLevelSwapper.cs" id="1_3y6fm"]
 [ext_resource type="PackedScene" uid="uid://gvduncuyxglt" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.tscn" id="2_1i0nq"]
 [ext_resource type="PackedScene" uid="uid://8s6036ufpjx6" path="res://Levels/UtilityLevels/PauseScreen/PauseScreen.tscn" id="3_srn8q"]
 [ext_resource type="PackedScene" uid="uid://b0d8o8cs0xkch" path="res://Levels/OverworldLevels/UserInterface/PortalTimer.tscn" id="4_vctyv"]
+[ext_resource type="Texture2D" uid="uid://dxgidmlvifcw8" path="res://Levels/OverworldLevels/TileMapping/Background/BlackBackground.png" id="5_2kica"]
 
 [node name="DungeonLevelSwapper" type="Control"]
 layout_mode = 3
@@ -75,3 +76,9 @@ offset_right = 756.0
 offset_bottom = 436.0
 theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
 text = "HELLO"
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(883, 1.13687e-13)
+scale = Vector2(-380.824, -330.531)
+texture = ExtResource("5_2kica")

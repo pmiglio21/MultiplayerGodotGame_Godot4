@@ -20,6 +20,7 @@ namespace Root
 		public ScreenNames PriorSceneName;
 		public GameRules CurrentGameRules = new GameRules();
         public Settings CurrentSettings = new Settings();
+		public Vector2 MaxScreenSize = new Vector2();
 
         public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 		public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
@@ -61,7 +62,10 @@ namespace Root
             _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
 
-			ReadLastOpenedData();
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized);
+            MaxScreenSize = DisplayServer.ScreenGetSize();
+
+            ReadLastOpenedData();
             LoadOriginalSettings();
         }
 
@@ -76,22 +80,26 @@ namespace Root
 
 		private void OnTitleScreenRootGoToPlayModeScreen()
 		{
-			ChangeSceneToPlayModeScreen(_titleScreenManager);
+            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
+            ChangeSceneToPlayModeScreen(_titleScreenManager);
 		}
 
 		private void OnTitleScreenRootGoToGameRulesScreen()
 		{
-			ChangeSceneToGameRulesScreen(_titleScreenManager);
+            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
+            ChangeSceneToGameRulesScreen(_titleScreenManager);
 		}
 
         private void OnTitleScreenRootGoToPlayerCharacterSelectScreen()
         {
+            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
             ChangeSceneToPlayerCharacterSelectScreen(_titleScreenManager);
         }
 
         private void OnTitleScreenRootGoToSettingsScreen()
 		{
-			ChangeSceneToSettingsScreen();
+            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
+            ChangeSceneToSettingsScreen();
 		}
 
 		#endregion
@@ -211,7 +219,9 @@ namespace Root
 
 		private void ChangeSceneToTitleScreen(Control currentUiScene)
 		{
-			_rootGuiControl.AddChild(_titleScreenManager);
+            GetTree().Root.SizeChanged += _titleScreenManager.ResizeUI;
+
+            _rootGuiControl.AddChild(_titleScreenManager);
 
 			_rootGuiControl.RemoveChild(currentUiScene);
 
@@ -220,7 +230,9 @@ namespace Root
 
 		private void ChangeSceneToTitleScreen(Node currentScene)
 		{
-			_rootGuiControl.AddChild(_titleScreenManager);
+            GetTree().Root.SizeChanged += _titleScreenManager.ResizeUI;
+
+            _rootGuiControl.AddChild(_titleScreenManager);
 
 			_rootGuiControl.RemoveChild(currentScene);
 
@@ -493,27 +505,27 @@ namespace Root
             // Found in C:\Users\pmigl\AppData\Roaming\Godot\app_userdata\Multiplayer Godot Game Godot 4
             Error error = config.Load(PersistentFilePaths.GameSettingsFilePath);
 
-            // If the file didn't load, ignore it.
-            if (error != Error.Ok)
-            {
-                return;
-            }
-            else
-            {
-                // Iterate over all sections.
-                foreach (string section in config.GetSections())
-                {
-                    // Fetch the data for each section.
-                    CurrentSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
-                    CurrentSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
-                    CurrentSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
-                    CurrentSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
-                }
-            }
+			////If the file didn't load, ignore it.
+			//if (error != Error.Ok)
+			//{
+			//	return;
+			//}
+			if (error == Error.Ok)
+			{
+				// Iterate over all sections.
+				foreach (string section in config.GetSections())
+				{
+					// Fetch the data for each section.
+					CurrentSettings.MusicVolume = (float)config.GetValue(section, "music_volume");
+					CurrentSettings.SoundEffectsVolume = (float)config.GetValue(section, "menu_sounds_volume");
+					CurrentSettings.DungeonSoundsVolume = (float)config.GetValue(section, "dungeon_sounds_volume");
+					CurrentSettings.FullscreenState = (string)config.GetValue(section, "fullscreen_state");
+				}
+			}
 
 			if (CurrentSettings.FullscreenState != GlobalConstants.OffOnOptionOn)
-			{
-                DisplayServer.WindowSetSize(GlobalConstants.DefaultResolution);
+			{ 
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized);
             }
 			else
 			{

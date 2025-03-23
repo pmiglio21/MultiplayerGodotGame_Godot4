@@ -15,6 +15,8 @@ namespace Levels.EarlyLevels
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
+		private Vector2 _titleScreenAnchorPosition = new Vector2(522.5f, 326);
+
 		#region Signals
 
 		//[Signal]
@@ -49,7 +51,23 @@ namespace Levels.EarlyLevels
             _quitGameButton.Pressed += OnQuitGame;
 
             _playButton.GrabFocus();
-		}
+
+            GetTree().Root.SizeChanged += ResizeUI;
+        }
+
+		public void ResizeUI()
+		{
+            var tree = GetTree();
+
+            Vector2 mainViewportSize = tree.Root.Size;
+
+            Vector2 viewPortProportionalScale = mainViewportSize / _rootSceneSwapper.MaxScreenSize;
+
+			int offset = 50;
+
+			GlobalPosition = new Vector2((mainViewportSize.X/2) - offset, (mainViewportSize.Y/2) + offset);
+            Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
+        }
 
 		public override void _Process(double delta)
 		{
