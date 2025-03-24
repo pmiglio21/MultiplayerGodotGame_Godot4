@@ -15,7 +15,7 @@ namespace Levels.EarlyLevels
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
-		private Vector2 _titleScreenAnchorPosition = new Vector2(522.5f, 326);
+		//private Vector2 _titleScreenAnchorPosition = new Vector2(522.5f, 326);
 
 		#region Signals
 
@@ -57,17 +57,20 @@ namespace Levels.EarlyLevels
 
 		public void ResizeUI()
 		{
-            var tree = GetTree();
+			var tree = GetTree();
 
-            Vector2 mainViewportSize = tree.Root.Size;
+			Vector2 mainViewportSize = tree.Root.Size;
 
-            Vector2 viewPortProportionalScale = mainViewportSize / _rootSceneSwapper.MaxScreenSize;
+			int otherOffset = 0;
 
-			int offset = 50;
+			Vector2 viewPortProportionalScale = new Vector2(mainViewportSize.X + otherOffset, mainViewportSize.Y + otherOffset) / _rootSceneSwapper.MaxScreenSize;
 
-			GlobalPosition = new Vector2((mainViewportSize.X/2) - offset, (mainViewportSize.Y/2) + offset);
-            Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
-        }
+			//Don't set GlobalPosition, because editor uses anchors to keep it in the center of the screen
+			if (mainViewportSize.X >= 400 && mainViewportSize.Y >= 400)
+			{
+				Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
+			}
+		}
 
 		public override void _Process(double delta)
 		{

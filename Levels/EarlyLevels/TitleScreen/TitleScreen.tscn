@@ -8,16 +8,17 @@ default_font_size = 30
 
 [node name="TitleScreenRoot" type="Control" groups=["TitleScreenManager"]]
 layout_mode = 3
-anchor_left = 0.429
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.542
-offset_left = -39.208
-offset_top = -38.0
-offset_right = 94.0
-offset_bottom = -65.216
+anchor_bottom = 0.5
+offset_left = -66.604
+offset_right = 66.604
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_thxbk")
 
 [node name="InputTimer" type="Timer" parent="."]
