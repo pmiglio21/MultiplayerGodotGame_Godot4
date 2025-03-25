@@ -23,8 +23,6 @@ public partial class DungeonLevelSwapper : Node
     private BaseDungeonLevel _latestBaseDungeonLevel;
     private PlayerUpgradesScreenManager _latestPlayerUpgradesScreenManager;
 
-    public Vector2 MaxScreenSize = new Vector2();
-
     #region Signals
 
     [Signal]
@@ -46,7 +44,6 @@ public partial class DungeonLevelSwapper : Node
 	{
 		_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 		CurrentGameRules = _rootSceneSwapper.CurrentGameRules;
-        MaxScreenSize = _rootSceneSwapper.MaxScreenSize;
 
         _pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
