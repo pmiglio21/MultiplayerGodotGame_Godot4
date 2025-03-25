@@ -20,7 +20,6 @@ namespace Root
 		public ScreenNames PriorSceneName;
 		public GameRules CurrentGameRules = new GameRules();
         public Settings CurrentSettings = new Settings();
-		public Vector2 MaxScreenSize = new Vector2();
 
         public List<BaseCharacter> ActivePlayers = new List<BaseCharacter>();
 		public List<PlayerCharacterPicker> ActivePlayerCharacterPickers = new List<PlayerCharacterPicker>();
@@ -63,7 +62,6 @@ namespace Root
 			_titleScreenManager.QuitGame += QuitGame;
 
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized);
-            MaxScreenSize = DisplayServer.ScreenGetSize();
 
             ReadLastOpenedData();
             LoadOriginalSettings();

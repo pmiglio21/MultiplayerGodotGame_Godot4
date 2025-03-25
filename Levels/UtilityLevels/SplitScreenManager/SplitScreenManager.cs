@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents
 {
-	public partial class SplitScreenManager : GridContainer
+	public partial class SplitScreenManager : Control
 	{
 		private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
@@ -12,10 +12,12 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
 		private List<SubViewportContainer> _availableSubViewportContainers = new List<SubViewportContainer>();
 
-		private bool hasSceneLoaded = false;
+        private Vector2 _anchorPosition = new Vector2(522.5f, 326);
+
+        private bool hasSceneLoaded = false;
 
 		public override void _Ready()
-		{
+        {
             _parentDungeonLevelSwapper = GetParent() as DungeonLevelSwapper;
 
             _availableSubViewports = GetSubViewports();
@@ -111,15 +113,11 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 
 		private void AdjustScreenPerPlayerCameraView()
 		{
-			var tree = GetTree();
+            Vector2I mainViewportSize = (Vector2I)GetViewport().GetVisibleRect().Size;
+			//Not tree.Root.Size, we need the visible rectangle. tree.Root.Size grabs everything even the distance covered by the resized window's black bars;
 
-            Vector2I mainViewportSize = tree.Root.Size;
-
-			if (_parentDungeonLevelSwapper.ActivePlayers.Count == 1)
+            if (_parentDungeonLevelSwapper.ActivePlayers.Count == 1)
 			{
-				//GridContainer only needs one column
-				this.Columns = 1;
-				
 				//Remove all but the first SubviewportContainer
 				for (int i = 1; i < _availableSubViewportContainers.Count; i++)
 				{
@@ -128,9 +126,8 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 					_availableSubViewportContainers.RemoveAt(1);
 				}
 
-				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkCenter | SizeFlags.Expand;
-				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkCenter | SizeFlags.Expand;
-				_availableSubViewports[0].Size = mainViewportSize;
+                _availableSubViewportContainers[0].GlobalPosition = Vector2.Zero;
+				_availableSubViewportContainers[0].Size = mainViewportSize;
 			}
 			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 2)
 			{
@@ -142,47 +139,38 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 					_availableSubViewportContainers.RemoveAt(2);
 				}
 
-				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkCenter | SizeFlags.Expand;
-				_availableSubViewports[0].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y);
+                _availableSubViewportContainers[0].GlobalPosition = new Vector2(0, 0);
+				_availableSubViewportContainers[0].Size = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y);
 
-				_availableSubViewportContainers[1].SizeFlagsHorizontal = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewportContainers[1].SizeFlagsVertical = SizeFlags.ShrinkCenter | SizeFlags.Expand;
-				_availableSubViewports[1].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y);
+				_availableSubViewportContainers[1].GlobalPosition = new Vector2(mainViewportSize.X / 2, 0);
+				_availableSubViewportContainers[1].Size = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y);
 			}
 			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 3)
 			{
-				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;
+				_availableSubViewportContainers[0].GlobalPosition = new Vector2(0, 0);
 				_availableSubViewports[0].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
 
-				_availableSubViewportContainers[1].SizeFlagsHorizontal = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewportContainers[1].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;
+				_availableSubViewportContainers[1].GlobalPosition = new Vector2(mainViewportSize.X / 2, 0);
 				_availableSubViewports[1].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
 
-				_availableSubViewportContainers[2].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewportContainers[2].SizeFlagsVertical = SizeFlags.ShrinkBegin | SizeFlags.Expand;
+				_availableSubViewportContainers[2].GlobalPosition = new Vector2(0, mainViewportSize.Y / 2);
 				_availableSubViewports[2].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
-				
+
 				_availableSubViewports[3].Size = Vector2I.Zero;
 			}
 			else if (_parentDungeonLevelSwapper.ActivePlayers.Count == 4)
 			{
-				_availableSubViewportContainers[0].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewportContainers[0].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewports[0].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
-				
-				_availableSubViewportContainers[1].SizeFlagsHorizontal = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewportContainers[1].SizeFlagsVertical = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewports[1].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+                _availableSubViewportContainers[0].GlobalPosition = new Vector2(0, 0);
+                _availableSubViewports[0].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
 
-				_availableSubViewportContainers[2].SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Expand;
-				_availableSubViewportContainers[2].SizeFlagsVertical = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewports[2].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+                _availableSubViewportContainers[1].GlobalPosition = new Vector2(mainViewportSize.X / 2, 0);
+                _availableSubViewports[1].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
 
-				_availableSubViewportContainers[3].SizeFlagsHorizontal = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewportContainers[3].SizeFlagsVertical = SizeFlags.ShrinkBegin | SizeFlags.Expand;
-				_availableSubViewports[3].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+                _availableSubViewportContainers[2].GlobalPosition = new Vector2(0, mainViewportSize.Y / 2);
+                _availableSubViewports[2].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+
+                _availableSubViewportContainers[3].GlobalPosition = new Vector2(mainViewportSize.X / 2, mainViewportSize.Y / 2);
+                _availableSubViewports[3].Size = new Vector2I(mainViewportSize.X / 2, mainViewportSize.Y / 2);
 			}
 		}
 

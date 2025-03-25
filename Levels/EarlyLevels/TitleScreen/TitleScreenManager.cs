@@ -57,19 +57,19 @@ namespace Levels.EarlyLevels
 
 		public void ResizeUI()
 		{
-			var tree = GetTree();
+			//var tree = GetTree();
 
-			Vector2 mainViewportSize = tree.Root.Size;
+			//Vector2 mainViewportSize = tree.Root.Size;
 
-			int otherOffset = 0;
+			//int otherOffset = 0;
 
-			Vector2 viewPortProportionalScale = new Vector2(mainViewportSize.X + otherOffset, mainViewportSize.Y + otherOffset) / _rootSceneSwapper.MaxScreenSize;
+			//Vector2 viewPortProportionalScale = new Vector2(mainViewportSize.X + otherOffset, mainViewportSize.Y + otherOffset) / _rootSceneSwapper.MaxScreenSize;
 
-			//Don't set GlobalPosition, because editor uses anchors to keep it in the center of the screen
-			if (mainViewportSize.X >= 400 && mainViewportSize.Y >= 400)
-			{
-				Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
-			}
+			////Don't set GlobalPosition, because editor uses anchors to keep it in the center of the screen
+			//if (mainViewportSize.X >= 400 && mainViewportSize.Y >= 400)
+			//{
+			//	Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
+			//}
 		}
 
 		public override void _Process(double delta)

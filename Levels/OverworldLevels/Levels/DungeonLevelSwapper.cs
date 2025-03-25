@@ -23,6 +23,8 @@ public partial class DungeonLevelSwapper : Node
     private BaseDungeonLevel _latestBaseDungeonLevel;
     private PlayerUpgradesScreenManager _latestPlayerUpgradesScreenManager;
 
+    public Vector2 MaxScreenSize = new Vector2();
+
     #region Signals
 
     [Signal]
@@ -44,6 +46,7 @@ public partial class DungeonLevelSwapper : Node
 	{
 		_rootSceneSwapper = GetTree().Root.GetNode<RootSceneSwapper>("RootSceneSwapper");
 		CurrentGameRules = _rootSceneSwapper.CurrentGameRules;
+        MaxScreenSize = _rootSceneSwapper.MaxScreenSize;
 
         _pauseScreenManager = FindChild("PauseScreen") as PauseScreenManager;
         _pauseScreenManager.GoToTitleScreen += ChangeScreenToTitleScreen;
@@ -96,9 +99,7 @@ public partial class DungeonLevelSwapper : Node
 
     private void MoveButtonsAround()
     {
-        var tree = GetTree();
-
-        Vector2 mainViewportSize = tree.Root.Size;
+        Vector2I mainViewportSize = (Vector2I)GetViewport().GetVisibleRect().Size;
 
         int buttonCount = 1;
 
@@ -122,10 +123,6 @@ public partial class DungeonLevelSwapper : Node
             {
                 button.GlobalPosition = new Vector2((mainViewportSize.X / 2) + offset, (mainViewportSize.Y / 2) + offset);
             }
-
-            Vector2 viewPortProportionalScale = mainViewportSize / _rootSceneSwapper.MaxScreenSize;
-
-            button.Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
 
             buttonCount++;
         }
