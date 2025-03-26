@@ -12,8 +12,6 @@ namespace Levels.UtilityLevels.UserInterfaceComponents
 		private List<SubViewport> _availableSubViewports = new List<SubViewport>();
 		private List<SubViewportContainer> _availableSubViewportContainers = new List<SubViewportContainer>();
 
-        private Vector2 _anchorPosition = new Vector2(522.5f, 326);
-
         private bool hasSceneLoaded = false;
 
 		public override void _Ready()

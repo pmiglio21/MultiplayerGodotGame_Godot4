@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://t1cyumqgdw24" path="res://Levels/OverworldLevels/Levels/BaseDungeonLevel.tscn" id="1_sbvqd"]
 [ext_resource type="PackedScene" uid="uid://dfxuhtvhblj48" path="res://MobileEntities/Utilities/PlayerCamera.tscn" id="2_nt5ex"]
 
-[node name="Control" type="Control" groups=["SplitScreenManager"]]
+[node name="Control2" type="Control" groups=["SplitScreenManager"]]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -30,6 +30,7 @@ size = Vector2i(576, 328)
 render_target_update_mode = 4
 
 [node name="PlayerCamera1" parent="SubViewportContainer1/SubViewport1" instance=ExtResource("2_nt5ex")]
+zoom = Vector2(0.125, 0.125)
 limit_left = -10000000
 limit_top = -10000000
 limit_right = 10000000

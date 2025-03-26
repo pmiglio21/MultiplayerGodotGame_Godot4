@@ -159,14 +159,14 @@ public partial class BaseDungeonLevel : Node
 
         float percentageOfFloorToCover = 0;
 
-        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
-        {
-            percentageOfFloorToCover = .05f;
-        }
-        else
-        {
+        //if (SelectedBiomeType == GlobalConstants.BiomeCastle && (SelectedLevelSize == GlobalConstants.LevelSizeMedium || SelectedLevelSize == GlobalConstants.LevelSizeLarge))
+        //{
+        //    percentageOfFloorToCover = .2f;
+        //}
+        //else
+        //{
             percentageOfFloorToCover = .15f;
-        }
+        //}
 
         while (_possibleTileMapSpacesByFloorPosition.Count < (percentageOfFloorToCover * _possibleFloorPositionsByIndex.Count))
         {
@@ -241,14 +241,32 @@ public partial class BaseDungeonLevel : Node
     {
 		Dictionary<int,Vector2I> nonBorderPositions = new Dictionary<int, Vector2I>();
 
+        //if (SelectedBiomeType == GlobalConstants.BiomeCastle && spawnPointGeneratedCount > 0)
+        //{
+
+        //}
+
 		int counter = 0;
 
-        //TODO: Make sure this point is not a spawn point too
-		foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => IsBlockInsideBorders(position.Value)))
-		{
-			nonBorderPositions.Add(counter, indexPositionPair.Value);
-			counter++;
-        }
+        //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+        //{
+        //    //TODO: Make sure this point is not a spawn point too
+        //    foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => IsBlockInsideBorders(position.Value) && (spawnPointGeneratedCount == 0 ||
+        //                          ((Vector2)position.Value).DistanceTo(_spawnPoints[spawnPointGeneratedCount - 1].ActualGlobalPosition) <= 10000)))
+        //    {
+        //        nonBorderPositions.Add(counter, indexPositionPair.Value);
+        //        counter++;
+        //    }
+        //}
+        //else
+        //{
+            //TODO: Make sure this point is not a spawn point too
+            foreach (var indexPositionPair in _possibleFloorPositionsByIndex.Where(position => IsBlockInsideBorders(position.Value)))
+            {
+                nonBorderPositions.Add(counter, indexPositionPair.Value);
+                counter++;
+            }
+        //}
 
         //Get a random space in possible floor spaces to pick as spawn point
         var floorTileIndex = _rng.RandiRange(0, nonBorderPositions.Count - 1);
@@ -367,14 +385,14 @@ public partial class BaseDungeonLevel : Node
 
             Tuple<int, int> weightedValues = new Tuple<int, int>(0, 0);
 
-            if (SelectedBiomeType == GlobalConstants.BiomeCastle)
-            {
-                weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-            }
-            else
-            {
+            //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+            //{
+            //    weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+            //}
+            //else
+            //{
                 weightedValues = GetWeightedValues_Roundabout(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-            }
+            //}
 
             var changeInX = 0;
             var changeInY = 0;
@@ -388,14 +406,14 @@ public partial class BaseDungeonLevel : Node
                 {
                     angleFromWalkingFloorSpaceToTargetSpawnPoint = walkingFloorSpace.InteriorBlock.GlobalPosition.AngleToPoint(targetSpawnPoint.InteriorBlock.GlobalPosition);
 
-                    if (SelectedBiomeType == GlobalConstants.BiomeCastle)
-                    {
-                        weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-                    }
-                    else
-                    {
+                    //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+                    //{
+                    //    weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetSpawnPoint);
+                    //}
+                    //else
+                    //{
                         weightedValues = GetWeightedValues_Roundabout(angleFromWalkingFloorSpaceToTargetSpawnPoint);
-                    }
+                    //}
 
                     iterationCount = 0;
                 }
@@ -557,14 +575,14 @@ public partial class BaseDungeonLevel : Node
 
             Tuple<int, int> weightedValues = new Tuple<int, int>(0, 0);
 
-            if (SelectedBiomeType == GlobalConstants.BiomeCastle)
-            {
-                weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetPoint);
-            }
-            else
-            {
+            //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+            //{
+            //    weightedValues = GetWeightedValues_Direct(angleFromWalkingFloorSpaceToTargetPoint);
+            //}
+            //else
+            //{
                 weightedValues = GetWeightedValues_Roundabout(angleFromWalkingFloorSpaceToTargetPoint);
-            }
+            //}
 
             var changeInX = 0;
             var changeInY = 0;
@@ -1305,6 +1323,25 @@ public partial class BaseDungeonLevel : Node
             weightedXValue = 1;
             weightedYValue = 1;
         }
+
+        float chanceOfFlipping = _rng.RandiRange(0, 100);
+
+        //if (chanceOfFlipping < 25 && weightedXValue == 0)
+        //{
+        //    weightedXValue = 1;
+        //}
+        //else if (chanceOfFlipping < 25 && weightedYValue == 0)
+        //{
+        //    weightedYValue = 1;
+        //}
+        //else if (chanceOfFlipping >= 25 && chanceOfFlipping < 50 && weightedXValue == 0)
+        //{
+        //    weightedXValue = -1;
+        //}
+        //else if (chanceOfFlipping >= 25 && chanceOfFlipping < 50 && weightedYValue == 0)
+        //{
+        //    weightedYValue = -1;
+        //}
 
         return new Tuple<int, int>(weightedXValue, weightedYValue); ;
     }
