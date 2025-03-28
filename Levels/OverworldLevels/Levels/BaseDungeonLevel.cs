@@ -768,6 +768,10 @@ public partial class BaseDungeonLevel : Node
 
                         collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
                         collisionShape.Position = new Vector2(0, 8);
+
+                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
+
+                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y/2);
                     }
                 }
 
@@ -776,17 +780,45 @@ public partial class BaseDungeonLevel : Node
                 {
                     Vector2I southBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X, wallTileMapSpace.TileMapPosition.Y + 1);
 
-                    if (((_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].LastNumberToClearSpace != 90)) &&
+                    if (_possibleTileMapSpacesByFloorPosition.ContainsKey(southBlockPosition) && _possibleTileMapSpacesByFloorPosition[southBlockPosition].LastNumberToClearSpace != 90 &&
                         allAdjacentFloorSpacePositions.Any(x => x == southBlockPosition))
                     {
                         var interiorBlockSprite = wallTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
 						interiorBlockSprite.Texture = GetWallTexture();
                         wallTileMapSpace.TileMapSpaceType = TileMapSpaceType.Wall;
-                        wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
+
+
+                        wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, -14);
+                        wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .125f);
+
+                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
 
                     }
                 }
+
+                //Vector2I eastBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X + 1, wallTileMapSpace.TileMapPosition.Y);
+
+                //if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(eastBlockPosition) ||
+                //    (_possibleTileMapSpacesByFloorPosition.ContainsKey(eastBlockPosition) && _possibleTileMapSpacesByFloorPosition[eastBlockPosition].LastNumberToClearSpace != 90)) &&
+                //    allAdjacentFloorSpacePositions.Any(x => x == eastBlockPosition))
+                //{
+                //    var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+
+                //    //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(.125f, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y);
+                //}
+
+
+                //Vector2I westBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X - 1, wallTileMapSpace.TileMapPosition.Y);
+
+                //if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(westBlockPosition) ||
+                //    (_possibleTileMapSpacesByFloorPosition.ContainsKey(westBlockPosition) && _possibleTileMapSpacesByFloorPosition[westBlockPosition].LastNumberToClearSpace != 90)) &&
+                //    allAdjacentFloorSpacePositions.Any(x => x == westBlockPosition))
+                //{
+                //    var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
+
+                //    //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(.125f, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y);
+                //}
             }
         }
 		catch (Exception ex)
