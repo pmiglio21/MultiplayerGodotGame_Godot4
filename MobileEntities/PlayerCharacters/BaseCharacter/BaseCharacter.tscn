@@ -1,10 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjc80kpo3mn2l"]
+[gd_scene load_steps=7 format=3 uid="uid://cjc80kpo3mn2l"]
 
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.cs" id="1_t02fc"]
 [ext_resource type="PackedScene" uid="uid://co5rd15t5k5d6" path="res://MobileEntities/Utilities/TriggerBoxes/Player/PlayerHurtBox.tscn" id="3_cxmac"]
-[ext_resource type="Texture2D" uid="uid://bgbrf4c0jmhcd" path="res://MobileEntities/PlayerCharacters/ComponentPieces/CharacterPointLight/CharacterPointLight.png" id="4_6ligv"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
+
+[sub_resource type="Gradient" id="Gradient_stltl"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ug2n6"]
+gradient = SubResource("Gradient_stltl")
+fill = 1
+fill_from = Vector2(0.504274, 0.551282)
+fill_to = Vector2(0.850427, 0.222222)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4nnay"]
 size = Vector2(12.5, 2)
@@ -29,8 +37,8 @@ scale = Vector2(4.65891, -4.97787)
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
-shadow_color = Color(0.0117647, 0.0117647, 0.0117647, 0.819608)
-texture = ExtResource("4_6ligv")
+shadow_color = Color(0, 0, 0, 0.819608)
+texture = SubResource("GradientTexture2D_ug2n6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

@@ -20,12 +20,14 @@ grow_vertical = 0
 script = ExtResource("1_rtyjs")
 
 [node name="Control" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
+visible = false
 material = SubResource("ShaderMaterial_am30j")
 layout_mode = 0
 offset_right = 1152.0

@@ -20,5 +20,9 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_aa8xg")
 
+[node name="LightOccluder2DOverviewCover" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource("OccluderPolygon2D_e7lyw")
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_e7lyw")

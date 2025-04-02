@@ -51,6 +51,8 @@ public partial class BaseDungeonLevel : Node
 	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
     private List<PortalSwitch> _portalSwitches = new List<PortalSwitch>();
 
+    private PackedScene _torchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/LightSources/Torch.tscn");
+
     #endregion
 
     #region Enemy Generation
@@ -769,6 +771,11 @@ public partial class BaseDungeonLevel : Node
                         collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
                         collisionShape.Position = new Vector2(0, 8);
 
+                        wallTileMapSpace.InteriorBlock.LightOccluderOverviewCover.Show();
+
+                        wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, 8);
+                        wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .5f);
+
                         //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
 
                         //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y/2);
@@ -1006,6 +1013,8 @@ public partial class BaseDungeonLevel : Node
 		GeneratePortal();
 
         GenerateSwitches();
+
+        GenerateLightPoints();
     }
 
 	private void GeneratePortal() 
@@ -1379,6 +1388,24 @@ public partial class BaseDungeonLevel : Node
     }
 
     #endregion
+
+    private void GenerateLightPoints()
+    {
+        var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace && x.InteriorBlock.IsQueuedForDeletion()).ToList();
+
+        for (int i = 0; i < 5; i++)
+        {
+            var torch = _torchScene.Instantiate() as Torch;
+            AddChild(torch);
+
+            torch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+
+            //_torches.Add(torch);
+
+            _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(torch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+        }
+    }
+
 
     public override void _Process(double delta)
 	{
