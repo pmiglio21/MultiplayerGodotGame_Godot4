@@ -22,3 +22,10 @@ range_z_max = 4096
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 0.819608)
 texture = SubResource("GradientTexture2D_rfy7u")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(0.643137, 0.368627, 0.105882, 1)

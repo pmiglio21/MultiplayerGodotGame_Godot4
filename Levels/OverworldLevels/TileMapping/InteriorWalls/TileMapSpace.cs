@@ -1,5 +1,6 @@
 using Enums;
 using Godot;
+using System;
 
 public partial class TileMapSpace 
 {
@@ -24,4 +25,10 @@ public partial class TileMapSpace
     public bool IsSomethingInTileMapSpace = false;
 
     public TileMapSpaceType TileMapSpaceType = TileMapSpaceType.None;
+
+    //Hold onto if you need it somewhere else.
+    //public TileMapSpace ShallowCopy()
+    //{
+    //    return (TileMapSpace)this.MemberwiseClone();
+    //}
 }

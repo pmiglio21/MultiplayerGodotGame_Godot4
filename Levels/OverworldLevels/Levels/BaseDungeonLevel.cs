@@ -30,8 +30,10 @@ public partial class BaseDungeonLevel : Node
     private Dictionary<int,Vector2I> _possibleFloorPositionsByIndex = new Dictionary<int,Vector2I>();
     private Dictionary<Vector2I, int> _possibleIndicesByFloorPositions = new Dictionary<Vector2I, int>();
     private Dictionary<Vector2I, TileMapSpace> _possibleTileMapSpacesByFloorPosition = new Dictionary<Vector2I, TileMapSpace>();
+    private Dictionary<Vector2I, TileMapSpace> _possibleWallSpacesByFloorPosition = new Dictionary<Vector2I, TileMapSpace>();
 
     private List<TileMapSpace> _spawnPoints = new List<TileMapSpace>();
+    private List<Torch> _torches = new List<Torch>();
 
     private RandomNumberGenerator _rng = new RandomNumberGenerator();
 
@@ -689,6 +691,7 @@ public partial class BaseDungeonLevel : Node
 
 		var positionInLevel = interiorBlock.ToGlobal(_tileMap.MapToLocal(positionOfTileMapSpace));
 		interiorBlock.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
+        interiorBlock.ZIndex = (int)positionInLevel.Y;
 		testText.GlobalPosition = new Vector2(positionInLevel.X, positionInLevel.Y);
 
 		TileMapSpace newTileMapSpace = new TileMapSpace()
@@ -738,8 +741,8 @@ public partial class BaseDungeonLevel : Node
                         wallTileMapSpaces.Add(newWall_TileMapSpace);
 
                         var interiorBlockSprite = newWall_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
-						interiorBlockSprite.Texture = GetOverviewTexture();
-					}
+                        interiorBlockSprite.Texture = GetOverviewTexture();
+                    }
                 }
 			}
 
@@ -768,17 +771,8 @@ public partial class BaseDungeonLevel : Node
                     {
                         var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
 
-                        collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 16) };
-                        collisionShape.Position = new Vector2(0, 8);
-
-                        wallTileMapSpace.InteriorBlock.LightOccluderOverviewCover.Show();
-
-                        wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, 8);
-                        wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .5f);
-
-                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
-
-                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y/2);
+                        collisionShape.Shape = new RectangleShape2D() { Size = new Vector2(32, 24) };
+                        collisionShape.Position = new Vector2(0, 4);
                     }
                 }
 
@@ -792,15 +786,16 @@ public partial class BaseDungeonLevel : Node
                     {
                         var interiorBlockSprite = wallTileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
 
-						interiorBlockSprite.Texture = GetWallTexture();
+                        interiorBlockSprite.Texture = GetWallTexture();
                         wallTileMapSpace.TileMapSpaceType = TileMapSpaceType.Wall;
-
 
                         wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, -14);
                         wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .125f);
 
-                        //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
-
+                        if (!_possibleWallSpacesByFloorPosition.ContainsKey(wallTileMapSpace.TileMapPosition))
+                        {
+                            _possibleWallSpacesByFloorPosition.Add(wallTileMapSpace.TileMapPosition, wallTileMapSpace);
+                        }
                     }
                 }
 
@@ -1007,6 +1002,8 @@ public partial class BaseDungeonLevel : Node
     #endregion
 
     #region Key Object Generation
+
+    
 
     private void GenerateKeyMapObjects()
 	{
@@ -1391,18 +1388,25 @@ public partial class BaseDungeonLevel : Node
 
     private void GenerateLightPoints()
     {
-        var availableTargetSpaces = _possibleTileMapSpacesByFloorPosition.Values.Where(x => !x.IsSpawnPoint && x.TileMapSpaceType == TileMapSpaceType.Floor && !x.IsSomethingInTileMapSpace && x.InteriorBlock.IsQueuedForDeletion()).ToList();
+        var availableTargetSpaces = _possibleWallSpacesByFloorPosition.Values.Where(x => x.TileMapSpaceType == TileMapSpaceType.Wall && !x.IsSomethingInTileMapSpace).ToList();
 
-        for (int i = 0; i < 5; i++)
+        if (availableTargetSpaces.Count > 0)
         {
-            var torch = _torchScene.Instantiate() as Torch;
-            AddChild(torch);
+            for (int i = 0; i < 5; i++)
+            {
+                var torch = _torchScene.Instantiate() as Torch;
+                AddChild(torch);
 
-            torch.GlobalPosition = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)].ActualGlobalPosition;
+                var targetSpace = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
 
-            //_torches.Add(torch);
+                torch.GlobalPosition = targetSpace.ActualGlobalPosition;
 
-            _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(torch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+                torch.ZIndex = targetSpace.InteriorBlock.ZIndex + 1;
+
+                _torches.Add(torch);
+
+                _possibleTileMapSpacesByFloorPosition[_tileMap.LocalToMap(torch.GlobalPosition)].IsSomethingInTileMapSpace = true;
+            }
         }
     }
 
