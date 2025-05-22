@@ -742,6 +742,10 @@ public partial class BaseDungeonLevel : Node
 
                         var interiorBlockSprite = newWall_TileMapSpace.InteriorBlock.FindChild("Sprite2D") as Sprite2D;
                         interiorBlockSprite.Texture = GetOverviewTexture();
+
+                        /////////////////////////////////////////////////////////////////////////////////
+                        interiorBlockSprite.Scale = new Vector2(.5f, .5f);
+                        /////////////////////////////////////////////////////////////////////////////////
                     }
                 }
 			}
@@ -789,6 +793,10 @@ public partial class BaseDungeonLevel : Node
                         interiorBlockSprite.Texture = GetWallTexture();
                         wallTileMapSpace.TileMapSpaceType = TileMapSpaceType.Wall;
 
+                        /////////////////////////////////////////////////////////////////////////////////
+                        interiorBlockSprite.Scale = new Vector2(.5f, .5f);
+                        /////////////////////////////////////////////////////////////////////////////////
+
                         wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, -14);
                         wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .125f);
 
@@ -798,29 +806,6 @@ public partial class BaseDungeonLevel : Node
                         }
                     }
                 }
-
-                //Vector2I eastBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X + 1, wallTileMapSpace.TileMapPosition.Y);
-
-                //if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(eastBlockPosition) ||
-                //    (_possibleTileMapSpacesByFloorPosition.ContainsKey(eastBlockPosition) && _possibleTileMapSpacesByFloorPosition[eastBlockPosition].LastNumberToClearSpace != 90)) &&
-                //    allAdjacentFloorSpacePositions.Any(x => x == eastBlockPosition))
-                //{
-                //    var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                //    //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(.125f, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y);
-                //}
-
-
-                //Vector2I westBlockPosition = new Vector2I(wallTileMapSpace.TileMapPosition.X - 1, wallTileMapSpace.TileMapPosition.Y);
-
-                //if ((!_possibleTileMapSpacesByFloorPosition.ContainsKey(westBlockPosition) ||
-                //    (_possibleTileMapSpacesByFloorPosition.ContainsKey(westBlockPosition) && _possibleTileMapSpacesByFloorPosition[westBlockPosition].LastNumberToClearSpace != 90)) &&
-                //    allAdjacentFloorSpacePositions.Any(x => x == westBlockPosition))
-                //{
-                //    var collisionShape = wallTileMapSpace.InteriorBlock.FindChild("CollisionShape2D") as CollisionShape2D;
-
-                //    //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(.125f, wallTileMapSpace.InteriorBlock.LightOccluder.Scale.Y);
-                //}
             }
         }
 		catch (Exception ex)
@@ -959,13 +944,19 @@ public partial class BaseDungeonLevel : Node
 
 		int overviewIndex = 0;
 
-        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
-		{
-            overviewIndex = _rng.RandiRange(0, 3);
+        //      if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+        //{
+        //          overviewIndex = _rng.RandiRange(0, 3);
 
-            overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
+        //          overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Overview/CastleOverview{overviewIndex}.png") as Texture2D;
+        //      }
+        if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+        {
+            overviewIndex = _rng.RandiRange(0, 3);
+    
+            overviewTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/CastleWalls/CastleWall_{5}.png") as Texture2D;
         }
-		else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
+        else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
 		{
             overviewIndex = _rng.RandiRange(0, 5);
 
@@ -981,11 +972,17 @@ public partial class BaseDungeonLevel : Node
 
         int wallIndex = 0;
 
+        //if (SelectedBiomeType == GlobalConstants.BiomeCastle)
+        //{
+        //    wallIndex = _rng.RandiRange(0, 5);
+
+        //    wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{wallIndex}.png") as Texture2D;
+        //}
         if (SelectedBiomeType == GlobalConstants.BiomeCastle)
         {
             wallIndex = _rng.RandiRange(0, 5);
 
-            wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/Wall/CastleWall{wallIndex}.png") as Texture2D;
+            wallTexture = ResourceLoader.Load($"res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/CastleWalls/CastleWall_{3}.png") as Texture2D;
         }
         else if (SelectedBiomeType == GlobalConstants.BiomeFrost)
         {

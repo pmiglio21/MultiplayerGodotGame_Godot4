@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8uh0e8lbeyla"
-path="res://.godot/imported/KnightIdle_1.png-28f8274ed493bd17c38d65350c9fb489.ctex"
+uid="uid://cvt838wmgd7oy"
+path="res://.godot/imported/CastleWall_5.png-b9eecdb2cdc16fc799be7b3792c572cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png"
-dest_files=["res://.godot/imported/KnightIdle_1.png-28f8274ed493bd17c38d65350c9fb489.ctex"]
+source_file="res://Levels/OverworldLevels/TileMapping/InteriorWalls/Castle/CastleWalls/CastleWall_5.png"
+dest_files=["res://.godot/imported/CastleWall_5.png-b9eecdb2cdc16fc799be7b3792c572cb.ctex"]
 
 [params]
 

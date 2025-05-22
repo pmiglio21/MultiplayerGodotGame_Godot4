@@ -1,13 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=19 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
-[ext_resource type="Texture2D" uid="uid://dbkbm2gxiip21" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_2.png" id="3_bjke3"]
+[ext_resource type="Texture2D" uid="uid://dglhxu7ojl1a0" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_64x64_TestIdle/KnightIdle4.png" id="3_686x8"]
 [ext_resource type="Texture2D" uid="uid://cvq7onruuneyb" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_4.png" id="3_o5mq7"]
-[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_0.png" id="4_g7qoj"]
-[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_1.png" id="5_6g2fj"]
+[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/KnightIdle_0.png" id="4_g7qoj"]
+[ext_resource type="Texture2D" uid="uid://du2c112ww0ot7" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_64x64_TestIdle/KnightIdle0.png" id="6_ge4m4"]
 [ext_resource type="Texture2D" uid="uid://2pxqj7dynkb8" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
+[ext_resource type="Texture2D" uid="uid://c0vmgbyngun02" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_64x64_TestIdle/KnightIdle1.png" id="7_13lws"]
 [ext_resource type="Texture2D" uid="uid://difmrlcooea2l" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_5.png" id="8_s0shy"]
+[ext_resource type="Texture2D" uid="uid://im4k4xpnjj02" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_64x64_TestIdle/KnightIdle2.png" id="8_x45l0"]
+[ext_resource type="Texture2D" uid="uid://ufrw0th302v0" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/Knight_64x64_TestIdle/KnightIdle3.png" id="9_yssal"]
 
 [sub_resource type="Animation" id="Animation_r73ib"]
 resource_name = "Attack_East"
@@ -75,7 +78,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_eqtv1"]
 resource_name = "Idle_East"
-length = 2.0
+length = 3.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -84,10 +87,10 @@ tracks/0/path = NodePath("PlayerSprite:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1.2, 1.5, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.1, 0.6, 0.9, 1.2, 1.6, 1.9, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("4_g7qoj"), ExtResource("5_6g2fj"), ExtResource("3_bjke3"), ExtResource("5_6g2fj")]
+"values": [ExtResource("6_ge4m4"), ExtResource("7_13lws"), ExtResource("8_x45l0"), ExtResource("9_yssal"), ExtResource("3_686x8"), ExtResource("9_yssal"), ExtResource("8_x45l0"), ExtResource("7_13lws")]
 }
 
 [sub_resource type="Animation" id="Animation_0ujs5"]
@@ -122,7 +125,8 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("6_xutwp")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_13lws")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
