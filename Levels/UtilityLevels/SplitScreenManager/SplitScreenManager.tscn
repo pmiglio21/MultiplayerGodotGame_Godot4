@@ -1,13 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://gvduncuyxglt"]
+[gd_scene load_steps=4 format=3 uid="uid://gvduncuyxglt"]
 
 [ext_resource type="Script" path="res://Levels/UtilityLevels/SplitScreenManager/SplitScreenManager.cs" id="1_rtyjs"]
 [ext_resource type="PackedScene" uid="uid://t1cyumqgdw24" path="res://Levels/OverworldLevels/Levels/BaseDungeonLevel.tscn" id="1_sbvqd"]
-[ext_resource type="Shader" path="res://Levels/OverworldLevels/Levels/PixelateShader.gdshader" id="2_7q8jb"]
 [ext_resource type="PackedScene" uid="uid://dfxuhtvhblj48" path="res://MobileEntities/Utilities/PlayerCamera.tscn" id="2_nt5ex"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_am30j"]
-shader = ExtResource("2_7q8jb")
-shader_parameter/resolution = 32.0
 
 [node name="SplitScreenManager" type="Control" groups=["SplitScreenManager"]]
 layout_mode = 3
@@ -28,7 +23,6 @@ offset_bottom = 648.0
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 visible = false
-material = SubResource("ShaderMaterial_am30j")
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0

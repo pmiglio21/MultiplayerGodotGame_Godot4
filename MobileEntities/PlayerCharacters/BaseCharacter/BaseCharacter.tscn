@@ -6,13 +6,16 @@
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
 
 [sub_resource type="Gradient" id="Gradient_stltl"]
+interpolation_mode = 2
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ug2n6"]
 gradient = SubResource("Gradient_stltl")
+width = 32
+height = 32
 fill = 1
-fill_from = Vector2(0.504274, 0.551282)
-fill_to = Vector2(0.850427, 0.222222)
+fill_from = Vector2(0.495726, 0.5)
+fill_to = Vector2(0.833333, 0.179487)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4nnay"]
 size = Vector2(12.5, 2)
@@ -38,6 +41,8 @@ range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 0.819608)
+shadow_filter = 1
+shadow_filter_smooth = 5.0
 texture = SubResource("GradientTexture2D_ug2n6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
