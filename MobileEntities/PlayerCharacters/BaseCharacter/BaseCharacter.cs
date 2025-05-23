@@ -109,6 +109,12 @@ namespace MobileEntities.PlayerCharacters
         public bool IsWaitingForNextLevel = false;
 		#endregion
 
+		#region Player System Properties
+
+		public Inventory Inventory;
+
+		#endregion
+
 		#region References to Outside Nodes
 
 		protected PauseScreenManager pauseScreen;
