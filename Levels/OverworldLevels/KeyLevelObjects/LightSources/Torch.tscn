@@ -28,14 +28,6 @@ shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = SubResource("GradientTexture2D_rfy7u")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-color = Color(0.643137, 0.368627, 0.105882, 1)
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_pt3s2")
 

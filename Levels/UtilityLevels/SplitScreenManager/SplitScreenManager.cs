@@ -1,5 +1,5 @@
 using Godot;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using System.Collections.Generic;
 
 namespace Levels.UtilityLevels.UserInterfaceComponents

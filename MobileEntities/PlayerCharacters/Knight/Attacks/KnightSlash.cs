@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileEntities.PlayerCharacters.Knight
+namespace MobileEntities.PlayerCharacters
 {
 	public partial class KnightSlash : Node2D
 	{

@@ -1,9 +1,8 @@
 using Godot;
 using MobileEntities.CharacterStats;
-using MobileEntities.PlayerCharacters;
 using System;
 
-namespace MobileEntities.PlayerCharacters.Scripts
+namespace MobileEntities.PlayerCharacters
 {
 	public partial class Cleric : BaseCharacter
 	{

@@ -3,7 +3,7 @@ using Godot;
 using Levels.OverworldLevels;
 using Levels.UtilityLevels;
 using Levels.UtilityLevels.UserInterfaceComponents;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using Models;
 using Root;
 using System;

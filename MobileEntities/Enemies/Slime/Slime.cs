@@ -1,7 +1,7 @@
 using Enums;
 using Godot;
 using MobileEntities.CharacterStats;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 
 namespace MobileEntities.Enemies.Scripts
 {

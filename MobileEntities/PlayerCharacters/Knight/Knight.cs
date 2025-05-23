@@ -1,9 +1,8 @@
 using Enums;
 using Godot;
 using MobileEntities.CharacterStats;
-using MobileEntities.PlayerCharacters.Knight;
 
-namespace MobileEntities.PlayerCharacters.Scripts
+namespace MobileEntities.PlayerCharacters
 {
 	public partial class Knight : BaseCharacter
 	{

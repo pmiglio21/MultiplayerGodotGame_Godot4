@@ -1,7 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using Scenes.UI.PlayerSelectScene;
 using System.Collections.Generic;
 using System.Linq;

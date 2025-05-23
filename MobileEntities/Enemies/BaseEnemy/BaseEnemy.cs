@@ -1,6 +1,6 @@
 using Enums;
 using Godot;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using Root;
 using System.Collections.Generic;
 

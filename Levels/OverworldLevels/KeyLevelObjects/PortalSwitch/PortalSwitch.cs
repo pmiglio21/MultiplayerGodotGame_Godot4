@@ -2,7 +2,7 @@ using Enums;
 using Globals;
 using Godot;
 using Levels.UtilityLevels.UserInterfaceComponents;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using System;
 using System.Collections.Generic;
 

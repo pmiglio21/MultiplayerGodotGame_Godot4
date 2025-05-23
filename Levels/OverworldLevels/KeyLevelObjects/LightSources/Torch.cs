@@ -1,12 +1,11 @@
 using Globals;
 using Godot;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using System;
 using System.Collections.Generic;
 
 public partial class Torch : Node2D
 {
-	public ColorRect ColorRect;
 	public Sprite2D Sprite;
 
     private List<int> _playersInArea = new List<int>();
@@ -14,7 +13,6 @@ public partial class Torch : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        ColorRect = this.GetNode<ColorRect>("ColorRect");
         Sprite = this.GetNode<Sprite2D>("Sprite2D");
     }
 

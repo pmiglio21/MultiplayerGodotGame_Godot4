@@ -9,7 +9,7 @@ using System.Linq;
 using Root;
 using MobileEntities.CharacterStats;
 
-namespace MobileEntities.PlayerCharacters.Scripts
+namespace MobileEntities.PlayerCharacters
 {
 	public partial class BaseCharacter : BaseMobileEntity
 	{

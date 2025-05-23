@@ -2,7 +2,7 @@ using Enums;
 using Godot;
 using MobileEntities.CharacterStats;
 
-namespace MobileEntities.PlayerCharacters.Scripts
+namespace MobileEntities.PlayerCharacters
 {
 	public partial class Mage : BaseCharacter
 	{

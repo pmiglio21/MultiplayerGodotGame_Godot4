@@ -4,7 +4,7 @@ using Godot;
 using Levels.UtilityLevels;
 using Levels.EarlyLevels;
 using Models;
-using MobileEntities.PlayerCharacters.Scripts;
+using MobileEntities.PlayerCharacters;
 using Scenes.UI.PlayerSelectScene;
 using System.Collections.Generic;
 using System;
