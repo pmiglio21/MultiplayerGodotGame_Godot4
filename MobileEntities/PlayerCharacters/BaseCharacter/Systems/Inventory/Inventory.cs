@@ -8,10 +8,6 @@ namespace MobileEntities.PlayerCharacters
 {
     public class Inventory
     {
-        public List<InventoryItem> InventoryItems 
-        { 
-            get; 
-            set; 
-        }
+        public List<InventoryItem> Items = new List<InventoryItem>();
     }
 }

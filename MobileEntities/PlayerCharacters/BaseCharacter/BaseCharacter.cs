@@ -15,6 +15,8 @@ namespace MobileEntities.PlayerCharacters
 	{
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
+		private List<Node2D> _inventoryPocketableObjectsInArea = new List<Node2D>();
+
         #region Components
         [Export]
 		protected PlayableCharacterClass characterClass;
@@ -111,7 +113,7 @@ namespace MobileEntities.PlayerCharacters
 
 		#region Player System Properties
 
-		public Inventory Inventory;
+		public Inventory Inventory = new Inventory();
 
 		#endregion
 
@@ -211,6 +213,8 @@ namespace MobileEntities.PlayerCharacters
 					#region Get Input
 
 					GetPauseInput();
+
+					GetInteractionInput();
 
 					GetAttackInput();
 
@@ -314,6 +318,28 @@ namespace MobileEntities.PlayerCharacters
 
 				pauseScreen.GrabFocusOfTopButton();
 			}
+		}
+
+		protected void GetInteractionInput()
+		{
+			if (_inventoryPocketableObjectsInArea.Any(x => x is Torch) && Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}"))
+			{
+				InventoryItem torchItem = new InventoryItem()
+				{ 
+					Type = InventoryItemType.Torch
+				};
+
+				Inventory.Items.Add(torchItem);
+
+				Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
+
+				if (torchNode != null)
+				{
+					_inventoryPocketableObjectsInArea.Remove(torchNode);
+
+                    torchNode.QueueFree();
+				}
+            }
 		}
 
 		protected void GetAttackInput()
@@ -451,6 +477,10 @@ namespace MobileEntities.PlayerCharacters
                 {
                     IsWaitingForPortal = true;
                 }
+            }
+			else if (area.IsInGroup("InventoryPocketable"))
+			{
+                _inventoryPocketableObjectsInArea.Add(area.GetParent() as Node2D);
             }
 		}
 

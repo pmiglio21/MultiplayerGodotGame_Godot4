@@ -31,7 +31,7 @@ texture = SubResource("GradientTexture2D_rfy7u")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_pt3s2")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." groups=["InventoryPocketable"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 position = Vector2(0, -3)
