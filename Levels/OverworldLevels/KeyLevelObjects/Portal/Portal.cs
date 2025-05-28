@@ -9,20 +9,21 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 {
 	public partial class Portal : Node2D
 	{
+		public Sprite2D Sprite;
 		public bool IsPortalActivated = false;
-		private bool _isAreaEntered = false;
 		private List<string> _playersInArea = new List<string>();
 
 		private AnimationPlayer _animationPlayer;
 
 		public override void _Ready()
 		{
-			_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            Sprite = this.GetNode<Sprite2D>("Sprite2D");
+            _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		}
 
 		public override void _Process(double delta)
 		{
-			//CheckForPortalActivation();
+
 		}
 
 		public void PlayPortalActivation()
@@ -40,10 +41,16 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
 				if (!collisionShape.Disabled)
 				{
-					_isAreaEntered = true;
-
 					_playersInArea.Add(character.DeviceIdentifier);
-				}
+
+                    ShaderMaterial shaderMaterial = GD.Load<ShaderMaterial>(ShaderMaterialPaths.OutlineShaderMaterialPath);
+                    Sprite.Material = shaderMaterial;
+
+                    if (!_playersInArea.Contains(character.DeviceIdentifier))
+                    {
+                        _playersInArea.Add(character.DeviceIdentifier);
+                    }
+                }
 			}
 		}
 
@@ -57,10 +64,16 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
 				if (!collisionShape.Disabled)
 				{
-					_isAreaEntered = false;
+                    if (_playersInArea.Contains(character.DeviceIdentifier))
+                    {
+                        _playersInArea.Remove(character.DeviceIdentifier);
+                    }
 
-					_playersInArea.Remove(character.DeviceIdentifier);
-				}
+                    if (_playersInArea.Count == 0)
+                    {
+                        Sprite.Material = new ShaderMaterial();
+                    }
+                }
 			}
 		}
 	}

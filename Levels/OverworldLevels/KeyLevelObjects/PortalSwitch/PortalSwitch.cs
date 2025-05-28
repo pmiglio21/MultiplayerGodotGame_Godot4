@@ -5,6 +5,7 @@ using Levels.UtilityLevels.UserInterfaceComponents;
 using MobileEntities.PlayerCharacters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Levels.OverworldLevels.KeyLevelObjects
 {
@@ -17,6 +18,7 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
         #endregion
 
+        public Sprite2D Sprite;
         private AnimationPlayer _animationPlayer;
 
 		public bool IsSwitchActivated = false;
@@ -25,7 +27,8 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
 		public override void _Ready()
 		{
-			_animationPlayer = FindChild("AnimationPlayer") as AnimationPlayer;
+            Sprite = this.GetNode<Sprite2D>("Sprite2D");
+            _animationPlayer = FindChild("AnimationPlayer") as AnimationPlayer;
         }
 
 		public override void _Process(double delta)
@@ -63,7 +66,7 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 			}
 		}
 
-		private void OnCollisionAreaEntered(Area2D area)
+        private void OnCollisionAreaEntered(Area2D area)
 		{
 			if (area.IsInGroup("PlayerHurtBox"))
 			{
@@ -75,8 +78,14 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 				{
 					_isAreaEntered = true;
 
-					_playersInArea.Add(character.DeviceIdentifier);
-				}
+                    ShaderMaterial shaderMaterial = GD.Load<ShaderMaterial>(ShaderMaterialPaths.OutlineShaderMaterialPath);
+                    Sprite.Material = shaderMaterial;
+
+                    if (!_playersInArea.Contains(character.DeviceIdentifier))
+                    {
+                        _playersInArea.Add(character.DeviceIdentifier);
+                    }
+                }
 			}
 		}
 
@@ -92,8 +101,16 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 				{
 					_isAreaEntered = false;
 
-					_playersInArea.Remove(character.DeviceIdentifier);
-				}
+                    if (_playersInArea.Contains(character.DeviceIdentifier))
+                    {
+                        _playersInArea.Remove(character.DeviceIdentifier);
+                    }
+
+                    if (_playersInArea.Count == 0)
+                    {
+                        Sprite.Material = new ShaderMaterial();
+                    }
+                }
 			}
 		}
 	}
