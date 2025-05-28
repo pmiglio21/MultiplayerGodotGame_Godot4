@@ -29,6 +29,8 @@ namespace MobileEntities.PlayerCharacters
 
 		public Camera2D playerCamera;
 
+		protected Timer rollingTimer;
+
 		#endregion
 
 		#region Input Properties
@@ -85,6 +87,8 @@ namespace MobileEntities.PlayerCharacters
 
 		protected bool finishedAttack = false;
 
+		protected bool isRolling = false;
+
 		public bool IsDead
 		{
 			get { return _isDead; }
@@ -114,12 +118,16 @@ namespace MobileEntities.PlayerCharacters
 		#region Player System Properties
 
 		public Inventory Inventory = new Inventory();
+		
+		private float _staminaAmount = 100;
+        private float _staminaDepletionAmount = 20;
+        private float _staminaAdditionAmount = .2f;
 
-		#endregion
+        #endregion
 
-		#region References to Outside Nodes
+        #region References to Outside Nodes
 
-		protected PauseScreenManager pauseScreen;
+        protected PauseScreenManager pauseScreen;
 
 		#endregion
 
@@ -158,9 +166,11 @@ namespace MobileEntities.PlayerCharacters
 
 			playerCamera = GetNode<Camera2D>("Camera2D");
 
-			#endregion
+            rollingTimer = GetNode<Timer>("RollingTimer");
 
-			InitializeDeadZones();
+            #endregion
+
+            InitializeDeadZones();
 
 			GetReferencesToOutsideNodes();
 
@@ -212,32 +222,35 @@ namespace MobileEntities.PlayerCharacters
 				{
 					#region Get Input
 
-					GetPauseInput();
+					if (rollingTimer.IsStopped())
+                    {
+                        GetPauseInput();
 
-					GetInteractionInput();
+                        GetInteractionInput();
 
-					GetAttackInput();
+                        GetAttackInput();
 
-					GetMovementInput();
-					 
-					#endregion
+                        GetMovementInput();
 
-					if (isAttacking && attackInputTimer == attackInputTimerMax && !finishedAttack)
-					{
-						moveDirection = Vector2.Zero;
+                        #endregion
 
-						attackInputTimer = 0;
+                        if (isAttacking && attackInputTimer == attackInputTimerMax && !finishedAttack)
+                        {
+                            moveDirection = Vector2.Zero;
 
-						RunAttack();
+                            attackInputTimer = 0;
 
-						finishedAttack = true;
+                            RunAttack();
 
-						GD.Print("Attacking");
-					}
+                            finishedAttack = true;
 
-					MoveHurtBoxes(latestCardinalDirection);
+                            GD.Print("Attacking");
+                        }
 
-					SetAnimationToBePlayed();
+                        MoveHurtBoxes(latestCardinalDirection);
+
+                        SetAnimationToBePlayed();
+                    }
 				}
 			}
 
@@ -350,7 +363,7 @@ namespace MobileEntities.PlayerCharacters
             }
 		}
 
-		protected void GetAttackInput()
+        protected void GetAttackInput()
 		{
 			if (attackInputTimer < attackInputTimerMax)
 			{
@@ -358,7 +371,7 @@ namespace MobileEntities.PlayerCharacters
 			}
 			else if (!isAttacking && attackInputTimer == attackInputTimerMax)
 			{
-				isAttacking = Input.IsActionJustPressed($"WestButton_{DeviceIdentifier}");
+				isAttacking = Input.IsActionJustPressed($"{InputType.GameActionAttack1}_{DeviceIdentifier}");
 
 				attackTurnDirection.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 
@@ -373,35 +386,49 @@ namespace MobileEntities.PlayerCharacters
 		{
 			moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
 			moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
-
-			if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
+			
+            if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
 			{
                 float speed = (float)((float)(100 + CharacterStats.Speed) / 100);
 				var normalizedMoveInput = moveInput.Normalized();
 
-                //if you want to check input for walking and running speeds, do it here
-                moveDirection = normalizedMoveInput * speed;
-			}
+                isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
+
+				if (_staminaAmount >= _staminaDepletionAmount && isRolling)
+				{
+					rollingTimer.Start();
+
+                    //if you want to check input for walking and running speeds, do it here
+                    moveDirection = normalizedMoveInput * speed * 2;
+
+					_staminaAmount = Mathf.Clamp(_staminaAmount - _staminaDepletionAmount, 0, 100);
+
+                    playerSprite.Modulate = ColorPaths.RollingColor;
+
+                    GD.Print($"I'm rolling {_staminaAmount}");
+                }
+				else
+				{
+                    //if you want to check input for walking and running speeds, do it here
+                    moveDirection = normalizedMoveInput * speed;
+
+                    _staminaAmount = Mathf.Clamp(_staminaAmount + _staminaAdditionAmount, 0, 100);
+
+                    GD.Print($"I never was {_staminaAmount}");
+                }
+            }
 			else
 			{
 				moveDirection = Vector2.Zero;
-			}
 
-   //         if (!isAttacking)
-			//{
-			//	moveInput.X = Input.GetActionStrength($"MoveEast_{DeviceIdentifier}") - Input.GetActionStrength($"MoveWest_{DeviceIdentifier}");
-			//	moveInput.Y = Input.GetActionStrength($"MoveSouth_{DeviceIdentifier}") - Input.GetActionStrength($"MoveNorth_{DeviceIdentifier}");
+				isRolling = false;
 
-			//	if (Vector2.Zero.DistanceTo(moveInput) > moveDeadzone * Math.Sqrt(2.0))
-			//	{
-			//		//if you want to check input for walking and running speeds, do it here
-			//		moveDirection = moveInput.Normalized();
-			//	}
-			//	else
-			//	{
-			//		moveDirection = Vector2.Zero;
-			//	}
-			//}
+                _staminaAmount = Mathf.Clamp(_staminaAmount + _staminaAdditionAmount, 0, 100);
+
+				playerSprite.Modulate = ColorPaths.DefaultColor;
+
+                GD.Print($"Now I'm not {_staminaAmount}");
+            }
 		}
 
 		private void MovePlayer()
