@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace MobileEntities.PlayerCharacters
 {
     public class Inventory
     {
-        public List<InventoryItem> Items = new List<InventoryItem>();
+        public Dictionary<InventoryItemType, List<InventoryItem>> ItemsByType = new Dictionary<InventoryItemType, List<InventoryItem>>();
     }
 }

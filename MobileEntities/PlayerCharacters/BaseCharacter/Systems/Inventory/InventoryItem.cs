@@ -6,6 +6,7 @@ namespace MobileEntities.PlayerCharacters
     public partial class InventoryItem : Node2D
     {
         public InventoryItemType Type;
+        public InventoryItemType Duration;
 
         public InventoryItem() { }
 

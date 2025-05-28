@@ -329,7 +329,15 @@ namespace MobileEntities.PlayerCharacters
 					Type = InventoryItemType.Torch
 				};
 
-				Inventory.Items.Add(torchItem);
+				if (Inventory.ItemsByType.ContainsKey(InventoryItemType.Torch))
+                {
+                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                }
+				else
+				{
+					Inventory.ItemsByType.Add(InventoryItemType.Torch, new List<InventoryItem>());
+                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                }
 
 				Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
 

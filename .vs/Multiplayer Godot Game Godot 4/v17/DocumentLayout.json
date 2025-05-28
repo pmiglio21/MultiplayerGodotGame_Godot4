@@ -7,20 +7,20 @@
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\basecharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\enums\\playablecharacterclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:enums\\playablecharacterclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\enums\\inventoryitemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:enums\\inventoryitemtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventoryitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\playercharacters\\basecharacter\\systems\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\keylevelobjects\\lightsources\\torch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -149,11 +149,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "BaseCharacter.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
+              "ViewState": "AQIAADkBAAAAAAAAAAAIwEgBAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T18:01:29.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "PlayableCharacterClass.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Enums\\PlayableCharacterClass.cs",
               "RelativeDocumentMoniker": "Enums\\PlayableCharacterClass.cs",
@@ -166,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "InventoryItemType.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Enums\\InventoryItemType.cs",
               "RelativeDocumentMoniker": "Enums\\InventoryItemType.cs",
@@ -179,41 +192,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Inventory.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\Inventory.cs",
               "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\Inventory.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\Inventory.cs",
               "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\Inventory.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAABFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T17:54:40.772Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "InventoryItem.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\InventoryItem.cs",
               "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\InventoryItem.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\InventoryItem.cs",
               "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\Systems\\Inventory\\InventoryItem.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAiAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T18:09:18.726Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BaseCharacter.cs",
-              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "ViewState": "AQIAADcBAAAAAAAAAAApwFIBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-23T18:01:29.026Z",
               "EditorCaption": ""
             },
             {
@@ -226,8 +226,7 @@
               "RelativeToolTip": "MobileEntities\\Enemies\\Slime\\Slime.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-23T18:01:22.68Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-23T18:01:22.68Z"
             },
             {
               "$type": "Document",
@@ -239,8 +238,7 @@
               "RelativeToolTip": "RootSceneSwapper\\RootSceneSwapper.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T18:40:32.49Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T18:40:32.49Z"
             },
             {
               "$type": "Document",
@@ -252,8 +250,7 @@
               "RelativeToolTip": "MobileEntities\\Enemies\\BaseEnemy\\BaseEnemy.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAqwAgAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T02:10:41.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-14T02:10:41.493Z"
             },
             {
               "$type": "Document",
@@ -265,8 +262,7 @@
               "RelativeToolTip": "Levels\\EarlyLevels\\PlayerSelectScreen\\PlayerCharacterSelectScreenManager.cs",
               "ViewState": "AQIAAGoAAAAAAAAAAAAkwHcAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T16:01:23.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-16T16:01:23.277Z"
             },
             {
               "$type": "Document",
@@ -278,8 +274,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\KeyLevelObjects\\PortalSwitch\\PortalSwitch.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-23T17:39:49.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-23T17:39:49.822Z"
             },
             {
               "$type": "Document",
@@ -291,8 +286,7 @@
               "RelativeToolTip": "MobileEntities\\BaseMobileEntity.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T02:08:44.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-14T02:08:44.65Z"
             },
             {
               "$type": "Document",
@@ -304,8 +298,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\KeyLevelObjects\\LightSources\\Torch.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T18:01:17.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T18:01:17.852Z"
             },
             {
               "$type": "Document",
@@ -317,8 +310,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\BaseDungeonLevel.cs",
               "ViewState": "AQIAAMcEAAAAAAAAAAAkwNQEAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T18:27:08.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T18:27:08.449Z"
             },
             {
               "$type": "Document",
@@ -330,8 +322,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T17:58:19.05Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T17:58:19.05Z"
             },
             {
               "$type": "Document",
@@ -343,8 +334,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\KeyLevelObjects\\Portal\\Portal.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-09T16:32:39.649Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-09T16:32:39.649Z"
             },
             {
               "$type": "Document",
@@ -356,8 +346,7 @@
               "RelativeToolTip": "Levels\\UtilityLevels\\SplitScreenManager\\SplitScreenManager.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T15:52:05.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-02T15:52:05.301Z"
             },
             {
               "$type": "Document",
@@ -417,8 +406,7 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\InteriorWallBlock.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T17:39:41.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-16T17:39:41.927Z"
             },
             {
               "$type": "Document",
