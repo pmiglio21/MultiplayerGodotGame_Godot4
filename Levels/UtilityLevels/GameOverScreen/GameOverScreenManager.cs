@@ -60,7 +60,7 @@ namespace Levels.UtilityLevels
                 _inputChangedRecently = false;
             }
 
-            if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+            if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
             {
                 if (_toTitleScreenButton.HasFocus())
                 {

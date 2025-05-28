@@ -97,7 +97,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 					if (!_playerSelectionChangedRecently)
 					{
-						bool goToTitleLevel = UniversalInputHelper.IsActionJustPressed(InputType.EastButton);
+						bool goToTitleLevel = UniversalInputHelper.IsActionJustPressed(InputType.UiActionCancel);
 
 						if (goToTitleLevel && _playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count == 0)
 						{
@@ -129,7 +129,7 @@ namespace Scenes.UI.PlayerSelectScene
 
 					//Finish character selection for all players (activates confirmation button)
 					if (SelectionHasBeenMade && !_playerSelectionChangedRecently &&
-						(Input.IsActionJustPressed($"SouthButton_{CurrentDeviceId}") || Input.IsActionJustPressed($"StartButton_{CurrentDeviceId}")))
+						Input.IsActionJustPressed($"{InputType.UiActionConfirm}_{CurrentDeviceId}"))
 					{
 						_playerSelectionChangedRecently = true;
 
@@ -147,7 +147,7 @@ namespace Scenes.UI.PlayerSelectScene
 						}
 
 						if (_isSelectionEnabled && !_playerSelectionChangedRecently && !SelectionHasBeenMade && !_isClassAlreadySelectedByOtherPickers
-							&& (Input.IsActionJustPressed($"SouthButton_{CurrentDeviceId}") || Input.IsActionJustPressed($"StartButton_{CurrentDeviceId}")))
+							&& Input.IsActionJustPressed($"{InputType.UiActionConfirm}_{CurrentDeviceId}"))
 						{
 							_playerSelectionChangedRecently = true;
 							SelectionHasBeenMade = true;
@@ -161,7 +161,7 @@ namespace Scenes.UI.PlayerSelectScene
 					if (SelectionHasBeenMade)
 					{
 						if (!_playerSelectionChangedRecently && SelectionHasBeenMade
-							&& Input.IsActionJustPressed($"EastButton_{CurrentDeviceId}"))
+							&& Input.IsActionJustPressed($"{InputType.UiActionCancel}_{CurrentDeviceId}"))
 						{
 							_playerSelectionChangedRecently = true;
 							SelectionHasBeenMade = false;
@@ -172,7 +172,7 @@ namespace Scenes.UI.PlayerSelectScene
 					}
 
 					//Deactivate picker 
-					if (!_playerSelectionChangedRecently && CurrentDeviceId != "-1" && Input.IsActionJustPressed($"EastButton_{CurrentDeviceId}"))
+					if (!_playerSelectionChangedRecently && CurrentDeviceId != "-1" && Input.IsActionJustPressed($"{InputType.UiActionCancel}_{CurrentDeviceId}"))
 					{
 						_playerSelectionChangedRecently = true;
 
@@ -200,23 +200,23 @@ namespace Scenes.UI.PlayerSelectScene
 
 			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "0") == 0)
 			{
-				isWakeUp0 = Input.IsActionJustPressed($"SouthButton_0") || Input.IsActionJustPressed($"StartButton_0");
+				isWakeUp0 = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_0");
 			}
 			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "1") == 0)
 			{
-				isWakeUp1 = Input.IsActionJustPressed($"SouthButton_1") || Input.IsActionJustPressed($"StartButton_1");
+				isWakeUp1 = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_1");
 			}
 			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "2") == 0)
 			{
-				isWakeUp2 = Input.IsActionJustPressed($"SouthButton_2") || Input.IsActionJustPressed($"StartButton_2");
+				isWakeUp2 = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_2");
 			}
 			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "3") == 0)
 			{
-				isWakeUp3 = Input.IsActionJustPressed($"SouthButton_3") || Input.IsActionJustPressed($"StartButton_3");
+				isWakeUp3 = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_3");
 			}
 			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "Keyboard") == 0)
 			{
-				isWakeUpKeyboard = Input.IsActionJustPressed($"SouthButton_Keyboard") || Input.IsActionJustPressed($"StartButton_Keyboard");
+				isWakeUpKeyboard = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_Keyboard");
 			}
 
 			if (isWakeUp0 || isWakeUp1 || isWakeUp2 || isWakeUp3 || isWakeUpKeyboard)

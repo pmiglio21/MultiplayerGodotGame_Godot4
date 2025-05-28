@@ -78,25 +78,21 @@ namespace Root
 
 		private void OnTitleScreenRootGoToPlayModeScreen()
 		{
-            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
             ChangeSceneToPlayModeScreen(_titleScreenManager);
 		}
 
 		private void OnTitleScreenRootGoToGameRulesScreen()
 		{
-            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
             ChangeSceneToGameRulesScreen(_titleScreenManager);
 		}
 
         private void OnTitleScreenRootGoToPlayerCharacterSelectScreen()
         {
-            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
             ChangeSceneToPlayerCharacterSelectScreen(_titleScreenManager);
         }
 
         private void OnTitleScreenRootGoToSettingsScreen()
 		{
-            GetTree().Root.SizeChanged -= _titleScreenManager.ResizeUI;
             ChangeSceneToSettingsScreen();
 		}
 
@@ -217,8 +213,6 @@ namespace Root
 
 		private void ChangeSceneToTitleScreen(Control currentUiScene)
 		{
-            GetTree().Root.SizeChanged += _titleScreenManager.ResizeUI;
-
             _rootGuiControl.AddChild(_titleScreenManager);
 
 			_rootGuiControl.RemoveChild(currentUiScene);
@@ -228,8 +222,6 @@ namespace Root
 
 		private void ChangeSceneToTitleScreen(Node currentScene)
 		{
-            GetTree().Root.SizeChanged += _titleScreenManager.ResizeUI;
-
             _rootGuiControl.AddChild(_titleScreenManager);
 
 			_rootGuiControl.RemoveChild(currentScene);

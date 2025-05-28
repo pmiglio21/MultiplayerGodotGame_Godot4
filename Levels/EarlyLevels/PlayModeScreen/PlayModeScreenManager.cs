@@ -44,7 +44,7 @@ public partial class PlayModeScreenManager : GridContainer
 
     private void GetButtonPressInput()
     {
-        if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+        if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
         {
             if (_localButton.HasFocus())
             {
@@ -56,7 +56,7 @@ public partial class PlayModeScreenManager : GridContainer
             }
         }
 
-        if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+        if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionCancel))
         {
             _rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 

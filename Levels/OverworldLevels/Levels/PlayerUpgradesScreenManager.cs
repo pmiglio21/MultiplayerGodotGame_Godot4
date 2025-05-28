@@ -66,7 +66,7 @@ namespace Levels.OverworldLevels
 
         public override void _Process(double delta)
         {
-            if (UniversalInputHelper.IsActionJustReleased(InputType.SouthButton) || UniversalInputHelper.IsActionJustReleased(InputType.StartButton))
+            if (UniversalInputHelper.IsActionJustReleased(InputType.UiActionConfirm))
             {
                 EmitSignal(SignalName.GoToSplitScreenManager);
             }

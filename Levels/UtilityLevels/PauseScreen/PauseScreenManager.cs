@@ -93,7 +93,7 @@ namespace Levels.UtilityLevels
 			}
 			#endregion
 
-			if ((UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton)))
+			if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
 			{
 				if (_resumeGameButton.HasFocus())
 				{
@@ -128,7 +128,7 @@ namespace Levels.UtilityLevels
 				}
 			}
 
-			if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+			if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionCancel))
 			{
 				_rootSceneSwapper.PlayUiSoundEffect(SoundFilePaths.UiReturnToPreviousScreenSoundPath);
 

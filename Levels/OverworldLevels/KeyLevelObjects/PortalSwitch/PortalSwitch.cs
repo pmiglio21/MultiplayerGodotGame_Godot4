@@ -35,9 +35,9 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 
 		private void CheckForSwitchActivation()
 		{
-			if (_isAreaEntered && UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			if (_isAreaEntered && UniversalInputHelper.IsActionJustPressed(InputType.GameActionInteract))
 			{
-				var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.SouthButton);
+				var playersWhoPressedButtonThisFrame = UniversalInputHelper.GetPlayersWhoJustPressedButton(InputType.GameActionInteract);
 
 				bool didOneOfThePlayersInAreaPressTheButton = false;
 

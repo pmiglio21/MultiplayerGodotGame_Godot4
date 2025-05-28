@@ -104,7 +104,7 @@ namespace Levels.UtilityLevels
 
 		private void GetButtonInput()
 		{
-            if (UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+            if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
             {
                 if (_musicVolumeSliderButton.GetHSlider().HasFocus())
                 {
@@ -155,7 +155,7 @@ namespace Levels.UtilityLevels
                     ReturnToPriorScene();
                 }
             }
-            else if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+            else if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionCancel))
             {
                 if (_musicVolumeSliderButton.GetHSlider().HasFocus())
                 {
@@ -174,7 +174,7 @@ namespace Levels.UtilityLevels
                     ReturnToPriorScene();
                 }
             }
-            else if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton))
+            else if (UniversalInputHelper.IsActionJustPressed(InputType.GameActionPause))
             {
                 if (_returnButton.HasFocus())
                 {

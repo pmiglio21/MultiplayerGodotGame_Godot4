@@ -310,7 +310,7 @@ namespace MobileEntities.PlayerCharacters
 				_pauseTimer = 0;
 			}
 
-			if (!_pauseChangedRecently && Input.IsActionJustPressed($"StartButton_{DeviceIdentifier}"))
+			if (!_pauseChangedRecently && Input.IsActionJustPressed($"{InputType.GameActionPause}_{DeviceIdentifier}"))
 			{
 				pauseScreen.IsPauseScreenBeingShown = true;
 				GetTree().Paused = true;
@@ -322,7 +322,7 @@ namespace MobileEntities.PlayerCharacters
 
 		protected void GetInteractionInput()
 		{
-			if (_inventoryPocketableObjectsInArea.Any(x => x is Torch) && Input.IsActionJustPressed($"SouthButton_{DeviceIdentifier}"))
+			if (_inventoryPocketableObjectsInArea.Any(x => x is Torch) && Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}"))
 			{
 				InventoryItem torchItem = new InventoryItem()
 				{ 

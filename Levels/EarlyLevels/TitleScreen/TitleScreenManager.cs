@@ -15,8 +15,6 @@ namespace Levels.EarlyLevels
 		private Button _settingsButton;
 		private Button _quitGameButton;
 
-		//private Vector2 _titleScreenAnchorPosition = new Vector2(522.5f, 326);
-
 		#region Signals
 
 		//[Signal]
@@ -51,26 +49,7 @@ namespace Levels.EarlyLevels
             _quitGameButton.Pressed += OnQuitGame;
 
             _playButton.GrabFocus();
-
-            GetTree().Root.SizeChanged += ResizeUI;
         }
-
-		public void ResizeUI()
-		{
-			//var tree = GetTree();
-
-			//Vector2 mainViewportSize = tree.Root.Size;
-
-			//int otherOffset = 0;
-
-			//Vector2 viewPortProportionalScale = new Vector2(mainViewportSize.X + otherOffset, mainViewportSize.Y + otherOffset) / _rootSceneSwapper.MaxScreenSize;
-
-			////Don't set GlobalPosition, because editor uses anchors to keep it in the center of the screen
-			//if (mainViewportSize.X >= 400 && mainViewportSize.Y >= 400)
-			//{
-			//	Scale = new Vector2(viewPortProportionalScale.X, viewPortProportionalScale.X);
-			//}
-		}
 
 		public override void _Process(double delta)
 		{
@@ -81,7 +60,7 @@ namespace Levels.EarlyLevels
 
 		private void GetButtonPressInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.StartButton) || UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
 			{
 				if (_playButton.HasFocus())
 				{

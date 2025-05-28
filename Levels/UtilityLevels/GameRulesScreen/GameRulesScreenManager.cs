@@ -192,7 +192,7 @@ namespace Levels.UtilityLevels
 
 		private void GetButtonPressInput()
 		{
-			if (UniversalInputHelper.IsActionJustPressed(InputType.SouthButton))
+			if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionConfirm))
 			{
                 #region Press Button while focusing on XxxxOptionSelector
 
@@ -320,7 +320,7 @@ namespace Levels.UtilityLevels
 
                 #endregion
             }
-            else if (UniversalInputHelper.IsActionJustPressed(InputType.EastButton))
+            else if (UniversalInputHelper.IsActionJustPressed(InputType.UiActionCancel))
 			{
                 #region Press Button while focused on XxxxButton
 
