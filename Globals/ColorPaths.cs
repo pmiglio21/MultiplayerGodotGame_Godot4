@@ -6,7 +6,7 @@ namespace Globals
     {
         public static Color DefaultColor = new Color(1, 1, 1); //White
 
-        public static Color RollingColor = new Color(113,113,113); //Grayish
+        public static Color RollingColor = new Color(1, 1, 1) { V = 0.6f }; //Grayish
 
 
     }

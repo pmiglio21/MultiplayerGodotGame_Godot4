@@ -414,6 +414,8 @@ namespace MobileEntities.PlayerCharacters
 
                     _staminaAmount = Mathf.Clamp(_staminaAmount + _staminaAdditionAmount, 0, 100);
 
+                    playerSprite.Modulate = ColorPaths.DefaultColor;
+
                     GD.Print($"I never was {_staminaAmount}");
                 }
             }

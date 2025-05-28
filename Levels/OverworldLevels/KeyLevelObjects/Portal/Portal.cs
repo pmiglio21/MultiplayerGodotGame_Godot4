@@ -43,8 +43,8 @@ namespace Levels.OverworldLevels.KeyLevelObjects
 				{
 					_playersInArea.Add(character.DeviceIdentifier);
 
-                    ShaderMaterial shaderMaterial = GD.Load<ShaderMaterial>(ShaderMaterialPaths.OutlineShaderMaterialPath);
-                    Sprite.Material = shaderMaterial;
+                    //ShaderMaterial shaderMaterial = GD.Load<ShaderMaterial>(ShaderMaterialPaths.OutlineShaderMaterialPath);
+                    //Sprite.Material = shaderMaterial;
 
                     if (!_playersInArea.Contains(character.DeviceIdentifier))
                     {
@@ -69,10 +69,10 @@ namespace Levels.OverworldLevels.KeyLevelObjects
                         _playersInArea.Remove(character.DeviceIdentifier);
                     }
 
-                    if (_playersInArea.Count == 0)
-                    {
-                        Sprite.Material = new ShaderMaterial();
-                    }
+                    //if (_playersInArea.Count == 0)
+                    //{
+                    //    Sprite.Material = new ShaderMaterial();
+                    //}
                 }
 			}
 		}
