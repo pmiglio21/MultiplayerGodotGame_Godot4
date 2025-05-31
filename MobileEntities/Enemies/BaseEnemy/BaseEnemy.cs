@@ -3,12 +3,16 @@ using Godot;
 using MobileEntities.PlayerCharacters;
 using Root;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MobileEntities.Enemies.Scripts
 {
 	public partial class BaseEnemy : BaseMobileEntity
 	{
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
+
+        private const int _playerDetectionFrameCountMax = 8;
+		private int _playerDetectionFrameCount = 0;
 
         #region Components
 
@@ -18,10 +22,15 @@ namespace MobileEntities.Enemies.Scripts
 		protected CollisionShape2D mainHitBoxCollisionShape;
 		protected AnimationPlayer animationPlayer;
 		protected Timer gracePeriodTimer;
+        protected Area2D playerDetectionBox;
+        protected CollisionShape2D playerDetectionBoxCollisionShape;
 
-		#endregion
+        #endregion
 
-		protected EnemyType enemyType;
+        protected bool isPlayerDetected = false;
+        protected bool isWallDetected = false;
+
+        protected EnemyType enemyType;
 
 		#region On Ready
 
@@ -46,9 +55,13 @@ namespace MobileEntities.Enemies.Scripts
 			mainHitBox = GetNode<Area2D>("MainHitBox");
 			mainHitBoxCollisionShape = mainHitBox.GetNode<CollisionShape2D>("CollisionShape");
 			mainHitBoxCollisionShape.Scale = new Vector2(1, 1);
-			//mainHitBoxCollisionShape.Disabled = true;
+            //mainHitBoxCollisionShape.Disabled = true;
 
-			animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            playerDetectionBox = GetNode<Area2D>("PlayerDetectionBox");
+            //playerDetectionBoxCollisionShape = playerDetectionBox.GetNode<CollisionShape2D>("CollisionShape");
+            //playerDetectionBoxCollisionShape.Scale = new Vector2(1, 1);
+
+            animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 			animationPlayer.Play("Idle_East");
 
 			gracePeriodTimer = FindChild("GracePeriodTimer") as Timer;
@@ -60,37 +73,167 @@ namespace MobileEntities.Enemies.Scripts
 		{
 			ZIndex = (int)this.GlobalPosition.Y;
 
-			MoveEnemy();
-		}
+            MoveEnemy();
+        }
 
 		protected virtual void InitializeEnemySpecificProperties() { }
 
-		protected virtual void MoveEnemy() { }
+		protected virtual void MoveEnemy() 
+		{
+            if (_playerDetectionFrameCount == _playerDetectionFrameCountMax)
+            {
+                _playerDetectionFrameCount = 0;
+            }
+            else
+            {
+                _playerDetectionFrameCount++;
+            }
+
+            BaseCharacter closestPlayer = FindClosestPlayer();
+
+            if (closestPlayer != null)
+            {
+                playerDetectionBox.Scale = Vector2.One;
+
+                var distanceBetweenClosestPlayer = closestPlayer.GlobalPosition.DistanceTo(GlobalPosition);
+
+                var direction = (closestPlayer.GlobalPosition - GlobalPosition).Normalized();
+
+                Velocity = direction * 5;
+
+                if (distanceBetweenClosestPlayer <= 64)
+                {
+                    MoveAndSlide();
+                }
+                else if (distanceBetweenClosestPlayer > 64 && isPlayerDetected && !isWallDetected)
+                {
+                    Velocity = Velocity * 8;
+
+                    MoveAndSlide();
+                }
+            }
+            else
+            {
+                playerDetectionBox.Scale = Vector2.Zero;
+
+                Velocity = Vector2.Zero;
+
+                MoveAndSlide();
+            }
+
+            isPlayerDetected = false;
+            isWallDetected = false;
+        }
 
 		protected BaseCharacter FindClosestPlayer()
 		{
-			BaseCharacter closestPlayer = null;
-			float minDistance = float.MaxValue; 
+            BaseCharacter closestPlayer = null;
+            float minDistance = float.MaxValue;
 
-			foreach (var player in _parentDungeonLevelSwapper.ActivePlayers)
+            foreach (var player in _parentDungeonLevelSwapper.ActivePlayers)
 			{
 				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
 
-				if (newDistance <= 200 && newDistance < minDistance)
+				if (newDistance <= 256 && newDistance < minDistance)
 				{
-					closestPlayer = player;
+                    //playerDetectionBox.Scale = Vector2.One;
+
+                    //               List<Vector2> spacesToCheck = GetListOfSpacesToCheckForPlayersFrom();
+
+                    //               foreach (Vector2 space in spacesToCheck)
+                    //               {
+                    //                   //GD.Print($"Waiting on {space}");
+
+                    //                   playerDetectionBox.GlobalPosition = space;
+                    //               }
+
+                    ////playerDetectionBox.Scale = Vector2.Zero;
+                    //               playerDetectionBox.GlobalPosition = GlobalPosition;
+
+                    Vector2 spaceToCheck = GetSpaceToCheckForPlayersFrom();
+
+                    playerDetectionBox.GlobalPosition = spaceToCheck;
+
+                    //playerDetectionBox.Scale = Vector2.Zero;
+                    //playerDetectionBox.GlobalPosition = GlobalPosition;
+
+                    closestPlayer = player;
 					minDistance = newDistance;
 				}
 			}
 
-			return closestPlayer;
+            return closestPlayer;
 		}
 
-		#region	Signal Receptions
+        protected Vector2 GetSpaceToCheckForPlayersFrom()
+        {
+            Vector2 spaceToCheck = new Vector2();
 
-		#region Trigger Boxes
+            int spaceFromGlobalPosition = 64;
 
-		private void OnMainHitBoxAreaEntered(Area2D area)
+            Vector2 actualGlobalPosition = GlobalPosition;
+
+            if (_playerDetectionFrameCount == 0)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y);
+            }
+            else if (_playerDetectionFrameCount == 1)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition);
+            }
+            else if (_playerDetectionFrameCount == 2)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y + spaceFromGlobalPosition);
+            }
+            else if (_playerDetectionFrameCount == 3)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition);
+            }
+            else if (_playerDetectionFrameCount == 4)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y);
+            }
+            else if (_playerDetectionFrameCount == 5)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition);
+            }
+            else if (_playerDetectionFrameCount == 6)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y - spaceFromGlobalPosition);
+            }
+            else if (_playerDetectionFrameCount == 7)
+            {
+                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition);
+            }
+
+            return spaceToCheck;
+        }
+
+        //protected List<Vector2> GetListOfSpacesToCheckForPlayersFrom()
+        //{
+        //	List<Vector2> spacesToCheck = new List<Vector2>();
+
+        //	int spaceFromGlobalPosition = 64;
+
+        //	Vector2 actualGlobalPosition = GlobalPosition;
+
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X, GlobalPosition.Y + spaceFromGlobalPosition));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X, GlobalPosition.Y - spaceFromGlobalPosition));
+        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition));
+
+        //          return spacesToCheck;
+        //}
+
+        #region	Signal Receptions
+
+        #region Trigger Boxes
+
+        private void OnMainHitBoxAreaEntered(Area2D area)
 		{
 			//GD.Print("Enemy Hit Entered");
 		}
@@ -137,10 +280,38 @@ namespace MobileEntities.Enemies.Scripts
 			//GD.Print("Enemy Hurt Exited");
 		}
 
-		#endregion
+		private void OnPlayerDetectionBoxAreaEntered(Area2D area)
+		{
+            if (area.IsInGroup("PlayerHurtBox"))
+            {
+                CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
-		#endregion
-	}
+                if (!collisionShape.Disabled)
+                {
+                    isPlayerDetected = true;
 
+                    //GD.Print("I detect player");
+                }
+            }
+        }
 
+        private void OnPlayerDetectionBoxBodyEntered(Node2D node2D)
+        {
+            if (node2D.IsInGroup("InteriorWallBlock"))
+            {
+                CollisionShape2D collisionShape = node2D.GetNode<CollisionShape2D>("CollisionShape2D");
+
+                if (!collisionShape.Disabled)
+                {
+                    isWallDetected = true;
+
+                    //GD.Print("I detect wall");
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
 }

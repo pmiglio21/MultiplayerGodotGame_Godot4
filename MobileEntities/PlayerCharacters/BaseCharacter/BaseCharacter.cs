@@ -405,7 +405,7 @@ namespace MobileEntities.PlayerCharacters
 
                     playerSprite.Modulate = ColorPaths.RollingColor;
 
-                    GD.Print($"I'm rolling {_staminaAmount}");
+                    //GD.Print($"I'm rolling {_staminaAmount}");
                 }
 				else
 				{
@@ -416,7 +416,7 @@ namespace MobileEntities.PlayerCharacters
 
                     playerSprite.Modulate = ColorPaths.DefaultColor;
 
-                    GD.Print($"I never was {_staminaAmount}");
+                    //GD.Print($"I never was {_staminaAmount}");
                 }
             }
 			else
@@ -429,7 +429,7 @@ namespace MobileEntities.PlayerCharacters
 
 				playerSprite.Modulate = ColorPaths.DefaultColor;
 
-                GD.Print($"Now I'm not {_staminaAmount}");
+                //GD.Print($"Now I'm not {_staminaAmount}");
             }
 		}
 
