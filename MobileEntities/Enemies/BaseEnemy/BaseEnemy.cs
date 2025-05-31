@@ -11,8 +11,12 @@ namespace MobileEntities.Enemies.Scripts
 	{
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
-        private const int _playerDetectionFrameCountMax = 8;
+        private const int _speed = 10;
+        private const int _playerDetectionFrameCountMax = 7;
 		private int _playerDetectionFrameCount = 0;
+
+        private const int _distanceToPlayerDetectionCheck = 256;
+        private const int _distanceToPlayerDetectionMoving = 64;
 
         #region Components
 
@@ -99,15 +103,15 @@ namespace MobileEntities.Enemies.Scripts
 
                 var direction = (closestPlayer.GlobalPosition - GlobalPosition).Normalized();
 
-                Velocity = direction * 5;
+                Velocity = direction * _speed;
 
-                if (distanceBetweenClosestPlayer <= 64)
+                if (distanceBetweenClosestPlayer <= _distanceToPlayerDetectionMoving)
                 {
                     MoveAndSlide();
                 }
-                else if (distanceBetweenClosestPlayer > 64 && isPlayerDetected && !isWallDetected)
+                else if (distanceBetweenClosestPlayer > _distanceToPlayerDetectionMoving && isPlayerDetected && !isWallDetected)
                 {
-                    Velocity = Velocity * 8;
+                    Velocity = Velocity * _playerDetectionFrameCountMax;
 
                     MoveAndSlide();
                 }
@@ -134,7 +138,7 @@ namespace MobileEntities.Enemies.Scripts
 			{
 				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
 
-				if (newDistance <= 256 && newDistance < minDistance)
+				if (newDistance <= _distanceToPlayerDetectionCheck && newDistance < minDistance)
 				{
                     //playerDetectionBox.Scale = Vector2.One;
 
@@ -154,6 +158,15 @@ namespace MobileEntities.Enemies.Scripts
 
                     playerDetectionBox.GlobalPosition = spaceToCheck;
 
+                    if (_playerDetectionFrameCount == 0 || _playerDetectionFrameCount == 4)
+                    {
+                        playerDetectionBox.GlobalRotation = - Mathf.Pi / 2;
+                    }
+                    else
+                    {
+                        playerDetectionBox.GlobalRotation = Mathf.Pi / 2;
+                    }
+
                     //playerDetectionBox.Scale = Vector2.Zero;
                     //playerDetectionBox.GlobalPosition = GlobalPosition;
 
@@ -169,41 +182,39 @@ namespace MobileEntities.Enemies.Scripts
         {
             Vector2 spaceToCheck = new Vector2();
 
-            int spaceFromGlobalPosition = 64;
-
             Vector2 actualGlobalPosition = GlobalPosition;
 
             if (_playerDetectionFrameCount == 0)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y);
+                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y);
             }
             else if (_playerDetectionFrameCount == 1)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
             }
             else if (_playerDetectionFrameCount == 2)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y + spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
             }
             else if (_playerDetectionFrameCount == 3)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
             }
             else if (_playerDetectionFrameCount == 4)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y);
+                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y);
             }
             else if (_playerDetectionFrameCount == 5)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
             }
             else if (_playerDetectionFrameCount == 6)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y - spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
             }
             else if (_playerDetectionFrameCount == 7)
             {
-                spaceToCheck = new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition);
+                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
             }
 
             return spaceToCheck;

@@ -8,7 +8,7 @@
 size = Vector2(27, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cdstb"]
-size = Vector2(152, 5)
+size = Vector2(90, 16)
 
 [node name="EnemyBody" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 0
