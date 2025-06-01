@@ -3,6 +3,7 @@ using Godot;
 using MobileEntities.PlayerCharacters;
 using Root;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace MobileEntities.Enemies.Scripts
@@ -16,7 +17,7 @@ namespace MobileEntities.Enemies.Scripts
 		private int _playerDetectionFrameCount = 0;
 
         private const int _distanceToPlayerDetectionCheck = 256;
-        private const int _distanceToPlayerDetectionMoving = 64;
+        private const int _distanceToPlayerDetectionMoving = 256;
 
         #region Components
 
@@ -62,8 +63,7 @@ namespace MobileEntities.Enemies.Scripts
             //mainHitBoxCollisionShape.Disabled = true;
 
             playerDetectionBox = GetNode<Area2D>("PlayerDetectionBox");
-            //playerDetectionBoxCollisionShape = playerDetectionBox.GetNode<CollisionShape2D>("CollisionShape");
-            //playerDetectionBoxCollisionShape.Scale = new Vector2(1, 1);
+            playerDetectionBoxCollisionShape = playerDetectionBox.GetNode<CollisionShape2D>("CollisionShape");
 
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 			animationPlayer.Play("Idle_East");
@@ -103,16 +103,18 @@ namespace MobileEntities.Enemies.Scripts
 
                 var direction = (closestPlayer.GlobalPosition - GlobalPosition).Normalized();
 
+                var angleBetweenClosestPlayerAndEnemy = (closestPlayer.GlobalPosition - GlobalPosition).Angle();
+
+                playerDetectionBox.Rotation = angleBetweenClosestPlayerAndEnemy;
+
+                playerDetectionBox.GlobalPosition = (closestPlayer.GlobalPosition + GlobalPosition) / 2;
+
+                playerDetectionBoxCollisionShape.Shape = new RectangleShape2D() { Size = new Vector2(distanceBetweenClosestPlayer, playerDetectionBoxCollisionShape.Shape.GetRect().Size.Y) };
+
                 Velocity = direction * _speed;
 
-                if (distanceBetweenClosestPlayer <= _distanceToPlayerDetectionMoving)
+                if (distanceBetweenClosestPlayer <= _distanceToPlayerDetectionMoving && isPlayerDetected && !isWallDetected)
                 {
-                    MoveAndSlide();
-                }
-                else if (distanceBetweenClosestPlayer > _distanceToPlayerDetectionMoving && isPlayerDetected && !isWallDetected)
-                {
-                    Velocity = Velocity * _playerDetectionFrameCountMax;
-
                     MoveAndSlide();
                 }
             }
@@ -140,36 +142,6 @@ namespace MobileEntities.Enemies.Scripts
 
 				if (newDistance <= _distanceToPlayerDetectionCheck && newDistance < minDistance)
 				{
-                    //playerDetectionBox.Scale = Vector2.One;
-
-                    //               List<Vector2> spacesToCheck = GetListOfSpacesToCheckForPlayersFrom();
-
-                    //               foreach (Vector2 space in spacesToCheck)
-                    //               {
-                    //                   //GD.Print($"Waiting on {space}");
-
-                    //                   playerDetectionBox.GlobalPosition = space;
-                    //               }
-
-                    ////playerDetectionBox.Scale = Vector2.Zero;
-                    //               playerDetectionBox.GlobalPosition = GlobalPosition;
-
-                    Vector2 spaceToCheck = GetSpaceToCheckForPlayersFrom();
-
-                    playerDetectionBox.GlobalPosition = spaceToCheck;
-
-                    if (_playerDetectionFrameCount == 0 || _playerDetectionFrameCount == 4)
-                    {
-                        playerDetectionBox.GlobalRotation = - Mathf.Pi / 2;
-                    }
-                    else
-                    {
-                        playerDetectionBox.GlobalRotation = Mathf.Pi / 2;
-                    }
-
-                    //playerDetectionBox.Scale = Vector2.Zero;
-                    //playerDetectionBox.GlobalPosition = GlobalPosition;
-
                     closestPlayer = player;
 					minDistance = newDistance;
 				}
@@ -177,68 +149,6 @@ namespace MobileEntities.Enemies.Scripts
 
             return closestPlayer;
 		}
-
-        protected Vector2 GetSpaceToCheckForPlayersFrom()
-        {
-            Vector2 spaceToCheck = new Vector2();
-
-            Vector2 actualGlobalPosition = GlobalPosition;
-
-            if (_playerDetectionFrameCount == 0)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y);
-            }
-            else if (_playerDetectionFrameCount == 1)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
-            }
-            else if (_playerDetectionFrameCount == 2)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
-            }
-            else if (_playerDetectionFrameCount == 3)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y + _distanceToPlayerDetectionMoving);
-            }
-            else if (_playerDetectionFrameCount == 4)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y);
-            }
-            else if (_playerDetectionFrameCount == 5)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X - _distanceToPlayerDetectionMoving, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
-            }
-            else if (_playerDetectionFrameCount == 6)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
-            }
-            else if (_playerDetectionFrameCount == 7)
-            {
-                spaceToCheck = new Vector2(GlobalPosition.X + _distanceToPlayerDetectionMoving, GlobalPosition.Y - _distanceToPlayerDetectionMoving);
-            }
-
-            return spaceToCheck;
-        }
-
-        //protected List<Vector2> GetListOfSpacesToCheckForPlayersFrom()
-        //{
-        //	List<Vector2> spacesToCheck = new List<Vector2>();
-
-        //	int spaceFromGlobalPosition = 64;
-
-        //	Vector2 actualGlobalPosition = GlobalPosition;
-
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X, GlobalPosition.Y + spaceFromGlobalPosition));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y + spaceFromGlobalPosition));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X - spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X, GlobalPosition.Y - spaceFromGlobalPosition));
-        //          spacesToCheck.Add(new Vector2(GlobalPosition.X + spaceFromGlobalPosition, GlobalPosition.Y - spaceFromGlobalPosition));
-
-        //          return spacesToCheck;
-        //}
 
         #region	Signal Receptions
 
