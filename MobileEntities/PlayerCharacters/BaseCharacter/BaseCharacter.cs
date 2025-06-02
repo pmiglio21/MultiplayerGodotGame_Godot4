@@ -519,6 +519,10 @@ namespace MobileEntities.PlayerCharacters
 			{
                 _inventoryPocketableObjectsInArea.Add(area.GetParent() as Node2D);
             }
+			else if (area.IsInGroup("PlayerDetectionBox"))
+			{
+				//GD.Print($"FROM CHARACTER {DeviceIdentifier}, entered PlayerDetectionBox");
+			}
 		}
 
 
@@ -537,7 +541,11 @@ namespace MobileEntities.PlayerCharacters
                     _portalWaitTimer = 0;
 				}
 			}
-		}
+            else if (area.IsInGroup("PlayerDetectionBox"))
+            {
+                //GD.Print($"FROM CHARACTER {DeviceIdentifier}, exited PlayerDetectionBox");
+            }
+        }
 		#endregion
 
 		#endregion

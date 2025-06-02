@@ -2,9 +2,6 @@ using Enums;
 using Godot;
 using MobileEntities.PlayerCharacters;
 using Root;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
 
 namespace MobileEntities.Enemies.Scripts
 {
@@ -13,11 +10,8 @@ namespace MobileEntities.Enemies.Scripts
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
         private const int _speed = 10;
-        private const int _playerDetectionFrameCountMax = 7;
-		private int _playerDetectionFrameCount = 0;
 
-        private const int _distanceToPlayerDetectionCheck = 256;
-        private const int _distanceToPlayerDetectionMoving = 256;
+        private const int _distanceToDetectPlayer = 256;
 
         #region Components
 
@@ -73,7 +67,7 @@ namespace MobileEntities.Enemies.Scripts
 
 		#endregion
 
-		public override void _Process(double delta)
+		public override void _PhysicsProcess(double delta)
 		{
 			ZIndex = (int)this.GlobalPosition.Y;
 
@@ -84,15 +78,6 @@ namespace MobileEntities.Enemies.Scripts
 
 		protected virtual void MoveEnemy() 
 		{
-            if (_playerDetectionFrameCount == _playerDetectionFrameCountMax)
-            {
-                _playerDetectionFrameCount = 0;
-            }
-            else
-            {
-                _playerDetectionFrameCount++;
-            }
-
             BaseCharacter closestPlayer = FindClosestPlayer();
 
             if (closestPlayer != null)
@@ -105,16 +90,34 @@ namespace MobileEntities.Enemies.Scripts
 
                 var angleBetweenClosestPlayerAndEnemy = (closestPlayer.GlobalPosition - GlobalPosition).Angle();
 
+                
                 playerDetectionBox.Rotation = angleBetweenClosestPlayerAndEnemy;
 
                 playerDetectionBox.GlobalPosition = (closestPlayer.GlobalPosition + GlobalPosition) / 2;
 
-                playerDetectionBoxCollisionShape.Shape = new RectangleShape2D() { Size = new Vector2(distanceBetweenClosestPlayer, playerDetectionBoxCollisionShape.Shape.GetRect().Size.Y) };
+                var playerDetectionBoxSize = new Vector2(distanceBetweenClosestPlayer, playerDetectionBoxCollisionShape.Shape.GetRect().Size.Y);
 
-                Velocity = direction * _speed;
+                playerDetectionBoxCollisionShape.Shape = new RectangleShape2D() { Size = playerDetectionBoxSize };
 
-                if (distanceBetweenClosestPlayer <= _distanceToPlayerDetectionMoving && isPlayerDetected && !isWallDetected)
+
+                var overlappingBodies = playerDetectionBox.GetOverlappingBodies();
+
+                isWallDetected = false;
+
+                foreach (var body in overlappingBodies)
                 {
+                    if (body.GetParent() is InteriorWallBlock)
+                    {
+                        isWallDetected = true;
+                        break;
+                    }
+                }
+
+
+                if (distanceBetweenClosestPlayer <= _distanceToDetectPlayer && isPlayerDetected && !isWallDetected)
+                {
+                    Velocity = direction * _speed;
+
                     MoveAndSlide();
                 }
             }
@@ -126,9 +129,6 @@ namespace MobileEntities.Enemies.Scripts
 
                 MoveAndSlide();
             }
-
-            isPlayerDetected = false;
-            isWallDetected = false;
         }
 
 		protected BaseCharacter FindClosestPlayer()
@@ -140,7 +140,7 @@ namespace MobileEntities.Enemies.Scripts
 			{
 				var newDistance = player.GlobalPosition.DistanceTo(this.GlobalPosition);
 
-				if (newDistance <= _distanceToPlayerDetectionCheck && newDistance < minDistance)
+				if (newDistance <= _distanceToDetectPlayer && newDistance < minDistance)
 				{
                     closestPlayer = player;
 					minDistance = newDistance;
@@ -211,22 +211,24 @@ namespace MobileEntities.Enemies.Scripts
                 {
                     isPlayerDetected = true;
 
-                    //GD.Print("I detect player");
+                    GD.Print($"PlayerHurtBox Entered {area.GetParent().Name}");
                 }
             }
         }
 
-        private void OnPlayerDetectionBoxBodyEntered(Node2D node2D)
+        private void OnPlayerDetectionBoxAreaExited(Area2D area)
         {
-            if (node2D.IsInGroup("InteriorWallBlock"))
+            if (area.IsInGroup("PlayerHurtBox"))
             {
-                CollisionShape2D collisionShape = node2D.GetNode<CollisionShape2D>("CollisionShape2D");
+                CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
 
                 if (!collisionShape.Disabled)
                 {
-                    isWallDetected = true;
+                    Node2D character = area.GetParent() as Node2D;
 
-                    //GD.Print("I detect wall");
+                    isPlayerDetected = false;
+
+                    GD.Print($"PlayerHurtBox Exited {area.GetParent().Name}");
                 }
             }
         }

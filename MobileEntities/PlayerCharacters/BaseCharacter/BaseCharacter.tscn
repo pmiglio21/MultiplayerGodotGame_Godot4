@@ -33,6 +33,7 @@ libraries = {
 }
 
 [node name="MainHurtBox" parent="." instance=ExtResource("3_cxmac")]
+collision_layer = 9
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-0.5, 0.5)
