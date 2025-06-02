@@ -21,6 +21,7 @@ namespace MobileEntities.Enemies.Scripts
 		protected CollisionShape2D mainHitBoxCollisionShape;
 		protected AnimationPlayer animationPlayer;
 		protected Timer gracePeriodTimer;
+        protected Timer playerChaseTimer;
         protected Area2D playerDetectionBox;
         protected CollisionShape2D playerDetectionBoxCollisionShape;
 
@@ -63,7 +64,8 @@ namespace MobileEntities.Enemies.Scripts
 			animationPlayer.Play("Idle_East");
 
 			gracePeriodTimer = FindChild("GracePeriodTimer") as Timer;
-		}
+            playerChaseTimer = FindChild("PlayerChaseTimer") as Timer;
+        }
 
 		#endregion
 
@@ -114,7 +116,17 @@ namespace MobileEntities.Enemies.Scripts
                 }
 
 
-                if (distanceBetweenClosestPlayer <= _distanceToDetectPlayer && isPlayerDetected && !isWallDetected)
+                if (isPlayerDetected && !isWallDetected)
+                {
+                    if (playerChaseTimer.IsStopped())
+                    {
+                        playerChaseTimer.Start();
+                    }
+                }
+
+
+                if (!playerChaseTimer.IsStopped() ||
+                    (distanceBetweenClosestPlayer <= _distanceToDetectPlayer && isPlayerDetected && !isWallDetected))
                 {
                     Velocity = direction * _speed;
 

@@ -38,6 +38,10 @@ collision_mask = 8
 [node name="CollisionShape" type="CollisionShape2D" parent="PlayerDetectionBox"]
 shape = SubResource("RectangleShape2D_cdstb")
 
+[node name="PlayerChaseTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
 [connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
 [connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
