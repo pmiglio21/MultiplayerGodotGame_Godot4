@@ -23,9 +23,12 @@ namespace Enums
         //Middle buttons
         SelectButton,
 
+        //Item activation
+        GameActionActivateItem, //Right trigger, E key
+
         //Item Loop buttons
-        ItemLoopLeft, //Left shoulder, mouse scroll up
-        ItemLoopRight, //Right shoulder, mouse scroll down
+        GameActionLoopItemLeft, //Left shoulder, mouse scroll up
+        GameActionLoopItemRight, //Right shoulder, mouse scroll down
 
         //Shoulder buttons
         LeftShoulder,

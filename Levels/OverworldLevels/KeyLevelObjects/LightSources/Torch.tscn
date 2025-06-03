@@ -4,13 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://cstpgwrmlr8gd" path="res://Levels/OverworldLevels/KeyLevelObjects/LightSources/Torch.png" id="2_pt3s2"]
 
 [sub_resource type="Gradient" id="Gradient_nwxgi"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.704735, 0.738162, 0.771588, 0.952646)
+colors = PackedColorArray(1, 1, 1, 1, 0.196215, 0.196215, 0.196215, 1, 0.185739, 0.185739, 0.185739, 1, 0.175487, 0.175487, 0.175487, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rfy7u"]
 gradient = SubResource("Gradient_nwxgi")
+width = 256
+height = 256
 fill = 1
-fill_from = Vector2(0.504274, 0.551282)
-fill_to = Vector2(0.850427, 0.222222)
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.761, 0.226)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xgtmu"]
 
@@ -18,12 +21,22 @@ fill_to = Vector2(0.850427, 0.222222)
 script = ExtResource("1_i0p7v")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(12, 12)
-scale = Vector2(4.65891, -4.97787)
+position = Vector2(0, 31)
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
-shadow_color = Color(0, 0, 0, 0.819608)
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = SubResource("GradientTexture2D_rfy7u")
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, 9.53674e-07)
+scale = Vector2(0.5, 0.5)
+range_z_min = -4096
+range_z_max = 4096
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.956863)
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = SubResource("GradientTexture2D_rfy7u")

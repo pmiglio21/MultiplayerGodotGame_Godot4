@@ -240,4 +240,14 @@ public partial class DungeonLevelSwapper : Node
 	{
         EmitSignal(SignalName.GoToGameOverScreen);
     }
+
+    public SplitScreenManager GetLatestSplitScreenManager()
+    {
+        return _latestSplitScreenManager;
+    }
+
+    public BaseDungeonLevel GetLatestBaseDungeonLevel()
+    {
+        return _latestBaseDungeonLevel;
+    }
 }

@@ -53,8 +53,6 @@ public partial class BaseDungeonLevel : Node
 	private PackedScene _portalSwitchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/PortalSwitch/PortalSwitch.tscn");
     private List<PortalSwitch> _portalSwitches = new List<PortalSwitch>();
 
-    private PackedScene _torchScene = GD.Load<PackedScene>("res://Levels/OverworldLevels/KeyLevelObjects/LightSources/Torch.tscn");
-
     #endregion
 
     #region Enemy Generation
@@ -1392,9 +1390,9 @@ public partial class BaseDungeonLevel : Node
 
         if (availableTargetSpaces.Count > 0)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20; i++)
             {
-                var torch = _torchScene.Instantiate() as Torch;
+                var torch = InteractableScenePaths.TorchScenePath.Instantiate() as Torch;
                 AddChild(torch);
 
                 var targetSpace = availableTargetSpaces[_rng.RandiRange(0, availableTargetSpaces.Count - 1)];
