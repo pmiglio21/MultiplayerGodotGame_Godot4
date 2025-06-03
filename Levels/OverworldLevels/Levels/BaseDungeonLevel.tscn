@@ -8,7 +8,7 @@
 script = ExtResource("1_u85ix")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0, 0, 0, 1)
+color = Color(0.0470588, 0.0470588, 0.0470588, 1)
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -2
