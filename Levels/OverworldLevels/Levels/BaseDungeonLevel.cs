@@ -790,6 +790,8 @@ public partial class BaseDungeonLevel : Node
                         wallTileMapSpace.InteriorBlock.LightOccluder.Position = new Vector2(0, -14);
                         wallTileMapSpace.InteriorBlock.LightOccluder.Scale = new Vector2(wallTileMapSpace.InteriorBlock.LightOccluder.Scale.X, .125f);
 
+                        wallTileMapSpace.InteriorBlock.IsWall = true;
+
                         //wallTileMapSpace.InteriorBlock.LightOccluder.Scale = Vector2.Zero;
 
                         if (!_possibleWallSpacesByFloorPosition.ContainsKey(wallTileMapSpace.TileMapPosition))
