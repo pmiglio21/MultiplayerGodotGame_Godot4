@@ -51,8 +51,6 @@ namespace Root
 			_rootGuiControl = FindChild("GUI") as Control;
 			_uiAudioStreamPlayer = FindChild("UiSoundEffectsAudioStreamPlayer") as AudioStreamPlayer;
 
-			//GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
-
             _titleScreenManager = FindChild("TitleScreenRoot") as TitleScreenManager;
 
             //_titleScreenManager.GoToPlayModeScreen += OnTitleScreenRootGoToPlayModeScreen;
@@ -370,6 +368,8 @@ namespace Root
                 //Need this or else game confuses memory while quitting
                 if (IsInstanceValid(_dungeonLevelSwapper) && _dungeonLevelSwapper != null)
                 {
+                    _dungeonLevelSwapper.GetLatestBaseDungeonLevel()?.QueueFree();
+                    _dungeonLevelSwapper.GetLatestSplitScreenManager()?.QueueFree();
                     _dungeonLevelSwapper.QueueFree();
                 }
 

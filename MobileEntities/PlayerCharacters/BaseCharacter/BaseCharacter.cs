@@ -19,6 +19,7 @@ namespace MobileEntities.PlayerCharacters
 		private BaseDungeonLevel _baseDungeonLevel;
 
         private List<Node2D> _inventoryPocketableObjectsInArea = new List<Node2D>();
+		private bool _didInteractWithInteractableObjects = false;
 
         #region Components
         [Export]
@@ -258,6 +259,8 @@ namespace MobileEntities.PlayerCharacters
 				}
 			}
 
+			_didInteractWithInteractableObjects = false;
+
             playerCamera.GlobalPosition = this.GlobalPosition;
         }
 
@@ -339,41 +342,42 @@ namespace MobileEntities.PlayerCharacters
 
 		protected void GetInteractWithEnvironmentInput()
 		{
-			if (_inventoryPocketableObjectsInArea.Any(x => x is Torch) && Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}"))
+			if (_inventoryPocketableObjectsInArea.Count > 0 && Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}"))
 			{
-				InventoryItem torchItem = new InventoryItem()
-				{ 
-					Type = InventoryItemType.Torch
-				};
-
-				if (Inventory.ItemsByType.ContainsKey(InventoryItemType.Torch))
-                {
-                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
-                }
-				else
+				if (_inventoryPocketableObjectsInArea.Any(x => x is Torch))
 				{
-					Inventory.ItemsByType.Add(InventoryItemType.Torch, new List<InventoryItem>());
-                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
-					Inventory.ItemTypeOrder.Add(InventoryItemType.Torch);
-                }
+                    InventoryItem torchItem = new InventoryItem()
+                    {
+                        Type = InventoryItemType.Torch
+                    };
 
-				Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
-
-				if (torchNode != null)
-				{
-					_inventoryPocketableObjectsInArea.Remove(torchNode);
-
-					_parentDungeonLevelSwapper.GetLatestBaseDungeonLevel().RemoveChild(torchNode);
-
-					if (!torchNode.IsQueuedForDeletion())
-					{
-                        torchNode.QueueFree();
+                    if (Inventory.ItemsByType.ContainsKey(InventoryItemType.Torch))
+                    {
+                        Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
                     }
-					else
-					{
-						var a = 0;
-					}
-				}
+                    else
+                    {
+                        Inventory.ItemsByType.Add(InventoryItemType.Torch, new List<InventoryItem>());
+                        Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                        Inventory.ItemTypeOrder.Add(InventoryItemType.Torch);
+                    }
+
+                    Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
+
+                    if (torchNode != null)
+                    {
+                        _inventoryPocketableObjectsInArea.Remove(torchNode);
+
+                        _parentDungeonLevelSwapper.GetLatestBaseDungeonLevel().RemoveChild(torchNode);
+
+                        if (!torchNode.IsQueuedForDeletion())
+                        {
+                            torchNode.QueueFree();
+                        }
+                    }
+                }
+
+				_didInteractWithInteractableObjects = true;
             }
 		}
 
@@ -444,7 +448,10 @@ namespace MobileEntities.PlayerCharacters
                 float speed = (float)((float)(100 + CharacterStats.Speed) / 100);
 				var normalizedMoveInput = moveInput.Normalized();
 
-                isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
+				if (!_didInteractWithInteractableObjects)
+				{
+                    isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
+                }
 
 				if (_staminaAmount >= _staminaDepletionAmount && isRolling)
 				{

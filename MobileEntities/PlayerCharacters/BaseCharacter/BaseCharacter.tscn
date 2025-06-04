@@ -6,8 +6,8 @@
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hihs4"]
 
 [sub_resource type="Gradient" id="Gradient_nwxgi"]
-offsets = PackedFloat32Array(0, 0.704735, 0.738162, 0.771588, 0.952646)
-colors = PackedColorArray(1, 1, 1, 1, 0.196215, 0.196215, 0.196215, 1, 0.185739, 0.185739, 0.185739, 1, 0.175487, 0.175487, 0.175487, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.952646)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8ryj4"]
 gradient = SubResource("Gradient_nwxgi")
@@ -36,9 +36,12 @@ libraries = {
 collision_layer = 9
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 2.0
+blend_mode = 2
 range_z_min = -4096
 range_z_max = 4096
 shadow_enabled = true
+shadow_color = Color(0.152941, 0.152941, 0.152941, 0)
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = SubResource("GradientTexture2D_8ryj4")

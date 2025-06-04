@@ -7,19 +7,29 @@ using System.Collections.Generic;
 public partial class Torch : Node2D
 {
 	public Sprite2D Sprite;
+    private PointLight2D _upperLight;
+    private PointLight2D _lowerLight;
+
 
     private List<int> _playersInArea = new List<int>();
+
+    private bool _isInsideWall = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        Sprite = this.GetNode<Sprite2D>("Sprite2D");
+        Sprite = GetNode<Sprite2D>("Sprite2D");
+        _upperLight = GetNode<PointLight2D>("UpperLight");
+        _lowerLight = GetNode<PointLight2D>("LowerLight");
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
-
+        if (!_isInsideWall && _lowerLight.Energy == 0)
+        {
+            _lowerLight.Energy = 2.0f;
+        }
 	}
 
 	private void OnInteractionAreaEntered(Area2D area)
@@ -53,6 +63,18 @@ public partial class Torch : Node2D
             {
                 Sprite.Material = new ShaderMaterial();
             }
+        }
+    }
+
+    private void OnInteriorWallBlockCollisionAreaOnBodyShapeEntered(Node2D node2D)
+    {
+        if (node2D.IsInGroup("InteriorWallBlock"))
+        {
+            _isInsideWall = true;
+
+            _upperLight.Scale = new Vector2(1.0f, 1.0f);
+
+            _lowerLight.Hide();
         }
     }
 }

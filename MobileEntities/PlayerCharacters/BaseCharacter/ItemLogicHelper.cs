@@ -22,9 +22,9 @@ namespace MobileEntities.PlayerCharacters
                     var torch = InteractableScenePaths.TorchScenePath.Instantiate() as Torch;
                     _parentDungeonLevelSwapper.GetLatestBaseDungeonLevel().AddChild(torch);
 
-                    torch.GlobalPosition = GlobalPosition;
+                    torch.GlobalPosition = new Vector2(GlobalPosition.X, GlobalPosition.Y);
 
-                    torch.ZIndex = ZIndex - 1;
+                    torch.ZIndex = ZIndex - 2;
 
                     Inventory.ItemsByType[InventoryItemType.Torch].RemoveAt(0);
 
