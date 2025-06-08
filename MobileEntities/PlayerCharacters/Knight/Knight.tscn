@@ -1,13 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=22 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
 [ext_resource type="Texture2D" uid="uid://dbkbm2gxiip21" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_2.png" id="3_bjke3"]
 [ext_resource type="Texture2D" uid="uid://cvq7onruuneyb" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_4.png" id="3_o5mq7"]
+[ext_resource type="Texture2D" uid="uid://dxppwhpt0ie8c" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_UPDATED/KnightMove3.png" id="3_yqawn"]
 [ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_0.png" id="4_g7qoj"]
 [ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_1.png" id="5_6g2fj"]
 [ext_resource type="Texture2D" uid="uid://2pxqj7dynkb8" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 [ext_resource type="Texture2D" uid="uid://difmrlcooea2l" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_5.png" id="8_s0shy"]
+[ext_resource type="Texture2D" uid="uid://c4ia87bk00jyx" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_UPDATED/KnightMove2.png" id="10_3kwy3"]
+[ext_resource type="Texture2D" uid="uid://csl4r7n6hjvdt" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_UPDATED/KnightMove4.png" id="11_tqwmd"]
+[ext_resource type="Texture2D" uid="uid://cqvxd30hlnlur" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_UPDATED/KnightMove5.png" id="12_53ilg"]
+[ext_resource type="Texture2D" uid="uid://dcwy22ld7jd57" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_UPDATED/KnightMove6.png" id="13_loen8"]
 
 [sub_resource type="Animation" id="Animation_r73ib"]
 resource_name = "Attack_East"
@@ -107,6 +112,23 @@ tracks/0/keys = {
 "values": [ExtResource("6_xutwp"), ExtResource("3_o5mq7"), ExtResource("8_s0shy"), ExtResource("3_o5mq7")]
 }
 
+[sub_resource type="Animation" id="Animation_vp12l"]
+resource_name = "Move_East"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_3kwy3"), ExtResource("3_yqawn"), ExtResource("11_tqwmd"), ExtResource("12_53ilg"), ExtResource("13_loen8"), ExtResource("12_53ilg")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
 "Attack_East": SubResource("Animation_r73ib"),
@@ -114,7 +136,8 @@ _data = {
 "Attack_South": SubResource("Animation_cttcp"),
 "Attack_West": SubResource("Animation_qt6yc"),
 "Idle_East": SubResource("Animation_eqtv1"),
-"Idle_West": SubResource("Animation_0ujs5")
+"Idle_West": SubResource("Animation_0ujs5"),
+"Move_East": SubResource("Animation_vp12l")
 }
 
 [node name="CharacterBody" instance=ExtResource("1_vtany")]
@@ -122,7 +145,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("6_xutwp")
+texture = ExtResource("4_g7qoj")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
@@ -130,8 +153,10 @@ libraries = {
 }
 
 [node name="MainHurtBox" parent="." index="2"]
+visible = false
 position = Vector2(0, 2)
 scale = Vector2(-0.0548879, -1.31183)
 
 [node name="FootBox" parent="." index="5"]
+visible = false
 position = Vector2(0.5, 11)
