@@ -223,7 +223,7 @@ namespace MobileEntities.Enemies.Scripts
                 {
                     isPlayerDetected = true;
 
-                    GD.Print($"PlayerHurtBox Entered {area.GetParent().Name}");
+                    //GD.Print($"PlayerHurtBox Entered {area.GetParent().Name}");
                 }
             }
         }
@@ -240,7 +240,7 @@ namespace MobileEntities.Enemies.Scripts
 
                     isPlayerDetected = false;
 
-                    GD.Print($"PlayerHurtBox Exited {area.GetParent().Name}");
+                    //GD.Print($"PlayerHurtBox Exited {area.GetParent().Name}");
                 }
             }
         }

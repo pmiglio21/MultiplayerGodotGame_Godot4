@@ -31,11 +31,13 @@ namespace MobileEntities.PlayerCharacters
 
 		protected Timer rollingTimer;
 
-		#endregion
+        protected AudioStreamPlayer2D audioStreamPlayer;
 
-		#region Input Properties
+        #endregion
 
-		Vector2 moveInput = Vector2.Zero;
+        #region Input Properties
+
+        Vector2 moveInput = Vector2.Zero;
 		float moveInputDeadzone = 0.1f;
 
 		float moveDeadzone = 0.32f;
@@ -167,6 +169,8 @@ namespace MobileEntities.PlayerCharacters
 			playerCamera = GetNode<Camera2D>("Camera2D");
 
             rollingTimer = GetNode<Timer>("RollingTimer");
+
+			audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 
             #endregion
 
@@ -436,6 +440,18 @@ namespace MobileEntities.PlayerCharacters
 		private void MovePlayer()
 		{
 			Velocity = moveDirection * speed;
+
+			//if (Velocity > Vector2.Zero)
+			//{
+   //             AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.CastleWalkingSoundPath) as AudioStream;
+
+			//	audioStreamPlayer.Stream = audioStream;
+   //             audioStreamPlayer.Play();
+   //         }
+			//else
+			//{
+			//	audioStreamPlayer.Stop();
+			//}
 
 			MoveAndSlide();
 		}

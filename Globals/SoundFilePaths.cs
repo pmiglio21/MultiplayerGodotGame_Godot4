@@ -16,5 +16,11 @@ namespace Globals
         public const string UiVolumeSliderTickSoundPath = "res://Levels/UISounds/UiVolumeTickSound.wav";
 
         #endregion
+
+        #region Player Character Sound Paths
+
+        public const string CastleWalkingSoundPath = "res://MobileEntities/PlayerCharacters/BaseCharacter/Sounds/CastleWalking.mp3";
+
+        #endregion
     }
 }
