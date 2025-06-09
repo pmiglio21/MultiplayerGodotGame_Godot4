@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=22 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://difmrlcooea2l" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_5.png" id="8_s0shy"]
 [ext_resource type="Texture2D" uid="uid://c4wtypey8nl8j" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_1.png" id="11_tptjq"]
 [ext_resource type="Texture2D" uid="uid://dbs731abs4u2f" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_2.png" id="12_q0jo7"]
+[ext_resource type="AudioStream" uid="uid://10mnwu4td5tg" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Sounds/CastleWalking.mp3" id="13_3i50b"]
 [ext_resource type="Texture2D" uid="uid://b6e20vkwi506v" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_5.png" id="14_uufsi"]
 
 [sub_resource type="Animation" id="Animation_r73ib"]
@@ -144,7 +145,7 @@ script = ExtResource("2_5633e")
 characterClass = 1
 
 [node name="PlayerSprite" parent="." index="0"]
-texture = ExtResource("12_q0jo7")
+texture = ExtResource("14_uufsi")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
@@ -159,3 +160,7 @@ scale = Vector2(-0.0548879, -1.31183)
 [node name="FootBox" parent="." index="5"]
 visible = false
 position = Vector2(0.5, 11)
+
+[node name="AudioStreamPlayer2D" parent="." index="7"]
+stream = ExtResource("13_3i50b")
+volume_db = 10.0

@@ -398,29 +398,29 @@ namespace MobileEntities.PlayerCharacters
 
                 isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
 
+				//When player is rolling
 				if (_staminaAmount >= _staminaDepletionAmount && isRolling)
 				{
 					rollingTimer.Start();
 
-                    //if you want to check input for walking and running speeds, do it here
                     moveDirection = normalizedMoveInput * speed * 2;
 
 					_staminaAmount = Mathf.Clamp(_staminaAmount - _staminaDepletionAmount, 0, 100);
 
                     playerSprite.Modulate = ColorPaths.RollingColor;
 
-                    //GD.Print($"I'm rolling {_staminaAmount}");
+                    //GD.Print($"I'm rolling: {_staminaAmount}");
                 }
+				//When player is just walking
 				else
 				{
-                    //if you want to check input for walking and running speeds, do it here
                     moveDirection = normalizedMoveInput * speed;
 
                     _staminaAmount = Mathf.Clamp(_staminaAmount + _staminaAdditionAmount, 0, 100);
 
                     playerSprite.Modulate = ColorPaths.DefaultColor;
 
-                    //GD.Print($"I never was {_staminaAmount}");
+                    //GD.Print($"I am not rolling: {_staminaAmount}");
                 }
             }
 			else
@@ -435,23 +435,23 @@ namespace MobileEntities.PlayerCharacters
 
                 //GD.Print($"Now I'm not {_staminaAmount}");
             }
-		}
+
+            if (moveDirection != Vector2.Zero && !audioStreamPlayer.Playing)
+            {
+                AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.CastleWalkingSoundPath) as AudioStream;
+
+                audioStreamPlayer.Stream = audioStream;
+                audioStreamPlayer.Play();
+            }
+            else
+            {
+                audioStreamPlayer.Stop();
+            }
+        }
 
 		private void MovePlayer()
 		{
 			Velocity = moveDirection * speed;
-
-			//if (Velocity > Vector2.Zero)
-			//{
-   //             AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.CastleWalkingSoundPath) as AudioStream;
-
-			//	audioStreamPlayer.Stream = audioStream;
-   //             audioStreamPlayer.Play();
-   //         }
-			//else
-			//{
-			//	audioStreamPlayer.Stop();
-			//}
 
 			MoveAndSlide();
 		}

@@ -110,7 +110,7 @@
               "RelativeDocumentMoniker": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
               "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
               "RelativeToolTip": "MobileEntities\\PlayerCharacters\\BaseCharacter\\BaseCharacter.cs",
-              "ViewState": "AQIAAKwBAAAAAAAAAAAiwNIBAAAmAAAA",
+              "ViewState": "AQIAAKcBAAAAAAAAAAAgwLwBAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T17:01:19.279Z",
               "EditorCaption": ""
@@ -237,7 +237,8 @@
               "RelativeToolTip": "Levels\\OverworldLevels\\Levels\\DungeonLevelSwapper.cs",
               "ViewState": "AQIAADgAAAAAAAAAAAAAAMgAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T17:18:00.523Z"
+              "WhenOpened": "2025-05-28T17:18:00.523Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
