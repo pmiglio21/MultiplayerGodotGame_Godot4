@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
 [ext_resource type="Texture2D" uid="uid://dbkbm2gxiip21" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_2.png" id="3_bjke3"]
 [ext_resource type="Texture2D" uid="uid://cvq7onruuneyb" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_4.png" id="3_o5mq7"]
-[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_0.png" id="4_g7qoj"]
-[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_1.png" id="5_6g2fj"]
+[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_g7qoj"]
+[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png" id="5_6g2fj"]
 [ext_resource type="Texture2D" uid="uid://2pxqj7dynkb8" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 [ext_resource type="Texture2D" uid="uid://difmrlcooea2l" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_5.png" id="8_s0shy"]
 
@@ -117,7 +117,7 @@ _data = {
 "Idle_West": SubResource("Animation_0ujs5")
 }
 
-[node name="CharacterBody" instance=ExtResource("1_vtany")]
+[node name="CharacterBody2" instance=ExtResource("1_vtany")]
 script = ExtResource("2_5633e")
 characterClass = 1
 

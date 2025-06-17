@@ -15,7 +15,7 @@ public partial class Torch : Node2D
     protected Area2D playerDetectionBox;
     protected CollisionShape2D playerDetectionBoxCollisionShape;
 
-    private const int _distanceToDetectPlayer = 256;
+    private const int _distanceToDetectPlayer = 512;
     private List<int> _playersInArea = new List<int>();
     private bool _isInsideWall = false;
 
@@ -81,7 +81,7 @@ public partial class Torch : Node2D
             }
 
 
-            if ((distanceBetweenClosestPlayer <= _distanceToDetectPlayer && isPlayerDetected && !isOverviewDetected))
+            if ((distanceBetweenClosestPlayer <= _distanceToDetectPlayer))// && isPlayerDetected && !isOverviewDetected))
             {
                 _upperLight.Show();
                 _lowerLight.Show();
