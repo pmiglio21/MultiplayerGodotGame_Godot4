@@ -1013,7 +1013,7 @@ public partial class BaseDungeonLevel : Node
 
         GenerateSwitches();
 
-        //GenerateLightPoints();
+        GenerateLightPoints();
     }
 
 	private void GeneratePortal() 
