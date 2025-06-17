@@ -8,14 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Root;
 using MobileEntities.CharacterStats;
+using Levels.UtilityLevels.UserInterfaceComponents;
 
 namespace MobileEntities.PlayerCharacters
 {
 	public partial class BaseCharacter : BaseMobileEntity
 	{
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
+        private SplitScreenManager _splitScreenManager;
+		private BaseDungeonLevel _baseDungeonLevel;
 
-		private List<Node2D> _inventoryPocketableObjectsInArea = new List<Node2D>();
+        private List<Node2D> _inventoryPocketableObjectsInArea = new List<Node2D>();
+		private bool _didInteractWithInteractableObjects = false;
 
         #region Components
         [Export]
@@ -157,7 +161,6 @@ namespace MobileEntities.PlayerCharacters
 
             _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
 
-
             InitializeClassSpecificProperties();
 
 			#region Initializing Components
@@ -230,7 +233,9 @@ namespace MobileEntities.PlayerCharacters
                     {
                         GetPauseInput();
 
-                        GetInteractionInput();
+                        GetInteractWithEnvironmentInput();
+
+						GetInteractWithItemInput();
 
                         GetAttackInput();
 
@@ -257,6 +262,8 @@ namespace MobileEntities.PlayerCharacters
                     }
 				}
 			}
+
+			_didInteractWithInteractableObjects = false;
 
             playerCamera.GlobalPosition = this.GlobalPosition;
         }
@@ -337,35 +344,84 @@ namespace MobileEntities.PlayerCharacters
 			}
 		}
 
-		protected void GetInteractionInput()
+		protected void GetInteractWithEnvironmentInput()
 		{
-			if (_inventoryPocketableObjectsInArea.Any(x => x is Torch) && Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}"))
+			if (_inventoryPocketableObjectsInArea.Count > 0 && Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}"))
 			{
-				InventoryItem torchItem = new InventoryItem()
-				{ 
-					Type = InventoryItemType.Torch
-				};
-
-				if (Inventory.ItemsByType.ContainsKey(InventoryItemType.Torch))
-                {
-                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
-                }
-				else
+				if (_inventoryPocketableObjectsInArea.Any(x => x is Torch))
 				{
-					Inventory.ItemsByType.Add(InventoryItemType.Torch, new List<InventoryItem>());
-                    Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                    InventoryItem torchItem = new InventoryItem()
+                    {
+                        Type = InventoryItemType.Torch
+                    };
+
+                    if (Inventory.ItemsByType.ContainsKey(InventoryItemType.Torch))
+                    {
+                        Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                    }
+                    else
+                    {
+                        Inventory.ItemsByType.Add(InventoryItemType.Torch, new List<InventoryItem>());
+                        Inventory.ItemsByType[InventoryItemType.Torch].Add(torchItem);
+                        Inventory.ItemTypeOrder.Add(InventoryItemType.Torch);
+                    }
+
+                    Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
+
+                    if (torchNode != null)
+                    {
+                        _inventoryPocketableObjectsInArea.Remove(torchNode);
+
+                        _parentDungeonLevelSwapper.GetLatestBaseDungeonLevel().RemoveChild(torchNode);
+
+                        if (!torchNode.IsQueuedForDeletion())
+                        {
+                            torchNode.QueueFree();
+                        }
+                    }
                 }
 
-				Node2D torchNode = _inventoryPocketableObjectsInArea.FirstOrDefault(x => x is Torch);
-
-				if (torchNode != null)
-				{
-					_inventoryPocketableObjectsInArea.Remove(torchNode);
-
-                    torchNode.QueueFree();
-				}
+				_didInteractWithInteractableObjects = true;
             }
 		}
+
+		protected void GetInteractWithItemInput()
+		{
+			if (Inventory.ItemTypeOrder.Count > 0)
+			{
+                if (Input.IsActionJustPressed($"{InputType.GameActionLoopItemLeft}_{DeviceIdentifier}"))
+                {
+                    if (Inventory.CurrentItemTypeIndex == 0)
+                    {
+                        Inventory.CurrentItemTypeIndex = Inventory.ItemTypeOrder.Count - 1;
+                    }
+                    else
+                    {
+                        Inventory.CurrentItemTypeIndex = Inventory.CurrentItemTypeIndex - 1;
+                    }
+
+                    GD.Print($"Current Item Type Index: {Inventory.ItemTypeOrder[Inventory.CurrentItemTypeIndex]}");
+                }
+                else if (Input.IsActionJustPressed($"{InputType.GameActionLoopItemRight}_{DeviceIdentifier}"))
+                {
+                    if (Inventory.CurrentItemTypeIndex == Inventory.ItemTypeOrder.Count - 1)
+                    {
+                        Inventory.CurrentItemTypeIndex = 0;
+                    }
+                    else
+                    {
+                        Inventory.CurrentItemTypeIndex = Inventory.CurrentItemTypeIndex + 1;
+                    }
+
+                    GD.Print($"Current Item Type Index: {Inventory.ItemTypeOrder[Inventory.CurrentItemTypeIndex]}");
+                }
+
+				if (Input.IsActionJustPressed($"{InputType.GameActionActivateItem}_{DeviceIdentifier}"))
+				{
+					UseItem();
+				}
+            }
+        }
 
         protected void GetAttackInput()
 		{
@@ -396,7 +452,10 @@ namespace MobileEntities.PlayerCharacters
                 float speed = (float)((float)(100 + CharacterStats.Speed) / 100);
 				var normalizedMoveInput = moveInput.Normalized();
 
-                isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
+				if (!_didInteractWithInteractableObjects)
+				{
+                    isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
+                }
 
 				//When player is rolling
 				if (_staminaAmount >= _staminaDepletionAmount && isRolling)
@@ -560,6 +619,10 @@ namespace MobileEntities.PlayerCharacters
             else if (area.IsInGroup("PlayerDetectionBox"))
             {
                 //GD.Print($"FROM CHARACTER {DeviceIdentifier}, exited PlayerDetectionBox");
+            }
+            else if (area.IsInGroup("InventoryPocketable"))
+            {
+                _inventoryPocketableObjectsInArea.Remove(area.GetParent() as Node2D);
             }
         }
 		#endregion

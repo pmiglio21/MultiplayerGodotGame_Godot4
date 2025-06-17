@@ -10,5 +10,9 @@ namespace MobileEntities.PlayerCharacters
     public class Inventory
     {
         public Dictionary<InventoryItemType, List<InventoryItem>> ItemsByType = new Dictionary<InventoryItemType, List<InventoryItem>>();
+
+        public List<InventoryItemType> ItemTypeOrder = new List<InventoryItemType>();
+
+        public int CurrentItemTypeIndex = 0;
     }
 }

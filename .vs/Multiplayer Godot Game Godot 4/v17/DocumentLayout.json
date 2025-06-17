@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\enemies\\baseenemy\\baseenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:mobileentities\\enemies\\baseenemy\\baseenemy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\keylevelobjects\\lightsources\\torch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\keylevelobjects\\lightsources\\torch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\mobileentities\\playercharacters\\basecharacter\\basecharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,8 +35,16 @@
       "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\keylevelobjects\\portalswitch\\portalswitch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\basedungeonlevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\globals\\levelscenepaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:globals\\levelscenepaths.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\enums\\inputtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:enums\\inputtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\levels\\dungeonlevelswapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|solutionrelative:levels\\overworldlevels\\levels\\dungeonlevelswapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A8B8960C-E1F1-4C99-8A77-8E516F0230A2}|Multiplayer Godot Game Godot 4.csproj|c:\\users\\pmigl\\onedrive\\documents\\github\\multiplayergodotgame_godot4\\levels\\overworldlevels\\keylevelobjects\\lightsources\\torch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,7 +90,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
@@ -117,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BaseEnemy.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\MobileEntities\\Enemies\\BaseEnemy\\BaseEnemy.cs",
               "RelativeDocumentMoniker": "MobileEntities\\Enemies\\BaseEnemy\\BaseEnemy.cs",
@@ -178,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "InteriorWallBlock.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\InteriorWallBlock.cs",
               "RelativeDocumentMoniker": "Levels\\OverworldLevels\\TileMapping\\InteriorWalls\\InteriorWallBlock.cs",
@@ -191,7 +207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "RootSceneSwapper.cs",
               "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\RootSceneSwapper\\RootSceneSwapper.cs",
               "RelativeDocumentMoniker": "RootSceneSwapper\\RootSceneSwapper.cs",
@@ -226,6 +242,43 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T17:18:00.532Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Torch.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\KeyLevelObjects\\LightSources\\Torch.cs",
+              "RelativeDocumentMoniker": "Levels\\OverworldLevels\\KeyLevelObjects\\LightSources\\Torch.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\KeyLevelObjects\\LightSources\\Torch.cs",
+              "RelativeToolTip": "Levels\\OverworldLevels\\KeyLevelObjects\\LightSources\\Torch.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAowFMAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T00:34:27.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PortalSwitch.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\KeyLevelObjects\\PortalSwitch\\PortalSwitch.cs",
+              "RelativeDocumentMoniker": "Levels\\OverworldLevels\\KeyLevelObjects\\PortalSwitch\\PortalSwitch.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Levels\\OverworldLevels\\KeyLevelObjects\\PortalSwitch\\PortalSwitch.cs",
+              "RelativeToolTip": "Levels\\OverworldLevels\\KeyLevelObjects\\PortalSwitch\\PortalSwitch.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAAAwwFAAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T02:01:08.911Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SoundFilePaths.cs",
+              "DocumentMoniker": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\SoundFilePaths.cs",
+              "RelativeDocumentMoniker": "Globals\\SoundFilePaths.cs",
+              "ToolTip": "C:\\Users\\pmigl\\OneDrive\\Documents\\GitHub\\MultiplayerGodotGame_Godot4\\Globals\\SoundFilePaths.cs",
+              "RelativeToolTip": "Globals\\SoundFilePaths.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T02:09:37.877Z"
             },
             {
               "$type": "Document",
