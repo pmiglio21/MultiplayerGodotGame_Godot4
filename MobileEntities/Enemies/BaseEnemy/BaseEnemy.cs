@@ -245,6 +245,23 @@ namespace MobileEntities.Enemies.Scripts
             }
         }
 
+        private void OnEnemyDetectionAreaEntered(Area2D area)
+        {
+            if (area.IsInGroup("Enemy"))
+            {
+                CollisionShape2D collisionShape = area.GetNode<CollisionShape2D>("CollisionShape");
+
+                if (!collisionShape.Disabled)
+                {
+                    //Node2D enemy = area.GetParent() as Node2D;
+
+                    //var direction = GlobalPosition - area.GlobalPosition;
+
+                    //GlobalPosition += direction.Normalized() * _speed;
+                }
+            }
+        }
+
         #endregion
 
         #endregion

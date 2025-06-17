@@ -59,7 +59,7 @@ public partial class BaseDungeonLevel : Node
 
     #region Enemy Generation
 
-    private int _enemyCountMax = 10;
+    private int _enemyCountMax = 100;
 	private int _enemyCount = 0;
 
 	#endregion

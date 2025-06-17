@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp2csqmog36w"]
+[gd_scene load_steps=7 format=3 uid="uid://cp2csqmog36w"]
 
 [ext_resource type="Script" path="res://MobileEntities/Enemies/BaseEnemy/BaseEnemy.cs" id="1_14wtk"]
 [ext_resource type="PackedScene" uid="uid://b5osh7vwxfkjk" path="res://MobileEntities/Utilities/TriggerBoxes/Enemy/EnemyHitBox.tscn" id="1_tcsid"]
@@ -10,8 +10,11 @@ size = Vector2(27, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cdstb"]
 size = Vector2(90, 4)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5katr"]
+radius = 7.0
+
 [node name="EnemyBody" type="CharacterBody2D" groups=["Enemy"]]
-collision_layer = 8
+collision_layer = 24
 collision_mask = 4
 script = ExtResource("1_14wtk")
 
@@ -42,9 +45,17 @@ shape = SubResource("RectangleShape2D_cdstb")
 wait_time = 10.0
 one_shot = true
 
+[node name="EnemyDetectionArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="EnemyDetectionCollisionShape" type="CollisionShape2D" parent="EnemyDetectionArea"]
+shape = SubResource("CircleShape2D_5katr")
+
 [connection signal="area_entered" from="MainHitBox" to="." method="OnMainHitBoxAreaEntered"]
 [connection signal="area_exited" from="MainHitBox" to="." method="OnMainHitBoxAreaExited"]
 [connection signal="area_entered" from="MainHurtBox" to="." method="OnMainHurtBoxAreaEntered"]
 [connection signal="area_exited" from="MainHurtBox" to="." method="OnMainHurtBoxAreaExited"]
 [connection signal="area_entered" from="PlayerDetectionBox" to="." method="OnPlayerDetectionBoxAreaEntered"]
 [connection signal="area_exited" from="PlayerDetectionBox" to="." method="OnPlayerDetectionBoxAreaExited"]
+[connection signal="area_entered" from="EnemyDetectionArea" to="." method="OnEnemyDetectionAreaEntered"]
