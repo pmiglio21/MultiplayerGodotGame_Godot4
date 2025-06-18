@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj8b6ycqb6403"
-path="res://.godot/imported/KnightMove_1.png-4d6288ed8717906361f4dceba1880ee3.ctex"
+uid="uid://do1io0dye01j0"
+path="res://.godot/imported/StatPickup_13.png-fe6daa03d68eb3114c4ab9d87e88a412.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_1.png"
-dest_files=["res://.godot/imported/KnightMove_1.png-4d6288ed8717906361f4dceba1880ee3.ctex"]
+source_file="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_13.png"
+dest_files=["res://.godot/imported/StatPickup_13.png-fe6daa03d68eb3114c4ab9d87e88a412.ctex"]
 
 [params]
 

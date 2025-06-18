@@ -8,6 +8,7 @@
 script = ExtResource("1_u85ix")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 color = Color(0.0588235, 0.0588235, 0.0588235, 1)
 
 [node name="Background" type="Sprite2D" parent="."]
