@@ -2,6 +2,7 @@ using Enums;
 using Godot;
 using MobileEntities.PlayerCharacters;
 using Root;
+using System;
 
 namespace MobileEntities.Enemies.Scripts
 {
@@ -9,9 +10,13 @@ namespace MobileEntities.Enemies.Scripts
 	{
         private DungeonLevelSwapper _parentDungeonLevelSwapper;
 
+        private BaseDungeonLevel _parentLevel;
+
         private const int _speed = 10;
 
         private const int _distanceToDetectPlayer = 256;
+
+        private string _statPickupPath = "res://Levels/OverworldLevels/Items/StatPickup.tscn";
 
         #region Components
 
@@ -40,6 +45,7 @@ namespace MobileEntities.Enemies.Scripts
 
             _parentDungeonLevelSwapper = rootSceneSwapper.GetDungeonLevelSwapper();
 
+            _parentLevel = this.GetParent() as BaseDungeonLevel;
 
             InitializeComponents();
 
@@ -197,6 +203,8 @@ namespace MobileEntities.Enemies.Scripts
 						if (CharacterStats.Health <= 0)
 						{
 							this.QueueFree();
+
+                            RunDeathProcess();
 						}
 						else
 						{
@@ -206,6 +214,23 @@ namespace MobileEntities.Enemies.Scripts
 				}
 			}
 		}
+
+        private void RunDeathProcess()
+        {
+            PackedScene statPickupScene = GD.Load<PackedScene>(_statPickupPath);
+
+            var statPickupNode = statPickupScene.Instantiate();
+
+            _parentLevel.AddChild(statPickupNode);
+
+            var statPickup = statPickupNode as StatPickup;
+
+            statPickup.StatType = (StatType)GD.RandRange(0, Enum.GetValues(typeof(StatType)).Length - 1);
+            statPickup.StatSize = (StatSize)GD.RandRange(0, Enum.GetValues(typeof(StatSize)).Length - 1);
+
+            statPickup.GlobalPosition = GlobalPosition;
+            statPickup.ZIndex = ZIndex;
+        }
 
 
 		private void OnMainHurtBoxAreaExited(Area2D area)

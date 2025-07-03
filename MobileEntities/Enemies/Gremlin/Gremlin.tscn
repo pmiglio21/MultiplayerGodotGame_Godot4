@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgvsqbvwky8ne"]
+
+[ext_resource type="PackedScene" uid="uid://cp2csqmog36w" path="res://MobileEntities/Enemies/BaseEnemy/BaseEnemy.tscn" id="1_0jeyu"]
+[ext_resource type="Script" path="res://MobileEntities/Enemies/Gremlin/Gremlin.cs" id="2_q5wnr"]
+
+[sub_resource type="Animation" id="Animation_ufgcj"]
+resource_name = "Move_East"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_un2vr"]
+_data = {
+"Move_East": SubResource("Animation_ufgcj")
+}
+
+[node name="EnemyBody" instance=ExtResource("1_0jeyu")]
+script = ExtResource("2_q5wnr")
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_un2vr")
+}

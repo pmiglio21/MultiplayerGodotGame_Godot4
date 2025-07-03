@@ -11,7 +11,7 @@ namespace MobileEntities.Enemies.Scripts
 		{
 			enemyType = EnemyType.Slime;
 
-			CharacterStats = new Stats(3);
+			CharacterStats = new Stats(1);
 		}
 	}
 }

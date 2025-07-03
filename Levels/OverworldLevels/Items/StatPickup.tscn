@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://j3rut48kqmcx"]
+[gd_scene load_steps=27 format=3 uid="uid://j3rut48kqmcx"]
 
+[ext_resource type="Script" path="res://Levels/OverworldLevels/Items/StatPickup.cs" id="1_83gsq"]
 [ext_resource type="Texture2D" uid="uid://b11034uixm4sf" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_00.png" id="1_m0rtd"]
 [ext_resource type="Texture2D" uid="uid://dmkpaitwtl3h4" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_10.png" id="1_vb214"]
 [ext_resource type="Texture2D" uid="uid://2rtpweb5y8mj" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_01.png" id="2_6oxfp"]
@@ -17,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://cq7b1dannc0w" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_14.png" id="15_dk72u"]
 [ext_resource type="Texture2D" uid="uid://dt4qs8htpsahb" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_15.png" id="16_wrp2x"]
 
-[sub_resource type="Animation" id="Animation_3ycxs"]
-resource_name = "HealthSmall"
+[sub_resource type="Animation" id="Animation_veamg"]
+resource_name = "AttackLarge"
 length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -31,24 +32,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("1_m0rtd"), ExtResource("2_6oxfp")]
-}
-
-[sub_resource type="Animation" id="Animation_aikon"]
-resource_name = "HealthLarge"
-length = 0.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("4_g6ypl"), ExtResource("5_a3ssk")]
+"values": [ExtResource("8_f0h2n"), ExtResource("9_k47jt")]
 }
 
 [sub_resource type="Animation" id="Animation_lwcse"]
@@ -68,8 +52,8 @@ tracks/0/keys = {
 "values": [ExtResource("6_pfkhi"), ExtResource("7_4nf17")]
 }
 
-[sub_resource type="Animation" id="Animation_veamg"]
-resource_name = "AttackLarge"
+[sub_resource type="Animation" id="Animation_4bdse"]
+resource_name = "DefenseLarge"
 length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -82,7 +66,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("8_f0h2n"), ExtResource("9_k47jt")]
+"values": [ExtResource("1_vb214"), ExtResource("12_5an6w")]
 }
 
 [sub_resource type="Animation" id="Animation_qloqt"]
@@ -102,8 +86,8 @@ tracks/0/keys = {
 "values": [ExtResource("10_a0e4w"), ExtResource("11_7pgw1")]
 }
 
-[sub_resource type="Animation" id="Animation_4bdse"]
-resource_name = "DefenseLarge"
+[sub_resource type="Animation" id="Animation_aikon"]
+resource_name = "HealthLarge"
 length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -116,11 +100,11 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("1_vb214"), ExtResource("12_5an6w")]
+"values": [ExtResource("4_g6ypl"), ExtResource("5_a3ssk")]
 }
 
-[sub_resource type="Animation" id="Animation_3he58"]
-resource_name = "SpeedSmall"
+[sub_resource type="Animation" id="Animation_3ycxs"]
+resource_name = "HealthSmall"
 length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -133,7 +117,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ExtResource("13_o6t2i"), ExtResource("14_u2ojx")]
+"values": [ExtResource("1_m0rtd"), ExtResource("2_6oxfp")]
 }
 
 [sub_resource type="Animation" id="Animation_43mna"]
@@ -153,6 +137,23 @@ tracks/0/keys = {
 "values": [ExtResource("15_dk72u"), ExtResource("16_wrp2x")]
 }
 
+[sub_resource type="Animation" id="Animation_3he58"]
+resource_name = "SpeedSmall"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("13_o6t2i"), ExtResource("14_u2ojx")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2xra5"]
 _data = {
 "AttackLarge": SubResource("Animation_veamg"),
@@ -166,9 +167,10 @@ _data = {
 }
 
 [node name="StatPickup" type="Node2D"]
+script = ExtResource("1_83gsq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("16_wrp2x")
+texture = ExtResource("8_f0h2n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
