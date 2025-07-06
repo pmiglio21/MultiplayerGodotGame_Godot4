@@ -10,8 +10,8 @@ namespace Globals
     {
         #region UI Sound Paths
 
-        public const string UiMoveSoundPath = "res://Levels/UISounds/ButtonMove.wav";
-        public const string UiButtonSelectSoundPath = "res://Levels/UISounds/ButtonSelect1.wav";
+        public const string UiMoveSoundPath = "res://Levels/UISounds/click.wav";
+        public const string UiButtonSelectSoundPath = "res://Levels/UISounds/Blip3.wav";
         public const string UiReturnToPreviousScreenSoundPath = "res://Levels/UISounds/ButtonSelect3.wav";
         public const string UiVolumeSliderTickSoundPath = "res://Levels/UISounds/UiVolumeTickSound.wav";
 
