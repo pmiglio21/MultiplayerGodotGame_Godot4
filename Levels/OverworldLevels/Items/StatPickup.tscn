@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://j3rut48kqmcx"]
+[gd_scene load_steps=28 format=3 uid="uid://j3rut48kqmcx"]
 
 [ext_resource type="Script" path="res://Levels/OverworldLevels/Items/StatPickup.cs" id="1_83gsq"]
 [ext_resource type="Texture2D" uid="uid://b11034uixm4sf" path="res://Levels/OverworldLevels/Items/StatPickups/StatPickup_00.png" id="1_m0rtd"]
@@ -166,13 +166,32 @@ _data = {
 "SpeedSmall": SubResource("Animation_3he58")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x7c3y"]
+
 [node name="StatPickup" type="Node2D"]
 script = ExtResource("1_83gsq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_f0h2n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_2xra5")
 }
+
+[node name="AttractionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea"]
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_x7c3y")
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_x7c3y")
+
+[connection signal="area_entered" from="AttractionArea" to="." method="OnAttractionAreaEntered"]
+[connection signal="area_exited" from="AttractionArea" to="." method="OnAttractionAreaExited"]
+[connection signal="area_entered" from="PickupArea" to="." method="OnPickupAreaEntered"]
