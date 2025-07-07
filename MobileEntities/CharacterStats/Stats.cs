@@ -9,13 +9,13 @@ namespace MobileEntities.CharacterStats
 {
     public class Stats
     {
-        public int Health = 0;
+        public float Health = 0;
                
-        public int Attack = 0;
+        public float Attack = 0;
                
-        public int Defense = 0;
+        public float Defense = 0;
                
-        public int Speed = 0;
+        public float Speed = 0;
 
         #region Base Stats
 

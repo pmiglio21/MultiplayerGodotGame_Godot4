@@ -598,7 +598,41 @@ namespace MobileEntities.PlayerCharacters
 			{
 				//GD.Print($"FROM CHARACTER {DeviceIdentifier}, entered PlayerDetectionBox");
 			}
-		}
+            else if (area.IsInGroup("StatPickup"))
+            {
+				StatPickup statPickup = area.GetParent() as StatPickup;
+
+				float statMultiplier = 0;
+
+				if (statPickup.StatSize == StatSize.Small)
+				{
+					statMultiplier = .1f;
+                }
+                else if (statPickup.StatSize == StatSize.Large)
+                {
+					statMultiplier = .5f;
+                }
+
+				if (statPickup.StatType == StatType.Health)
+				{
+					CharacterStats.Health += statMultiplier;
+				}
+                else if (statPickup.StatType == StatType.Attack)
+                {
+                    CharacterStats.Attack += statMultiplier;
+                }
+                else if (statPickup.StatType == StatType.Defense)
+                {
+                    CharacterStats.Defense += statMultiplier;
+                }
+                else if (statPickup.StatType == StatType.Speed)
+                {
+                    CharacterStats.Speed += statMultiplier;
+                }
+
+                GD.Print($"StatPickup obtained");
+			}
+        }
 
 
 		private void OnMainHurtBoxAreaExited(Area2D area)

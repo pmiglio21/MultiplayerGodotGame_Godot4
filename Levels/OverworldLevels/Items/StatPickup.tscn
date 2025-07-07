@@ -183,10 +183,10 @@ libraries = {
 [node name="AttractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttractionArea"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_x7c3y")
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." groups=["StatPickup"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 scale = Vector2(0.5, 0.5)
