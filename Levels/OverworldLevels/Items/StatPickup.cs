@@ -144,6 +144,8 @@ public partial class StatPickup : Node2D
     {
         if (area.IsInGroup("PlayerHurtBox"))
         {
+            //CallDeferred(nameof(QueueFree));
+
             this.QueueFree();
         }
     }

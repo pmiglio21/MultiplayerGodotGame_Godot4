@@ -36,7 +36,9 @@ _data = {
 script = ExtResource("1_6pdwu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 28)
 texture = ExtResource("1_dftwk")
+offset = Vector2(0, -28)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

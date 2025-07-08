@@ -245,7 +245,9 @@ namespace MobileEntities.PlayerCharacters
 
                         if (isAttacking && attackInputTimer == attackInputTimerMax && !finishedAttack)
                         {
-                            moveDirection = Vector2.Zero;
+							//moveDirection = Vector2.Zero;
+
+							//moveDirection = moveDirection * .5f;
 
                             attackInputTimer = 0;
 
