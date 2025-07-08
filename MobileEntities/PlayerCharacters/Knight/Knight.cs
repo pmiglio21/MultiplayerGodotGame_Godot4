@@ -24,6 +24,8 @@ namespace MobileEntities.PlayerCharacters
 		{
 			var knightSlashInstance = _knightSlash.Instantiate() as KnightSlash;
 
+            //TODO: make keyboard and mouse option here too
+
 			this.AddChild(knightSlashInstance);
 
             if (moveDirection == Vector2.Zero)

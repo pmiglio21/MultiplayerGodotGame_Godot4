@@ -3,6 +3,7 @@ using Godot;
 using MobileEntities.PlayerCharacters;
 using Root;
 using System;
+using System.Threading.Tasks;
 
 namespace MobileEntities.Enemies.Scripts
 {
@@ -202,10 +203,12 @@ namespace MobileEntities.Enemies.Scripts
 
 						if (CharacterStats.Health <= 0)
 						{
-							this.QueueFree();
+							
 
                             RunDeathProcess();
-						}
+
+                            this.QueueFree();
+                        }
 						else
 						{
 							gracePeriodTimer.Start();
@@ -221,8 +224,6 @@ namespace MobileEntities.Enemies.Scripts
 
             var statPickupNode = statPickupScene.Instantiate();
 
-            _parentLevel.AddChild(statPickupNode);
-
             var statPickup = statPickupNode as StatPickup;
 
             statPickup.StatType = (StatType)GD.RandRange(0, Enum.GetValues(typeof(StatType)).Length - 1);
@@ -230,8 +231,9 @@ namespace MobileEntities.Enemies.Scripts
 
             statPickup.GlobalPosition = GlobalPosition;
             statPickup.ZIndex = ZIndex;
-        }
 
+            _parentLevel.CallDeferred(MethodName.AddChild, statPickupNode);
+        }
 
 		private void OnMainHurtBoxAreaExited(Area2D area)
 		{

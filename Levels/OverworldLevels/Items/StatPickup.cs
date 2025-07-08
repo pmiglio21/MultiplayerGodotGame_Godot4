@@ -28,6 +28,11 @@ public partial class StatPickup : Node2D
 				_statType = value;
             }
 
+            if (_animationPlayer == null)
+            {
+                _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            }
+
             if (_animationPlayer != null)
             {
                 _animationPlayer.Play($"{StatType}{StatSize}");
@@ -45,6 +50,11 @@ public partial class StatPickup : Node2D
             if (_statSize != value)
             {
                 _statSize = value;
+            }
+
+            if (_animationPlayer == null)
+            {
+                _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
             }
 
             if (_animationPlayer != null)
@@ -146,7 +156,7 @@ public partial class StatPickup : Node2D
         {
             //CallDeferred(nameof(QueueFree));
 
-            this.QueueFree();
+            this.QueueFree(); //TODO: This is fine. I think it has to do with the instancing of StatPickups as enemies are killed
         }
     }
 }
