@@ -1,6 +1,7 @@
 using Enums;
 using Globals;
 using Godot;
+using Levels.OverworldLevels.Utilities;
 using MobileEntities.CharacterStats;
 
 namespace MobileEntities.PlayerCharacters
@@ -31,12 +32,13 @@ namespace MobileEntities.PlayerCharacters
 
             if (this.DeviceIdentifier == GlobalConstants.KeyboardDeviceIdentifier)
             {
-                //TODO: Not working. Not the correct angling
                 Vector2 mouseClickPosition = GetViewport().GetMousePosition();
 
-                GD.Print($"Position: {mouseClickPosition}");
+                var knightPositionOnCanvas = GetGlobalTransformWithCanvas().Origin;
 
-                knightSlashInstance.GlobalRotation = GlobalPosition.AngleTo(mouseClickPosition);// + (Mathf.Pi / 2);
+                Vector2 directionToMousePosition = knightPositionOnCanvas.DirectionTo(mouseClickPosition);
+
+                knightSlashInstance.GlobalRotation = directionToMousePosition.Angle() + (Mathf.Pi / 2);
             }
             else
             {

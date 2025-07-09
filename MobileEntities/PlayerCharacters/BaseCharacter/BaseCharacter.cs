@@ -450,7 +450,8 @@ namespace MobileEntities.PlayerCharacters
                 float speed = (float)((float)(100 + CharacterStats.Speed) / 100);
 				var normalizedMoveInput = moveInput.Normalized();
 
-				if (!_didInteractWithInteractableObjects)
+				//TODO: This doesn't prevent anything
+				if (_inventoryPocketableObjectsInArea.Count == 0 || !_didInteractWithInteractableObjects)
 				{
                     isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
                 }
