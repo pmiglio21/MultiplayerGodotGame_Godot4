@@ -123,8 +123,6 @@ public partial class StatPickup : Node2D
                 if (!_playersInArea.Any(x => x == character))
                 {
                     _playersInArea.Add(character);
-
-                    GD.Print($"PlayerHurtBox Entered {area.GetParent().Name}");
                 }
             }
         }
@@ -143,8 +141,6 @@ public partial class StatPickup : Node2D
                 if (_playersInArea.Any(x => x == character))
                 {
                     _playersInArea.Remove(character);
-
-                    GD.Print($"PlayerHurtBox Exited {area.GetParent().Name}");
                 }
             }
         }
@@ -154,9 +150,7 @@ public partial class StatPickup : Node2D
     {
         if (area.IsInGroup("PlayerHurtBox"))
         {
-            //CallDeferred(nameof(QueueFree));
-
-            this.QueueFree(); //TODO: This is fine. I think it has to do with the instancing of StatPickups as enemies are killed
+            this.QueueFree();
         }
     }
 }

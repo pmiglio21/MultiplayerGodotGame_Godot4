@@ -9,6 +9,12 @@ namespace Globals
 {
     public static class GlobalConstants
     {
+        #region Keyboard Device Identifier
+
+        public const string KeyboardDeviceIdentifier = "Keyboard";
+
+        #endregion
+
         #region Level Size
 
         public const string LevelSizeSmall = "Small";

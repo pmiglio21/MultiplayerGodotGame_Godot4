@@ -67,9 +67,9 @@ namespace Globals
                 playersWhoJustPressedButton.Add("3");
             }
 
-            if (Input.IsActionJustPressed($"{inputType}_Keyboard"))
+            if (Input.IsActionJustPressed($"{inputType}_{GlobalConstants.KeyboardDeviceIdentifier}"))
             {
-                playersWhoJustPressedButton.Add("Keyboard");
+                playersWhoJustPressedButton.Add(GlobalConstants.KeyboardDeviceIdentifier);
             }
 
             return playersWhoJustPressedButton;

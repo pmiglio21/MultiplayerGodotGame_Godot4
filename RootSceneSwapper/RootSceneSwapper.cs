@@ -59,7 +59,7 @@ namespace Root
             _titleScreenManager.GoToSettingsScreen += OnTitleScreenRootGoToSettingsScreen;
 			_titleScreenManager.QuitGame += QuitGame;
 
-            DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized);
+            //DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized); //TODO: Undo this
 
             ReadLastOpenedData();
             LoadOriginalSettings();
@@ -181,8 +181,6 @@ namespace Root
             {
                 _dungeonLevelSwapper.QueueFree();
             }
-
-            //GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
         }
 
 		public void OnDungeonLevelSwapperScreenGoToGameOverScreen()
@@ -190,8 +188,6 @@ namespace Root
 			_playerCharacterSelectScreenManager = null;
 
 			ChangeSceneToGameOverScreen(_dungeonLevelSwapper);
-
-            //GetTree().Root.SizeChanged += AdjustUiOnWindowSizeChanged;
         }
 
 		#endregion
@@ -301,8 +297,6 @@ namespace Root
 		{
 			try
 			{
-                //GetTree().Root.SizeChanged -= AdjustUiOnWindowSizeChanged;
-
                 //Doesn't need to be checked for null, just reset every time
                 _dungeonLevelSwapper = GD.Load<PackedScene>(LevelScenePaths.DungeonLevelSwapperPath).Instantiate() as DungeonLevelSwapper;
 
@@ -315,8 +309,8 @@ namespace Root
 
                 _rootGuiControl.AddChild(_dungeonLevelSwapper);
 
-                _rootGuiControl.RemoveChild(currentUiScene);
-            }
+				_rootGuiControl.RemoveChild(currentUiScene);
+			}
 			catch (Exception ex)
 			{
 				GD.PushError(ex.Message);
@@ -341,23 +335,6 @@ namespace Root
 				QuitGame();
             }
         }
-
-		//Move this to each screen manager. Can't have it here because we don't want split screen manager to shrink even more
-		//private void AdjustUiOnWindowSizeChanged()
-		//{
-		//	if (GetTree().Root.GetWindow().Size.X * GetTree().Root.GetWindow().Size.Y > 1000000)
-		//	{
-		//		_rootGuiControl.Scale = new Vector2(2, 2);
-  //          }
-  //          else if (GetTree().Root.GetWindow().Size.X * GetTree().Root.GetWindow().Size.Y < 500000)
-  //          {
-  //              _rootGuiControl.Scale = new Vector2(.5f, .5f);
-  //          }
-  //          else
-  //          {
-  //              _rootGuiControl.Scale = new Vector2(1, 1);
-  //          }
-  //      }
 
         private void QuitGame()
 		{

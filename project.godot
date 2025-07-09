@@ -17,7 +17,6 @@ config/icon="res://MobileEntities/PlayerCharacters/Mage/Sprites/Idle/East/MageId
 
 [display]
 
-window/size/mode=2
 window/stretch/mode="viewport"
 
 [dotnet]

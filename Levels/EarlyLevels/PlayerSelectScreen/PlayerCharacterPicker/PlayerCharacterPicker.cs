@@ -214,7 +214,7 @@ namespace Scenes.UI.PlayerSelectScene
 			{
 				isWakeUp3 = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_3");
 			}
-			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == "Keyboard") == 0)
+			if (_playerCharacterSelectScreenManager.ActivePlayerCharacterPickers.Count(x => x.CurrentDeviceId == GlobalConstants.KeyboardDeviceIdentifier) == 0)
 			{
 				isWakeUpKeyboard = Input.IsActionJustPressed($"{InputType.UiActionConfirm}_Keyboard");
 			}
@@ -239,7 +239,7 @@ namespace Scenes.UI.PlayerSelectScene
 				}
 				else if (isWakeUpKeyboard)
 				{
-					CurrentDeviceId = "Keyboard";
+					CurrentDeviceId = GlobalConstants.KeyboardDeviceIdentifier;
 				}
 
 				#region Initial Texture Setting

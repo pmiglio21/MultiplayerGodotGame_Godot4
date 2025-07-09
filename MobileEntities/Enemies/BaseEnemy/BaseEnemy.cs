@@ -193,18 +193,16 @@ namespace MobileEntities.Enemies.Scripts
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print("Enemy Hurt Entered");
+					//GD.Print("Enemy Hurt Entered");
 
 					if (gracePeriodTimer.IsStopped())
 					{
 						CharacterStats.Health -= 1;
 
-						GD.Print($"Health: {CharacterStats.Health}");
+						//GD.Print($"Health: {CharacterStats.Health}");
 
 						if (CharacterStats.Health <= 0)
 						{
-							
-
                             RunDeathProcess();
 
                             this.QueueFree();

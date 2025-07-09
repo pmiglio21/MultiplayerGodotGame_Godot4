@@ -1,4 +1,5 @@
 using Enums;
+using Globals;
 using Godot;
 using MobileEntities.CharacterStats;
 
@@ -24,25 +25,40 @@ namespace MobileEntities.PlayerCharacters
 		{
 			var knightSlashInstance = _knightSlash.Instantiate() as KnightSlash;
 
-            //TODO: make keyboard and mouse option here too
+            this.AddChild(knightSlashInstance);
 
-			this.AddChild(knightSlashInstance);
+            Vector2 attackDirection = Vector2.Zero;
 
-            if (moveDirection == Vector2.Zero)
+            if (this.DeviceIdentifier == GlobalConstants.KeyboardDeviceIdentifier)
             {
-                if (latestCardinalDirection == CardinalDirection.East)
+                //TODO: Not working. Not the correct angling
+                Vector2 mouseClickPosition = GetViewport().GetMousePosition();
+
+                GD.Print($"Position: {mouseClickPosition}");
+
+                knightSlashInstance.GlobalRotation = GlobalPosition.AngleTo(mouseClickPosition);// + (Mathf.Pi / 2);
+            }
+            else
+            {
+                if (moveDirection == Vector2.Zero)
                 {
-                    moveDirection = new Vector2(1, 0);
+                    if (latestCardinalDirection == CardinalDirection.East)
+                    {
+                        moveDirection = new Vector2(1, 0);
+                    }
+                    else if (latestCardinalDirection == CardinalDirection.West)
+                    {
+                        moveDirection = new Vector2(-1, 0);
+                    }
                 }
-                else if (latestCardinalDirection == CardinalDirection.West)
-                {
-                    moveDirection = new Vector2(-1, 0);
-                }
+
+                attackDirection = moveDirection;
+
+                knightSlashInstance.GlobalRotation = attackDirection.Angle() + (Mathf.Pi / 2);
             }
 
             var radius = 16;
-
-            knightSlashInstance.GlobalRotation = moveDirection.Angle() + (Mathf.Pi / 2);
+            
             knightSlashInstance.GlobalPosition = new Vector2(this.GlobalPosition.X + (radius * Mathf.Cos(knightSlashInstance.GlobalRotation - (Mathf.Pi / 2))), this.GlobalPosition.Y + (radius * Mathf.Sin(knightSlashInstance.GlobalRotation - (Mathf.Pi / 2))));
 
 			knightSlashInstance.ZIndex = this.ZIndex + 100;

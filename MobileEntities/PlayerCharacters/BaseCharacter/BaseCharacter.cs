@@ -245,10 +245,6 @@ namespace MobileEntities.PlayerCharacters
 
                         if (isAttacking && attackInputTimer == attackInputTimerMax && !finishedAttack)
                         {
-							//moveDirection = Vector2.Zero;
-
-							//moveDirection = moveDirection * .5f;
-
                             attackInputTimer = 0;
 
                             RunAttack();
@@ -556,7 +552,7 @@ namespace MobileEntities.PlayerCharacters
 		{
 			string animationNameString = animationName.ToString();
 
-			GD.Print($"{animationName} finished");
+			//GD.Print($"{animationName} finished");
 			if (animationNameString.Contains(AnimationType.Attack.ToString()))
 			{
 				isAttacking = false;
@@ -573,7 +569,7 @@ namespace MobileEntities.PlayerCharacters
 
 				if (!collisionShape.Disabled)
 				{
-					GD.Print($"Player Hurt Entered - Health: {CharacterStats.Health}");
+					//GD.Print($"Player Hurt Entered - Health: {CharacterStats.Health}");
 
 					//CharacterStats.Health -= 1;
 				}
@@ -632,7 +628,7 @@ namespace MobileEntities.PlayerCharacters
                     CharacterStats.Speed += statMultiplier;
                 }
 
-                GD.Print($"StatPickup obtained");
+                //GD.Print($"StatPickup obtained");
 			}
         }
 
