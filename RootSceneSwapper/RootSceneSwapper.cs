@@ -246,7 +246,7 @@ namespace Root
 			{
 				_gameRulesScreenManager = GD.Load<PackedScene>(LevelScenePaths.GameRulesScreenPath).Instantiate() as GameRulesScreenManager;
 
-				_gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
+                _gameRulesScreenManager.GoToTitleScreen += OnGameRulesScreenGoToTitleScreen;
 				_gameRulesScreenManager.GoToPlayModeScreen += OnGameRulesScreenGoToPlayModeScreen;
 				_gameRulesScreenManager.GoToPlayerCharacterSelectScreen += OnGameRulesScreenGoToPlayerCharacterSelectScreen;
 			}
@@ -255,7 +255,7 @@ namespace Root
 
 			_rootGuiControl.AddChild(_gameRulesScreenManager);
 
-			_rootGuiControl.RemoveChild(currentUiScene);
+            _rootGuiControl.RemoveChild(currentUiScene);
 
 			_gameRulesScreenManager.SetOptionButtonsWhenEnteringGameRulesScreen();
             _gameRulesScreenManager.GrabFocusOfTopButton();
@@ -309,7 +309,7 @@ namespace Root
 
                 _rootGuiControl.AddChild(_dungeonLevelSwapper);
 
-				_rootGuiControl.RemoveChild(currentUiScene);
+                _rootGuiControl.RemoveChild(currentUiScene);
 			}
 			catch (Exception ex)
 			{
@@ -492,7 +492,7 @@ namespace Root
 
 			if (CurrentSettings.FullscreenState != GlobalConstants.OffOnOptionOn)
 			{ 
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized);
+                //DisplayServer.WindowSetMode(DisplayServer.WindowMode.Maximized); //TODO: Undo this
             }
 			else
 			{

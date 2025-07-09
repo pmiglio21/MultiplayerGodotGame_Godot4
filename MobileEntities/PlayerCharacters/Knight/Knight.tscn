@@ -1,18 +1,17 @@
-[gd_scene load_steps=22 format=3 uid="uid://d3o2qaw760l14"]
+[gd_scene load_steps=21 format=3 uid="uid://d3o2qaw760l14"]
 
 [ext_resource type="PackedScene" uid="uid://cjc80kpo3mn2l" path="res://MobileEntities/PlayerCharacters/BaseCharacter/BaseCharacter.tscn" id="1_vtany"]
 [ext_resource type="Script" path="res://MobileEntities/PlayerCharacters/Knight/Knight.cs" id="2_5633e"]
-[ext_resource type="Texture2D" uid="uid://d06jtf5mh4jei" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_4.png" id="3_0kcqp"]
+[ext_resource type="Texture2D" uid="uid://dlyoy85mx3rmi" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_4.png" id="3_0kcqp"]
 [ext_resource type="Texture2D" uid="uid://dbkbm2gxiip21" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_2.png" id="3_bjke3"]
 [ext_resource type="Texture2D" uid="uid://cvq7onruuneyb" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_4.png" id="3_o5mq7"]
-[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_0.png" id="4_g7qoj"]
-[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/East/KnightIdle_1.png" id="5_6g2fj"]
+[ext_resource type="Texture2D" uid="uid://by5ifqr2rjr2e" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_0.png" id="4_g7qoj"]
+[ext_resource type="Texture2D" uid="uid://b8uh0e8lbeyla" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/Piskel/Knight_Idle/KnightIdle_1.png" id="5_6g2fj"]
 [ext_resource type="Texture2D" uid="uid://2pxqj7dynkb8" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_3.png" id="6_xutwp"]
 [ext_resource type="Texture2D" uid="uid://difmrlcooea2l" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Idle/West/KnightIdle_5.png" id="8_s0shy"]
-[ext_resource type="Texture2D" uid="uid://c4wtypey8nl8j" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_1.png" id="11_tptjq"]
-[ext_resource type="Texture2D" uid="uid://dbs731abs4u2f" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_2.png" id="12_q0jo7"]
-[ext_resource type="AudioStream" uid="uid://10mnwu4td5tg" path="res://MobileEntities/PlayerCharacters/BaseCharacter/Sounds/CastleWalking.mp3" id="13_3i50b"]
-[ext_resource type="Texture2D" uid="uid://b6e20vkwi506v" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_5.png" id="14_uufsi"]
+[ext_resource type="Texture2D" uid="uid://dj8b6ycqb6403" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_1.png" id="11_tptjq"]
+[ext_resource type="Texture2D" uid="uid://b66lixbdqt0qv" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_2.png" id="12_q0jo7"]
+[ext_resource type="Texture2D" uid="uid://bgnux03tsayc5" path="res://MobileEntities/PlayerCharacters/Knight/Sprites/Move/East/Knight_Move_SwordUp/KnightMove_5.png" id="14_uufsi"]
 
 [sub_resource type="Animation" id="Animation_r73ib"]
 resource_name = "Attack_East"
@@ -94,6 +93,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ExtResource("4_g7qoj"), ExtResource("5_6g2fj"), ExtResource("3_bjke3"), ExtResource("5_6g2fj")]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"StopFootstepsNoise"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_0ujs5"]
 resource_name = "Idle_West"
@@ -110,6 +123,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("6_xutwp"), ExtResource("3_o5mq7"), ExtResource("8_s0shy"), ExtResource("3_o5mq7")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"StopFootstepsNoise"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_vp12l"]
@@ -128,6 +155,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ExtResource("11_tptjq"), ExtResource("12_q0jo7"), ExtResource("3_0kcqp"), ExtResource("14_uufsi")]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PlayFootstepsNoise"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g3jla"]
 _data = {
@@ -140,7 +181,7 @@ _data = {
 "Move_East": SubResource("Animation_vp12l")
 }
 
-[node name="CharacterBody2" instance=ExtResource("1_vtany")]
+[node name="CharacterBody" instance=ExtResource("1_vtany")]
 script = ExtResource("2_5633e")
 characterClass = 1
 
@@ -162,5 +203,5 @@ visible = false
 position = Vector2(0.5, 11)
 
 [node name="AudioStreamPlayer2D" parent="." index="7"]
-stream = ExtResource("13_3i50b")
-volume_db = 10.0
+volume_db = 0.001
+pitch_scale = 0.5

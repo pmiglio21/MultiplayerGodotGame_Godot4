@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class DungeonLevelSwapper : Node
+public partial class DungeonLevelSwapper : Control
 {
 	private RootSceneSwapper _rootSceneSwapper;
 

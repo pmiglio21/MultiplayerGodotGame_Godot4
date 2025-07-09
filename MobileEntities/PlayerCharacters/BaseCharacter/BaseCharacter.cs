@@ -493,21 +493,22 @@ namespace MobileEntities.PlayerCharacters
 
                 //GD.Print($"Now I'm not {_staminaAmount}");
             }
-
-            if (moveDirection != Vector2.Zero && !audioStreamPlayer.Playing)
-            {
-                AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.CastleWalkingSoundPath) as AudioStream;
-
-                audioStreamPlayer.Stream = audioStream;
-                audioStreamPlayer.Play();
-            }
-            else
-            {
-                audioStreamPlayer.Stop();
-            }
         }
 
-		private void MovePlayer()
+		public void PlayFootstepsNoise()
+		{
+            AudioStream audioStream = ResourceLoader.Load(SoundFilePaths.CastleWalkingSoundPath) as AudioStream;
+			audioStreamPlayer.Stream = audioStream;
+			audioStreamPlayer.VolumeDb = -5.0f; // Adjust volume as needed
+			audioStreamPlayer.Play();
+		}
+
+        public void StopFootstepsNoise()
+        {
+            audioStreamPlayer.Stop();
+        }
+
+        private void MovePlayer()
 		{
 			Velocity = moveDirection * speed;
 
