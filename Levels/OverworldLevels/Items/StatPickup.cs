@@ -10,8 +10,9 @@ public partial class StatPickup : Node2D
     #region Components 
 
     private AnimationPlayer _animationPlayer { get; set; }
-    protected Area2D _attractionArea;
-    protected CollisionShape2D _collisionShape;
+    private Area2D _attractionArea;
+    private CollisionShape2D _collisionShape;
+    private Timer _despawnTimer;
 
     #endregion
 
@@ -71,6 +72,8 @@ public partial class StatPickup : Node2D
 	    _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _attractionArea = GetNode<Area2D>("AttractionArea");
         _collisionShape = _attractionArea.GetNode<CollisionShape2D>("CollisionShape2D");
+        _despawnTimer = GetNode<Timer>("DespawnTimer");
+        _despawnTimer.Timeout += () => this.QueueFree();
     }
 
     private BaseCharacter _nearestCharacter = null;

@@ -193,15 +193,15 @@ libraries = {
 "": SubResource("AnimationLibrary_g3jla")
 }
 
-[node name="MainHurtBox" parent="." index="2"]
+[node name="AudioStreamPlayer2D" parent="." index="2"]
+volume_db = 0.001
+pitch_scale = 0.5
+
+[node name="MainHurtBox" parent="." index="3"]
 visible = false
 position = Vector2(0, 2)
 scale = Vector2(-0.0548879, -1.31183)
 
-[node name="FootBox" parent="." index="5"]
+[node name="FootBox" parent="." index="6"]
 visible = false
 position = Vector2(0.5, 11)
-
-[node name="AudioStreamPlayer2D" parent="." index="7"]
-volume_db = 0.001
-pitch_scale = 0.5

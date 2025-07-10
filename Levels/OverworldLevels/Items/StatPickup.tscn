@@ -192,6 +192,21 @@ shape = SubResource("CircleShape2D_x7c3y")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_x7c3y")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+visible = false
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_x7c3y")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
 [connection signal="area_entered" from="AttractionArea" to="." method="OnAttractionAreaEntered"]
 [connection signal="area_exited" from="AttractionArea" to="." method="OnAttractionAreaExited"]
 [connection signal="area_entered" from="PickupArea" to="." method="OnPickupAreaEntered"]

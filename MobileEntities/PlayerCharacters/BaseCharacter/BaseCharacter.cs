@@ -35,6 +35,10 @@ namespace MobileEntities.PlayerCharacters
 
 		protected Timer rollingTimer;
 
+		protected Timer interactableInAreaTimer;
+
+		protected bool canRollBecauseNoInteractableInArea = true;
+
         protected AudioStreamPlayer2D audioStreamPlayer;
 
         #endregion
@@ -173,7 +177,9 @@ namespace MobileEntities.PlayerCharacters
 
             rollingTimer = GetNode<Timer>("RollingTimer");
 
-			audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+            interactableInAreaTimer = GetNode<Timer>("InteractableInAreaTimer");
+
+            audioStreamPlayer = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 
             #endregion
 
@@ -451,7 +457,7 @@ namespace MobileEntities.PlayerCharacters
 				var normalizedMoveInput = moveInput.Normalized();
 
 				//TODO: This doesn't prevent anything
-				if (_inventoryPocketableObjectsInArea.Count == 0 || !_didInteractWithInteractableObjects)
+				if (interactableInAreaTimer.IsStopped() && canRollBecauseNoInteractableInArea)
 				{
                     isRolling = Input.IsActionJustPressed($"{InputType.GameActionInteract}_{DeviceIdentifier}");
                 }
@@ -593,6 +599,11 @@ namespace MobileEntities.PlayerCharacters
 			else if (area.IsInGroup("InventoryPocketable"))
 			{
                 _inventoryPocketableObjectsInArea.Add(area.GetParent() as Node2D);
+
+                if (_inventoryPocketableObjectsInArea.Count > 0)
+                {
+                    canRollBecauseNoInteractableInArea = false;
+                }
             }
 			else if (area.IsInGroup("PlayerDetectionBox"))
 			{
@@ -657,6 +668,13 @@ namespace MobileEntities.PlayerCharacters
             else if (area.IsInGroup("InventoryPocketable"))
             {
                 _inventoryPocketableObjectsInArea.Remove(area.GetParent() as Node2D);
+
+				if (_inventoryPocketableObjectsInArea.Count == 0)
+				{
+					interactableInAreaTimer.Start();
+
+                    canRollBecauseNoInteractableInArea = true;
+                }
             }
         }
 		#endregion
